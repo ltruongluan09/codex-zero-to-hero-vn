@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <rect width="1400" height="760" fill="#06111f"/>
+  <text x="700" y="78" text-anchor="middle" fill="#eaffff" font-family="Arial" font-size="42" font-weight="700">CEO dùng AI để tạo bản demo sản phẩm</text>
+  <rect x="95" y="140" width="1210" height="520" rx="34" fill="#0d2231" stroke="#2ad5e8"/>
+  <circle cx="290" cy="330" r="78" fill="#12384a" stroke="#5beaf5"/>
+  <rect x="220" y="425" width="140" height="150" rx="34" fill="#12384a" stroke="#5beaf5"/>
+  <rect x="500" y="250" width="610" height="330" rx="22" fill="#07141f" stroke="#3be0ef"/>
+  <rect x="535" y="285" width="540" height="60" rx="14" fill="#14384a"/>
+  <text x="805" y="324" text-anchor="middle" fill="#eaffff" font-family="Arial" font-size="22">Prompt: “Tạo MVP quản lý đào tạo nội bộ”</text>
+  <rect x="545" y="380" width="150" height="82" rx="14" fill="#0e4555"/><rect x="725" y="380" width="150" height="82" rx="14" fill="#0e4555"/><rect x="905" y="380" width="150" height="82" rx="14" fill="#0e4555"/>
+  <text x="805" y="525" text-anchor="middle" fill="#6ff3ff" font-family="Arial" font-size="26">Ý tưởng → Demo app</text>
+</svg>

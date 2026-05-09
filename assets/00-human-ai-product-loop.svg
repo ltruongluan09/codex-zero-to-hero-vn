@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#06111f"/>
+  <text x="600" y="80" text-anchor="middle" fill="#eaffff" font-family="Arial" font-size="40" font-weight="700">Con người dẫn dắt, Codex hỗ trợ build</text>
+  <circle cx="600" cy="390" r="215" fill="none" stroke="#2bd8e8" stroke-width="10" stroke-dasharray="18 16"/>
+  <rect x="445" y="300" width="310" height="165" rx="28" fill="#102a3a" stroke="#5bf0ff"/>
+  <text x="600" y="365" text-anchor="middle" fill="#eaffff" font-family="Arial" font-size="30" font-weight="700">Sản phẩm demo</text>
+  <text x="600" y="410" text-anchor="middle" fill="#8df6ff" font-family="Arial" font-size="24">app / tool / MVP</text>
+  <g font-family="Arial" font-size="24" fill="#eaffff" text-anchor="middle">
+    <text x="600" y="160">Mô tả</text><text x="860" y="390">Build</text><text x="600" y="650">Kiểm tra</text><text x="340" y="390">Sửa tiếp</text>
+  </g>
+  <text x="600" y="720" text-anchor="middle" fill="#8aaeba" font-family="Arial" font-size="23">Bạn hiểu vấn đề • Codex tạo giải pháp • Bạn kiểm tra • Codex cải thiện</text>
+</svg>

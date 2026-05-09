@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <rect width="1400" height="760" fill="#071320"/>
+  <text x="700" y="80" text-anchor="middle" fill="#eafcff" font-family="Arial" font-size="44" font-weight="700">Không cần bắt đầu bằng code</text>
+  <rect x="90" y="150" width="560" height="480" rx="30" fill="#101c2b" stroke="#32475a"/>
+  <rect x="750" y="150" width="560" height="480" rx="30" fill="#0d2835" stroke="#2ad5e8"/>
+  <text x="370" y="210" text-anchor="middle" fill="#ffb3aa" font-family="Arial" font-size="30" font-weight="700">TRƯỚC</text>
+  <text x="1030" y="210" text-anchor="middle" fill="#7ef4ff" font-family="Arial" font-size="30" font-weight="700">HIỆN TẠI</text>
+  <g font-family="Consolas" font-size="24" fill="#7891a0"><text x="140" y="290">function app()</text><text x="140" y="330">{ return state.map(...)</text><text x="140" y="370">const err = undefined</text><text x="140" y="410">npm run build...</text></g>
+  <text x="370" y="535" text-anchor="middle" fill="#c7d8df" font-family="Arial" font-size="26">Người mới dễ bị choáng</text>
+  <rect x="820" y="270" width="420" height="86" rx="18" fill="#14384a" stroke="#38d7e8"/>
+  <text x="1030" y="323" text-anchor="middle" fill="#eaffff" font-family="Arial" font-size="24">“Tạo dashboard doanh thu tháng”</text>
+  <rect x="840" y="405" width="380" height="120" rx="18" fill="#0a1723" stroke="#45e6f2"/>
+  <rect x="870" y="435" width="90" height="58" rx="12" fill="#123f50"/><rect x="985" y="435" width="90" height="58" rx="12" fill="#123f50"/><rect x="1100" y="435" width="90" height="58" rx="12" fill="#123f50"/>
+  <text x="1030" y="575" text-anchor="middle" fill="#7ef4ff" font-family="Arial" font-size="26">Prompt thành app demo</text>
+</svg>

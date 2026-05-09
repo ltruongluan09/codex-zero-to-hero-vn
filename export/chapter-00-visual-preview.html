@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chapter 00 | Codex Zero To Hero Việt Nam</title>
+  <style>
+    :root {
+      --bg: #040b13;
+      --bg-2: #071726;
+      --ink: #effcff;
+      --soft: #a9c5cf;
+      --muted: #78929d;
+      --cyan: #59e9ff;
+      --cyan-2: #0fb9d0;
+      --mint: #6ff0b8;
+      --amber: #ffd166;
+      --coral: #ff8f7e;
+      --panel: rgba(11, 29, 45, .74);
+      --panel-strong: rgba(13, 40, 59, .92);
+      --stroke: rgba(105, 238, 255, .24);
+      --stroke-strong: rgba(105, 238, 255, .54);
+      --shadow: 0 24px 80px rgba(0, 0, 0, .42);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 12% 6%, rgba(89, 233, 255, .20), transparent 28%),
+        radial-gradient(circle at 88% 8%, rgba(111, 240, 184, .13), transparent 30%),
+        radial-gradient(circle at 50% 72%, rgba(15, 185, 208, .11), transparent 42%),
+        linear-gradient(145deg, var(--bg), var(--bg-2) 52%, #03070d);
+      line-height: 1.55;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.8), transparent 84%);
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0%;
+      z-index: 20;
+      background: linear-gradient(90deg, var(--cyan), var(--mint));
+      box-shadow: 0 0 18px rgba(89, 233, 255, .7);
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 44px));
+      margin: 0 auto;
+      padding: 30px 0 110px;
+      position: relative;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 14px;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 12px 14px;
+      margin-bottom: 46px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 999px;
+      background: rgba(4, 12, 20, .72);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 14px 50px rgba(0,0,0,.24);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, rgba(89,233,255,.95), rgba(111,240,184,.88));
+      box-shadow: 0 0 26px rgba(89,233,255,.42);
+      position: relative;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 2px solid rgba(4, 11, 19, .82);
+      border-radius: 8px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      color: var(--soft);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 10px;
+      border-radius: 999px;
+    }
+
+    .nav a:hover {
+      color: var(--ink);
+      background: rgba(89,233,255,.10);
+    }
+
+    .hero {
+      min-height: 680px;
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 34px;
+      align-items: center;
+      padding: 28px 0 60px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      margin-bottom: 18px;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 24px var(--cyan);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      font-size: clamp(48px, 6vw, 86px);
+      line-height: .94;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: clamp(34px, 4vw, 56px);
+      line-height: 1;
+      letter-spacing: 0;
+      margin-bottom: 18px;
+    }
+
+    h3 {
+      font-size: 24px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: var(--soft);
+      font-size: 18px;
+    }
+
+    .lead {
+      max-width: 650px;
+      color: #cfe9ef;
+      font-size: 22px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 800;
+      color: #031016;
+      background: linear-gradient(135deg, var(--cyan), var(--mint));
+      box-shadow: 0 18px 44px rgba(89,233,255,.22);
+    }
+
+    .btn.secondary {
+      color: var(--ink);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: none;
+    }
+
+    .glass {
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(16, 42, 61, .84), rgba(7, 24, 39, .64));
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-visual {
+      position: relative;
+      padding: 18px;
+      min-height: 570px;
+      overflow: hidden;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      right: -90px;
+      top: -100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(89,233,255,.24), transparent 66%);
+    }
+
+    .window {
+      position: relative;
+      border-radius: 22px;
+      background: rgba(3, 10, 18, .82);
+      border: 1px solid rgba(255,255,255,.10);
+      overflow: hidden;
+    }
+
+    .window-head {
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.035);
+    }
+
+    .dots { display: flex; gap: 7px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #ff6f61; }
+    .dot:nth-child(2) { background: #ffd166; }
+    .dot:nth-child(3) { background: #52e5b5; }
+
+    .window-title {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .prompt-box {
+      margin: 18px;
+      padding: 18px;
+      border-radius: 18px;
+      color: #e8fbff;
+      background: linear-gradient(135deg, rgba(89,233,255,.12), rgba(111,240,184,.08));
+      border: 1px solid rgba(89,233,255,.20);
+      font-size: 17px;
+    }
+
+    .product-preview {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 16px;
+      padding: 0 18px 18px;
+    }
+
+    .side-menu {
+      display: grid;
+      gap: 10px;
+    }
+
+    .side-pill {
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+
+    .side-pill.active {
+      background: rgba(89,233,255,.15);
+      border-color: rgba(89,233,255,.38);
+    }
+
+    .dashboard {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(89,233,255,.095);
+      border: 1px solid rgba(89,233,255,.18);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--ink);
+      font-size: 25px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .chart {
+      height: 178px;
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(to top, rgba(89,233,255,.12), transparent),
+        repeating-linear-gradient(to right, transparent 0 70px, rgba(255,255,255,.045) 71px),
+        repeating-linear-gradient(to bottom, transparent 0 35px, rgba(255,255,255,.045) 36px);
+      border: 1px solid rgba(255,255,255,.075);
+    }
+
+    .chart svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .floating-card {
+      position: absolute;
+      right: 36px;
+      bottom: 34px;
+      width: 240px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(6, 22, 35, .88);
+      border: 1px solid rgba(111,240,184,.30);
+      box-shadow: 0 22px 60px rgba(0,0,0,.34);
+    }
+
+    .floating-card b {
+      display: block;
+      color: var(--mint);
+      margin-bottom: 6px;
+    }
+
+    .section {
+      padding: 76px 0 16px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 22px;
+      align-items: start;
+      margin-bottom: 28px;
+    }
+
+    .section-no {
+      display: inline-grid;
+      place-items: center;
+      width: 88px;
+      height: 88px;
+      border-radius: 24px;
+      color: #041018;
+      background: linear-gradient(135deg, var(--cyan), var(--mint));
+      font-size: 28px;
+      font-weight: 900;
+      box-shadow: 0 22px 52px rgba(89,233,255,.20);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .compare-card {
+      min-height: 410px;
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .compare-card::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -90px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(89,233,255,.16), transparent 64%);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      background: rgba(255,255,255,.07);
+      color: var(--soft);
+      margin-bottom: 22px;
+    }
+
+    .tag.bad { color: #ffd2cc; background: rgba(255,143,126,.10); }
+    .tag.good { color: #c9ffeb; background: rgba(111,240,184,.10); }
+
+    .list {
+      display: grid;
+      gap: 13px;
+      padding: 0;
+      margin: 20px 0 0;
+      list-style: none;
+    }
+
+    .list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: #d9edf3;
+      font-size: 18px;
+    }
+
+    .marker {
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+      font-weight: 900;
+      color: #06111f;
+      background: var(--mint);
+      margin-top: 2px;
+    }
+
+    .bad .marker { background: var(--coral); }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .flow-step {
+      min-height: 150px;
+      padding: 18px 14px;
+      text-align: center;
+      position: relative;
+      overflow: visible;
+    }
+
+    .flow-step::before {
+      content: attr(data-step);
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      margin: 0 auto 14px;
+      color: #041018;
+      background: linear-gradient(135deg, var(--cyan), var(--mint));
+      font-weight: 900;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 66px;
+      right: -15px;
+      width: 22px;
+      height: 2px;
+      background: var(--cyan);
+      box-shadow: 0 0 14px rgba(89,233,255,.7);
+    }
+
+    .flow-step b {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
+    .flow-step span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .example {
+      padding: 22px;
+      min-height: 500px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .mock-screen {
+      border-radius: 22px;
+      background: rgba(2, 9, 16, .72);
+      border: 1px solid rgba(255,255,255,.085);
+      overflow: hidden;
+      min-height: 245px;
+    }
+
+    .mock-top {
+      height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 14px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.035);
+    }
+
+    .mock-body { padding: 18px; }
+
+    .landing-hero {
+      min-height: 176px;
+      padding: 22px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 82% 22%, rgba(89,233,255,.30), transparent 26%),
+        linear-gradient(135deg, rgba(15,70,88,.95), rgba(6,20,34,.95));
+      border: 1px solid rgba(89,233,255,.18);
+    }
+
+    .landing-hero h4,
+    .mock-body h4 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      color: var(--ink);
+    }
+
+    .landing-hero p,
+    .mock-body p {
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .cta {
+      display: inline-flex;
+      padding: 10px 13px;
+      border-radius: 12px;
+      color: #031016;
+      background: var(--cyan);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .mini-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mini-card {
+      height: 62px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+
+    .table {
+      display: grid;
+      gap: 9px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1.2fr .9fr .9fr;
+      gap: 8px;
+    }
+
+    .cell {
+      min-height: 32px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .cell.head {
+      background: rgba(89,233,255,.12);
+      border-color: rgba(89,233,255,.18);
+    }
+
+    .chat {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .bubble {
+      max-width: 82%;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #eafcff;
+      background: rgba(89,233,255,.10);
+      border: 1px solid rgba(89,233,255,.15);
+      font-size: 14px;
+    }
+
+    .bubble.answer {
+      justify-self: end;
+      background: rgba(111,240,184,.11);
+      border-color: rgba(111,240,184,.20);
+    }
+
+    .prompt-card {
+      padding: 16px;
+      border-radius: 18px;
+      color: #dffaff;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.075);
+      font-size: 15px;
+    }
+
+    .result-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .result-list div {
+      padding: 12px;
+      border-radius: 14px;
+      color: #cff7ff;
+      background: rgba(89,233,255,.075);
+      border: 1px solid rgba(89,233,255,.12);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .human-ai {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-top: 26px;
+    }
+
+    .role-card {
+      padding: 24px;
+      min-height: 260px;
+    }
+
+    .center-product {
+      padding: 30px;
+      text-align: center;
+      min-height: 320px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .center-product::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(89,233,255,.18);
+      border-radius: 50%;
+      animation: spin 14s linear infinite;
+    }
+
+    .center-product::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border: 1px dashed rgba(111,240,184,.26);
+      border-radius: 50%;
+      animation: spin 18s linear reverse infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .product-core {
+      position: relative;
+      z-index: 1;
+      width: 160px;
+      height: 160px;
+      display: grid;
+      place-items: center;
+      border-radius: 42px;
+      color: #031016;
+      background: linear-gradient(135deg, var(--cyan), var(--mint));
+      font-size: 21px;
+      font-weight: 950;
+      box-shadow: 0 0 70px rgba(89,233,255,.28);
+    }
+
+    .final-card {
+      padding: 38px;
+      margin-top: 26px;
+      border-left: 4px solid var(--cyan);
+    }
+
+    .quote {
+      color: var(--ink);
+      font-size: clamp(30px, 4vw, 50px);
+      line-height: 1.08;
+      font-weight: 900;
+      margin-bottom: 22px;
+    }
+
+    .practice {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 22px;
+      margin-top: 22px;
+    }
+
+    .textarea-fake {
+      min-height: 280px;
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(3, 10, 18, .78);
+      border: 1px solid rgba(255,255,255,.09);
+      color: #dffaff;
+      font-size: 16px;
+      white-space: pre-line;
+    }
+
+    .print-note {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 34px;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .topbar { position: static; border-radius: 22px; align-items: flex-start; }
+      .nav { display: none; }
+      .hero, .split, .example-grid, .human-ai, .practice { grid-template-columns: 1fr; }
+      .flow-grid { grid-template-columns: repeat(2, 1fr); }
+      .flow-step:not(:last-child)::after { display: none; }
+      .section-head { grid-template-columns: 1fr; }
+      .product-preview { grid-template-columns: 1fr; }
+      .side-menu { display: none; }
+      .hero-visual { min-height: auto; }
+    }
+
+    @media print {
+      body { background: #07111c; }
+      .topbar, .progress, .hero-actions { display: none; }
+      .page { width: 100%; padding: 0; }
+      .section { break-inside: avoid; padding-top: 34px; }
+      .glass { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <main class="page">
+    <nav class="topbar" aria-label="Điều hướng chapter">
+      <div class="brand"><span class="brand-mark"></span><span>Codex Zero To Hero Việt Nam</span></div>
+      <div class="nav">
+        <a href="#before-now">Trước vs hiện tại</a>
+        <a href="#codex">Codex là gì</a>
+        <a href="#examples">Ví dụ</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#human">Vai trò con người</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <div class="kicker">Chapter 00</div>
+        <h1>Người không biết lập trình vẫn có thể tạo ứng dụng bằng AI</h1>
+        <p class="lead">Bạn không cần bắt đầu bằng code. Bạn bắt đầu bằng một vấn đề thật trong công việc, mô tả rõ điều mình muốn, rồi để Codex hỗ trợ build bản demo đầu tiên.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#examples">Xem ví dụ thực tế</a>
+          <a class="btn secondary" href="#workflow">Xem workflow</a>
+        </div>
+      </div>
+
+      <div class="glass hero-visual" aria-label="Mockup Codex tạo dashboard">
+        <div class="window">
+          <div class="window-head">
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <span class="window-title">Codex workspace</span>
+          </div>
+          <div class="prompt-box">Tạo dashboard doanh thu tháng cho sales manager. Cần KPI, biểu đồ, bảng top nhân viên và giao diện dễ xem trong cuộc họp.</div>
+          <div class="product-preview">
+            <div class="side-menu">
+              <span class="side-pill active"></span>
+              <span class="side-pill"></span>
+              <span class="side-pill"></span>
+              <span class="side-pill"></span>
+            </div>
+            <div class="dashboard">
+              <div class="stats">
+                <div class="stat"><strong>1.2B</strong><span>Doanh thu</span></div>
+                <div class="stat"><strong>842</strong><span>Số đơn</span></div>
+                <div class="stat"><strong>31%</strong><span>Tỷ lệ chốt</span></div>
+              </div>
+              <div class="chart">
+                <svg viewBox="0 0 420 178" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M22 136 C70 118 82 78 126 90 C170 104 184 48 230 58 C276 68 286 124 332 88 C362 64 382 48 402 38" fill="none" stroke="#59e9ff" stroke-width="5" stroke-linecap="round"/>
+                  <path d="M22 136 C70 118 82 78 126 90 C170 104 184 48 230 58 C276 68 286 124 332 88 C362 64 382 48 402 38 L402 178 L22 178 Z" fill="rgba(89,233,255,.12)"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-card">
+          <b>Demo đã có hình dạng</b>
+          <p style="font-size:14px;margin:0;">Bạn không cần đọc code để thấy ý tưởng đang trở thành sản phẩm.</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" id="before-now">
+      <div class="section-head">
+        <div class="section-no">01</div>
+        <div>
+          <h2>5 năm trước vs hiện tại</h2>
+          <p class="lead">Cách tạo ứng dụng đã thay đổi. Khoảng cách giữa “tôi có ý tưởng” và “tôi có bản demo” ngắn hơn rất nhiều.</p>
+        </div>
+      </div>
+
+      <div class="split">
+        <article class="glass compare-card bad">
+          <span class="tag bad">Trước đây</span>
+          <h3>Ý tưởng dễ bị kẹt lại</h3>
+          <p>Một CEO, manager, HR hay BA thường phải chờ người biết code trước khi nhìn thấy sản phẩm.</p>
+          <ul class="list">
+            <li><span class="marker">×</span><span>Phải thuê dev hoặc chờ team IT.</span></li>
+            <li><span class="marker">×</span><span>Phải học code trước khi tự làm.</span></li>
+            <li><span class="marker">×</span><span>Mất nhiều tuần hoặc nhiều tháng.</span></li>
+            <li><span class="marker">×</span><span>Tốn tiền trước khi biết ý tưởng có đáng làm không.</span></li>
+          </ul>
+        </article>
+
+        <article class="glass compare-card">
+          <span class="tag good">Hiện tại</span>
+          <h3>Ý tưởng có thể thành demo nhanh</h3>
+          <p>Người hiểu công việc có thể mô tả nhu cầu, để Codex hỗ trợ build, rồi tự kiểm tra bản đầu.</p>
+          <ul class="list">
+            <li><span class="marker">✓</span><span>Mô tả ý tưởng bằng tiếng Việt.</span></li>
+            <li><span class="marker">✓</span><span>AI hỗ trợ tạo app, dashboard, tool hoặc chatbot.</span></li>
+            <li><span class="marker">✓</span><span>Thấy bản demo sớm để góp ý và sửa tiếp.</span></li>
+            <li><span class="marker">✓</span><span>Dễ deploy và gửi link cho người khác xem.</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="codex">
+      <div class="section-head">
+        <div class="section-no">02</div>
+        <div>
+          <h2>Codex là gì?</h2>
+          <p class="lead">Hãy nghĩ đơn giản: Codex giống một nhân viên kỹ thuật AI. Bạn giao việc bằng ngôn ngữ công việc. Codex hỗ trợ biến nó thành sản phẩm.</p>
+        </div>
+      </div>
+
+      <div class="flow-grid">
+        <div class="glass flow-step" data-step="1"><b>Người dùng</b><span>CEO, manager, BA, HR, backoffice</span></div>
+        <div class="glass flow-step" data-step="2"><b>Mô tả yêu cầu</b><span>Nói rõ muốn tạo gì, cho ai dùng</span></div>
+        <div class="glass flow-step" data-step="3"><b>Codex build</b><span>Tạo bản đầu tiên trong project</span></div>
+        <div class="glass flow-step" data-step="4"><b>Kiểm tra</b><span>Mở lên xem, bấm thử, góp ý</span></div>
+        <div class="glass flow-step" data-step="5"><b>Sửa tiếp</b><span>Fix lỗi, cải thiện giao diện</span></div>
+        <div class="glass flow-step" data-step="6"><b>Sản phẩm</b><span>App, tool, MVP, link demo</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="examples">
+      <div class="section-head">
+        <div class="section-no">03</div>
+        <div>
+          <h2>Ví dụ thực tế</h2>
+          <p class="lead">Không cần bắt đầu bằng sản phẩm khổng lồ. Hãy bắt đầu bằng một công cụ nhỏ có ích ngay trong công việc.</p>
+        </div>
+      </div>
+
+      <div class="example-grid">
+        <article class="glass example">
+          <div>
+            <span class="tag good">Landing page</span>
+            <h3>Website một trang cho dịch vụ mới</h3>
+            <p>Phù hợp cho CEO, founder, marketing, HR agency hoặc trung tâm đào tạo.</p>
+          </div>
+          <div class="mock-screen">
+            <div class="mock-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="mock-body">
+              <div class="landing-hero">
+                <h4>Dịch vụ tư vấn tuyển dụng</h4>
+                <p>Giúp doanh nghiệp vừa và nhỏ tuyển đúng người nhanh hơn.</p>
+                <span class="cta">Đăng ký tư vấn</span>
+              </div>
+              <div class="mini-cards"><span class="mini-card"></span><span class="mini-card"></span><span class="mini-card"></span></div>
+            </div>
+          </div>
+          <div class="prompt-card">Prompt: “Tạo landing page cho dịch vụ tư vấn tuyển dụng dành cho doanh nghiệp vừa và nhỏ ở Việt Nam.”</div>
+          <div class="result-list"><div>Hero rõ ràng</div><div>Form liên hệ</div><div>Lợi ích</div><div>CTA</div></div>
+        </article>
+
+        <article class="glass example">
+          <div>
+            <span class="tag good">Dashboard</span>
+            <h3>Màn hình doanh thu cho manager</h3>
+            <p>Phù hợp cho CEO, sales manager, operation manager và finance.</p>
+          </div>
+          <div class="mock-screen">
+            <div class="mock-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="mock-body">
+              <div class="stats">
+                <div class="stat"><strong>1.2B</strong><span>Doanh thu</span></div>
+                <div class="stat"><strong>126</strong><span>KH mới</span></div>
+                <div class="stat"><strong>31%</strong><span>Chốt</span></div>
+              </div>
+              <div class="chart" style="margin-top:14px;height:128px;">
+                <svg viewBox="0 0 420 128" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M20 94 C60 60 92 88 122 58 C168 12 208 74 244 46 C290 10 326 62 400 26" fill="none" stroke="#59e9ff" stroke-width="5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="prompt-card">Prompt: “Tạo dashboard doanh thu tháng gồm KPI, biểu đồ và bảng xếp hạng nhân viên.”</div>
+          <div class="result-list"><div>KPI</div><div>Biểu đồ</div><div>Bảng top sales</div><div>Bộ lọc</div></div>
+        </article>
+
+        <article class="glass example">
+          <div>
+            <span class="tag good">Excel helper</span>
+            <h3>Tool xử lý dữ liệu văn phòng</h3>
+            <p>Phù hợp cho HR, admin, backoffice, kế toán nội bộ và vận hành.</p>
+          </div>
+          <div class="mock-screen">
+            <div class="mock-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="mock-body">
+              <h4>Upload CSV / Excel</h4>
+              <div class="table">
+                <div class="row"><span class="cell head"></span><span class="cell head"></span><span class="cell head"></span></div>
+                <div class="row"><span class="cell"></span><span class="cell"></span><span class="cell"></span></div>
+                <div class="row"><span class="cell"></span><span class="cell"></span><span class="cell"></span></div>
+                <div class="row"><span class="cell"></span><span class="cell"></span><span class="cell"></span></div>
+              </div>
+              <span class="cta" style="margin-top:16px;">Xuất kết quả</span>
+            </div>
+          </div>
+          <div class="prompt-card">Prompt: “Tạo tool upload file nhân viên, lọc theo phòng ban và xuất bảng tổng hợp.”</div>
+          <div class="result-list"><div>Upload file</div><div>Lọc dữ liệu</div><div>Tổng hợp</div><div>Export</div></div>
+        </article>
+
+        <article class="glass example">
+          <div>
+            <span class="tag good">Chatbot AI</span>
+            <h3>FAQ nội bộ cho nhân viên mới</h3>
+            <p>Phù hợp cho HR, training, customer support và product team.</p>
+          </div>
+          <div class="mock-screen">
+            <div class="mock-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="chat">
+              <div class="bubble">Nhân viên mới cần chuẩn bị giấy tờ gì?</div>
+              <div class="bubble answer">Bạn cần CCCD, hồ sơ cá nhân và thông tin tài khoản ngân hàng.</div>
+              <div class="bubble">Nếu câu hỏi ngoài dữ liệu thì sao?</div>
+              <div class="bubble answer">Chatbot sẽ nói chưa có thông tin thay vì tự bịa.</div>
+            </div>
+          </div>
+          <div class="prompt-card">Prompt: “Tạo chatbot FAQ chỉ trả lời dựa trên nội dung onboarding tôi cung cấp.”</div>
+          <div class="result-list"><div>Khung chat</div><div>FAQ</div><div>Giới hạn phạm vi</div><div>Demo nội bộ</div></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-head">
+        <div class="section-no">04</div>
+        <div>
+          <h2>Workflow dùng Codex</h2>
+          <p class="lead">Hãy làm theo vòng lặp nhỏ. Mỗi vòng chỉ cần tạo ra một kết quả nhìn thấy được.</p>
+        </div>
+      </div>
+
+      <div class="flow-grid">
+        <div class="glass flow-step" data-step="1"><b>Ý tưởng</b><span>Chọn một việc thật đang tốn thời gian</span></div>
+        <div class="glass flow-step" data-step="2"><b>Prompt</b><span>Mô tả rõ bằng tiếng Việt</span></div>
+        <div class="glass flow-step" data-step="3"><b>Codex</b><span>Tạo bản đầu tiên</span></div>
+        <div class="glass flow-step" data-step="4"><b>Test</b><span>Mở app và bấm thử</span></div>
+        <div class="glass flow-step" data-step="5"><b>Fix lỗi</b><span>Nói lỗi, sửa từng bước</span></div>
+        <div class="glass flow-step" data-step="6"><b>Deploy</b><span>Gửi link demo</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="human">
+      <div class="section-head">
+        <div class="section-no">05</div>
+        <div>
+          <h2>Điều quan trọng nhất</h2>
+          <p class="lead">Codex không thay thế con người 100%. Codex giúp người hiểu công việc biến ý tưởng thành bản demo nhanh hơn.</p>
+        </div>
+      </div>
+
+      <div class="human-ai">
+        <article class="glass role-card">
+          <span class="tag good">Bạn</span>
+          <h3>Người dẫn dắt</h3>
+          <ul class="list">
+            <li><span class="marker">✓</span><span>Hiểu vấn đề thật.</span></li>
+            <li><span class="marker">✓</span><span>Biết ai sẽ dùng.</span></li>
+            <li><span class="marker">✓</span><span>Kiểm tra kết quả.</span></li>
+          </ul>
+        </article>
+        <article class="glass center-product">
+          <div class="product-core">Demo thật</div>
+        </article>
+        <article class="glass role-card">
+          <span class="tag good">Codex</span>
+          <h3>Nhân viên kỹ thuật AI</h3>
+          <ul class="list">
+            <li><span class="marker">✓</span><span>Build bản đầu.</span></li>
+            <li><span class="marker">✓</span><span>Fix lỗi.</span></li>
+            <li><span class="marker">✓</span><span>Cải thiện UI.</span></li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="glass final-card">
+        <div class="quote">Người không biết code vẫn có thể bắt đầu tạo ứng dụng bằng AI.</div>
+        <p>Không phải bằng phép màu. Mà bằng cách mô tả rõ, kiểm tra kỹ, chia nhỏ việc và làm cùng một nhân viên kỹ thuật AI tên là Codex.</p>
+      </div>
+
+      <div class="practice">
+        <div>
+          <h3>Bài tập 10 phút</h3>
+          <p>Chọn một việc trong công việc của bạn đang lặp lại nhiều lần. Điền vào prompt bên cạnh và thử đưa cho Codex.</p>
+        </div>
+        <div class="textarea-fake">Tôi là [vai trò].
+
+Tôi muốn tạo một công cụ giúp [vấn đề cần giải quyết].
+
+Người dùng là [ai sẽ dùng].
+
+Bản đầu tiên chỉ cần:
+1. [tính năng nhỏ 1]
+2. [tính năng nhỏ 2]
+3. [tính năng nhỏ 3]
+
+Hãy giúp tôi tạo bản demo đầu tiên thật đơn giản.</div>
+      </div>
+    </section>
+
+    <p class="print-note">Gợi ý: mở bằng Chrome hoặc Edge, bấm Ctrl+P và chọn Save as PDF để xuất bản chapter dạng visual.</p>
+  </main>
+
+  <script>
+    const bar = document.getElementById("progress");
+    const updateProgress = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      const pct = max > 0 ? (scrollY / max) * 100 : 0;
+      bar.style.width = pct + "%";
+    };
+    addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+  </script>
+</body>
+</html>

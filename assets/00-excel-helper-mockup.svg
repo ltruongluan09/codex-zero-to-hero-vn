@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <rect width="1400" height="760" fill="#06111f"/>
+  <text x="110" y="88" fill="#eaffff" font-family="Arial" font-size="38" font-weight="700">Excel Helper</text>
+  <rect x="110" y="130" width="390" height="500" rx="26" fill="#0d2533" stroke="#2bd8e8"/>
+  <rect x="555" y="130" width="735" height="500" rx="26" fill="#0d2533" stroke="#2bd8e8"/>
+  <text x="305" y="300" text-anchor="middle" fill="#8df6ff" font-family="Arial" font-size="30" font-weight="700">Kéo thả file CSV/Excel</text>
+  <rect x="215" y="350" width="180" height="58" rx="16" fill="#28d7e8"/><text x="305" y="387" text-anchor="middle" fill="#06202a" font-family="Arial" font-size="22" font-weight="700">Upload file</text>
+  <g stroke="#2a5368"><line x1="600" y1="210" x2="1240" y2="210"/><line x1="600" y1="285" x2="1240" y2="285"/><line x1="600" y1="360" x2="1240" y2="360"/><line x1="600" y1="435" x2="1240" y2="435"/></g>
+  <g fill="#dffaff" font-family="Arial" font-size="24"><text x="620" y="180">Tên</text><text x="820" y="180">Phòng ban</text><text x="1040" y="180">Trạng thái</text><text x="620" y="255">An</text><text x="820" y="255">HR</text><text x="1040" y="255">Đang làm</text><text x="620" y="330">Bình</text><text x="820" y="330">Sales</text><text x="1040" y="330">Đang làm</text></g>
+  <rect x="600" y="510" width="230" height="60" rx="16" fill="#12384a"/><text x="715" y="548" text-anchor="middle" fill="#8df6ff" font-family="Arial" font-size="22">Xuất kết quả</text>
+</svg>

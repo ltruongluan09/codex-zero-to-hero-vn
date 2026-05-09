@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <rect width="1400" height="760" fill="#06111f"/>
+  <text x="110" y="88" fill="#eaffff" font-family="Arial" font-size="38" font-weight="700">Chatbot AI nội bộ</text>
+  <rect x="110" y="130" width="320" height="500" rx="26" fill="#0d2533" stroke="#2bd8e8"/>
+  <rect x="470" y="130" width="820" height="500" rx="26" fill="#0d2533" stroke="#2bd8e8"/>
+  <g fill="#12384a"><rect x="150" y="190" width="230" height="50" rx="14"/><rect x="150" y="265" width="230" height="50" rx="14"/><rect x="150" y="340" width="230" height="50" rx="14"/><rect x="150" y="415" width="230" height="50" rx="14"/></g>
+  <g fill="#dffaff" font-family="Arial" font-size="22"><text x="175" y="223">Onboarding</text><text x="175" y="298">Nghỉ phép</text><text x="175" y="373">Bảo hiểm</text><text x="175" y="448">Quy trình</text></g>
+  <rect x="540" y="210" width="430" height="68" rx="20" fill="#14384a"/><text x="755" y="252" text-anchor="middle" fill="#eaffff" font-family="Arial" font-size="22">Nhân viên mới cần giấy tờ gì?</text>
+  <rect x="700" y="320" width="500" height="92" rx="22" fill="#0f4555"/><text x="950" y="358" text-anchor="middle" fill="#eaffff" font-family="Arial" font-size="21">Bạn cần CCCD, hồ sơ cá nhân,</text><text x="950" y="388" text-anchor="middle" fill="#eaffff" font-family="Arial" font-size="21">thông tin tài khoản ngân hàng...</text>
+  <rect x="540" y="520" width="620" height="58" rx="18" fill="#07141f" stroke="#2a5368"/><text x="575" y="557" fill="#7891a0" font-family="Arial" font-size="22">Nhập câu hỏi...</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <rect width="1400" height="760" fill="#06111f"/>
+  <text x="120" y="90" fill="#eaffff" font-family="Arial" font-size="38" font-weight="700">Dashboard doanh thu tháng</text>
+  <g fill="#102a3a" stroke="#2bd8e8"><rect x="110" y="130" width="260" height="120" rx="20"/><rect x="400" y="130" width="260" height="120" rx="20"/><rect x="690" y="130" width="260" height="120" rx="20"/><rect x="980" y="130" width="260" height="120" rx="20"/><rect x="110" y="300" width="720" height="330" rx="24"/><rect x="870" y="300" width="370" height="330" rx="24"/></g>
+  <g fill="#eaffff" font-family="Arial"><text x="150" y="180" font-size="22">Doanh thu</text><text x="150" y="220" font-size="34" font-weight="700">1.2B</text><text x="440" y="180" font-size="22">Số đơn</text><text x="440" y="220" font-size="34" font-weight="700">842</text><text x="730" y="180" font-size="22">KH mới</text><text x="730" y="220" font-size="34" font-weight="700">126</text><text x="1020" y="180" font-size="22">Tỷ lệ chốt</text><text x="1020" y="220" font-size="34" font-weight="700">31%</text></g>
+  <polyline points="160,560 260,500 360,535 460,430 560,470 660,380 780,410" fill="none" stroke="#5bf0ff" stroke-width="8"/>
+  <g fill="#12384a"><rect x="920" y="370" width="260" height="34" rx="10"/><rect x="920" y="430" width="220" height="34" rx="10"/><rect x="920" y="490" width="290" height="34" rx="10"/><rect x="920" y="550" width="190" height="34" rx="10"/></g>
+</svg>

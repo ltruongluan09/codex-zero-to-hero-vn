@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="980" viewBox="0 0 1200 980">
+  <rect width="1200" height="980" fill="#06111f"/>
+  <text x="600" y="70" text-anchor="middle" fill="#e9fdff" font-family="Arial" font-size="42" font-weight="700">Codex như nhân viên kỹ thuật AI</text>
+  <g font-family="Arial" font-size="26" text-anchor="middle">
+    <g fill="#102a3a" stroke="#38d7e8"><rect x="330" y="120" width="540" height="90" rx="22"/><rect x="330" y="260" width="540" height="90" rx="22"/><rect x="330" y="400" width="540" height="90" rx="22"/><rect x="330" y="540" width="540" height="90" rx="22"/><rect x="330" y="680" width="540" height="90" rx="22"/><rect x="330" y="820" width="540" height="90" rx="22"/></g>
+    <g fill="#e9fdff"><text x="600" y="175">Người dùng</text><text x="600" y="315">Mô tả yêu cầu</text><text x="600" y="455">Codex build</text><text x="600" y="595">Người dùng kiểm tra</text><text x="600" y="735">Codex sửa tiếp</text><text x="600" y="875">Ra sản phẩm demo</text></g>
+    <g fill="#43e5f2" font-size="38"><text x="600" y="245">↓</text><text x="600" y="385">↓</text><text x="600" y="525">↓</text><text x="600" y="665">↓</text><text x="600" y="805">↓</text></g>
+  </g>
+</svg>
