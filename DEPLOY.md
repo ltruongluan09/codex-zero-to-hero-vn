@@ -14,13 +14,13 @@ Public website
 
 ## 1. Project
 
-Website đã có file chính:
+Website hiện là React/Vite app. File chính:
 
 ```text
-index.html
+src/App.jsx
 ```
 
-Khi deploy, Vercel sẽ mở file này ở trang chủ.
+Vite sẽ build ra thư mục `dist/` khi deploy.
 
 ## 2. Push GitHub
 
@@ -43,8 +43,8 @@ Nếu chưa có Git, có thể tạo repo trên GitHub rồi upload toàn bộ f
 2. Chọn Add New Project.
 3. Import repo `codex-zero-to-hero-vn`.
 4. Framework Preset: Other.
-5. Build Command: để trống.
-6. Output Directory: để trống.
+5. Build Command: `npm run build`
+6. Output Directory: `dist`
 7. Bấm Deploy.
 
 ## 4. Public website
@@ -59,4 +59,4 @@ Gửi link này cho người khác là họ có thể xem website.
 
 ## Ghi chú
 
-Project hiện là static website thuần HTML/CSS/JS, không cần server, không cần API key, không cần build command.
+Project hiện là frontend thuần React/Vite, không cần backend, database, login hoặc API key.
