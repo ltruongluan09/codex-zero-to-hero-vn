@@ -36,7 +36,7 @@ const codexBullets = [
 
 const heroBadges = ["Build in public", "Không cần giỏi code", "Demo thật mỗi tuần"];
 
-const labLogs = ["AI Agent Active", "Generating UI…", "Deploying…", "Build Completed"];
+const labLogs = ["Deploying Lumi Labs...", "Initializing AI modules...", "AI Agent Active", "Build Complete"];
 
 function SectionLabel({ children }) {
   return (
@@ -70,9 +70,11 @@ function ProductMockup() {
         animate={{ rotateX: [0, 2.4, 0], rotateY: [-3, 3, -3], y: [0, -10, 0] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       >
-        <GlowCard className="relative min-h-[560px] overflow-hidden p-5 ring-1 ring-cyan-200/10 md:p-6">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(103,232,249,.24),transparent_26%),radial-gradient(circle_at_78%_14%,rgba(217,70,239,.22),transparent_26%)]" />
+        <GlowCard className="relative min-h-[600px] overflow-hidden p-5 ring-1 ring-cyan-200/10 md:p-6">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(103,232,249,.30),transparent_24%),radial-gradient(circle_at_78%_14%,rgba(217,70,239,.22),transparent_26%),linear-gradient(180deg,rgba(255,255,255,.05),transparent_28%,rgba(34,211,238,.06))]" />
           <div className="pointer-events-none absolute inset-0 opacity-30 [background:linear-gradient(90deg,transparent_0,rgba(103,232,249,.24)_50%,transparent_100%)] animate-scan" />
+          <div className="pointer-events-none absolute inset-x-10 top-24 h-20 rounded-[100%] bg-cyan-300/10 blur-2xl" />
+          <div className="pointer-events-none absolute inset-x-16 bottom-24 h-10 rounded-[100%] bg-fuchsia-400/10 blur-xl" />
 
           <div className="relative flex items-center justify-between rounded-2xl border border-cyan-200/15 bg-slate-950/75 px-4 py-3">
             <div className="flex items-center gap-3">
@@ -82,21 +84,21 @@ function ProductMockup() {
               </span>
               <span className="text-xs font-black uppercase tracking-[0.22em] text-emerald-200">AI Agent Active</span>
             </div>
-            <span className="text-xs font-semibold text-slate-400">Lumi Lab OS</span>
+            <span className="text-xs font-semibold text-slate-400">Lumi Lab OS · Part 4</span>
           </div>
 
-          <div className="relative mt-7 grid min-h-[455px] place-items-center">
+          <div className="relative mt-7 grid min-h-[485px] place-items-center">
             <div className="absolute inset-x-8 top-8 h-px bg-gradient-to-r from-transparent via-cyan-200/50 to-transparent" />
             <div className="absolute inset-y-10 left-10 w-px bg-gradient-to-b from-transparent via-fuchsia-300/40 to-transparent" />
             <div className="absolute inset-y-10 right-10 w-px bg-gradient-to-b from-transparent via-cyan-300/40 to-transparent" />
 
             <motion.div
-              className="absolute left-0 top-16 hidden w-48 rounded-2xl border border-cyan-200/20 bg-slate-950/75 p-4 shadow-2xl shadow-cyan-950/20 backdrop-blur-2xl sm:block"
+              className="absolute left-0 top-16 hidden w-52 rounded-2xl border border-cyan-200/20 bg-slate-950/75 p-4 shadow-2xl shadow-cyan-950/20 backdrop-blur-2xl sm:block"
               animate={{ y: [0, -14, 0], x: [0, 8, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             >
-              <div className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-cyan-200">Prompt</div>
-              <div className="text-sm font-semibold text-white">Build HRM AI demo</div>
+              <div className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-cyan-200">Reality marker</div>
+              <div className="text-sm font-semibold text-white">Built publicly in Vietnam</div>
               <div className="mt-3 h-1.5 rounded-full bg-cyan-300/30">
                 <div className="h-full w-4/5 rounded-full bg-cyan-300" />
               </div>
@@ -107,24 +109,31 @@ function ProductMockup() {
               animate={{ y: [0, 16, 0], x: [0, -10, 0] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
             >
-              <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-fuchsia-200">Deploy</div>
+              <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-fuchsia-200">Powered by Codex</div>
               <div className="grid grid-cols-3 gap-2">
                 <span className="h-10 rounded-xl bg-cyan-300/20" />
                 <span className="h-10 rounded-xl bg-fuchsia-300/20" />
                 <span className="h-10 rounded-xl bg-blue-400/20" />
               </div>
-              <div className="mt-3 text-sm font-semibold text-white">Public website</div>
+              <div className="mt-3 text-sm font-semibold text-white">AI builder workspace</div>
             </motion.div>
 
-            <div className="relative grid h-72 w-72 place-items-center rounded-full md:h-80 md:w-80">
-              <div className="absolute inset-0 rounded-full border border-cyan-200/20 animate-spin-slow" />
-              <div className="absolute inset-8 rounded-full border border-dashed border-fuchsia-200/20 animate-spin-reverse" />
-              <div className="absolute inset-16 rounded-full bg-[radial-gradient(circle,rgba(103,232,249,.36),rgba(168,85,247,.14)_48%,transparent_70%)] blur-sm" />
-              <div className="relative grid h-36 w-36 place-items-center rounded-full border border-cyan-100/40 bg-gradient-to-br from-cyan-200/30 via-blue-500/20 to-fuchsia-400/30 shadow-[0_0_80px_rgba(103,232,249,.42)] backdrop-blur-xl md:h-44 md:w-44">
+            <div className="relative grid h-80 w-80 place-items-center rounded-full md:h-[23rem] md:w-[23rem]">
+              <div className="absolute inset-0 rounded-full border border-cyan-200/20 animate-spin-slow shadow-[0_0_80px_rgba(34,211,238,.16)]" />
+              <div className="absolute inset-5 rounded-full border border-blue-300/10 animate-spin-reverse" />
+              <div className="absolute inset-10 rounded-full border border-dashed border-fuchsia-200/25 animate-spin-reverse" />
+              <div className="absolute inset-20 rounded-full bg-[radial-gradient(circle,rgba(103,232,249,.42),rgba(59,130,246,.22)_38%,rgba(168,85,247,.14)_58%,transparent_72%)] blur-sm animate-breathe" />
+              <div className="absolute h-[105%] w-[38%] rounded-full border border-cyan-200/15 animate-spin-slow" />
+              <div className="absolute h-[38%] w-[105%] rounded-full border border-fuchsia-200/15 animate-spin-reverse" />
+              <span className="orbit-dot orbit-dot-a" />
+              <span className="orbit-dot orbit-dot-b" />
+              <span className="orbit-dot orbit-dot-c" />
+              <div className="relative grid h-40 w-40 place-items-center rounded-full border border-cyan-100/50 bg-gradient-to-br from-cyan-200/35 via-blue-500/25 to-fuchsia-400/35 shadow-[0_0_110px_rgba(103,232,249,.55)] backdrop-blur-xl animate-breathe md:h-48 md:w-48">
                 <div className="absolute inset-3 rounded-full border border-white/10" />
-                <div className="text-center">
-                  <div className="text-4xl font-black text-white md:text-5xl">AI</div>
-                  <div className="mt-1 text-xs font-black uppercase tracking-[0.24em] text-cyan-100">Builder</div>
+                <div className="absolute inset-7 rounded-full bg-white/5 blur-sm" />
+                <div className="relative text-center">
+                  <div className="text-4xl font-black text-white md:text-6xl">AI</div>
+                  <div className="mt-1 text-xs font-black uppercase tracking-[0.28em] text-cyan-100">Core</div>
                 </div>
               </div>
             </div>

@@ -67,6 +67,34 @@ body {
   .hero-particle {
     @apply pointer-events-none absolute z-10 h-2 w-2 rounded-full bg-cyan-200 shadow-[0_0_28px_rgba(103,232,249,.95)] animate-float;
   }
+
+  .orbit-dot {
+    @apply absolute z-10 h-3 w-3 rounded-full bg-cyan-200 shadow-[0_0_28px_rgba(103,232,249,.95)];
+  }
+
+  .orbit-dot-a {
+    top: 18%;
+    left: 50%;
+    animation: orbit-a 8s linear infinite;
+  }
+
+  .orbit-dot-b {
+    top: 50%;
+    left: 14%;
+    background: rgb(217 70 239);
+    box-shadow: 0 0 28px rgba(217, 70, 239, .95);
+    animation: orbit-b 10s linear infinite reverse;
+  }
+
+  .orbit-dot-c {
+    right: 17%;
+    bottom: 25%;
+    width: 0.55rem;
+    height: 0.55rem;
+    background: rgb(147 197 253);
+    box-shadow: 0 0 24px rgba(147, 197, 253, .9);
+    animation: orbit-c 12s linear infinite;
+  }
 }
 
 @layer utilities {
@@ -97,6 +125,10 @@ body {
   .animate-spin-reverse {
     animation: spin 20s linear infinite reverse;
   }
+
+  .animate-breathe {
+    animation: breathe 4.8s ease-in-out infinite;
+  }
 }
 
 @keyframes float {
@@ -123,5 +155,49 @@ body {
 
   100% {
     transform: translateX(120%);
+  }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(0.97);
+    opacity: 0.72;
+    filter: saturate(1);
+  }
+
+  50% {
+    transform: scale(1.04);
+    opacity: 1;
+    filter: saturate(1.35);
+  }
+}
+
+@keyframes orbit-a {
+  from {
+    transform: rotate(0deg) translateX(158px) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg) translateX(158px) rotate(-360deg);
+  }
+}
+
+@keyframes orbit-b {
+  from {
+    transform: rotate(120deg) translateX(132px) rotate(-120deg);
+  }
+
+  to {
+    transform: rotate(480deg) translateX(132px) rotate(-480deg);
+  }
+}
+
+@keyframes orbit-c {
+  from {
+    transform: rotate(240deg) translateX(176px) rotate(-240deg);
+  }
+
+  to {
+    transform: rotate(600deg) translateX(176px) rotate(-600deg);
   }
 }
