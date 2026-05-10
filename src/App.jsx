@@ -36,6 +36,8 @@ const codexBullets = [
 
 const heroBadges = ["Build in public", "Không cần giỏi code", "Demo thật mỗi tuần"];
 
+const labLogs = ["AI Agent Active", "Generating UI…", "Deploying…", "Build Completed"];
+
 function SectionLabel({ children }) {
   return (
     <div className="mb-5 inline-flex items-center gap-3 rounded-full border border-cyan-300/20 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-cyan-200">
@@ -56,69 +58,100 @@ function ProductMockup() {
       initial="hidden"
       animate="visible"
       transition={{ duration: 0.8, delay: 0.2 }}
-      className="relative mx-auto w-full max-w-2xl"
+      className="relative mx-auto w-full max-w-2xl perspective-[1200px]"
     >
-      <motion.div
-        aria-hidden="true"
-        className="absolute -left-8 top-10 h-20 w-20 rounded-full bg-cyan-300/30 blur-2xl"
-        animate={{ y: [0, -18, 0], opacity: [0.5, 0.9, 0.5] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        aria-hidden="true"
-        className="absolute -right-10 bottom-14 h-28 w-28 rounded-full bg-fuchsia-400/30 blur-3xl"
-        animate={{ y: [0, 16, 0], x: [0, -10, 0], opacity: [0.45, 0.85, 0.45] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <div className="absolute -inset-10 rounded-[3.5rem] bg-[radial-gradient(circle_at_30%_20%,rgba(34,211,238,.26),transparent_36%),radial-gradient(circle_at_80%_70%,rgba(217,70,239,.26),transparent_38%)] blur-2xl" />
-      <GlowCard className="relative overflow-hidden p-4 ring-1 ring-cyan-200/10 md:p-5">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(103,232,249,.22),transparent_34%),radial-gradient(circle_at_90%_20%,rgba(192,132,252,.24),transparent_32%)]" />
-        <div className="relative mb-4 flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/75 px-4 py-3">
-          <div className="flex gap-2">
-            <span className="h-3 w-3 rounded-full bg-rose-400" />
-            <span className="h-3 w-3 rounded-full bg-amber-300" />
-            <span className="h-3 w-3 rounded-full bg-emerald-300" />
-          </div>
-          <span className="text-xs font-semibold text-slate-400">lumi-labs.ai/demo-lab</span>
-        </div>
+      <div className="pointer-events-none absolute -inset-16 rounded-[4rem] bg-[radial-gradient(circle_at_30%_20%,rgba(34,211,238,.34),transparent_34%),radial-gradient(circle_at_80%_70%,rgba(168,85,247,.38),transparent_36%),radial-gradient(circle_at_50%_50%,rgba(37,99,235,.20),transparent_48%)] blur-3xl" />
+      <div className="hero-particle left-[9%] top-[16%]" />
+      <div className="hero-particle left-[18%] top-[78%] animation-delay-700" />
+      <div className="hero-particle right-[8%] top-[24%] animation-delay-1000" />
+      <div className="hero-particle right-[20%] bottom-[12%] animation-delay-1500" />
 
-        <div className="relative rounded-3xl border border-cyan-300/20 bg-slate-950/85 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.08)]">
-          <div className="mb-5 rounded-2xl border border-fuchsia-300/20 bg-gradient-to-r from-cyan-300/10 via-white/[0.04] to-fuchsia-400/10 p-4 text-sm text-cyan-50 md:text-base">
-            “Build một AI assistant cho HRM: có landing page, demo chat, automation gửi báo cáo và deploy public.”
+      <motion.div
+        animate={{ rotateX: [0, 2.4, 0], rotateY: [-3, 3, -3], y: [0, -10, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <GlowCard className="relative min-h-[560px] overflow-hidden p-5 ring-1 ring-cyan-200/10 md:p-6">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(103,232,249,.24),transparent_26%),radial-gradient(circle_at_78%_14%,rgba(217,70,239,.22),transparent_26%)]" />
+          <div className="pointer-events-none absolute inset-0 opacity-30 [background:linear-gradient(90deg,transparent_0,rgba(103,232,249,.24)_50%,transparent_100%)] animate-scan" />
+
+          <div className="relative flex items-center justify-between rounded-2xl border border-cyan-200/15 bg-slate-950/75 px-4 py-3">
+            <div className="flex items-center gap-3">
+              <span className="relative flex h-3 w-3">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-75" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-300" />
+              </span>
+              <span className="text-xs font-black uppercase tracking-[0.22em] text-emerald-200">AI Agent Active</span>
+            </div>
+            <span className="text-xs font-semibold text-slate-400">Lumi Lab OS</span>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
-            {[
-              ["Website", "Landing page"],
-              ["Assistant", "AI workflow"],
-              ["Public", "Vercel deploy"],
-            ].map(([value, label]) => (
-              <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.06] p-4">
-                <div className="text-xl font-black text-white md:text-2xl">{value}</div>
-                <div className="text-sm text-slate-400">{label}</div>
+          <div className="relative mt-7 grid min-h-[455px] place-items-center">
+            <div className="absolute inset-x-8 top-8 h-px bg-gradient-to-r from-transparent via-cyan-200/50 to-transparent" />
+            <div className="absolute inset-y-10 left-10 w-px bg-gradient-to-b from-transparent via-fuchsia-300/40 to-transparent" />
+            <div className="absolute inset-y-10 right-10 w-px bg-gradient-to-b from-transparent via-cyan-300/40 to-transparent" />
+
+            <motion.div
+              className="absolute left-0 top-16 hidden w-48 rounded-2xl border border-cyan-200/20 bg-slate-950/75 p-4 shadow-2xl shadow-cyan-950/20 backdrop-blur-2xl sm:block"
+              animate={{ y: [0, -14, 0], x: [0, 8, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-cyan-200">Prompt</div>
+              <div className="text-sm font-semibold text-white">Build HRM AI demo</div>
+              <div className="mt-3 h-1.5 rounded-full bg-cyan-300/30">
+                <div className="h-full w-4/5 rounded-full bg-cyan-300" />
               </div>
-            ))}
-          </div>
+            </motion.div>
 
-          <div className="mt-4 grid gap-3 rounded-2xl border border-white/10 bg-[linear-gradient(to_right,rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,.045)_1px,transparent_1px)] bg-[size:44px_44px] p-4">
-            {[
-              ["01", "Ý tưởng", "AI onboarding cho nhân sự"],
-              ["02", "Build", "Prompt, UI, demo data"],
-              ["03", "Launch", "Public website + video demo"],
-            ].map(([step, title, body]) => (
-              <div key={step} className="flex items-center gap-4 rounded-2xl border border-white/10 bg-slate-900/70 p-3">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-cyan-300 to-fuchsia-400 text-sm font-black text-slate-950">
-                  {step}
-                </span>
-                <div>
-                  <div className="font-black text-white">{title}</div>
-                  <div className="text-sm text-slate-400">{body}</div>
+            <motion.div
+              className="absolute bottom-20 right-0 hidden w-52 rounded-2xl border border-fuchsia-200/20 bg-slate-950/75 p-4 shadow-2xl shadow-fuchsia-950/20 backdrop-blur-2xl sm:block"
+              animate={{ y: [0, 16, 0], x: [0, -10, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-fuchsia-200">Deploy</div>
+              <div className="grid grid-cols-3 gap-2">
+                <span className="h-10 rounded-xl bg-cyan-300/20" />
+                <span className="h-10 rounded-xl bg-fuchsia-300/20" />
+                <span className="h-10 rounded-xl bg-blue-400/20" />
+              </div>
+              <div className="mt-3 text-sm font-semibold text-white">Public website</div>
+            </motion.div>
+
+            <div className="relative grid h-72 w-72 place-items-center rounded-full md:h-80 md:w-80">
+              <div className="absolute inset-0 rounded-full border border-cyan-200/20 animate-spin-slow" />
+              <div className="absolute inset-8 rounded-full border border-dashed border-fuchsia-200/20 animate-spin-reverse" />
+              <div className="absolute inset-16 rounded-full bg-[radial-gradient(circle,rgba(103,232,249,.36),rgba(168,85,247,.14)_48%,transparent_70%)] blur-sm" />
+              <div className="relative grid h-36 w-36 place-items-center rounded-full border border-cyan-100/40 bg-gradient-to-br from-cyan-200/30 via-blue-500/20 to-fuchsia-400/30 shadow-[0_0_80px_rgba(103,232,249,.42)] backdrop-blur-xl md:h-44 md:w-44">
+                <div className="absolute inset-3 rounded-full border border-white/10" />
+                <div className="text-center">
+                  <div className="text-4xl font-black text-white md:text-5xl">AI</div>
+                  <div className="mt-1 text-xs font-black uppercase tracking-[0.24em] text-cyan-100">Builder</div>
                 </div>
               </div>
-            ))}
+            </div>
+
+            <div className="absolute bottom-0 left-1/2 w-full max-w-md -translate-x-1/2 rounded-2xl border border-white/10 bg-slate-950/80 p-4 shadow-2xl shadow-black/30 backdrop-blur-2xl">
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-xs font-black uppercase tracking-[0.2em] text-cyan-200">Live Build Log</span>
+                <span className="rounded-full bg-emerald-300/10 px-2 py-1 text-[11px] font-black text-emerald-200">running</span>
+              </div>
+              <div className="grid gap-2 font-mono text-xs text-slate-300 sm:text-sm">
+                {labLogs.map((log, index) => (
+                  <motion.div
+                    key={log}
+                    className="flex items-center gap-2"
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: [0.35, 1, 0.65], x: 0 }}
+                    transition={{ duration: 2.4, repeat: Infinity, delay: index * 0.45, ease: "easeInOut" }}
+                  >
+                    <span className="text-cyan-300">›</span>
+                    <span>{log}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </GlowCard>
+        </GlowCard>
+      </motion.div>
     </motion.div>
   );
 }
@@ -143,17 +176,18 @@ function App() {
         </nav>
       </header>
 
-      <section id="top" className="relative mx-auto grid min-h-[86vh] w-full max-w-7xl items-center gap-12 px-5 pb-20 pt-10 md:grid-cols-[.95fr_1.05fr] md:px-8">
-        <div className="pointer-events-none absolute left-6 top-20 h-2 w-2 rounded-full bg-cyan-200 shadow-[0_0_30px_rgba(103,232,249,.95)]" />
-        <div className="pointer-events-none absolute left-[48%] top-16 h-1.5 w-1.5 rounded-full bg-fuchsia-300 shadow-[0_0_28px_rgba(217,70,239,.85)]" />
-        <div className="pointer-events-none absolute bottom-28 right-10 h-2.5 w-2.5 rounded-full bg-cyan-100/80 shadow-[0_0_28px_rgba(103,232,249,.75)]" />
+      <section id="top" className="relative mx-auto grid min-h-[88vh] w-full max-w-7xl items-center gap-12 px-5 pb-20 pt-8 md:grid-cols-[.88fr_1.12fr] md:px-8">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_35%,rgba(37,99,235,.18),transparent_28%),radial-gradient(circle_at_76%_44%,rgba(168,85,247,.22),transparent_32%)]" />
+        <div className="pointer-events-none absolute left-6 top-20 h-2 w-2 rounded-full bg-cyan-200 shadow-[0_0_30px_rgba(103,232,249,.95)] animate-float" />
+        <div className="pointer-events-none absolute left-[48%] top-16 h-1.5 w-1.5 rounded-full bg-fuchsia-300 shadow-[0_0_28px_rgba(217,70,239,.85)] animate-float animation-delay-1000" />
+        <div className="pointer-events-none absolute bottom-28 right-10 h-2.5 w-2.5 rounded-full bg-cyan-100/80 shadow-[0_0_28px_rgba(103,232,249,.75)] animate-float animation-delay-1500" />
 
         <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.75 }}>
           <SectionLabel>Premium AI Builder Lab</SectionLabel>
-          <h1 className="max-w-4xl text-5xl font-black leading-[0.94] tracking-tight sm:text-6xl md:text-8xl">
+          <h1 className="max-w-4xl text-5xl font-black leading-[0.92] tracking-tight sm:text-6xl md:text-8xl">
             Từ ý tưởng <span className="gradient-text">→ sản phẩm AI thật.</span>
           </h1>
-          <p className="mt-7 max-w-2xl text-2xl font-bold leading-tight text-cyan-50 md:text-4xl">
+          <p className="mt-7 max-w-2xl text-xl font-bold leading-tight text-cyan-50 sm:text-2xl md:text-3xl">
             Mỗi tuần tôi build và chia sẻ các sản phẩm AI thực tế: website, AI assistant, HRM, automation, content tools và nhiều hơn nữa.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
