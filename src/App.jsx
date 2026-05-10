@@ -36,7 +36,7 @@ const codexBullets = [
 
 const heroBadges = ["Build in public", "Không cần giỏi code", "Demo thật mỗi tuần"];
 
-const labLogs = ["Deploying Lumi Labs...", "Initializing AI modules...", "AI Agent Active", "Build Complete"];
+const labLogs = ["Part 1: Landing page", "Part 2: HRM demo", "Part 3: AI assistant", "Part 4: Deploy on Vercel"];
 
 function SectionLabel({ children }) {
   return (
@@ -58,104 +58,84 @@ function ProductMockup() {
       initial="hidden"
       animate="visible"
       transition={{ duration: 0.8, delay: 0.2 }}
-      className="relative mx-auto w-full max-w-2xl perspective-[1200px]"
+      className="relative mx-auto w-full max-w-2xl"
     >
-      <div className="pointer-events-none absolute -inset-16 rounded-[4rem] bg-[radial-gradient(circle_at_30%_20%,rgba(34,211,238,.34),transparent_34%),radial-gradient(circle_at_80%_70%,rgba(168,85,247,.38),transparent_36%),radial-gradient(circle_at_50%_50%,rgba(37,99,235,.20),transparent_48%)] blur-3xl" />
-      <div className="hero-particle left-[9%] top-[16%]" />
-      <div className="hero-particle left-[18%] top-[78%] animation-delay-700" />
-      <div className="hero-particle right-[8%] top-[24%] animation-delay-1000" />
-      <div className="hero-particle right-[20%] bottom-[12%] animation-delay-1500" />
+      <div className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-[radial-gradient(circle_at_70%_20%,rgba(34,211,238,.16),transparent_34%),radial-gradient(circle_at_20%_80%,rgba(168,85,247,.14),transparent_36%)] blur-3xl" />
 
       <motion.div
-        animate={{ rotateX: [0, 2.4, 0], rotateY: [-3, 3, -3], y: [0, -10, 0] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
-        <GlowCard className="relative min-h-[600px] overflow-hidden p-5 ring-1 ring-cyan-200/10 md:p-6">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(103,232,249,.30),transparent_24%),radial-gradient(circle_at_78%_14%,rgba(217,70,239,.22),transparent_26%),linear-gradient(180deg,rgba(255,255,255,.05),transparent_28%,rgba(34,211,238,.06))]" />
-          <div className="pointer-events-none absolute inset-0 opacity-30 [background:linear-gradient(90deg,transparent_0,rgba(103,232,249,.24)_50%,transparent_100%)] animate-scan" />
-          <div className="pointer-events-none absolute inset-x-10 top-24 h-20 rounded-[100%] bg-cyan-300/10 blur-2xl" />
-          <div className="pointer-events-none absolute inset-x-16 bottom-24 h-10 rounded-[100%] bg-fuchsia-400/10 blur-xl" />
+        <GlowCard className="relative overflow-hidden p-5 ring-1 ring-cyan-200/10 md:p-6">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_0%,rgba(103,232,249,.12),transparent_28%)]" />
 
-          <div className="relative flex items-center justify-between rounded-2xl border border-cyan-200/15 bg-slate-950/75 px-4 py-3">
+          <div className="relative flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/75 px-4 py-3">
             <div className="flex items-center gap-3">
               <span className="relative flex h-3 w-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-75" />
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-300" />
               </span>
-              <span className="text-xs font-black uppercase tracking-[0.22em] text-emerald-200">AI Agent Active</span>
+              <span className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Builder workspace</span>
             </div>
-            <span className="text-xs font-semibold text-slate-400">Lumi Lab OS · Part 4</span>
+            <span className="text-xs font-semibold text-slate-400">Built with Codex</span>
           </div>
 
-          <div className="relative mt-7 grid min-h-[485px] place-items-center">
-            <div className="absolute inset-x-8 top-8 h-px bg-gradient-to-r from-transparent via-cyan-200/50 to-transparent" />
-            <div className="absolute inset-y-10 left-10 w-px bg-gradient-to-b from-transparent via-fuchsia-300/40 to-transparent" />
-            <div className="absolute inset-y-10 right-10 w-px bg-gradient-to-b from-transparent via-cyan-300/40 to-transparent" />
-
-            <motion.div
-              className="absolute left-0 top-16 hidden w-52 rounded-2xl border border-cyan-200/20 bg-slate-950/75 p-4 shadow-2xl shadow-cyan-950/20 backdrop-blur-2xl sm:block"
-              animate={{ y: [0, -14, 0], x: [0, 8, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <div className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-cyan-200">Reality marker</div>
-              <div className="text-sm font-semibold text-white">Built publicly in Vietnam</div>
-              <div className="mt-3 h-1.5 rounded-full bg-cyan-300/30">
-                <div className="h-full w-4/5 rounded-full bg-cyan-300" />
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="absolute bottom-20 right-0 hidden w-52 rounded-2xl border border-fuchsia-200/20 bg-slate-950/75 p-4 shadow-2xl shadow-fuchsia-950/20 backdrop-blur-2xl sm:block"
-              animate={{ y: [0, 16, 0], x: [0, -10, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-fuchsia-200">Powered by Codex</div>
-              <div className="grid grid-cols-3 gap-2">
-                <span className="h-10 rounded-xl bg-cyan-300/20" />
-                <span className="h-10 rounded-xl bg-fuchsia-300/20" />
-                <span className="h-10 rounded-xl bg-blue-400/20" />
-              </div>
-              <div className="mt-3 text-sm font-semibold text-white">AI builder workspace</div>
-            </motion.div>
-
-            <div className="relative grid h-80 w-80 place-items-center rounded-full md:h-[23rem] md:w-[23rem]">
-              <div className="absolute inset-0 rounded-full border border-cyan-200/20 animate-spin-slow shadow-[0_0_80px_rgba(34,211,238,.16)]" />
-              <div className="absolute inset-5 rounded-full border border-blue-300/10 animate-spin-reverse" />
-              <div className="absolute inset-10 rounded-full border border-dashed border-fuchsia-200/25 animate-spin-reverse" />
-              <div className="absolute inset-20 rounded-full bg-[radial-gradient(circle,rgba(103,232,249,.42),rgba(59,130,246,.22)_38%,rgba(168,85,247,.14)_58%,transparent_72%)] blur-sm animate-breathe" />
-              <div className="absolute h-[105%] w-[38%] rounded-full border border-cyan-200/15 animate-spin-slow" />
-              <div className="absolute h-[38%] w-[105%] rounded-full border border-fuchsia-200/15 animate-spin-reverse" />
-              <span className="orbit-dot orbit-dot-a" />
-              <span className="orbit-dot orbit-dot-b" />
-              <span className="orbit-dot orbit-dot-c" />
-              <div className="relative grid h-40 w-40 place-items-center rounded-full border border-cyan-100/50 bg-gradient-to-br from-cyan-200/35 via-blue-500/25 to-fuchsia-400/35 shadow-[0_0_110px_rgba(103,232,249,.55)] backdrop-blur-xl animate-breathe md:h-48 md:w-48">
-                <div className="absolute inset-3 rounded-full border border-white/10" />
-                <div className="absolute inset-7 rounded-full bg-white/5 blur-sm" />
-                <div className="relative text-center">
-                  <div className="text-4xl font-black text-white md:text-6xl">AI</div>
-                  <div className="mt-1 text-xs font-black uppercase tracking-[0.28em] text-cyan-100">Core</div>
+          <div className="relative mt-5 grid gap-4">
+            <div className="grid gap-4 sm:grid-cols-[1fr_.78fr]">
+              <div className="rounded-3xl border border-white/10 bg-slate-950/70 p-4">
+                <div className="mb-4 flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-black text-white">Project tuần này</div>
+                    <div className="text-xs text-slate-400">HRM + AI assistant demo</div>
+                  </div>
+                  <span className="rounded-full bg-cyan-300/10 px-3 py-1 text-xs font-black text-cyan-100">Part 4</span>
                 </div>
+                <div className="rounded-2xl border border-cyan-200/15 bg-gradient-to-br from-slate-900 to-slate-950 p-4">
+                  <div className="mb-4 h-28 rounded-2xl border border-white/10 bg-[linear-gradient(135deg,rgba(34,211,238,.18),rgba(168,85,247,.10)),linear-gradient(to_right,rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,.05)_1px,transparent_1px)] bg-[size:auto,38px_38px,38px_38px]" />
+                  <div className="grid gap-2">
+                    <div className="h-3 w-4/5 rounded-full bg-white/18" />
+                    <div className="h-3 w-3/5 rounded-full bg-white/10" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-3">
+                {["Part 1", "Part 2", "Part 3", "Part 4", "Part 5"].map((part, index) => (
+                  <div key={part} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3">
+                    <span className="text-sm font-black text-white">{part}</span>
+                    <span className={index === 3 ? "text-xs font-bold text-cyan-200" : "text-xs font-bold text-slate-500"}>
+                      {index < 3 ? "Done" : index === 3 ? "Building" : "Next"}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="absolute bottom-0 left-1/2 w-full max-w-md -translate-x-1/2 rounded-2xl border border-white/10 bg-slate-950/80 p-4 shadow-2xl shadow-black/30 backdrop-blur-2xl">
-              <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-black uppercase tracking-[0.2em] text-cyan-200">Live Build Log</span>
-                <span className="rounded-full bg-emerald-300/10 px-2 py-1 text-[11px] font-black text-emerald-200">running</span>
+            <div className="grid gap-3 rounded-3xl border border-white/10 bg-slate-950/80 p-4">
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded-full bg-white/[0.06] px-3 py-1 text-xs font-bold text-slate-200">Built publicly in Vietnam</span>
+                <span className="rounded-full bg-white/[0.06] px-3 py-1 text-xs font-bold text-slate-200">Built with Codex</span>
+                <span className="rounded-full bg-white/[0.06] px-3 py-1 text-xs font-bold text-slate-200">Deploy on Vercel</span>
               </div>
-              <div className="grid gap-2 font-mono text-xs text-slate-300 sm:text-sm">
-                {labLogs.map((log, index) => (
-                  <motion.div
-                    key={log}
-                    className="flex items-center gap-2"
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: [0.35, 1, 0.65], x: 0 }}
-                    transition={{ duration: 2.4, repeat: Infinity, delay: index * 0.45, ease: "easeInOut" }}
-                  >
-                    <span className="text-cyan-300">›</span>
-                    <span>{log}</span>
-                  </motion.div>
-                ))}
+              <div className="rounded-2xl border border-white/10 bg-black/35 p-4">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">Terminal log</span>
+                  <span className="text-xs font-bold text-emerald-200">live</span>
+                </div>
+                <div className="grid gap-2 font-mono text-xs text-slate-300 sm:text-sm">
+                  {labLogs.map((log, index) => (
+                    <motion.div
+                      key={log}
+                      className="flex items-center gap-2"
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: [0.45, 1, 0.75], x: 0 }}
+                      transition={{ duration: 2.4, repeat: Infinity, delay: index * 0.45, ease: "easeInOut" }}
+                    >
+                      <span className="text-cyan-300">›</span>
+                      <span>{log}</span>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -185,30 +165,31 @@ function App() {
         </nav>
       </header>
 
-      <section id="top" className="relative mx-auto grid min-h-[88vh] w-full max-w-7xl items-center gap-12 px-5 pb-20 pt-8 md:grid-cols-[.88fr_1.12fr] md:px-8">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_35%,rgba(37,99,235,.18),transparent_28%),radial-gradient(circle_at_76%_44%,rgba(168,85,247,.22),transparent_32%)]" />
-        <div className="pointer-events-none absolute left-6 top-20 h-2 w-2 rounded-full bg-cyan-200 shadow-[0_0_30px_rgba(103,232,249,.95)] animate-float" />
-        <div className="pointer-events-none absolute left-[48%] top-16 h-1.5 w-1.5 rounded-full bg-fuchsia-300 shadow-[0_0_28px_rgba(217,70,239,.85)] animate-float animation-delay-1000" />
-        <div className="pointer-events-none absolute bottom-28 right-10 h-2.5 w-2.5 rounded-full bg-cyan-100/80 shadow-[0_0_28px_rgba(103,232,249,.75)] animate-float animation-delay-1500" />
+      <section id="top" className="relative mx-auto grid min-h-[86vh] w-full max-w-7xl items-center gap-14 px-5 pb-20 pt-8 md:grid-cols-[.92fr_1.08fr] md:px-8">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_35%,rgba(37,99,235,.10),transparent_28%),radial-gradient(circle_at_76%_44%,rgba(168,85,247,.10),transparent_32%)]" />
 
         <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.75 }}>
-          <SectionLabel>Premium AI Builder Lab</SectionLabel>
-          <h1 className="max-w-4xl text-5xl font-black leading-[0.92] tracking-tight sm:text-6xl md:text-8xl">
-            Từ ý tưởng <span className="gradient-text">→ sản phẩm AI thật.</span>
+          <div className="mb-5 inline-flex items-center rounded-full border border-cyan-200/20 bg-white/[0.055] px-4 py-2 text-sm font-bold text-cyan-100">
+            Build publicly in Vietnam
+          </div>
+          <h1 className="max-w-4xl text-5xl font-black leading-[0.96] tracking-tight sm:text-6xl md:text-7xl">
+            Tôi đang build sản phẩm AI thật bằng Codex.
           </h1>
-          <p className="mt-7 max-w-2xl text-xl font-bold leading-tight text-cyan-50 sm:text-2xl md:text-3xl">
-            Mỗi tuần tôi build và chia sẻ các sản phẩm AI thực tế: website, AI assistant, HRM, automation, content tools và nhiều hơn nữa.
+          <p className="mt-7 max-w-2xl whitespace-pre-line text-xl font-semibold leading-8 text-slate-200 md:text-2xl md:leading-9">
+            {`Mỗi tuần tôi chia sẻ một project AI thực tế:
+website, HRM, AI assistant, automation và nhiều hơn nữa.
+Dễ hiểu cho cả người không biết code.`}
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             {heroBadges.map((badge) => (
-              <span key={badge} className="rounded-full border border-cyan-200/20 bg-white/[0.06] px-4 py-2 text-sm font-bold text-cyan-50 shadow-xl shadow-cyan-950/20 backdrop-blur-xl">
+              <span key={badge} className="rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 text-sm font-bold text-slate-100">
                 {badge}
               </span>
             ))}
           </div>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-            <a href="#codex" className="primary-button">Xem demo mới nhất</a>
-            <a href="#paths" className="secondary-button">Tham gia thử thách 21 ngày AI</a>
+            <a href="#paths" className="primary-button">Xem các project</a>
+            <a href="#feedback" className="secondary-button">Theo dõi hành trình</a>
           </div>
         </motion.div>
 
