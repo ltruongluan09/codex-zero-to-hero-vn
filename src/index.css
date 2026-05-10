@@ -96,6 +96,7 @@ button {
   border-radius: 50%;
   background: var(--brand);
   box-shadow: 0 0 18px rgba(99, 102, 241, 0.7);
+  animation: softGlow 3s ease-in-out infinite;
 }
 
 .nav-links {
@@ -148,6 +149,7 @@ button {
 .btn.primary {
   background: var(--brand);
   color: #fff;
+  box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.16), 0 12px 36px rgba(99, 102, 241, 0.18);
 }
 
 .nav-cta:hover,
@@ -222,6 +224,8 @@ button {
 }
 
 .hero {
+  position: relative;
+  overflow: hidden;
   min-height: 88vh;
   display: grid;
   grid-template-columns: 55fr 45fr;
@@ -235,7 +239,37 @@ button {
   background-size: auto, 24px 24px;
 }
 
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(28px);
+  opacity: 0.42;
+  animation: floatGlow 8s ease-in-out infinite;
+}
+
+.hero::before {
+  width: 220px;
+  height: 220px;
+  top: 16%;
+  right: 10%;
+  background: rgba(99, 102, 241, 0.24);
+}
+
+.hero::after {
+  width: 160px;
+  height: 160px;
+  bottom: 12%;
+  left: 8%;
+  background: rgba(16, 185, 129, 0.12);
+  animation-delay: -3s;
+}
+
 .hero-copy {
+  position: relative;
+  z-index: 1;
   max-width: 540px;
 }
 
@@ -294,6 +328,35 @@ button {
   font-weight: 600;
 }
 
+.live-note {
+  width: min(380px, 100%);
+  display: grid;
+  gap: 6px;
+  margin-top: 18px;
+  border: 1px solid rgba(99, 102, 241, 0.26);
+  border-left: 3px solid var(--brand);
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.12), rgba(17, 17, 24, 0.42));
+  padding: 12px 14px;
+}
+
+.live-note span {
+  width: fit-content;
+  border-radius: var(--radius-pill);
+  background: rgba(99, 102, 241, 0.16);
+  color: var(--brand-light);
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.live-note strong {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -323,10 +386,56 @@ button {
 }
 
 .who-card {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
   border: 1px solid var(--bg-border);
   border-radius: 12px;
   background: var(--bg-surface);
   padding: 20px;
+  transform: translateY(10px);
+}
+
+.who-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(99, 102, 241, 0.18), transparent 28%),
+    linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.035) 42%, transparent 66%);
+  transform: translateX(-30%);
+  animation: cardSheen 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.who-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.live-meter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(99, 102, 241, 0.24);
+  border-radius: var(--radius-md);
+  background: rgba(99, 102, 241, 0.08);
+  padding: 12px;
+}
+
+.live-meter span {
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.live-meter strong {
+  color: var(--brand-light);
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 400;
 }
 
 .card-kicker {
@@ -498,6 +607,14 @@ button {
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
+.value-card:nth-child(2) {
+  transform: translateY(18px);
+}
+
+.value-card:nth-child(3) {
+  transform: translateY(-10px);
+}
+
 .value-card.active {
   border-top: 2px solid var(--brand);
 }
@@ -505,7 +622,12 @@ button {
 .value-card:hover {
   border-color: var(--brand);
   background: var(--bg-elevated);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.01);
+}
+
+.value-card:nth-child(2):hover,
+.value-card:nth-child(3):hover {
+  transform: translateY(-2px) scale(1.01);
 }
 
 .value-icon {
@@ -553,6 +675,19 @@ button {
   border-left: 1px dashed var(--bg-border);
 }
 
+.timeline-runner {
+  position: absolute;
+  z-index: 2;
+  left: 11px;
+  top: 0;
+  width: 7px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, transparent, var(--brand-light), transparent);
+  filter: drop-shadow(0 0 10px rgba(129, 140, 248, 0.7));
+  animation: timelineRun 5.5s ease-in-out infinite;
+}
+
 .timeline-item {
   position: relative;
   display: flex;
@@ -579,6 +714,7 @@ button {
   border-color: var(--brand);
   background: var(--brand);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  animation: dotBeat 2.4s ease-in-out infinite;
 }
 
 .timeline-content {
@@ -587,6 +723,13 @@ button {
   background: var(--bg-surface);
   padding: 16px;
   flex: 1;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.timeline-content:hover {
+  border-color: rgba(99, 102, 241, 0.56);
+  background: var(--bg-elevated);
+  transform: translateX(4px);
 }
 
 .timeline-date {
@@ -634,6 +777,8 @@ button {
 }
 
 .challenge-banner {
+  position: relative;
+  overflow: hidden;
   width: min(1120px, 100%);
   margin: 0 auto;
   display: grid;
@@ -644,6 +789,23 @@ button {
   border-radius: var(--radius-lg);
   background: linear-gradient(135deg, #1e1b4b 0%, var(--bg-surface) 70%);
   padding: 24px;
+}
+
+.challenge-banner::after {
+  content: "";
+  position: absolute;
+  inset: -40% auto auto 52%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(129, 140, 248, 0.14);
+  filter: blur(34px);
+  animation: floatGlow 7s ease-in-out infinite;
+}
+
+.challenge-banner > * {
+  position: relative;
+  z-index: 1;
 }
 
 .challenge-badge {
@@ -683,6 +845,7 @@ button {
   height: 100%;
   border-radius: inherit;
   background: var(--brand);
+  animation: progressBreath 2.4s ease-in-out infinite;
 }
 
 .challenge-banner small {
@@ -707,11 +870,21 @@ button {
   height: 20px;
   border-radius: 3px;
   background: var(--bg-elevated);
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .heatmap-col .today {
   background: var(--brand);
   box-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
+  animation: heatPulse 1.8s ease-in-out infinite;
+}
+
+.heatmap-col .warm {
+  background: rgba(99, 102, 241, 0.22);
+}
+
+.heatmap-col span:hover {
+  transform: scale(1.18);
 }
 
 .footer {
@@ -766,6 +939,76 @@ button {
   }
 }
 
+@keyframes softGlow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.52);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(129, 140, 248, 0.86);
+  }
+}
+
+@keyframes floatGlow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(14px, -18px, 0) scale(1.08);
+  }
+}
+
+@keyframes cardSheen {
+  0%, 44%, 100% {
+    transform: translateX(-42%);
+    opacity: 0.5;
+  }
+  64% {
+    transform: translateX(34%);
+    opacity: 0.9;
+  }
+}
+
+@keyframes dotBeat {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(99, 102, 241, 0.04), 0 0 18px rgba(99, 102, 241, 0.55);
+  }
+}
+
+@keyframes timelineRun {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15%, 80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(460px);
+    opacity: 0;
+  }
+}
+
+@keyframes progressBreath {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(99, 102, 241, 0);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(99, 102, 241, 0.68);
+  }
+}
+
+@keyframes heatPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.18);
+  }
+}
+
 @media (min-width: 640px) and (max-width: 1023px) {
   .hero {
     grid-template-columns: 1fr;
@@ -779,6 +1022,11 @@ button {
 
   .cards-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .value-card:nth-child(2),
+  .value-card:nth-child(3) {
+    transform: none;
   }
 }
 
@@ -805,6 +1053,11 @@ button {
     padding: 40px 20px;
   }
 
+  .hero::before,
+  .hero::after {
+    opacity: 0.26;
+  }
+
   .hero-h1 {
     font-size: 26px;
   }
@@ -819,6 +1072,11 @@ button {
 
   .cards-grid {
     grid-template-columns: 1fr;
+  }
+
+  .value-card:nth-child(2),
+  .value-card:nth-child(3) {
+    transform: none;
   }
 
   .challenge-section {

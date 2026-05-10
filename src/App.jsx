@@ -163,6 +163,10 @@ function WhoCard() {
 
   return (
     <aside className="who-card" data-reveal>
+      <div className="live-meter">
+        <span>Đang mở</span>
+        <strong>Ngày 1</strong>
+      </div>
       <p className="card-kicker">Bạn muốn gì từ Lumi Labs?</p>
       <div className="who-list">
         {whoOptions.map((option, index) => (
@@ -208,6 +212,10 @@ function Hero() {
           <br />
           <em>— từ con số 0.</em>
         </h1>
+        <div className="live-note">
+          <span>Đang xảy ra</span>
+          <strong>Hôm nay ngày 1, xem tôi làm được gì trong 30 ngày tới.</strong>
+        </div>
         <p>
           Không phải bài hướng dẫn được dàn dựng sẵn. Đây là hành trình <strong>thật</strong> —
           từ ý tưởng → Hub → Cộng đồng → Sản phẩm. Tôi ghi lại tất cả. Bạn theo dõi cùng tôi.
@@ -256,6 +264,7 @@ function JourneySection() {
         <h2>Đang xảy ra <strong>ngay lúc này</strong></h2>
       </div>
       <div className="journey-line">
+        <span className="timeline-runner" aria-hidden="true" />
         {timelineItems.map((item) => (
           <article key={item.title} className={`timeline-item ${item.state}`} data-reveal>
             <span className="timeline-dot" />
@@ -291,7 +300,7 @@ function ChallengeSection() {
         </div>
         <div className="heatmap-col" aria-label="21 ngày thử thách">
           {days.map((day) => (
-            <span key={day} className={day === 1 ? "today" : ""} />
+            <span key={day} className={day === 1 ? "today" : day < 5 ? "warm" : ""} />
           ))}
         </div>
       </div>
