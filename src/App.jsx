@@ -1,98 +1,88 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const navItems = [
-  "Home",
-  "Journey",
-  "Projects",
-  "21 Days",
-  "Build Logs",
-  "Resources",
-  "About",
+  { label: "Trang chủ", href: "#home" },
+  { label: "Hành trình", href: "#journey" },
+  { label: "Tool AI", href: "#value" },
+  { label: "Thử thách 21 ngày", href: "#challenge" },
+  { label: "Cộng đồng", href: "#community" },
 ];
 
-const phases = [
-  { name: "Foundation", week: "Tuần 1-2", state: "done" },
-  { name: "First Build", week: "Tuần 3-4", state: "done" },
-  { name: "Ship Real", week: "Tuần 5-8", state: "current" },
-  { name: "Scale Up", week: "Tuần 9-16", state: "future" },
-  { name: "Creator", week: "Tuần 17+", state: "future" },
-];
-
-const toolColors = {
-  Claude: { bg: "#1a1040", icon: "#818CF8", symbol: "●" },
-  ChatGPT: { bg: "#0d2218", icon: "#10A37F", symbol: "●" },
-  Cursor: { bg: "#0f0f1a", icon: "#8B8FA8", symbol: "▣" },
-  Codex: { bg: "#0a1929", icon: "#378ADD", symbol: "</>" },
-  Make: { bg: "#0d1a0d", icon: "#10B981", symbol: "⎇" },
-};
-
-const projects = [
+const whoOptions = [
   {
-    title: "AI Email Writer",
-    desc: "Tool viết email chuyên nghiệp từ vài gạch đầu dòng.",
-    stack: ["Claude", "Cursor"],
-    status: "Live",
-    tool: "Claude",
-    demoUrl: "https://codex-zero-to-hero-vn.vercel.app",
-    codeUrl: "https://github.com/ltruongluan09/codex-zero-to-hero-vn",
+    icon: "🙋",
+    tone: "indigo",
+    title: "Tôi muốn học dùng AI",
+    desc: "Chưa biết gì, muốn bắt đầu từ số 0",
   },
   {
-    title: "HRM Assistant",
-    desc: "Demo chatbot nội bộ cho onboarding và chính sách nhân sự.",
-    stack: ["ChatGPT", "Codex"],
-    status: "Building",
-    tool: "ChatGPT",
-    demoUrl: "#projects",
-    codeUrl: "https://github.com/ltruongluan09/codex-zero-to-hero-vn",
+    icon: "✍️",
+    tone: "green",
+    title: "Tôi muốn tạo tool AI của mình",
+    desc: "Có ý tưởng, không biết bắt đầu từ đâu",
   },
   {
-    title: "Vercel Launch Page",
-    desc: "Landing page public đầu tiên trong hành trình build AI.",
-    stack: ["Codex", "Vercel"],
-    status: "Live",
-    tool: "Codex",
-    demoUrl: "https://codex-zero-to-hero-vn.vercel.app",
-    codeUrl: "https://github.com/ltruongluan09/codex-zero-to-hero-vn",
+    icon: "👀",
+    tone: "amber",
+    title: "Tôi muốn theo dõi hành trình",
+    desc: "Xem một người xây Hub AI từ ngày 1",
   },
 ];
 
-const buildLogs = [
+const valueCards = [
   {
-    number: 23,
-    title: "Khi Claude từ chối code của tôi - và cách tôi fix nó",
-    meta: "Hôm nay · Claude · Cursor · 6 phút đọc",
+    icon: "📖",
+    title: "Nhật ký hành trình thật",
+    desc: "Tôi ghi lại mọi quyết định, mọi lần fail, mọi thứ học được khi xây Hub này. Không filter.",
+    tag: "⬤ Đang viết",
+    active: true,
   },
   {
-    number: 22,
-    title: "Deploy fail vì cấu hình Vercel, bài học nhỏ nhưng đau",
-    meta: "Hôm qua · Codex · Vercel · 5 phút đọc",
+    icon: "🛠️",
+    title: "Tool AI dùng được ngay",
+    desc: "Mỗi tool tôi tạo đều có link thử trực tiếp. Không cần tài khoản, không cần kỹ thuật.",
+    tag: "⬤ Tool đầu tiên: Tháng 6/2026",
+    active: true,
   },
   {
-    number: 21,
-    title: "Từ prompt mơ hồ đến UI dùng được cho người không biết code",
-    meta: "2 ngày trước · Codex · UX · 7 phút đọc",
+    icon: "🎯",
+    title: "Công thức AI cho người mới",
+    desc: "Những câu hỏi tôi dùng hàng ngày để làm việc với AI. Copy về dùng luôn, miễn phí.",
+    tag: "Sắp có",
+    active: false,
   },
 ];
 
-const resources = [
-  { icon: "⌘", title: "Prompt Library", count: "47 prompts · Copy 1 click" },
-  { icon: "▤", title: "Project Templates", count: "12 templates · Dễ chỉnh sửa" },
-  { icon: "✦", title: "AI Tools Map", count: "25 tools · Chọn theo use case" },
+const timelineItems = [
+  {
+    date: "Tháng 5 · 2026 — Hôm nay",
+    title: "Ra mắt Lumi Labs Hub",
+    desc: "Website này vừa được tạo ra. Thiết kế, nội dung, định hướng — tất cả đang được xây ngay lúc bạn đọc bài này.",
+    badge: "⬤ Đang xảy ra",
+    state: "now",
+  },
+  {
+    date: "Tháng 5 · 2026 — Tuần 2",
+    title: "Khởi động Thử thách 21 ngày AI",
+    desc: "Mỗi ngày 1 việc AI thực tế dành cho người mới hoàn toàn. Miễn phí. Cùng nhau làm.",
+    badge: "Sắp diễn ra",
+    state: "soon",
+  },
+  {
+    date: "Tháng 6 · 2026",
+    title: "Ra mắt tool AI đầu tiên",
+    desc: "Tool thật, có thể dùng ngay. Tôi ghi lại toàn bộ quá trình — từ ý tưởng đến lúc hoạt động.",
+    badge: "Đang lên kế hoạch",
+    state: "future",
+  },
+  {
+    date: "Tháng 7 · 2026",
+    title: "Xây dựng Cộng đồng + Zoom định kỳ",
+    desc: "Gặp nhau online, chia sẻ tool, học cùng nhau. Không phải khóa học — là cộng đồng builder thật.",
+    badge: "Đang lên kế hoạch",
+    state: "future",
+  },
 ];
-
-const terminalLines = [
-  ["$ lumi start --day=23", "muted"],
-  ["✓ Project: AI Email Writer", "success"],
-  ["✓ Stack: Claude + Cursor", "success"],
-  ["→ Gặp lỗi: API rate limit", "brand"],
-  ["  → Fix: exponential backoff", "muted"],
-  ["✓ Shipped sau 3h 20m", "success"],
-  ["⚡ 847 emails generated today", "warning"],
-];
-
-function slugify(value) {
-  return value.toLowerCase().replaceAll(" ", "-");
-}
 
 function useReveal() {
   useEffect(() => {
@@ -105,7 +95,7 @@ function useReveal() {
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     );
 
     document.querySelectorAll("[data-reveal]").forEach((el) => observer.observe(el));
@@ -113,82 +103,12 @@ function useReveal() {
   }, []);
 }
 
-function useCountUp() {
-  useEffect(() => {
-    const elements = document.querySelectorAll("[data-count]");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target;
-          const target = Number(el.getAttribute("data-count"));
-          const suffix = el.getAttribute("data-suffix") ?? "";
-          const start = performance.now();
-          const duration = 1000;
-
-          const update = (time) => {
-            const progress = Math.min((time - start) / duration, 1);
-            el.textContent = `${Math.floor(progress * target)}${suffix}`;
-            if (progress < 1) requestAnimationFrame(update);
-            else el.textContent = `${target}${suffix}`;
-          };
-
-          requestAnimationFrame(update);
-          observer.unobserve(el);
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-}
-
-function useTerminalTypewriter() {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    const node = ref.current;
-    if (!node) return;
-    node.innerHTML = "";
-
-    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-    async function typeLine(text, cls) {
-      const line = document.createElement("div");
-      line.className = `term-line ${cls}`;
-      node.appendChild(line);
-      for (const char of text) {
-        if (cancelled) return;
-        line.textContent += char;
-        await wait(18);
-      }
-      await wait(180);
-    }
-
-    async function run() {
-      for (const [text, cls] of terminalLines) {
-        await typeLine(text, cls);
-      }
-    }
-
-    run();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  return ref;
-}
-
-function SparkIcon() {
+function Logo() {
   return (
-    <svg className="logo-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9L12 2z" />
-      <path d="M19 15l.8 2.4L22 18l-2.2.6L19 21l-.8-2.4L16 18l2.2-.6L19 15z" />
-    </svg>
+    <a className="logo" href="#home" aria-label="Lumi Labs">
+      <span className="logo-dot" />
+      <span>Lumi Labs</span>
+    </a>
   );
 }
 
@@ -206,20 +126,17 @@ function Header() {
   return (
     <header className={scrolled ? "site-nav scrolled" : "site-nav"}>
       <div className="nav-inner">
-        <a className="logo" href="#home" onClick={() => setOpen(false)}>
-          <SparkIcon />
-          <span>Lumi Labs</span>
-        </a>
-        <nav className="desktop-nav" aria-label="Điều hướng chính">
-          {navItems.map((item) => (
-            <a key={item} className={item === "Home" ? "active" : ""} href={`#${slugify(item)}`}>
-              {item}
+        <Logo />
+        <nav className="nav-links" aria-label="Điều hướng chính">
+          {navItems.map((item, index) => (
+            <a key={item.label} className={index === 0 ? "active" : ""} href={item.href}>
+              {item.label}
             </a>
           ))}
         </nav>
         <div className="nav-actions">
-          <a className="nav-cta" href="#journey">Start Building →</a>
-          <button className="menu-btn" type="button" onClick={() => setOpen(true)} aria-label="Mở menu">
+          <a className="nav-cta" href="#journey">Theo dõi hành trình →</a>
+          <button className="hamburger" type="button" onClick={() => setOpen(true)} aria-label="Mở menu">
             ☰
           </button>
         </div>
@@ -229,171 +146,152 @@ function Header() {
           ×
         </button>
         {navItems.map((item) => (
-          <a key={item} href={`#${slugify(item)}`} onClick={() => setOpen(false)}>
-            {item}
+          <a key={item.label} href={item.href} onClick={() => setOpen(false)}>
+            {item.label}
           </a>
         ))}
-        <a className="nav-cta drawer-cta" href="#journey" onClick={() => setOpen(false)}>Start Building →</a>
+        <a className="nav-cta drawer-cta" href="#journey" onClick={() => setOpen(false)}>
+          Theo dõi hành trình →
+        </a>
       </div>
     </header>
   );
 }
 
-function LiveTerminal() {
-  const terminalRef = useTerminalTypewriter();
+function WhoCard() {
+  const [active, setActive] = useState(0);
 
   return (
-    <div className="terminal" data-reveal>
-      <div className="terminal-head">
-        <div className="dots">
-          <span className="dot red" />
-          <span className="dot amber" />
-          <span className="dot green" />
-        </div>
-        <span>build-log-23.sh</span>
+    <aside className="who-card" data-reveal>
+      <p className="card-kicker">Bạn muốn gì từ Lumi Labs?</p>
+      <div className="who-list">
+        {whoOptions.map((option, index) => (
+          <button
+            key={option.title}
+            className={active === index ? "who-opt active" : "who-opt"}
+            type="button"
+            onClick={() => setActive(index)}
+          >
+            <span className={`who-icon ${option.tone}`}>{option.icon}</span>
+            <span>
+              <strong>{option.title}</strong>
+              <small>{option.desc}</small>
+            </span>
+            <b>→</b>
+          </button>
+        ))}
       </div>
-      <div className="terminal-body" ref={terminalRef} />
-      <a className="terminal-foot" href="#build-logs">→ Đọc Build Log #23</a>
-    </div>
+      <div className="follow-bar">
+        <span>Theo dõi để không bỏ lỡ</span>
+        <div>
+          <a href="#community">TikTok</a>
+          <a href="#community">Facebook</a>
+          <a href="#community">Threads</a>
+        </div>
+      </div>
+    </aside>
   );
 }
 
 function Hero() {
   return (
-    <section id="home" className="hero-shell">
-      <div className="hero-grid">
-        <div className="hero-copy" data-reveal>
-          <div className="badge-live">
-            <span className="pulse-dot" />
-            Đang build · Day 23 · Cập nhật hôm nay
-          </div>
-          <h1>
-            Tôi đang build
-            <br />
-            sản phẩm <span>AI</span>
-            <br />
-            từ con số 0.
-          </h1>
-          <p>
-            Không phải tutorial hoàn hảo - đây là nhật ký thật. Mọi thứ tôi học, fail,
-            và ship bằng AI tools. Tất cả công khai, tất cả có demo.
-          </p>
-          <div className="hero-actions">
-            <a className="btn primary" href="#journey">Xem hành trình →</a>
-            <a className="btn secondary" href="#projects">Browse Projects</a>
-          </div>
-          <div className="stats">
-            <div><strong data-count="23">0</strong><span>ngày building</span></div>
-            <div><strong data-count="8">0</strong><span>projects shipped</span></div>
-            <div><strong data-count="47">0</strong><span>prompts shared</span></div>
-            <div><strong data-count="1" data-suffix=".2k">0</strong><span>người follow</span></div>
-          </div>
+    <section id="home" className="hero">
+      <div className="hero-copy" data-reveal>
+        <div className="badge-start">
+          <span className="pulse-dot" />
+          Tháng 5 · 2026 · Ngày đầu tiên
         </div>
-        <LiveTerminal />
+        <h1 className="hero-h1">
+          Hôm nay tôi bắt đầu
+          <br />
+          xây dựng <span>Lumi Labs</span>
+          <br />
+          <em>— từ con số 0.</em>
+        </h1>
+        <p>
+          Không phải bài hướng dẫn được dàn dựng sẵn. Đây là hành trình <strong>thật</strong> —
+          từ ý tưởng → Hub → Cộng đồng → Sản phẩm. Tôi ghi lại tất cả. Bạn theo dõi cùng tôi.
+        </p>
+        <div className="hero-actions">
+          <a className="btn primary" href="#journey">Theo dõi hành trình →</a>
+          <a className="btn secondary" href="#value">Lumi Labs là gì?</a>
+        </div>
+        <div className="proof-row">
+          <div><strong>Ngày 1</strong><span>Tháng 5 · 2026</span></div>
+          <div><strong>0 → ?</strong><span>hành trình bắt đầu</span></div>
+          <div><strong>∞</strong><span>chia sẻ hoàn toàn</span></div>
+        </div>
+      </div>
+      <WhoCard />
+    </section>
+  );
+}
+
+function ValueSection() {
+  return (
+    <section id="value" className="section">
+      <div className="section-head" data-reveal>
+        <span className="section-label">Tại sao xem trang này?</span>
+        <h2>Bạn sẽ <strong>thấy được</strong>, không chỉ nghe kể</h2>
+      </div>
+      <div className="cards-grid">
+        {valueCards.map((card) => (
+          <article key={card.title} className={card.active ? "value-card active" : "value-card"} data-reveal>
+            <span className="value-icon">{card.icon}</span>
+            <h3>{card.title}</h3>
+            <p>{card.desc}</p>
+            <small>{card.tag}</small>
+          </article>
+        ))}
       </div>
     </section>
   );
 }
 
-function Journey() {
+function JourneySection() {
   return (
     <section id="journey" className="section journey-section">
       <div className="section-head" data-reveal>
-        <span className="section-label">AI Builder Journey</span>
-        <h2>Con đường từ zero → builder</h2>
+        <span className="section-label">Hành trình · Tháng 5/2026</span>
+        <h2>Đang xảy ra <strong>ngay lúc này</strong></h2>
       </div>
-      <div className="timeline" data-reveal>
-        {phases.map((phase) => (
-          <div key={phase.name} className={`phase ${phase.state}`}>
-            <div className="phase-circle">{phase.state === "done" ? "✓" : phase.state === "current" ? "→" : ""}</div>
-            <h3>{phase.name}</h3>
-            <p>{phase.week}</p>
-          </div>
+      <div className="journey-line">
+        {timelineItems.map((item) => (
+          <article key={item.title} className={`timeline-item ${item.state}`} data-reveal>
+            <span className="timeline-dot" />
+            <div className="timeline-content">
+              <span className="timeline-date">{item.date}</span>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+              <span className={`timeline-badge ${item.state}`}>{item.badge}</span>
+            </div>
+          </article>
         ))}
       </div>
-      <a className="text-link" href="#journey">Xem toàn bộ lộ trình & bài học →</a>
     </section>
   );
 }
 
-function ProjectCard({ project }) {
-  const color = toolColors[project.tool] ?? toolColors.Codex;
-  return (
-    <article className="project-card" data-reveal>
-      <div className="project-preview" style={{ backgroundColor: color.bg }}>
-        <span className="project-icon" style={{ color: color.icon }}>{color.symbol}</span>
-        <span className={project.status === "Live" ? "status live" : "status building"}>{project.status}</span>
-      </div>
-      <div className="project-body">
-        <div className="tag-row">
-          {project.stack.map((tag) => <span key={tag}>{tag}</span>)}
-        </div>
-        <h3>{project.title}</h3>
-        <p>{project.desc}</p>
-        <div className="project-links">
-          <a href={project.demoUrl}>Demo ↗</a>
-          <a href={project.codeUrl}>Code ↗</a>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function Projects() {
-  return (
-    <section id="projects" className="section">
-      <div className="section-head" data-reveal>
-        <span className="section-label">Projects</span>
-        <h2>Demo thật - không phải mockup</h2>
-      </div>
-      <div className="project-grid">
-        {projects.map((project) => <ProjectCard key={project.title} project={project} />)}
-      </div>
-    </section>
-  );
-}
-
-function BuildLogs() {
-  return (
-    <section id="build-logs" className="section logs-section">
-      <div className="section-head" data-reveal>
-        <span className="section-label">Build Logs</span>
-        <h2>Nhật ký thật - không filter</h2>
-      </div>
-      <div className="log-list">
-        {buildLogs.map((log, index) => (
-          <a key={log.number} className={index === 0 ? "log-item latest" : "log-item"} href="#build-logs" data-reveal>
-            <span className="log-num">#{log.number}</span>
-            <span className="log-body">
-              <strong>{log.title}</strong>
-              <small>{log.meta}</small>
-            </span>
-          </a>
-        ))}
-      </div>
-      <a className="text-link" href="#build-logs">Đọc tất cả 23 Build Logs →</a>
-    </section>
-  );
-}
-
-function Challenge() {
-  const today = 8;
+function ChallengeSection() {
   const days = Array.from({ length: 21 }, (_, index) => index + 1);
 
   return (
-    <section id="21-days" className="section">
-      <div className="challenge-card" data-reveal>
+    <section id="challenge" className="challenge-section">
+      <div className="challenge-banner" data-reveal>
         <div>
-          <span className="challenge-badge">Challenge · Cộng đồng</span>
-          <h2>21 ngày, 21 AI task thực chiến</h2>
-          <p>Mỗi ngày 1 task cụ thể để bạn học bằng cách làm: prompt, tool, automation, demo, deploy.</p>
-          <div className="progress-bar"><span style={{ width: `${(today / 21) * 100}%` }} /></div>
-          <small>Day 8 / 21 · 127 người đang tham gia</small>
-          <a className="btn primary" href="#21-days">Tham gia ngay - miễn phí →</a>
+          <span className="challenge-badge">🔥 Miễn phí · Bắt đầu cùng nhau</span>
+          <h2>Thử thách 21 ngày AI — dành cho người chưa biết gì</h2>
+          <p>
+            Mỗi ngày 1 việc nhỏ, cụ thể, thực tế. Sau 21 ngày — bạn sẽ dùng được AI
+            trong công việc hàng ngày.
+          </p>
+          <div className="progress-bar"><span /></div>
+          <small>Sắp bắt đầu · Đăng ký để nhận thông báo</small>
+          <a className="btn primary" href="#community">Đăng ký miễn phí →</a>
         </div>
-        <div className="heatmap" aria-label="21 ngày thử thách">
+        <div className="heatmap-col" aria-label="21 ngày thử thách">
           {days.map((day) => (
-            <span key={day} className={day < today ? "done" : day === today ? "today" : "future"} title={`Day ${day}`} />
+            <span key={day} className={day === 1 ? "today" : ""} />
           ))}
         </div>
       </div>
@@ -401,52 +299,31 @@ function Challenge() {
   );
 }
 
-function Resources() {
-  return (
-    <section id="resources" className="section resources-section">
-      <div className="resources-grid">
-        {resources.map((item) => (
-          <a key={item.title} className="resource-card" href="#resources" data-reveal>
-            <span>{item.icon}</span>
-            <div>
-              <h3>{item.title}</h3>
-              <p>{item.count}</p>
-            </div>
-            <strong>Xem →</strong>
-          </a>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function Footer() {
   return (
-    <footer id="about" className="footer">
-      <a className="logo" href="#home">
-        <SparkIcon />
-        <span>Lumi Labs</span>
-      </a>
-      <span>Building publicly · 2025</span>
-      <span>Made with AI</span>
+    <footer id="community" className="footer">
+      <Logo />
+      <span>Bắt đầu tháng 5 · 2026 · Chia sẻ hoàn toàn công khai</span>
+      <div className="socials">
+        <a href="#community" aria-label="TikTok">T</a>
+        <a href="#community" aria-label="Facebook">F</a>
+        <a href="#community" aria-label="Threads">Th</a>
+      </div>
     </footer>
   );
 }
 
 function App() {
   useReveal();
-  useCountUp();
 
   return (
     <>
       <Header />
       <main>
         <Hero />
-        <Journey />
-        <Projects />
-        <BuildLogs />
-        <Challenge />
-        <Resources />
+        <ValueSection />
+        <JourneySection />
+        <ChallengeSection />
       </main>
       <Footer />
     </>
