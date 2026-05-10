@@ -1,324 +1,337 @@
-import { motion } from "framer-motion";
+const tools = [
+  {
+    icon: "⌘",
+    name: "Codex",
+    description: "Viết code bằng AI ngay trong terminal.",
+    href: "#codex",
+  },
+  {
+    icon: "🟣",
+    name: "Claude",
+    description: "Phân tích, viết tài liệu và hỗ trợ coding.",
+    href: "#claude",
+  },
+  {
+    icon: "💬",
+    name: "ChatGPT",
+    description: "Hỏi đáp, viết nội dung và tạo ý tưởng.",
+    href: "#chatgpt",
+  },
+  {
+    icon: "🧭",
+    name: "Cursor",
+    description: "Code nhanh hơn trong editor có AI.",
+    href: "#cursor",
+  },
+  {
+    icon: "✨",
+    name: "Gemini",
+    description: "Trợ lý AI cho tìm kiếm và công việc Google.",
+    href: "#gemini",
+  },
+  {
+    icon: "🎨",
+    name: "Midjourney",
+    description: "Tạo hình ảnh đẹp từ mô tả ngắn.",
+    href: "#midjourney",
+  },
+];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0 },
+const goals = [
+  {
+    icon: "💻",
+    title: "Viết code nhanh hơn",
+    description: "Dùng AI để tạo app, sửa lỗi và hiểu project.",
+  },
+  {
+    icon: "✍️",
+    title: "Tạo nội dung & copywriting",
+    description: "Viết bài, email, kịch bản, mô tả sản phẩm.",
+  },
+  {
+    icon: "⚡",
+    title: "Tự động hoá công việc",
+    description: "Tạo workflow, xử lý dữ liệu và giảm việc lặp lại.",
+  },
+  {
+    icon: "🎨",
+    title: "Thiết kế & tạo ảnh",
+    description: "Tạo visual, mockup, concept và tài sản marketing.",
+  },
+];
+
+const latestPosts = [
+  {
+    tool: "Codex",
+    title: "Codex là gì? Giải thích cho người chưa biết code",
+    description: "Hiểu Codex như một cộng sự kỹ thuật AI.",
+    readTime: "6 phút đọc",
+    href: "#post-codex-intro",
+  },
+  {
+    tool: "Codex",
+    title: "Tạo website đầu tiên bằng Codex",
+    description: "Từ prompt tiếng Việt đến trang web chạy được.",
+    readTime: "9 phút đọc",
+    href: "#post-codex-website",
+  },
+  {
+    tool: "Claude",
+    title: "Dùng Claude để viết tài liệu rõ hơn",
+    description: "Biến ghi chú rời rạc thành tài liệu dễ đọc.",
+    readTime: "7 phút đọc",
+    href: "#post-claude-docs",
+  },
+  {
+    tool: "Claude",
+    title: "Claude cho BA/PM: phân tích yêu cầu nhanh",
+    description: "Tóm tắt, chia task và tìm rủi ro nghiệp vụ.",
+    readTime: "8 phút đọc",
+    href: "#post-claude-ba",
+  },
+  {
+    tool: "ChatGPT",
+    title: "Prompt cơ bản cho dân văn phòng",
+    description: "Cách viết prompt rõ để AI trả lời đúng việc.",
+    readTime: "5 phút đọc",
+    href: "#post-chatgpt-prompt",
+  },
+  {
+    tool: "ChatGPT",
+    title: "Tạo nội dung marketing bằng ChatGPT",
+    description: "Từ ý tưởng thô đến bản copy có thể dùng.",
+    readTime: "6 phút đọc",
+    href: "#post-chatgpt-copy",
+  },
+];
+
+const footerLinks = {
+  "Theo tool": ["Codex", "Claude", "ChatGPT", "Cursor", "Gemini", "Midjourney"],
+  "Theo mục tiêu": ["Viết code", "Tạo nội dung", "Automation", "Thiết kế ảnh"],
+  "Về Lumi Labs": ["Giới thiệu", "Build in public", "Góp ý"],
 };
 
-const learningPaths = [
-  ["Codex Zero To Hero", "Đang xây dựng", "Học cách làm việc với Codex từ số 0 đến deploy app thật."],
-  ["Claude Code", "Sắp ra mắt", "Quy trình build và refactor project với AI coding assistant."],
-  ["AI Office Tools", "Sắp ra mắt", "Tool cho Excel, tài liệu, báo cáo, email và công việc văn phòng."],
-  ["AI Automation", "Sắp ra mắt", "Tự động hóa workflow bằng AI, n8n và các công cụ no-code."],
-  ["Prompt Library", "Sắp ra mắt", "Thư viện prompt thực chiến cho người đi làm."],
-  ["Demo Projects", "Sắp ra mắt", "Các project mẫu có thể copy, sửa và deploy."],
-];
+const toolTagStyles = {
+  Codex: "bg-indigo-50 text-indigo-700 ring-indigo-100",
+  Claude: "bg-violet-50 text-violet-700 ring-violet-100",
+  ChatGPT: "bg-slate-100 text-slate-700 ring-slate-200",
+};
 
-const outcomes = [
-  "Tạo landing page",
-  "Tạo dashboard",
-  "Xử lý Excel/XLSX",
-  "Tạo chatbot AI",
-  "Tạo automation",
-  "Deploy website public",
-];
-
-const audiences = ["CEO", "Manager", "BA/PM", "Dân văn phòng", "Người không biết code", "Người muốn build MVP nhanh"];
-
-const codexBullets = [
-  "Học từ số 0",
-  "Cách làm việc với Codex",
-  "Cách prompt",
-  "Cách build project đầu tiên",
-  "Cách sửa lỗi",
-  "Cách deploy Vercel",
-];
-
-const heroBadges = ["Build in public", "Không cần giỏi code", "Demo thật mỗi tuần"];
-
-const labLogs = ["Part 1: Landing page", "Part 2: HRM demo", "Part 3: AI assistant", "Part 4: Deploy on Vercel"];
-
-function SectionLabel({ children }) {
+function Header() {
   return (
-    <div className="mb-5 inline-flex items-center gap-3 rounded-full border border-cyan-300/20 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-cyan-200">
-      <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_22px_rgba(103,232,249,.9)]" />
-      {children}
+    <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
+      <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-4 md:px-6">
+        <a href="#top" className="flex shrink-0 items-center gap-3" aria-label="Lumi Labs">
+          <span className="grid h-10 w-10 place-items-center rounded-2xl bg-indigo-600 text-base font-black text-white shadow-sm">
+            L
+          </span>
+          <span className="text-lg font-black tracking-tight text-slate-950">Lumi Labs</span>
+        </a>
+
+        <label className="mx-auto hidden w-full max-w-xl items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-500 shadow-sm md:flex">
+          <span className="text-lg">⌕</span>
+          <input
+            className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
+            placeholder="Tìm tài liệu... (ví dụ: Claude, Codex, prompt)"
+            aria-label="Tìm tài liệu"
+          />
+        </label>
+      </div>
+
+      <div className="px-4 pb-4 md:hidden">
+        <label className="mx-auto flex w-full max-w-6xl items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-500 shadow-sm">
+          <span className="text-lg">⌕</span>
+          <input
+            className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
+            placeholder="Tìm tài liệu..."
+            aria-label="Tìm tài liệu"
+          />
+        </label>
+      </div>
+    </header>
+  );
+}
+
+function SectionHeading({ title, description }) {
+  return (
+    <div className="mb-8 max-w-2xl">
+      <h2 className="text-2xl font-black tracking-tight text-slate-950 md:text-3xl">{title}</h2>
+      {description ? <p className="mt-3 text-base leading-7 text-slate-600">{description}</p> : null}
     </div>
   );
 }
 
-function GlowCard({ children, className = "" }) {
-  return <div className={`glass-card ${className}`}>{children}</div>;
+function ToolCard({ tool }) {
+  return (
+    <a
+      href={tool.href}
+      className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-lg hover:shadow-indigo-100/50"
+    >
+      <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-2xl">
+        {tool.icon}
+      </div>
+      <h3 className="text-xl font-black text-slate-950">{tool.name}</h3>
+      <p className="mt-2 text-sm leading-6 text-slate-600">{tool.description}</p>
+      <span className="mt-5 inline-flex text-sm font-bold text-indigo-600 group-hover:text-indigo-700">
+        Xem tài liệu →
+      </span>
+    </a>
+  );
 }
 
-function ProductMockup() {
+function GoalCard({ goal }) {
   return (
-    <motion.div
-      variants={fadeUp}
-      initial="hidden"
-      animate="visible"
-      transition={{ duration: 0.8, delay: 0.2 }}
-      className="relative mx-auto w-full max-w-2xl"
+    <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="mb-5 text-3xl">{goal.icon}</div>
+      <h3 className="text-xl font-black text-slate-950">{goal.title}</h3>
+      <p className="mt-3 text-sm leading-6 text-slate-600">{goal.description}</p>
+    </article>
+  );
+}
+
+function PostCard({ post }) {
+  return (
+    <a
+      href={post.href}
+      className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:shadow-lg hover:shadow-indigo-100/50"
     >
-      <div className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-[radial-gradient(circle_at_70%_20%,rgba(34,211,238,.16),transparent_34%),radial-gradient(circle_at_20%_80%,rgba(168,85,247,.14),transparent_36%)] blur-3xl" />
+      <span className={`inline-flex rounded-full px-3 py-1 text-xs font-black ring-1 ${toolTagStyles[post.tool]}`}>
+        {post.tool}
+      </span>
+      <h3 className="mt-4 text-lg font-black leading-snug text-slate-950 group-hover:text-indigo-700">
+        {post.title}
+      </h3>
+      <p className="mt-2 text-sm leading-6 text-slate-600">{post.description}</p>
+      <div className="mt-5 text-sm font-semibold text-slate-500">{post.readTime}</div>
+    </a>
+  );
+}
 
-      <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <GlowCard className="relative overflow-hidden p-5 ring-1 ring-cyan-200/10 md:p-6">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_0%,rgba(103,232,249,.12),transparent_28%)]" />
-
-          <div className="relative flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/75 px-4 py-3">
-            <div className="flex items-center gap-3">
-              <span className="relative flex h-3 w-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-75" />
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-300" />
-              </span>
-              <span className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Builder workspace</span>
-            </div>
-            <span className="text-xs font-semibold text-slate-400">Built with Codex</span>
+function Footer() {
+  return (
+    <footer className="border-t border-slate-200 bg-white">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-[1.2fr_1fr_1fr_1fr] md:px-6">
+        <div>
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-indigo-600 text-base font-black text-white">
+              L
+            </span>
+            <span className="text-lg font-black text-slate-950">Lumi Labs</span>
           </div>
+          <p className="mt-4 max-w-xs text-sm leading-6 text-slate-600">
+            Tài liệu tiếng Việt giúp người không chuyên dùng AI để tạo sản phẩm và công cụ thật.
+          </p>
+        </div>
 
-          <div className="relative mt-5 grid gap-4">
-            <div className="grid gap-4 sm:grid-cols-[1fr_.78fr]">
-              <div className="rounded-3xl border border-white/10 bg-slate-950/70 p-4">
-                <div className="mb-4 flex items-center justify-between">
-                  <div>
-                    <div className="text-sm font-black text-white">Project tuần này</div>
-                    <div className="text-xs text-slate-400">HRM + AI assistant demo</div>
-                  </div>
-                  <span className="rounded-full bg-cyan-300/10 px-3 py-1 text-xs font-black text-cyan-100">Part 4</span>
-                </div>
-                <div className="rounded-2xl border border-cyan-200/15 bg-gradient-to-br from-slate-900 to-slate-950 p-4">
-                  <div className="mb-4 h-28 rounded-2xl border border-white/10 bg-[linear-gradient(135deg,rgba(34,211,238,.18),rgba(168,85,247,.10)),linear-gradient(to_right,rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,.05)_1px,transparent_1px)] bg-[size:auto,38px_38px,38px_38px]" />
-                  <div className="grid gap-2">
-                    <div className="h-3 w-4/5 rounded-full bg-white/18" />
-                    <div className="h-3 w-3/5 rounded-full bg-white/10" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid gap-3">
-                {["Part 1", "Part 2", "Part 3", "Part 4", "Part 5"].map((part, index) => (
-                  <div key={part} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3">
-                    <span className="text-sm font-black text-white">{part}</span>
-                    <span className={index === 3 ? "text-xs font-bold text-cyan-200" : "text-xs font-bold text-slate-500"}>
-                      {index < 3 ? "Done" : index === 3 ? "Building" : "Next"}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid gap-3 rounded-3xl border border-white/10 bg-slate-950/80 p-4">
-              <div className="flex flex-wrap gap-2">
-                <span className="rounded-full bg-white/[0.06] px-3 py-1 text-xs font-bold text-slate-200">Built publicly in Vietnam</span>
-                <span className="rounded-full bg-white/[0.06] px-3 py-1 text-xs font-bold text-slate-200">Built with Codex</span>
-                <span className="rounded-full bg-white/[0.06] px-3 py-1 text-xs font-bold text-slate-200">Deploy on Vercel</span>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-black/35 p-4">
-                <div className="mb-3 flex items-center justify-between">
-                  <span className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">Terminal log</span>
-                  <span className="text-xs font-bold text-emerald-200">live</span>
-                </div>
-                <div className="grid gap-2 font-mono text-xs text-slate-300 sm:text-sm">
-                  {labLogs.map((log, index) => (
-                    <motion.div
-                      key={log}
-                      className="flex items-center gap-2"
-                      initial={{ opacity: 0, x: -8 }}
-                      animate={{ opacity: [0.45, 1, 0.75], x: 0 }}
-                      transition={{ duration: 2.4, repeat: Infinity, delay: index * 0.45, ease: "easeInOut" }}
-                    >
-                      <span className="text-cyan-300">›</span>
-                      <span>{log}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
+        {Object.entries(footerLinks).map(([group, links]) => (
+          <div key={group}>
+            <h3 className="text-sm font-black text-slate-950">{group}</h3>
+            <ul className="mt-4 grid gap-3">
+              {links.map((link) => (
+                <li key={link}>
+                  <a href="#top" className="text-sm text-slate-600 hover:text-indigo-600">
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
-        </GlowCard>
-      </motion.div>
-    </motion.div>
+        ))}
+      </div>
+    </footer>
   );
 }
 
 function App() {
   return (
-    <main className="min-h-screen overflow-hidden bg-slate-950 text-white">
-      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,.22),transparent_30%),radial-gradient(circle_at_85%_18%,rgba(168,85,247,.24),transparent_30%),linear-gradient(135deg,#020617,#071426_50%,#08051b)]" />
-      <div className="fixed inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.035)_1px,transparent_1px)] bg-[size:72px_72px] opacity-40" />
+    <main id="top" className="min-h-screen bg-slate-50 text-slate-950">
+      <Header />
 
-      <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-6 md:px-8">
-        <a href="#top" className="flex items-center gap-3">
-          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-cyan-300 to-fuchsia-400 text-lg font-black text-slate-950 shadow-[0_0_36px_rgba(103,232,249,.35)]">
-            L
-          </span>
-          <span className="text-lg font-black tracking-tight">Lumi Labs</span>
-        </a>
-        <nav className="hidden items-center gap-6 text-sm font-semibold text-slate-300 md:flex">
-          <a href="#paths" className="hover:text-cyan-200">Learning Paths</a>
-          <a href="#codex" className="hover:text-cyan-200">Codex</a>
-          <a href="#feedback" className="hover:text-cyan-200">Góp ý</a>
-        </nav>
-      </header>
-
-      <section id="top" className="relative mx-auto grid min-h-[86vh] w-full max-w-7xl items-center gap-14 px-5 pb-20 pt-8 md:grid-cols-[.92fr_1.08fr] md:px-8">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_35%,rgba(37,99,235,.10),transparent_28%),radial-gradient(circle_at_76%_44%,rgba(168,85,247,.10),transparent_32%)]" />
-
-        <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.75 }}>
-          <div className="mb-5 inline-flex items-center rounded-full border border-cyan-200/20 bg-white/[0.055] px-4 py-2 text-sm font-bold text-cyan-100">
-            Build publicly in Vietnam
+      <section className="border-b border-slate-200 bg-[radial-gradient(circle_at_50%_0%,rgba(99,102,241,.16),transparent_38%),linear-gradient(180deg,#ffffff,#f8fafc)]">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-[1.05fr_.95fr] md:px-6 md:py-24">
+          <div className="flex flex-col justify-center">
+            <div className="mb-5 inline-flex w-fit rounded-full bg-indigo-50 px-4 py-2 text-sm font-black text-indigo-700 ring-1 ring-indigo-100">
+              Tài liệu AI tiếng Việt cho người mới
+            </div>
+            <h1 className="max-w-3xl text-4xl font-black leading-tight tracking-tight text-slate-950 md:text-6xl">
+              Học AI — Không cần biết code
+            </h1>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600 md:text-xl">
+              Tài liệu tiếng Việt về Codex, Claude, ChatGPT và các công cụ AI phổ biến nhất
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="#tools"
+                className="inline-flex items-center justify-center rounded-2xl bg-indigo-600 px-6 py-4 text-sm font-black text-white shadow-lg shadow-indigo-200 transition hover:bg-indigo-700"
+              >
+                Bắt đầu từ đây →
+              </a>
+              <a
+                href="#latest"
+                className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 py-4 text-sm font-black text-slate-900 shadow-sm transition hover:border-indigo-200 hover:text-indigo-700"
+              >
+                Xem tất cả tài liệu
+              </a>
+            </div>
           </div>
-          <h1 className="max-w-4xl text-5xl font-black leading-[0.96] tracking-tight sm:text-6xl md:text-7xl">
-            Tôi đang build sản phẩm AI thật bằng Codex.
-          </h1>
-          <p className="mt-7 max-w-2xl whitespace-pre-line text-xl font-semibold leading-8 text-slate-200 md:text-2xl md:leading-9">
-            {`Mỗi tuần tôi chia sẻ một project AI thực tế:
-website, HRM, AI assistant, automation và nhiều hơn nữa.
-Dễ hiểu cho cả người không biết code.`}
-          </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            {heroBadges.map((badge) => (
-              <span key={badge} className="rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 text-sm font-bold text-slate-100">
-                {badge}
-              </span>
-            ))}
-          </div>
-          <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-            <a href="#paths" className="primary-button">Xem các project</a>
-            <a href="#feedback" className="secondary-button">Theo dõi hành trình</a>
-          </div>
-        </motion.div>
 
-        <ProductMockup />
-      </section>
-
-      <section className="section-shell">
-        <div className="section-heading">
-          <SectionLabel>Lumi Labs là gì?</SectionLabel>
-          <h2>Không phải lớp học lập trình truyền thống.</h2>
-          <p>
-            Lumi Labs là nơi học cách làm việc với AI như một cộng sự kỹ thuật: bạn mô tả mục tiêu, AI hỗ trợ build, bạn kiểm tra và cải thiện từng bước.
-          </p>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-3">
-          {[
-            ["Không khô khan", "Ít thuật ngữ, nhiều ví dụ thật, tập trung vào việc tạo được sản phẩm."],
-            ["Không cần bắt đầu bằng code", "Bắt đầu bằng vấn đề công việc, prompt rõ và bản demo nhỏ."],
-            ["Build in public", "Từng learning path được mở rộng dần theo feedback của người học thật."],
-          ].map(([title, body]) => (
-            <GlowCard key={title} className="p-6">
-              <h3 className="text-xl font-black">{title}</h3>
-              <p className="mt-3 text-slate-300">{body}</p>
-            </GlowCard>
-          ))}
-        </div>
-      </section>
-
-      <section id="paths" className="section-shell">
-        <div className="section-heading">
-          <SectionLabel>Learning Paths</SectionLabel>
-          <h2>Từ Codex đến hệ sinh thái AI tools.</h2>
-          <p>Codex Zero To Hero là module đầu tiên. Sau đó Lumi Labs sẽ mở rộng sang Claude Code, ChatGPT, Gemini, Cursor, n8n và AI Office Tools.</p>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {learningPaths.map(([title, status, body], index) => (
-            <motion.div
-              key={title}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.45, delay: index * 0.04 }}
-            >
-              <GlowCard className="group h-full p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-200/50">
-                <div className="mb-8 flex items-start justify-between gap-4">
-                  <div className="grid h-12 w-12 place-items-center rounded-2xl bg-white/8 text-lg font-black text-cyan-100 ring-1 ring-white/10">
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <span className={status === "Đang xây dựng" ? "status-live" : "status-soon"}>{status}</span>
+          <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-xl shadow-slate-200/70">
+            <div className="rounded-[1.5rem] bg-slate-950 p-5 text-white">
+              <div className="mb-5 flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-bold text-indigo-200">Lộ trình đề xuất</p>
+                  <h2 className="mt-1 text-2xl font-black">Bắt đầu với Codex</h2>
                 </div>
-                <h3 className="text-2xl font-black">{title}</h3>
-                <p className="mt-3 text-slate-300">{body}</p>
-              </GlowCard>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-shell">
-        <div className="section-heading">
-          <SectionLabel>Bạn sẽ làm được gì?</SectionLabel>
-          <h2>Tạo ra thứ nhìn thấy được, dùng thử được.</h2>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {outcomes.map((item) => (
-            <GlowCard key={item} className="flex min-h-32 items-end p-6">
-              <div>
-                <div className="mb-4 h-1.5 w-16 rounded-full bg-gradient-to-r from-cyan-300 to-fuchsia-400" />
-                <h3 className="text-2xl font-black">{item}</h3>
+                <span className="rounded-full bg-indigo-500/20 px-3 py-1 text-xs font-black text-indigo-100">
+                  Beginner
+                </span>
               </div>
-            </GlowCard>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-shell">
-        <div className="section-heading">
-          <SectionLabel>Dành cho ai?</SectionLabel>
-          <h2>Cho người có ý tưởng, có việc thật, nhưng chưa biết bắt đầu từ code.</h2>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          {audiences.map((item) => (
-            <span key={item} className="rounded-full border border-white/10 bg-white/[0.06] px-5 py-3 text-base font-bold text-slate-100 shadow-xl shadow-black/10">
-              {item}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      <section id="codex" className="section-shell">
-        <GlowCard className="relative overflow-hidden p-7 md:p-10">
-          <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl" />
-          <div className="relative grid gap-9 lg:grid-cols-[.85fr_1.15fr]">
-            <div>
-              <SectionLabel>Module đầu tiên</SectionLabel>
-              <h2>Codex Zero To Hero</h2>
-              <p className="mt-5 text-lg leading-8 text-slate-300">
-                Learning path đầu tiên của Lumi Labs giúp người mới hiểu cách làm việc với Codex, từ prompt đầu tiên đến project chạy được và deploy public.
-              </p>
-              <a href="/export/chapter-00-visual-preview.html" className="primary-button mt-8 inline-flex">Xem chapter visual</a>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {codexBullets.map((item) => (
-                <div key={item} className="rounded-2xl border border-cyan-200/15 bg-slate-950/50 p-5">
-                  <div className="mb-4 grid h-9 w-9 place-items-center rounded-xl bg-cyan-300 text-sm font-black text-slate-950">✓</div>
-                  <h3 className="text-lg font-black">{item}</h3>
-                </div>
-              ))}
+              <div className="grid gap-3">
+                {["Codex là gì?", "Viết prompt đầu tiên", "Tạo project nhỏ", "Deploy lên Vercel"].map((item, index) => (
+                  <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/8 p-3">
+                    <span className="grid h-9 w-9 place-items-center rounded-xl bg-white text-sm font-black text-indigo-600">
+                      {index + 1}
+                    </span>
+                    <span className="text-sm font-bold text-slate-100">{item}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </GlowCard>
+        </div>
       </section>
 
-      <section id="feedback" className="section-shell pb-24">
-        <GlowCard className="overflow-hidden p-8 text-center md:p-12">
-          <SectionLabel>Góp ý</SectionLabel>
-          <h2>Bạn muốn Lumi Labs dễ hiểu hơn?</h2>
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-300">
-            Tôi đang build in public và rất cần góp ý từ người học thật. Nếu có phần nào khó hiểu, thiếu ví dụ hoặc chưa đủ thực chiến, hãy gửi góp ý.
-          </p>
-          <a href="https://forms.gle/your-form-link" className="primary-button mt-8 inline-flex" target="_blank" rel="noreferrer">
-            Gửi góp ý
-          </a>
-        </GlowCard>
+      <section id="tools" className="mx-auto max-w-6xl px-4 py-14 md:px-6 md:py-20">
+        <SectionHeading title="Bạn muốn học tool nào?" />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {tools.map((tool) => (
+            <ToolCard key={tool.name} tool={tool} />
+          ))}
+        </div>
       </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-14 md:px-6 md:py-20">
+        <SectionHeading title="Bạn muốn làm gì?" />
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {goals.map((goal) => (
+            <GoalCard key={goal.title} goal={goal} />
+          ))}
+        </div>
+      </section>
+
+      <section id="latest" className="mx-auto max-w-6xl px-4 py-14 md:px-6 md:py-20">
+        <SectionHeading
+          title="Tài liệu mới nhất"
+          description="Các bài viết ngắn, dễ hiểu, tập trung vào việc áp dụng AI vào công việc thật."
+        />
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {latestPosts.map((post) => (
+            <PostCard key={post.title} post={post} />
+          ))}
+        </div>
+      </section>
+
+      <Footer />
     </main>
   );
 }
