@@ -34,6 +34,8 @@ const codexBullets = [
   "Cách deploy Vercel",
 ];
 
+const heroBadges = ["Build in public", "Không cần giỏi code", "Demo thật mỗi tuần"];
+
 function SectionLabel({ children }) {
   return (
     <div className="mb-5 inline-flex items-center gap-3 rounded-full border border-cyan-300/20 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-cyan-200">
@@ -54,57 +56,66 @@ function ProductMockup() {
       initial="hidden"
       animate="visible"
       transition={{ duration: 0.8, delay: 0.2 }}
-      className="relative"
+      className="relative mx-auto w-full max-w-2xl"
     >
-      <div className="absolute -inset-8 rounded-[3rem] bg-cyan-400/10 blur-3xl" />
-      <GlowCard className="relative overflow-hidden p-4 md:p-5">
-        <div className="mb-4 flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3">
+      <motion.div
+        aria-hidden="true"
+        className="absolute -left-8 top-10 h-20 w-20 rounded-full bg-cyan-300/30 blur-2xl"
+        animate={{ y: [0, -18, 0], opacity: [0.5, 0.9, 0.5] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="absolute -right-10 bottom-14 h-28 w-28 rounded-full bg-fuchsia-400/30 blur-3xl"
+        animate={{ y: [0, 16, 0], x: [0, -10, 0], opacity: [0.45, 0.85, 0.45] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="absolute -inset-10 rounded-[3.5rem] bg-[radial-gradient(circle_at_30%_20%,rgba(34,211,238,.26),transparent_36%),radial-gradient(circle_at_80%_70%,rgba(217,70,239,.26),transparent_38%)] blur-2xl" />
+      <GlowCard className="relative overflow-hidden p-4 ring-1 ring-cyan-200/10 md:p-5">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(103,232,249,.22),transparent_34%),radial-gradient(circle_at_90%_20%,rgba(192,132,252,.24),transparent_32%)]" />
+        <div className="relative mb-4 flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/75 px-4 py-3">
           <div className="flex gap-2">
             <span className="h-3 w-3 rounded-full bg-rose-400" />
             <span className="h-3 w-3 rounded-full bg-amber-300" />
             <span className="h-3 w-3 rounded-full bg-emerald-300" />
           </div>
-          <span className="text-xs font-semibold text-slate-400">lumi-labs.ai/workspace</span>
+          <span className="text-xs font-semibold text-slate-400">lumi-labs.ai/demo-lab</span>
         </div>
 
-        <div className="rounded-3xl border border-cyan-300/20 bg-slate-950/80 p-5">
-          <div className="mb-5 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-4 text-sm text-cyan-50 md:text-base">
-            “Tạo dashboard doanh thu tháng, có KPI, biểu đồ, bảng top sales và nút deploy.”
+        <div className="relative rounded-3xl border border-cyan-300/20 bg-slate-950/85 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.08)]">
+          <div className="mb-5 rounded-2xl border border-fuchsia-300/20 bg-gradient-to-r from-cyan-300/10 via-white/[0.04] to-fuchsia-400/10 p-4 text-sm text-cyan-50 md:text-base">
+            “Build một AI assistant cho HRM: có landing page, demo chat, automation gửi báo cáo và deploy public.”
           </div>
 
-          <div className="grid gap-3 md:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-3">
             {[
-              ["1.2B", "Doanh thu"],
-              ["842", "Đơn hàng"],
-              ["31%", "Tỷ lệ chốt"],
+              ["Website", "Landing page"],
+              ["Assistant", "AI workflow"],
+              ["Public", "Vercel deploy"],
             ].map(([value, label]) => (
               <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.06] p-4">
-                <div className="text-2xl font-black text-white">{value}</div>
+                <div className="text-xl font-black text-white md:text-2xl">{value}</div>
                 <div className="text-sm text-slate-400">{label}</div>
               </div>
             ))}
           </div>
 
-          <div className="mt-4 h-44 overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(to_right,rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,.05)_1px,transparent_1px)] bg-[size:64px_42px]">
-            <svg className="h-full w-full" viewBox="0 0 640 220" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="lineFill" x1="0" x2="0" y1="0" y2="1">
-                  <stop stopColor="#67e8f9" stopOpacity=".32" />
-                  <stop offset="1" stopColor="#67e8f9" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M20 170 C90 120 116 138 168 94 C224 44 268 132 324 86 C380 42 414 144 470 94 C520 50 570 46 620 30"
-                fill="none"
-                stroke="#67e8f9"
-                strokeWidth="8"
-                strokeLinecap="round"
-              />
-              <path
-                d="M20 170 C90 120 116 138 168 94 C224 44 268 132 324 86 C380 42 414 144 470 94 C520 50 570 46 620 30 L620 220 L20 220 Z"
-                fill="url(#lineFill)"
-              />
-            </svg>
+          <div className="mt-4 grid gap-3 rounded-2xl border border-white/10 bg-[linear-gradient(to_right,rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,.045)_1px,transparent_1px)] bg-[size:44px_44px] p-4">
+            {[
+              ["01", "Ý tưởng", "AI onboarding cho nhân sự"],
+              ["02", "Build", "Prompt, UI, demo data"],
+              ["03", "Launch", "Public website + video demo"],
+            ].map(([step, title, body]) => (
+              <div key={step} className="flex items-center gap-4 rounded-2xl border border-white/10 bg-slate-900/70 p-3">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-cyan-300 to-fuchsia-400 text-sm font-black text-slate-950">
+                  {step}
+                </span>
+                <div>
+                  <div className="font-black text-white">{title}</div>
+                  <div className="text-sm text-slate-400">{body}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </GlowCard>
@@ -132,21 +143,29 @@ function App() {
         </nav>
       </header>
 
-      <section id="top" className="mx-auto grid min-h-[82vh] w-full max-w-7xl items-center gap-12 px-5 pb-20 pt-12 md:grid-cols-[.92fr_1.08fr] md:px-8">
+      <section id="top" className="relative mx-auto grid min-h-[86vh] w-full max-w-7xl items-center gap-12 px-5 pb-20 pt-10 md:grid-cols-[.95fr_1.05fr] md:px-8">
+        <div className="pointer-events-none absolute left-6 top-20 h-2 w-2 rounded-full bg-cyan-200 shadow-[0_0_30px_rgba(103,232,249,.95)]" />
+        <div className="pointer-events-none absolute left-[48%] top-16 h-1.5 w-1.5 rounded-full bg-fuchsia-300 shadow-[0_0_28px_rgba(217,70,239,.85)]" />
+        <div className="pointer-events-none absolute bottom-28 right-10 h-2.5 w-2.5 rounded-full bg-cyan-100/80 shadow-[0_0_28px_rgba(103,232,249,.75)]" />
+
         <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.75 }}>
-          <SectionLabel>AI product lab cho người không chuyên lập trình</SectionLabel>
-          <h1 className="max-w-4xl text-6xl font-black leading-[0.92] tracking-tight md:text-8xl">
-            Lumi <span className="gradient-text">Labs</span>
+          <SectionLabel>Premium AI Builder Lab</SectionLabel>
+          <h1 className="max-w-4xl text-5xl font-black leading-[0.94] tracking-tight sm:text-6xl md:text-8xl">
+            Từ ý tưởng <span className="gradient-text">→ sản phẩm AI thật.</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-3xl font-bold leading-tight text-cyan-50 md:text-4xl">
-            Biến ý tưởng thành sản phẩm bằng AI.
+          <p className="mt-7 max-w-2xl text-2xl font-bold leading-tight text-cyan-50 md:text-4xl">
+            Mỗi tuần tôi build và chia sẻ các sản phẩm AI thực tế: website, AI assistant, HRM, automation, content tools và nhiều hơn nữa.
           </p>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-            Dành cho người không chuyên lập trình muốn học cách build website, tool, dashboard, automation và AI app bằng các công cụ AI hiện đại.
-          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            {heroBadges.map((badge) => (
+              <span key={badge} className="rounded-full border border-cyan-200/20 bg-white/[0.06] px-4 py-2 text-sm font-bold text-cyan-50 shadow-xl shadow-cyan-950/20 backdrop-blur-xl">
+                {badge}
+              </span>
+            ))}
+          </div>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-            <a href="#codex" className="primary-button">Bắt đầu với Codex Zero To Hero</a>
-            <a href="#feedback" className="secondary-button">Gửi góp ý</a>
+            <a href="#codex" className="primary-button">Xem demo mới nhất</a>
+            <a href="#paths" className="secondary-button">Tham gia thử thách 21 ngày AI</a>
           </div>
         </motion.div>
 
