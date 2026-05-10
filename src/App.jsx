@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const navItems = [
   { label: "Trang chủ", href: "#home" },
   { label: "Hành trình", href: "#journey" },
-  { label: "Tool AI", href: "#value" },
+  { label: "Project sắp tới", href: "#upcoming" },
   { label: "Thử thách 21 ngày", href: "#challenge" },
   { label: "Cộng đồng", href: "#community" },
 ];
@@ -53,6 +53,27 @@ const valueCards = [
   },
 ];
 
+const upcomingProjects = [
+  {
+    level: "Dễ bắt đầu",
+    title: "Project AI đơn giản",
+    desc: "Tool nhỏ, dễ hiểu, làm được trong 1 buổi. Mục tiêu là giúp bạn thấy: à, mình cũng có thể bắt đầu.",
+    status: "Sắp bắt đầu",
+  },
+  {
+    level: "Cho công việc",
+    title: "Project dùng trong văn phòng",
+    desc: "Dashboard, tài liệu, Excel, HR, marketing, vận hành. Những thứ người đi làm thật sự cần.",
+    status: "Đang chuẩn bị",
+  },
+  {
+    level: "Khó dần",
+    title: "Project phức tạp hơn",
+    desc: "AI assistant, automation, app demo, MVP nhỏ. Đi từng bước, không nhảy vào phần khó ngay.",
+    status: "Giai đoạn sau",
+  },
+];
+
 const timelineItems = [
   {
     date: "Tháng 5 · 2026 — Hôm nay",
@@ -63,6 +84,13 @@ const timelineItems = [
   },
   {
     date: "Tháng 5 · 2026 — Tuần 2",
+    title: "Bắt đầu đăng project thật đầu tiên",
+    desc: "Tôi sẽ chọn một project rất nhỏ, làm từ đầu, giải thích từng quyết định bằng ngôn ngữ dễ hiểu cho người không biết code.",
+    badge: "Project đầu tiên",
+    state: "soon",
+  },
+  {
+    date: "Tháng 5 · 2026 — Tuần 3",
     title: "Khởi động Thử thách 21 ngày AI",
     desc: "Mỗi ngày 1 việc AI thực tế dành cho người mới hoàn toàn. Miễn phí. Cùng nhau làm.",
     badge: "Sắp diễn ra",
@@ -214,7 +242,7 @@ function Hero() {
         </h1>
         <div className="live-note">
           <span>Đang xảy ra</span>
-          <strong>Hôm nay ngày 1, xem tôi làm được gì trong 30 ngày tới.</strong>
+          <strong>Hôm nay là ngày 1. Tôi sẽ bắt đầu đăng các project AI thật từ đơn giản đến phức tạp — dành cho người không biết code.</strong>
         </div>
         <p>
           Không phải bài hướng dẫn được dàn dựng sẵn. Đây là hành trình <strong>thật</strong> —
@@ -231,6 +259,31 @@ function Hero() {
         </div>
       </div>
       <WhoCard />
+    </section>
+  );
+}
+
+function UpcomingSection() {
+  return (
+    <section id="upcoming" className="section upcoming-section">
+      <div className="section-head" data-reveal>
+        <span className="section-label">Sắp tới sẽ có gì?</span>
+        <h2>Project thật, đi từ <strong>dễ đến khó</strong></h2>
+        <p className="section-note">
+          Hiện tại chưa có thư viện project lớn. Tôi sẽ xây từng project công khai, giải thích bằng ngôn ngữ đời thường để bạn có thể theo dõi và làm theo.
+        </p>
+      </div>
+      <div className="upcoming-grid">
+        {upcomingProjects.map((project, index) => (
+          <article key={project.title} className="upcoming-card" data-reveal>
+            <span className="upcoming-num">0{index + 1}</span>
+            <small>{project.level}</small>
+            <h3>{project.title}</h3>
+            <p>{project.desc}</p>
+            <strong>{project.status}</strong>
+          </article>
+        ))}
+      </div>
     </section>
   );
 }
@@ -330,6 +383,7 @@ function App() {
       <Header />
       <main>
         <Hero />
+        <UpcomingSection />
         <ValueSection />
         <JourneySection />
         <ChallengeSection />
