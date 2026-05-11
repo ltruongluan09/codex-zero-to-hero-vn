@@ -2,10 +2,17 @@ import { useEffect, useState } from "react";
 
 const navItems = [
   { label: "Trang chủ", href: "#home" },
+  { label: "Caption AI", href: "#caption-ai" },
   { label: "Hành trình", href: "#journey" },
   { label: "Dự án sắp làm", href: "#upcoming" },
   { label: "Thử thách 21 ngày", href: "#challenge" },
   { label: "Cộng đồng", href: "#community" },
+];
+
+const captionModes = [
+  { id: "ban-hang", label: "Bán hàng nhẹ nhàng" },
+  { id: "ke-chuyen", label: "Kể chuyện gần gũi" },
+  { id: "viral", label: "Ngắn gọn dễ viral" },
 ];
 
 const whoOptions = [
@@ -269,6 +276,163 @@ function Hero() {
   );
 }
 
+function normalizeHashtag(value) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .replace(/[^a-zA-Z0-9\s]/g, "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 4)
+    .join("");
+}
+
+function buildCaption({ productName, description, mode }) {
+  const name = productName.trim() || "sản phẩm của bạn";
+  const desc = description.trim() || "giúp công việc hằng ngày nhẹ hơn, nhanh hơn và dễ bắt đầu hơn";
+  const shortName = name.length > 46 ? `${name.slice(0, 46)}...` : name;
+  const hashName = normalizeHashtag(name) || "SanPhamViet";
+
+  const variants = {
+    "ban-hang": {
+      tiktok: `Bạn đang tìm một thứ vừa dễ dùng, vừa giúp tiết kiệm thời gian?\n\n${shortName} được tạo ra cho chuyện đó.\n\n${desc}.\n\nNếu bạn muốn bắt đầu đơn giản hơn, thử lưu lại bài này nhé.`,
+      facebook: `${shortName} dành cho những ai muốn một giải pháp đơn giản nhưng dùng được ngay.\n\nĐiểm mình thích nhất: ${desc}.\n\nKhông cần làm mọi thứ phức tạp. Chỉ cần một công cụ đúng lúc, đúng việc, là công việc đã nhẹ hơn rất nhiều.`,
+    },
+    "ke-chuyen": {
+      tiktok: `Có những việc nhỏ nhưng làm mỗi ngày lại rất tốn thời gian.\n\nĐó là lý do mình muốn giới thiệu ${shortName}.\n\n${desc}.\n\nĐơn giản, dễ hiểu, và hợp với người mới bắt đầu.`,
+      facebook: `Mình luôn tin rằng một sản phẩm tốt không cần nói quá nhiều.\n\n${shortName} giải quyết một việc rất cụ thể: ${desc}.\n\nNếu bạn từng thấy công việc nhỏ lặp đi lặp lại quá nhiều lần, đây có thể là một cách bắt đầu nhẹ nhàng hơn.`,
+    },
+    viral: {
+      tiktok: `Đừng làm thủ công nữa.\n\nThử ${shortName} nếu bạn muốn: ${desc}.\n\nNhanh hơn. Gọn hơn. Dễ bắt đầu hơn.`,
+      facebook: `${shortName} giúp bạn xử lý việc này đơn giản hơn:\n\n${desc}.\n\nMột công cụ nhỏ, nhưng có thể tiết kiệm rất nhiều thời gian nếu dùng đúng lúc.`,
+    },
+  };
+
+  return {
+    ...variants[mode],
+    hashtags: [`#${hashName}`, "#AIChoCongViec", "#LumiLabs", "#CongCuAI", "#NguoiVietDungAI"],
+  };
+}
+
+function CaptionAISection() {
+  const [productName, setProductName] = useState("Bánh biscotti healthy");
+  const [description, setDescription] = useState("ít ngọt, nhiều hạt, phù hợp dân văn phòng muốn ăn vặt lành mạnh");
+  const [mode, setMode] = useState("ban-hang");
+  const [result, setResult] = useState(() =>
+    buildCaption({
+      productName: "Bánh biscotti healthy",
+      description: "ít ngọt, nhiều hạt, phù hợp dân văn phòng muốn ăn vặt lành mạnh",
+      mode: "ban-hang",
+    })
+  );
+  const [copied, setCopied] = useState("");
+
+  const generate = () => {
+    setResult(buildCaption({ productName, description, mode }));
+    setCopied("");
+  };
+
+  const copyText = async (key, text) => {
+    try {
+      await navigator.clipboard.writeText(Array.isArray(text) ? text.join(" ") : text);
+      setCopied(key);
+      setTimeout(() => setCopied(""), 1500);
+    } catch {
+      setCopied("");
+    }
+  };
+
+  return (
+    <section id="caption-ai" className="caption-ai-section">
+      <div className="caption-shell" data-reveal>
+        <div className="caption-intro">
+          <span className="caption-badge">Demo đầu tiên · dùng ngay</span>
+          <h2>Caption AI</h2>
+          <p>
+            Nhập tên sản phẩm và mô tả ngắn. Lumi Labs sẽ tạo nhanh caption TikTok,
+            Facebook và hashtag tiếng Việt để bạn đăng thử ngay.
+          </p>
+          <div className="caption-mini-proof">
+            <span>Không đăng ký</span>
+            <span>Không cần tài khoản</span>
+            <span>Ra kết quả ngay</span>
+          </div>
+        </div>
+
+        <div className="caption-app">
+          <div className="caption-form">
+            <label>
+              Tên sản phẩm
+              <input
+                value={productName}
+                onChange={(event) => setProductName(event.target.value)}
+                placeholder="Ví dụ: Bánh biscotti healthy"
+              />
+            </label>
+            <label>
+              Mô tả ngắn
+              <textarea
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+                placeholder="Ví dụ: ít ngọt, nhiều hạt, phù hợp dân văn phòng..."
+                rows="4"
+              />
+            </label>
+            <div className="mode-row" aria-label="Chọn kiểu caption">
+              {captionModes.map((item) => (
+                <button
+                  key={item.id}
+                  className={mode === item.id ? "mode-chip active" : "mode-chip"}
+                  type="button"
+                  onClick={() => setMode(item.id)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+            <button className="generate-btn" type="button" onClick={generate}>
+              Tạo caption ngay →
+            </button>
+          </div>
+
+          <div className="caption-results">
+            <article>
+              <div>
+                <span>TikTok</span>
+                <button type="button" onClick={() => copyText("tiktok", result.tiktok)}>
+                  {copied === "tiktok" ? "Đã copy" : "Copy"}
+                </button>
+              </div>
+              <p>{result.tiktok}</p>
+            </article>
+            <article>
+              <div>
+                <span>Facebook</span>
+                <button type="button" onClick={() => copyText("facebook", result.facebook)}>
+                  {copied === "facebook" ? "Đã copy" : "Copy"}
+                </button>
+              </div>
+              <p>{result.facebook}</p>
+            </article>
+            <article className="hashtag-card">
+              <div>
+                <span>Hashtag</span>
+                <button type="button" onClick={() => copyText("hashtags", result.hashtags)}>
+                  {copied === "hashtags" ? "Đã copy" : "Copy"}
+                </button>
+              </div>
+              <p>{result.hashtags.join(" ")}</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function UpcomingSection() {
   return (
     <section id="upcoming" className="section upcoming-section">
@@ -389,6 +553,7 @@ function App() {
       <Header />
       <main>
         <Hero />
+        <CaptionAISection />
         <UpcomingSection />
         <ValueSection />
         <JourneySection />
