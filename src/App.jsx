@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const navItems = [
   { label: "Trang chủ", href: "#home" },
   { label: "Hành trình", href: "#journey" },
-  { label: "Project sắp tới", href: "#upcoming" },
+  { label: "Dự án sắp làm", href: "#upcoming" },
   { label: "Thử thách 21 ngày", href: "#challenge" },
   { label: "Cộng đồng", href: "#community" },
 ];
@@ -18,30 +18,30 @@ const whoOptions = [
   {
     icon: "✍️",
     tone: "green",
-    title: "Tôi muốn tạo tool AI của mình",
+    title: "Tôi muốn tạo công cụ AI của mình",
     desc: "Có ý tưởng, không biết bắt đầu từ đâu",
   },
   {
     icon: "👀",
     tone: "amber",
     title: "Tôi muốn theo dõi hành trình",
-    desc: "Xem một người xây Hub AI từ ngày 1",
+    desc: "Xem một người bắt đầu từ ngày 1",
   },
 ];
 
 const valueCards = [
   {
     icon: "📖",
-    title: "Nhật ký hành trình thật",
-    desc: "Tôi ghi lại mọi quyết định, mọi lần fail, mọi thứ học được khi xây Hub này. Không filter.",
+    title: "Nhật ký làm thật",
+    desc: "Tôi ghi lại quá trình làm từng bước: nghĩ gì, thử gì, sai ở đâu, sửa thế nào. Không làm màu.",
     tag: "⬤ Đang viết",
     active: true,
   },
   {
     icon: "🛠️",
-    title: "Tool AI dùng được ngay",
-    desc: "Mỗi tool tôi tạo đều có link thử trực tiếp. Không cần tài khoản, không cần kỹ thuật.",
-    tag: "⬤ Tool đầu tiên: Tháng 6/2026",
+    title: "Công cụ AI dùng được",
+    desc: "Mỗi công cụ sẽ có bản demo để bạn mở lên xem ngay. Mục tiêu là giúp người đi làm tiết kiệm thời gian.",
+    tag: "⬤ Công cụ đầu tiên: Tháng 6/2026",
     active: true,
   },
   {
@@ -56,20 +56,20 @@ const valueCards = [
 const upcomingProjects = [
   {
     level: "Dễ bắt đầu",
-    title: "Project AI đơn giản",
-    desc: "Tool nhỏ, dễ hiểu, làm được trong 1 buổi. Mục tiêu là giúp bạn thấy: à, mình cũng có thể bắt đầu.",
+    title: "Dự án AI đơn giản",
+    desc: "Một công cụ nhỏ, dễ hiểu, làm được trong 1 buổi. Mục tiêu là giúp bạn thấy: à, mình cũng có thể bắt đầu.",
     status: "Sắp bắt đầu",
   },
   {
     level: "Cho công việc",
-    title: "Project dùng trong văn phòng",
-    desc: "Dashboard, tài liệu, Excel, HR, marketing, vận hành. Những thứ người đi làm thật sự cần.",
+    title: "Công cụ dùng trong văn phòng",
+    desc: "Bảng theo dõi, tài liệu, Excel, nhân sự, marketing, vận hành. Những thứ người đi làm thật sự cần.",
     status: "Đang chuẩn bị",
   },
   {
     level: "Khó dần",
-    title: "Project phức tạp hơn",
-    desc: "AI assistant, automation, app demo, MVP nhỏ. Đi từng bước, không nhảy vào phần khó ngay.",
+    title: "Ứng dụng phức tạp hơn",
+    desc: "Trợ lý AI, tự động hoá, app demo, sản phẩm thử nghiệm nhỏ. Đi từng bước, không nhảy vào phần khó ngay.",
     status: "Giai đoạn sau",
   },
 ];
@@ -77,16 +77,16 @@ const upcomingProjects = [
 const timelineItems = [
   {
     date: "Tháng 5 · 2026 — Hôm nay",
-    title: "Ra mắt Lumi Labs Hub",
-    desc: "Website này vừa được tạo ra. Thiết kế, nội dung, định hướng — tất cả đang được xây ngay lúc bạn đọc bài này.",
+    title: "Ra mắt Lumi Labs",
+    desc: "Website này vừa được tạo ra. Đây sẽ là nơi tôi ghi lại cách dùng AI để tạo công cụ thật cho công việc.",
     badge: "⬤ Đang xảy ra",
     state: "now",
   },
   {
     date: "Tháng 5 · 2026 — Tuần 2",
-    title: "Bắt đầu đăng project thật đầu tiên",
-    desc: "Tôi sẽ chọn một project rất nhỏ, làm từ đầu, giải thích từng quyết định bằng ngôn ngữ dễ hiểu cho người không biết code.",
-    badge: "Project đầu tiên",
+    title: "Bắt đầu đăng dự án thật đầu tiên",
+    desc: "Tôi sẽ chọn một dự án rất nhỏ, làm từ đầu, giải thích từng quyết định bằng ngôn ngữ dễ hiểu cho người không biết code.",
+    badge: "Dự án đầu tiên",
     state: "soon",
   },
   {
@@ -98,15 +98,15 @@ const timelineItems = [
   },
   {
     date: "Tháng 6 · 2026",
-    title: "Ra mắt tool AI đầu tiên",
-    desc: "Tool thật, có thể dùng ngay. Tôi ghi lại toàn bộ quá trình — từ ý tưởng đến lúc hoạt động.",
+    title: "Ra mắt công cụ AI đầu tiên",
+    desc: "Một công cụ thật, có thể mở lên dùng thử. Tôi ghi lại toàn bộ quá trình — từ ý tưởng đến lúc hoạt động.",
     badge: "Đang lên kế hoạch",
     state: "future",
   },
   {
     date: "Tháng 7 · 2026",
     title: "Xây dựng Cộng đồng + Zoom định kỳ",
-    desc: "Gặp nhau online, chia sẻ tool, học cùng nhau. Không phải khóa học — là cộng đồng builder thật.",
+    desc: "Gặp nhau online, chia sẻ công cụ, học cùng nhau. Không phải khóa học — là cộng đồng cùng làm thật.",
     badge: "Đang lên kế hoạch",
     state: "future",
   },
@@ -195,7 +195,7 @@ function WhoCard() {
         <span>Đang mở</span>
         <strong>Ngày 1</strong>
       </div>
-      <p className="card-kicker">Bạn muốn gì từ Lumi Labs?</p>
+      <p className="card-kicker">Bạn đang cần gì?</p>
       <div className="who-list">
         {whoOptions.map((option, index) => (
           <button
@@ -231,26 +231,27 @@ function Hero() {
       <div className="hero-copy" data-reveal>
         <div className="badge-start">
           <span className="pulse-dot" />
-          Tháng 5 · 2026 · Ngày đầu tiên
+          Nơi học dùng AI cho người không biết code
         </div>
         <h1 className="hero-h1">
-          Hôm nay tôi bắt đầu
+          Dùng AI để tạo
           <br />
-          xây dựng <span>Lumi Labs</span>
+          công cụ làm việc <span>thật</span>
           <br />
-          <em>— từ con số 0.</em>
+          <em>— giải thích thật dễ hiểu.</em>
         </h1>
         <div className="live-note">
           <span>Đang xảy ra</span>
-          <strong>Hôm nay là ngày 1. Tôi sẽ bắt đầu đăng các project AI thật từ đơn giản đến phức tạp — dành cho người không biết code.</strong>
+          <strong>Hôm nay là ngày 1. Tôi sẽ xây từng công cụ AI thật, từ đơn giản đến phức tạp, để người không biết code vẫn xem hiểu và làm theo được.</strong>
         </div>
         <p>
-          Không phải bài hướng dẫn được dàn dựng sẵn. Đây là hành trình <strong>thật</strong> —
-          từ ý tưởng → Hub → Cộng đồng → Sản phẩm. Tôi ghi lại tất cả. Bạn theo dõi cùng tôi.
+          Lumi Labs là nơi tôi chia sẻ cách dùng AI để tạo website, báo cáo,
+          bảng theo dõi, tài liệu, tự động hoá và ứng dụng mẫu. Không dạy lập trình khô khan —
+          chỉ tập trung vào <strong>làm ra thứ dùng được</strong>.
         </p>
         <div className="hero-actions">
-          <a className="btn primary" href="#journey">Theo dõi hành trình →</a>
-          <a className="btn secondary" href="#value">Lumi Labs là gì?</a>
+          <a className="btn primary" href="#upcoming">Xem sắp làm gì →</a>
+          <a className="btn secondary" href="#journey">Theo dõi hành trình</a>
         </div>
         <div className="proof-row">
           <div><strong>Ngày 1</strong><span>Tháng 5 · 2026</span></div>
@@ -268,9 +269,9 @@ function UpcomingSection() {
     <section id="upcoming" className="section upcoming-section">
       <div className="section-head" data-reveal>
         <span className="section-label">Sắp tới sẽ có gì?</span>
-        <h2>Project thật, đi từ <strong>dễ đến khó</strong></h2>
+        <h2>Dự án thật, đi từ <strong>dễ đến khó</strong></h2>
         <p className="section-note">
-          Hiện tại chưa có thư viện project lớn. Tôi sẽ xây từng project công khai, giải thích bằng ngôn ngữ đời thường để bạn có thể theo dõi và làm theo.
+          Hiện tại chưa có thư viện dự án lớn. Tôi sẽ xây từng dự án công khai, giải thích bằng ngôn ngữ đời thường để bạn có thể theo dõi và làm theo.
         </p>
       </div>
       <div className="upcoming-grid">
@@ -292,7 +293,7 @@ function ValueSection() {
   return (
     <section id="value" className="section">
       <div className="section-head" data-reveal>
-        <span className="section-label">Tại sao xem trang này?</span>
+        <span className="section-label">Bạn nhận được gì?</span>
         <h2>Bạn sẽ <strong>thấy được</strong>, không chỉ nghe kể</h2>
       </div>
       <div className="cards-grid">
