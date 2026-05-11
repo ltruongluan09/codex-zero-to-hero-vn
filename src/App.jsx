@@ -231,32 +231,37 @@ function Hero() {
       <div className="hero-copy" data-reveal>
         <div className="badge-start">
           <span className="pulse-dot" />
-          Nơi học dùng AI cho người không biết code
+          Build công khai từ Việt Nam · Cho người không biết code
         </div>
         <h1 className="hero-h1">
-          Dùng AI để tạo
+          Xem nhiều video AI rồi,
           <br />
-          công cụ làm việc <span>thật</span>
+          nhưng vẫn chưa tự
           <br />
-          <em>— giải thích thật dễ hiểu.</em>
+          <span>làm được gì?</span>
         </h1>
         <div className="live-note">
           <span>Đang xảy ra</span>
-          <strong>Hôm nay là ngày 1. Tôi sẽ xây từng công cụ AI thật, từ đơn giản đến phức tạp, để người không biết code vẫn xem hiểu và làm theo được.</strong>
+          <strong>Hôm nay là ngày 1. Tôi bắt đầu từ con số 0 — và sẽ đăng từng dự án thật từ dễ đến khó.</strong>
         </div>
         <p>
-          Lumi Labs là nơi tôi chia sẻ cách dùng AI để tạo website, báo cáo,
-          bảng theo dõi, tài liệu, tự động hoá và ứng dụng mẫu. Không dạy lập trình khô khan —
-          chỉ tập trung vào <strong>làm ra thứ dùng được</strong>.
+          Lumi Labs là nơi tôi dùng AI để build các công cụ thật cho công việc:
+          báo cáo, bảng theo dõi, tài liệu, tự động hoá và ứng dụng mẫu.
+          Tất cả được chia sẻ từng bước, dễ hiểu, có hình ảnh và demo khi hoàn thành.
         </p>
         <div className="hero-actions">
           <a className="btn primary" href="#upcoming">Xem sắp làm gì →</a>
           <a className="btn secondary" href="#journey">Theo dõi hành trình</a>
         </div>
+        <div className="trust-row">
+          <span>Từng bước dễ hiểu</span>
+          <span>Có hình ảnh & demo</span>
+          <span>Không cần biết code</span>
+        </div>
         <div className="proof-row">
           <div><strong>Ngày 1</strong><span>Tháng 5 · 2026</span></div>
-          <div><strong>0 → ?</strong><span>hành trình bắt đầu</span></div>
-          <div><strong>∞</strong><span>chia sẻ hoàn toàn</span></div>
+          <div><strong>0 → ?</strong><span>dự án thật sắp bắt đầu</span></div>
+          <div><strong>∞</strong><span>chia sẻ công khai</span></div>
         </div>
       </div>
       <WhoCard />

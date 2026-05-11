@@ -234,9 +234,10 @@ button {
   padding: 0 max(24px, 7vw);
   background-color: var(--bg-base);
   background-image:
-    radial-gradient(circle at 70% 20%, rgba(99, 102, 241, 0.14), transparent 28%),
+    radial-gradient(circle at 70% 20%, rgba(99, 102, 241, 0.18), transparent 28%),
+    radial-gradient(circle at 92% 78%, rgba(16, 185, 129, 0.08), transparent 26%),
     radial-gradient(circle, #2a2a38 1px, transparent 1px);
-  background-size: auto, 24px 24px;
+  background-size: auto, auto, 24px 24px;
 }
 
 .hero::before,
@@ -251,11 +252,11 @@ button {
 }
 
 .hero::before {
-  width: 220px;
-  height: 220px;
+  width: 260px;
+  height: 260px;
   top: 16%;
   right: 10%;
-  background: rgba(99, 102, 241, 0.24);
+  background: rgba(99, 102, 241, 0.3);
 }
 
 .hero::after {
@@ -306,7 +307,11 @@ button {
 }
 
 .hero-h1 span {
-  color: var(--brand-light);
+  color: transparent;
+  background: linear-gradient(90deg, #ffffff, var(--brand-light) 42%, #a7f3d0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 18px rgba(99, 102, 241, 0.18));
 }
 
 .hero-h1 em {
@@ -338,6 +343,7 @@ button {
   border-radius: var(--radius-md);
   background: linear-gradient(90deg, rgba(99, 102, 241, 0.12), rgba(17, 17, 24, 0.42));
   padding: 12px 14px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .live-note span {
@@ -362,6 +368,35 @@ button {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 24px;
+}
+
+.trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.trust-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--radius-pill);
+  background: rgba(17, 17, 24, 0.68);
+  color: var(--text-secondary);
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.trust-row span::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-light);
+  box-shadow: 0 0 10px rgba(129, 140, 248, 0.78);
 }
 
 .proof-row {
