@@ -610,6 +610,19 @@ button {
   filter: brightness(1.05);
 }
 
+.generate-btn:disabled {
+  cursor: wait;
+  opacity: 0.76;
+  transform: none;
+}
+
+.caption-source {
+  margin: -2px 0 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
 .caption-results {
   display: grid;
   gap: 10px;

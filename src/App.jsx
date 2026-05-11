@@ -328,11 +328,32 @@ function CaptionAISection() {
       mode: "ban-hang",
     })
   );
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [source, setSource] = useState("demo");
   const [copied, setCopied] = useState("");
 
-  const generate = () => {
-    setResult(buildCaption({ productName, description, mode }));
+  const generate = async () => {
+    setIsGenerating(true);
     setCopied("");
+    try {
+      const response = await fetch("/api/generate-caption", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productName, description, mode }),
+      });
+      const data = await response.json();
+      setResult({
+        tiktok: data.tiktok,
+        facebook: data.facebook,
+        hashtags: data.hashtags,
+      });
+      setSource(data.source === "gemini" ? "gemini" : "fallback");
+    } catch {
+      setResult(buildCaption({ productName, description, mode }));
+      setSource("fallback");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const copyText = async (key, text) => {
@@ -393,9 +414,16 @@ function CaptionAISection() {
                 </button>
               ))}
             </div>
-            <button className="generate-btn" type="button" onClick={generate}>
-              Tạo caption ngay →
+            <button className="generate-btn" type="button" onClick={generate} disabled={isGenerating}>
+              {isGenerating ? "Đang viết caption..." : "Tạo caption ngay →"}
             </button>
+            <p className="caption-source">
+              {source === "gemini"
+                ? "Đang dùng Gemini để viết caption thật."
+                : source === "fallback"
+                  ? "Đang dùng bản demo dự phòng. Thêm Gemini API key để kết quả hay hơn."
+                  : "Bản demo sẵn sàng. Thêm Gemini API key để dùng AI thật."}
+            </p>
           </div>
 
           <div className="caption-results">
