@@ -629,6 +629,7 @@ button {
   padding: 11px 12px;
   font: inherit;
   font-size: 13px;
+  font-weight: 500;
   line-height: 1.55;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -847,6 +848,7 @@ button {
   margin: 12px 0 0;
   color: var(--text-primary);
   font-size: clamp(18px, 2.5vw, 25px);
+  font-weight: 700;
   line-height: 1.22;
   letter-spacing: -0.3px;
 }
@@ -871,7 +873,7 @@ button {
   color: var(--text-secondary);
   padding: 8px 10px;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
   opacity: 0.45;
   transform: translateY(8px);
 }
