@@ -588,10 +588,9 @@ function ProjectOneSection() {
       <div className="project-one-card" data-reveal>
         <div className="project-one-copy">
           <span className="section-label">Project #1</span>
-          <h2>Caption AI — từ ý tưởng nhỏ đến tool dùng được ngay.</h2>
+          <h2>Caption AI đã live.</h2>
           <p>
-            Một công cụ đơn giản cho người bán hàng, creator và dân văn phòng:
-            nhập sản phẩm, nhận caption, đăng thử trong vài giây.
+            Nhập sản phẩm. Nhận caption TikTok, Facebook và hashtag trong vài giây.
           </p>
           <div className="project-one-actions">
             <a className="btn primary" href="#caption-ai">Thử lại demo →</a>
@@ -608,11 +607,11 @@ function ProjectOneSection() {
             <div className="screen-body">
               <div>
                 <small>Input</small>
-                <b>Tên sản phẩm + mô tả ngắn</b>
+                <b>Sản phẩm</b>
               </div>
               <div>
                 <small>Output</small>
-                <b>TikTok · Facebook · Hashtag</b>
+                <b>Caption + hashtag</b>
               </div>
             </div>
           </div>
