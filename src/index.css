@@ -420,6 +420,89 @@ button {
   font-size: 10px;
 }
 
+.hero-side {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 14px;
+}
+
+.lumi-bot-card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: center;
+  border: 1px solid rgba(99, 102, 241, 0.28);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 14% 30%, rgba(129, 140, 248, 0.18), transparent 34%),
+    rgba(17, 17, 24, 0.82);
+  padding: 14px;
+}
+
+.lumi-bot-card::after {
+  content: "";
+  position: absolute;
+  right: -28px;
+  top: -36px;
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.08);
+  filter: blur(16px);
+}
+
+.lumi-bot-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.lumi-bot-avatar {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(129, 140, 248, 0.28);
+  border-radius: 18px;
+  background: rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 28px rgba(99, 102, 241, 0.2);
+}
+
+.lumi-bot-avatar img {
+  width: 78px;
+  height: 78px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.lumi-bot-card span {
+  display: inline-flex;
+  width: fit-content;
+  border-radius: var(--radius-pill);
+  background: rgba(16, 185, 129, 0.1);
+  color: #a7f3d0;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.lumi-bot-card h2 {
+  margin: 8px 0 0;
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.lumi-bot-card p {
+  max-width: 320px;
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
 .caption-ai-section {
   position: relative;
   overflow: hidden;
@@ -841,6 +924,22 @@ button {
   font-weight: 800;
   letter-spacing: 0;
   text-transform: none;
+}
+
+.thinking-speech {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  max-width: min(100%, 390px);
+  margin: 10px 0 0;
+  border: 1px solid rgba(99, 102, 241, 0.24);
+  border-radius: 14px 14px 14px 4px;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--text-primary);
+  padding: 9px 11px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
 }
 
 .ai-thinking h3 {
@@ -1763,6 +1862,10 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .lumi-bot-card {
+    grid-template-columns: auto 1fr;
+  }
+
   .ai-thinking {
     min-height: auto;
     padding: 18px;
@@ -1854,6 +1957,20 @@ button {
   .caption-window-top {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .lumi-bot-card {
+    grid-template-columns: 1fr;
+  }
+
+  .lumi-bot-avatar {
+    width: 62px;
+    height: 62px;
+  }
+
+  .lumi-bot-avatar img {
+    width: 68px;
+    height: 68px;
   }
 
   .thinking-steps {

@@ -232,6 +232,21 @@ function WhoCard() {
   );
 }
 
+function LumiBotIntro() {
+  return (
+    <aside className="lumi-bot-card" data-reveal>
+      <div className="lumi-bot-avatar">
+        <img src="/lumi-bot.png" alt="Lumi Bot" />
+      </div>
+      <div>
+        <span>Lumi Bot</span>
+        <h2>Trợ lý AI thử nghiệm của Lumi Labs.</h2>
+        <p>Mình sẽ xuất hiện khi các tool đang suy nghĩ, viết nháp hoặc gợi ý bước tiếp theo.</p>
+      </div>
+    </aside>
+  );
+}
+
 function Hero() {
   return (
     <section id="home" className="hero">
@@ -271,7 +286,10 @@ function Hero() {
           <div><strong>∞</strong><span>chia sẻ công khai</span></div>
         </div>
       </div>
-      <WhoCard />
+      <div className="hero-side">
+        <LumiBotIntro />
+        <WhoCard />
+      </div>
     </section>
   );
 }
@@ -462,6 +480,7 @@ function CaptionAISection() {
                   <img src="/lumi-bot.png" alt="" />
                 </div>
                 <span className="thinking-label">AI đang phân tích</span>
+                <p className="thinking-speech">Lumi Bot: Mình đang viết bản nháp đầu tiên cho bạn...</p>
                 <h3>Đang biến ý tưởng của bạn thành caption có thể đăng ngay...</h3>
                 <div className="thinking-steps">
                   <div className="thinking-step active">
