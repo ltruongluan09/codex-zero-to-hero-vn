@@ -13,6 +13,24 @@ const captionModes = [
   { id: "viral", label: "Ngắn gọn dễ viral" },
 ];
 
+const captionExamples = [
+  {
+    label: "Đồ ăn",
+    productName: "Bánh biscotti healthy",
+    description: "Ít ngọt, nhiều hạt, phù hợp dân văn phòng muốn ăn vặt lành mạnh",
+  },
+  {
+    label: "Mỹ phẩm",
+    productName: "Serum phục hồi da ban đêm",
+    description: "Dành cho da khô, da yếu sau treatment, chất nhẹ, dễ thấm",
+  },
+  {
+    label: "Dịch vụ",
+    productName: "Gói chụp ảnh sản phẩm tại nhà",
+    description: "Phù hợp shop online nhỏ, có ảnh đẹp để đăng Facebook và TikTok",
+  },
+];
+
 const whoOptions = [
   {
     icon: "🙋",
@@ -327,8 +345,6 @@ function buildCaption({ productName, description, mode }) {
 }
 
 function CaptionAISection() {
-  const sampleProduct = "Bánh biscotti healthy";
-  const sampleDescription = "Ít ngọt, nhiều hạt, phù hợp dân văn phòng muốn ăn vặt lành mạnh";
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [mode, setMode] = useState("ban-hang");
@@ -372,11 +388,27 @@ function CaptionAISection() {
     }
   };
 
-  const useSample = () => {
-    setProductName(sampleProduct);
-    setDescription(sampleDescription);
+  const useSample = (sample = captionExamples[0]) => {
+    setProductName(sample.productName);
+    setDescription(sample.description);
     setResult(null);
     setSource("demo");
+  };
+
+  const resetCaption = () => {
+    setProductName("");
+    setDescription("");
+    setResult(null);
+    setSource("demo");
+    setCopied("");
+  };
+
+  const copyAll = () => {
+    if (!result) return;
+    copyText(
+      "all",
+      `TikTok:\n${result.tiktok}\n\nFacebook:\n${result.facebook}\n\nHashtag:\n${result.hashtags.join(" ")}`
+    );
   };
 
   return (
@@ -410,6 +442,13 @@ function CaptionAISection() {
               <button type="button" className="sample-btn" onClick={useSample}>
                 Dùng ví dụ mẫu
               </button>
+            </div>
+            <div className="example-row" aria-label="Chọn ví dụ nhanh">
+              {captionExamples.map((sample) => (
+                <button key={sample.label} type="button" onClick={() => useSample(sample)}>
+                  {sample.label}
+                </button>
+              ))}
             </div>
             <label>
               Tên sản phẩm
@@ -453,6 +492,9 @@ function CaptionAISection() {
                   ? "Đang viết caption..."
                   : "Tạo caption ngay →"}
             </button>
+            <button className="reset-btn" type="button" onClick={resetCaption}>
+              Làm lại từ đầu
+            </button>
             <p className="caption-source">
               {isGenerating
                 ? "AI đang đọc thông tin và viết bản nháp đầu tiên..."
@@ -494,6 +536,12 @@ function CaptionAISection() {
               </article>
             ) : result ? (
               <>
+                <div className="result-toolbar">
+                  <span>Sẵn sàng đăng</span>
+                  <button type="button" onClick={copyAll}>
+                    {copied === "all" ? "Đã copy tất cả" : "Copy tất cả"}
+                  </button>
+                </div>
                 <article>
                   <div>
                     <span>TikTok</span>
