@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 const navItems = [
   { label: "Trang chủ", href: "#home" },
   { label: "Caption AI", href: "#caption-ai" },
-  { label: "Hành trình", href: "#journey" },
-  { label: "Dự án sắp làm", href: "#upcoming" },
+  { label: "Dự án tiếp theo", href: "#upcoming" },
   { label: "Thử thách 21 ngày", href: "#challenge" },
   { label: "Cộng đồng", href: "#community" },
 ];
@@ -170,7 +169,7 @@ function Header() {
           ))}
         </nav>
         <div className="nav-actions">
-          <a className="nav-cta" href="#journey">Theo dõi hành trình →</a>
+          <a className="nav-cta" href="#caption-ai">Thử Caption AI →</a>
           <button className="hamburger" type="button" onClick={() => setOpen(true)} aria-label="Mở menu">
             ☰
           </button>
@@ -185,8 +184,8 @@ function Header() {
             {item.label}
           </a>
         ))}
-        <a className="nav-cta drawer-cta" href="#journey" onClick={() => setOpen(false)}>
-          Theo dõi hành trình →
+        <a className="nav-cta drawer-cta" href="#caption-ai" onClick={() => setOpen(false)}>
+          Thử Caption AI →
         </a>
       </div>
     </header>
@@ -271,13 +270,12 @@ function Hero() {
           <span>Lumi Bot sẽ đồng hành trong các demo AI.</span>
         </div>
         <p>
-          Lumi Labs là nơi tôi dùng AI để build các công cụ thật cho công việc:
-          báo cáo, bảng theo dõi, tài liệu, tự động hoá và ứng dụng mẫu.
-          Tất cả được chia sẻ từng bước, dễ hiểu, có hình ảnh và demo khi hoàn thành.
+          Lumi Labs là nơi tôi dùng AI để tạo các công cụ thật cho công việc.
+          Mỗi project đều được giải thích đơn giản, có demo để bạn mở lên thử ngay.
         </p>
         <div className="hero-actions">
           <a className="btn primary" href="#caption-ai">Thử Caption AI ngay →</a>
-          <a className="btn secondary" href="#journey">Theo dõi hành trình</a>
+          <a className="btn secondary" href="#upcoming">Xem dự án tiếp theo</a>
         </div>
         <div className="trust-row">
           <span>Từng bước dễ hiểu</span>
@@ -562,9 +560,9 @@ function UpcomingSection() {
     <section id="upcoming" className="section upcoming-section">
       <div className="section-head" data-reveal>
         <span className="section-label">Sắp tới sẽ có gì?</span>
-        <h2>Dự án thật, đi từ <strong>dễ đến khó</strong></h2>
+        <h2>Dự án tiếp theo</h2>
         <p className="section-note">
-          Hiện tại chưa có thư viện dự án lớn. Tôi sẽ xây từng dự án công khai, giải thích bằng ngôn ngữ đời thường để bạn có thể theo dõi và làm theo.
+          Mỗi project là một tool nhỏ, dễ hiểu, có demo thật để mở lên thử.
         </p>
       </div>
       <div className="upcoming-grid">
@@ -577,56 +575,6 @@ function UpcomingSection() {
             <strong>{project.status}</strong>
           </article>
         ))}
-      </div>
-    </section>
-  );
-}
-
-function ProjectOneSection() {
-  return (
-    <section id="project-one" className="section project-one-section">
-      <div className="project-one-card" data-reveal>
-        <div className="project-one-copy">
-          <span className="section-label">Project #1</span>
-          <h2>Caption AI đã live.</h2>
-          <p>
-            Nhập sản phẩm. Nhận caption TikTok, Facebook và hashtag trong vài giây.
-          </p>
-          <div className="project-one-actions">
-            <a className="btn primary" href="#caption-ai">Thử lại demo →</a>
-            <a className="btn secondary" href="#community">Gửi góp ý</a>
-          </div>
-        </div>
-
-        <div className="project-one-visual" aria-label="Tóm tắt Project #1">
-          <div className="project-screen">
-            <div className="screen-top">
-              <span></span>
-              <strong>Caption AI</strong>
-            </div>
-            <div className="screen-body">
-              <div>
-                <small>Input</small>
-                <b>Sản phẩm</b>
-              </div>
-              <div>
-                <small>Output</small>
-                <b>Caption + hashtag</b>
-              </div>
-            </div>
-          </div>
-          <div className="project-metrics">
-            <span><strong>1</strong>Dự án thật</span>
-            <span><strong>3</strong>Loại nội dung</span>
-            <span><strong>0</strong>Đăng ký</span>
-          </div>
-        </div>
-
-        <div className="project-one-steps">
-          <span>Ý tưởng</span>
-          <span>Build bằng AI</span>
-          <span>Deploy public</span>
-        </div>
       </div>
     </section>
   );
@@ -728,10 +676,7 @@ function App() {
       <main>
         <Hero />
         <CaptionAISection />
-        <ProjectOneSection />
         <UpcomingSection />
-        <ValueSection />
-        <JourneySection />
         <ChallengeSection />
       </main>
       <Footer />
