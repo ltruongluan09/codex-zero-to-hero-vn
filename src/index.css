@@ -1996,13 +1996,13 @@ button {
 
 @media (max-width: 640px) {
   .nav-inner {
-    width: calc(100% - 40px);
+    width: calc(100% - 28px);
   }
 
   .hero {
     grid-template-columns: 1fr;
     min-height: auto;
-    padding: 40px 20px;
+    padding: 32px 16px 36px;
   }
 
   .hero::before,
@@ -2011,19 +2011,46 @@ button {
   }
 
   .hero-h1 {
-    font-size: 26px;
+    font-size: clamp(30px, 10vw, 40px);
   }
 
   .hero-copy p {
     max-width: none;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .badge-start {
+    max-width: 100%;
+    align-items: flex-start;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .hero-side {
+    display: none;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions .btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .trust-row span {
+    font-size: 10px;
   }
 
   .section {
-    padding: 36px 20px;
+    padding: 32px 16px;
   }
 
   .caption-ai-section {
-    padding: 36px 20px;
+    padding: 32px 16px;
   }
 
   .caption-shell,
@@ -2031,9 +2058,39 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .caption-app {
+    gap: 10px;
+    padding: 10px;
+  }
+
   .caption-intro,
-  .caption-form {
-    padding: 16px;
+  .caption-form,
+  .caption-results article {
+    padding: 14px;
+  }
+
+  .caption-intro h2 {
+    font-size: 34px;
+  }
+
+  .caption-intro p {
+    font-size: 12px;
+    line-height: 1.65;
+  }
+
+  .caption-mini-proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .mode-chip {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .caption-results p {
+    font-size: 12px;
   }
 
   .caption-window-top {
@@ -2072,7 +2129,8 @@ button {
   }
 
   .upcoming-card {
-    min-height: 210px;
+    min-height: 170px;
+    padding: 16px;
   }
 
   .upcoming-card:nth-child(2) {
@@ -2085,11 +2143,20 @@ button {
   }
 
   .challenge-section {
-    padding: 0 20px 36px;
+    padding: 0 16px 32px;
   }
 
   .challenge-banner {
     grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .challenge-banner h2 {
+    font-size: 24px;
+  }
+
+  .challenge-banner p {
+    font-size: 12px;
   }
 
   .heatmap-col {

@@ -5,7 +5,6 @@ const navItems = [
   { label: "Caption AI", href: "#caption-ai" },
   { label: "Dự án tiếp theo", href: "#upcoming" },
   { label: "Thử thách 21 ngày", href: "#challenge" },
-  { label: "Cộng đồng", href: "#community" },
 ];
 
 const captionModes = [
@@ -63,19 +62,19 @@ const upcomingProjects = [
   {
     level: "Dễ bắt đầu",
     title: "Dự án AI đơn giản",
-    desc: "Một công cụ nhỏ, dễ hiểu, làm được trong 1 buổi. Mục tiêu là giúp bạn thấy: à, mình cũng có thể bắt đầu.",
+    desc: "Một tool nhỏ, làm nhanh, mở lên dùng thử ngay.",
     status: "Sắp bắt đầu",
   },
   {
     level: "Cho công việc",
     title: "Công cụ dùng trong văn phòng",
-    desc: "Bảng theo dõi, tài liệu, Excel, nhân sự, marketing, vận hành. Những thứ người đi làm thật sự cần.",
+    desc: "Excel, báo cáo, tài liệu, nhân sự, marketing.",
     status: "Đang chuẩn bị",
   },
   {
     level: "Khó dần",
     title: "Ứng dụng phức tạp hơn",
-    desc: "Trợ lý AI, tự động hoá, app demo, sản phẩm thử nghiệm nhỏ. Đi từng bước, không nhảy vào phần khó ngay.",
+    desc: "Trợ lý AI, automation và app demo có thể dùng thật.",
     status: "Giai đoạn sau",
   },
 ];
@@ -261,10 +260,6 @@ function Hero() {
           <br />
           <span>làm được gì?</span>
         </h1>
-        <div className="live-note">
-          <span>Đang xảy ra</span>
-          <strong>Hôm nay là ngày 1. Tôi bắt đầu từ con số 0 — và sẽ đăng từng dự án thật từ dễ đến khó.</strong>
-        </div>
         <div className="hero-bot-pill">
           <img src="/lumi-bot.png" alt="" />
           <span>Lumi Bot sẽ đồng hành trong các demo AI.</span>
@@ -282,15 +277,9 @@ function Hero() {
           <span>Có hình ảnh & demo</span>
           <span>Không cần biết code</span>
         </div>
-        <div className="proof-row">
-          <div><strong>Ngày 1</strong><span>Tháng 5 · 2026</span></div>
-          <div><strong>0 → ?</strong><span>dự án thật sắp bắt đầu</span></div>
-          <div><strong>∞</strong><span>chia sẻ công khai</span></div>
-        </div>
       </div>
       <div className="hero-side">
         <LumiBotIntro />
-        <WhoCard />
       </div>
     </section>
   );
@@ -634,10 +623,9 @@ function ChallengeSection() {
       <div className="challenge-banner" data-reveal>
         <div>
           <span className="challenge-badge">🔥 Miễn phí · Bắt đầu cùng nhau</span>
-          <h2>Thử thách 21 ngày AI — dành cho người chưa biết gì</h2>
+          <h2>21 ngày dùng AI tốt hơn</h2>
           <p>
-            Mỗi ngày 1 việc nhỏ, cụ thể, thực tế. Sau 21 ngày — bạn sẽ dùng được AI
-            trong công việc hàng ngày.
+            Mỗi ngày 1 việc nhỏ, thực tế, dễ làm theo.
           </p>
           <div className="progress-bar"><span /></div>
           <small>Sắp bắt đầu · Đăng ký để nhận thông báo</small>
