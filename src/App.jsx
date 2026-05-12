@@ -318,21 +318,18 @@ function buildCaption({ productName, description, mode }) {
 }
 
 function CaptionAISection() {
-  const [productName, setProductName] = useState("Bánh biscotti healthy");
-  const [description, setDescription] = useState("ít ngọt, nhiều hạt, phù hợp dân văn phòng muốn ăn vặt lành mạnh");
+  const sampleProduct = "Bánh biscotti healthy";
+  const sampleDescription = "Ít ngọt, nhiều hạt, phù hợp dân văn phòng muốn ăn vặt lành mạnh";
+  const [productName, setProductName] = useState("");
+  const [description, setDescription] = useState("");
   const [mode, setMode] = useState("ban-hang");
-  const [result, setResult] = useState(() =>
-    buildCaption({
-      productName: "Bánh biscotti healthy",
-      description: "ít ngọt, nhiều hạt, phù hợp dân văn phòng muốn ăn vặt lành mạnh",
-      mode: "ban-hang",
-    })
-  );
+  const [result, setResult] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [source, setSource] = useState("demo");
   const [copied, setCopied] = useState("");
 
   const generate = async () => {
+    if (!productName.trim()) return;
     setIsGenerating(true);
     setCopied("");
     try {
@@ -366,6 +363,13 @@ function CaptionAISection() {
     }
   };
 
+  const useSample = () => {
+    setProductName(sampleProduct);
+    setDescription(sampleDescription);
+    setResult(null);
+    setSource("demo");
+  };
+
   return (
     <section id="caption-ai" className="caption-ai-section">
       <div className="caption-shell" data-reveal>
@@ -384,7 +388,20 @@ function CaptionAISection() {
         </div>
 
         <div className="caption-app">
+          <div className="caption-window-top">
+            <div>
+              <span className="live-dot"></span>
+              Caption AI Studio
+            </div>
+            <span>Project #1</span>
+          </div>
           <div className="caption-form">
+            <div className="caption-form-head">
+              <span>1. Nhập ý tưởng</span>
+              <button type="button" className="sample-btn" onClick={useSample}>
+                Dùng ví dụ mẫu
+              </button>
+            </div>
             <label>
               Tên sản phẩm
               <input
@@ -402,6 +419,7 @@ function CaptionAISection() {
                 rows="4"
               />
             </label>
+            <p className="form-helper">Chỉ cần viết như đang nhắn tin cho nhân viên marketing.</p>
             <div className="mode-row" aria-label="Chọn kiểu caption">
               {captionModes.map((item) => (
                 <button
@@ -414,8 +432,17 @@ function CaptionAISection() {
                 </button>
               ))}
             </div>
-            <button className="generate-btn" type="button" onClick={generate} disabled={isGenerating}>
-              {isGenerating ? "Đang viết caption..." : "Tạo caption ngay →"}
+            <button
+              className="generate-btn"
+              type="button"
+              onClick={generate}
+              disabled={isGenerating || !productName.trim()}
+            >
+              {!productName.trim()
+                ? "Nhập tên sản phẩm để bắt đầu"
+                : isGenerating
+                  ? "Đang viết caption..."
+                  : "Tạo caption ngay →"}
             </button>
             <p className="caption-source">
               {source === "gemini"
@@ -426,34 +453,52 @@ function CaptionAISection() {
             </p>
           </div>
 
-          <div className="caption-results">
-            <article>
-              <div>
-                <span>TikTok</span>
-                <button type="button" onClick={() => copyText("tiktok", result.tiktok)}>
-                  {copied === "tiktok" ? "Đã copy" : "Copy"}
-                </button>
-              </div>
-              <p>{result.tiktok}</p>
-            </article>
-            <article>
-              <div>
-                <span>Facebook</span>
-                <button type="button" onClick={() => copyText("facebook", result.facebook)}>
-                  {copied === "facebook" ? "Đã copy" : "Copy"}
-                </button>
-              </div>
-              <p>{result.facebook}</p>
-            </article>
-            <article className="hashtag-card">
-              <div>
-                <span>Hashtag</span>
-                <button type="button" onClick={() => copyText("hashtags", result.hashtags)}>
-                  {copied === "hashtags" ? "Đã copy" : "Copy"}
-                </button>
-              </div>
-              <p>{result.hashtags.join(" ")}</p>
-            </article>
+          <div className={result ? "caption-results" : "caption-results empty"}>
+            {result ? (
+              <>
+                <article>
+                  <div>
+                    <span>TikTok</span>
+                    <button type="button" onClick={() => copyText("tiktok", result.tiktok)}>
+                      {copied === "tiktok" ? "Đã copy" : "Copy"}
+                    </button>
+                  </div>
+                  <p>{result.tiktok}</p>
+                </article>
+                <article>
+                  <div>
+                    <span>Facebook</span>
+                    <button type="button" onClick={() => copyText("facebook", result.facebook)}>
+                      {copied === "facebook" ? "Đã copy" : "Copy"}
+                    </button>
+                  </div>
+                  <p>{result.facebook}</p>
+                </article>
+                <article className="hashtag-card">
+                  <div>
+                    <span>Hashtag</span>
+                    <button type="button" onClick={() => copyText("hashtags", result.hashtags)}>
+                      {copied === "hashtags" ? "Đã copy" : "Copy"}
+                    </button>
+                  </div>
+                  <p>{result.hashtags.join(" ")}</p>
+                </article>
+              </>
+            ) : (
+              <article className="empty-result">
+                <span>2. Xem kết quả</span>
+                <h3>Caption TikTok, Facebook và hashtag sẽ hiện ở đây.</h3>
+                <p>
+                  Nhập tên sản phẩm, thêm mô tả ngắn rồi bấm tạo. Nếu muốn thử nhanh,
+                  hãy dùng ví dụ mẫu ở bên trái.
+                </p>
+                <div className="empty-preview">
+                  <span>TikTok caption</span>
+                  <span>Facebook caption</span>
+                  <span>#Hashtag</span>
+                </div>
+              </article>
+            )}
           </div>
         </div>
       </div>
