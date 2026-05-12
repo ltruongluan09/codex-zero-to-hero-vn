@@ -253,7 +253,7 @@ function Hero() {
       <div className="hero-copy" data-reveal>
         <div className="badge-start">
           <span className="pulse-dot" />
-          Build công khai từ Việt Nam · Cho người không biết code
+          Làm công khai từ Việt Nam · Cho người không biết code
         </div>
         <h1 className="hero-h1">
           Xem nhiều video AI rồi,
@@ -276,7 +276,7 @@ function Hero() {
           Tất cả được chia sẻ từng bước, dễ hiểu, có hình ảnh và demo khi hoàn thành.
         </p>
         <div className="hero-actions">
-          <a className="btn primary" href="#upcoming">Xem sắp làm gì →</a>
+          <a className="btn primary" href="#caption-ai">Thử Caption AI ngay →</a>
           <a className="btn secondary" href="#journey">Theo dõi hành trình</a>
         </div>
         <div className="trust-row">
@@ -413,9 +413,9 @@ function CaptionAISection() {
           <div className="caption-window-top">
             <div>
               <span className="live-dot"></span>
-              Caption AI Studio
+              Khu viết caption
             </div>
-            <span>Project #1</span>
+            <span>Dự án #1</span>
           </div>
           <div className="caption-form">
             <div className="caption-form-head">
@@ -455,7 +455,7 @@ function CaptionAISection() {
               ))}
             </div>
             <button
-              className="generate-btn"
+              className={!productName.trim() ? "generate-btn idle" : "generate-btn"}
               type="button"
               onClick={generate}
               disabled={isGenerating || !productName.trim()}
