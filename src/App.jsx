@@ -426,6 +426,16 @@ function CaptionAISection() {
             <span>Không cần tài khoản</span>
             <span>Ra kết quả ngay</span>
           </div>
+          <a className="caption-log-link" href="/project-01-caption-ai.html">
+            <span className="caption-log-bot">
+              <img src="/lumi-bot.png" alt="" />
+            </span>
+            <span>
+              <strong>Theo Lumi Bot vào phòng build</strong>
+              <small>Xem hậu trường tạo ra Caption AI →</small>
+            </span>
+            <i aria-hidden="true">→</i>
+          </a>
         </div>
 
         <div className="caption-app">
