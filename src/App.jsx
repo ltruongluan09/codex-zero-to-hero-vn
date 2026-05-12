@@ -454,7 +454,33 @@ function CaptionAISection() {
           </div>
 
           <div className={result ? "caption-results" : "caption-results empty"}>
-            {result ? (
+            {isGenerating ? (
+              <article className="ai-thinking">
+                <div className="thinking-orb" aria-hidden="true">
+                  <span></span>
+                </div>
+                <span className="thinking-label">AI đang phân tích</span>
+                <h3>Đang biến ý tưởng của bạn thành caption có thể đăng ngay...</h3>
+                <div className="thinking-steps">
+                  <div className="thinking-step active">
+                    <span></span>
+                    Đọc tên sản phẩm
+                  </div>
+                  <div className="thinking-step active delay-1">
+                    <span></span>
+                    Chọn giọng văn phù hợp
+                  </div>
+                  <div className="thinking-step active delay-2">
+                    <span></span>
+                    Viết caption TikTok & Facebook
+                  </div>
+                  <div className="thinking-step active delay-3">
+                    <span></span>
+                    Tạo hashtag tiếng Việt
+                  </div>
+                </div>
+              </article>
+            ) : result ? (
               <>
                 <article>
                   <div>
