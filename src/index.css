@@ -787,18 +787,18 @@ button {
 .thinking-orb {
   position: relative;
   z-index: 1;
-  width: 54px;
-  height: 54px;
+  width: 68px;
+  height: 68px;
   display: grid;
   place-items: center;
   border-radius: 999px;
   margin-bottom: 16px;
-  background:
-    radial-gradient(circle at 34% 28%, #ffffff, var(--brand-light) 18%, var(--brand) 45%, rgba(99, 102, 241, 0.14) 72%);
+  background: rgba(99, 102, 241, 0.1);
   box-shadow:
-    0 0 28px rgba(99, 102, 241, 0.5),
-    0 0 80px rgba(16, 185, 129, 0.12);
-  animation: orb-breathe 1.9s ease-in-out infinite;
+    0 0 0 1px rgba(129, 140, 248, 0.28),
+    0 0 30px rgba(99, 102, 241, 0.34),
+    0 0 80px rgba(16, 185, 129, 0.1);
+  animation: bot-breathe 2.4s ease-in-out infinite;
 }
 
 .thinking-orb::before,
@@ -818,12 +818,14 @@ button {
   animation-direction: reverse;
 }
 
-.thinking-orb span {
-  width: 10px;
-  height: 10px;
+.thinking-orb img {
+  position: relative;
+  z-index: 1;
+  width: 74px;
+  height: 74px;
+  object-fit: cover;
   border-radius: 999px;
-  background: #fff;
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.95);
+  transform: translateY(1px);
 }
 
 .thinking-label {
@@ -961,15 +963,15 @@ button {
   }
 }
 
-@keyframes orb-breathe {
+@keyframes bot-breathe {
   0%,
   100% {
     transform: scale(1);
     filter: saturate(1);
   }
   50% {
-    transform: scale(1.07);
-    filter: saturate(1.22);
+    transform: scale(1.04) translateY(-2px);
+    filter: saturate(1.12);
   }
 }
 
@@ -1767,8 +1769,13 @@ button {
   }
 
   .thinking-orb {
-    width: 46px;
-    height: 46px;
+    width: 58px;
+    height: 58px;
+  }
+
+  .thinking-orb img {
+    width: 64px;
+    height: 64px;
   }
 
   .ai-thinking h3 {

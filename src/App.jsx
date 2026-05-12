@@ -459,7 +459,7 @@ function CaptionAISection() {
             {isGenerating ? (
               <article className="ai-thinking">
                 <div className="thinking-orb" aria-hidden="true">
-                  <span></span>
+                  <img src="/lumi-bot.png" alt="" />
                 </div>
                 <span className="thinking-label">AI đang phân tích</span>
                 <h3>Đang biến ý tưởng của bạn thành caption có thể đăng ngay...</h3>
