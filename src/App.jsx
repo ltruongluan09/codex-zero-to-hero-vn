@@ -266,6 +266,10 @@ function Hero() {
           <span>Đang xảy ra</span>
           <strong>Hôm nay là ngày 1. Tôi bắt đầu từ con số 0 — và sẽ đăng từng dự án thật từ dễ đến khó.</strong>
         </div>
+        <div className="hero-bot-pill">
+          <img src="/lumi-bot.png" alt="" />
+          <span>Lumi Bot sẽ đồng hành trong các demo AI.</span>
+        </div>
         <p>
           Lumi Labs là nơi tôi dùng AI để build các công cụ thật cho công việc:
           báo cáo, bảng theo dõi, tài liệu, tự động hoá và ứng dụng mẫu.
