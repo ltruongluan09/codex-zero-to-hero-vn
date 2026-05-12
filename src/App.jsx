@@ -445,7 +445,9 @@ function CaptionAISection() {
                   : "Tạo caption ngay →"}
             </button>
             <p className="caption-source">
-              {source === "gemini"
+              {isGenerating
+                ? "AI đang đọc thông tin và viết bản nháp đầu tiên..."
+                : source === "gemini"
                 ? "Đang dùng Gemini để viết caption thật."
                 : source === "fallback"
                   ? "Đang dùng bản demo dự phòng. Thêm Gemini API key để kết quả hay hơn."
