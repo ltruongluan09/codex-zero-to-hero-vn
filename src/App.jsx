@@ -582,6 +582,57 @@ function UpcomingSection() {
   );
 }
 
+function ProjectOneSection() {
+  return (
+    <section id="project-one" className="section project-one-section">
+      <div className="project-one-card" data-reveal>
+        <div className="project-one-copy">
+          <span className="section-label">Project #1</span>
+          <h2>Caption AI — từ ý tưởng nhỏ đến tool dùng được ngay.</h2>
+          <p>
+            Một công cụ đơn giản cho người bán hàng, creator và dân văn phòng:
+            nhập sản phẩm, nhận caption, đăng thử trong vài giây.
+          </p>
+          <div className="project-one-actions">
+            <a className="btn primary" href="#caption-ai">Thử lại demo →</a>
+            <a className="btn secondary" href="#community">Gửi góp ý</a>
+          </div>
+        </div>
+
+        <div className="project-one-visual" aria-label="Tóm tắt Project #1">
+          <div className="project-screen">
+            <div className="screen-top">
+              <span></span>
+              <strong>Caption AI</strong>
+            </div>
+            <div className="screen-body">
+              <div>
+                <small>Input</small>
+                <b>Tên sản phẩm + mô tả ngắn</b>
+              </div>
+              <div>
+                <small>Output</small>
+                <b>TikTok · Facebook · Hashtag</b>
+              </div>
+            </div>
+          </div>
+          <div className="project-metrics">
+            <span><strong>1</strong>Dự án thật</span>
+            <span><strong>3</strong>Loại nội dung</span>
+            <span><strong>0</strong>Đăng ký</span>
+          </div>
+        </div>
+
+        <div className="project-one-steps">
+          <span>Ý tưởng</span>
+          <span>Build bằng AI</span>
+          <span>Deploy public</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ValueSection() {
   return (
     <section id="value" className="section">
@@ -678,6 +729,7 @@ function App() {
       <main>
         <Hero />
         <CaptionAISection />
+        <ProjectOneSection />
         <UpcomingSection />
         <ValueSection />
         <JourneySection />
