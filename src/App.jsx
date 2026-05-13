@@ -869,7 +869,7 @@ function CaptionAISection({ user }) {
   );
 }
 
-function LoginModal({ onClose, onGoogleLogin, onFacebookLogin }) {
+function LoginModal({ onClose, onGoogleLogin }) {
   return (
     <div className="login-modal-backdrop" role="presentation" onClick={onClose}>
       <div className="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" onClick={(event) => event.stopPropagation()}>
@@ -892,7 +892,6 @@ function LoginModal({ onClose, onGoogleLogin, onFacebookLogin }) {
         </div>
         <div className="social-login-stack">
           <SocialLoginButton provider="google" onClick={onGoogleLogin} />
-          <SocialLoginButton provider="facebook" onClick={onFacebookLogin} />
         </div>
         <small className="login-note">Không cần mật khẩu mới. Bạn có thể đăng xuất bất cứ lúc nào.</small>
       </div>
@@ -1248,7 +1247,6 @@ function App() {
           <LoginModal
             onClose={() => setLoginOpen(false)}
             onGoogleLogin={auth.signInWithGoogle}
-            onFacebookLogin={auth.signInWithFacebook}
           />
         )}
       </>
@@ -1280,7 +1278,6 @@ function App() {
         <LoginModal
           onClose={() => setLoginOpen(false)}
           onGoogleLogin={auth.signInWithGoogle}
-          onFacebookLogin={auth.signInWithFacebook}
         />
       )}
     </>

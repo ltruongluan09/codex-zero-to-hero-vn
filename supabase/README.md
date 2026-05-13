@@ -42,7 +42,13 @@ http://localhost:5174
 Production:
 
 ```text
-https://codex-zero-to-hero-vn.vercel.app
+https://luanai.io.vn
+```
+
+Nếu dùng thêm bản `www`, thêm cả:
+
+```text
+https://www.luanai.io.vn
 ```
 
 ## Bước 4: Env cần set

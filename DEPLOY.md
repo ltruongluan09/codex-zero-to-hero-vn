@@ -1,4 +1,4 @@
-# Deploy website Codex Zero To Hero Việt Nam
+# Deploy website Lumi Labs / LuanAI
 
 Flow mục tiêu:
 
@@ -49,13 +49,19 @@ Nếu chưa có Git, có thể tạo repo trên GitHub rồi upload toàn bộ f
 
 ## 4. Public website
 
-Sau khi deploy xong, Vercel sẽ tạo link dạng:
+Domain chính của website:
 
 ```text
-https://codex-zero-to-hero-vn.vercel.app
+https://luanai.io.vn
 ```
 
-Gửi link này cho người khác là họ có thể xem website.
+Domain Vercel mặc định vẫn có thể tồn tại để debug, nhưng khi chia sẻ công khai nên dùng `https://luanai.io.vn`.
+
+Nếu cấu hình thêm `www`, nên redirect:
+
+```text
+www.luanai.io.vn → luanai.io.vn
+```
 
 ## Ghi chú
 
