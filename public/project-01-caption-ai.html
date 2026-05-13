@@ -569,6 +569,181 @@
           padding: 16px 0;
         }
       }
+
+      /* Warm creator theme - aligned with Lumi Labs homepage */
+      :root {
+        --brand: #ff6b6b;
+        --brand-light: #8b5cf6;
+        --bg-base: #fffaf3;
+        --bg-surface: #ffffff;
+        --bg-elevated: #fff4ec;
+        --bg-border: #eadfd4;
+        --text-primary: #211915;
+        --text-secondary: #6f625b;
+        --text-muted: #a19086;
+        --green: #12a874;
+        --amber: #f59e0b;
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 14% 4%, rgba(255, 107, 107, 0.18), transparent 27%),
+          radial-gradient(circle at 92% 18%, rgba(139, 92, 246, 0.12), transparent 24%),
+          radial-gradient(circle at 70% 72%, rgba(255, 184, 115, 0.14), transparent 28%),
+          radial-gradient(circle, rgba(232, 213, 196, 0.64) 1px, transparent 1px),
+          #fffaf3;
+        background-size: auto, auto, auto, 26px 26px, auto;
+        color: var(--text-primary);
+      }
+
+      .nav {
+        border-bottom-color: rgba(234, 223, 212, 0.95);
+      }
+
+      .logo span {
+        background: linear-gradient(135deg, #ff6b6b, #8b5cf6);
+        box-shadow: 0 0 0 6px rgba(255, 107, 107, 0.08), 0 10px 24px rgba(255, 107, 107, 0.28);
+      }
+
+      .back,
+      .button.secondary {
+        background: rgba(255, 255, 255, 0.72);
+        border-color: rgba(234, 223, 212, 0.95);
+        color: #5f514a;
+      }
+
+      .hero {
+        min-height: 560px;
+      }
+
+      .badge {
+        border-color: rgba(255, 107, 107, 0.24);
+        background: rgba(255, 255, 255, 0.76);
+        color: #b63b38;
+        box-shadow: 0 12px 30px rgba(112, 76, 54, 0.08);
+      }
+
+      h1 {
+        letter-spacing: -1.6px;
+      }
+
+      .lead {
+        color: #5f514a;
+      }
+
+      .guide-card,
+      .mini-card,
+      .section,
+      .timeline-item,
+      .lesson,
+      .demo-card,
+      .prompt-box,
+      .plain-box {
+        border-color: rgba(234, 223, 212, 0.95);
+        background: rgba(255, 255, 255, 0.78);
+        box-shadow: 0 22px 60px rgba(112, 76, 54, 0.1);
+      }
+
+      .guide-card {
+        border-color: rgba(255, 255, 255, 0.76);
+        background:
+          radial-gradient(circle at 48% 0%, rgba(121, 213, 226, 0.28), transparent 42%),
+          radial-gradient(circle at 92% 12%, rgba(255, 107, 107, 0.15), transparent 30%),
+          linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(255, 244, 236, 0.88));
+        box-shadow: 0 26px 76px rgba(112, 76, 54, 0.16);
+      }
+
+      .guide-card::after,
+      .caption-log-link::before {
+        background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.58) 45%, transparent 70%);
+      }
+
+      .bot-wrap img {
+        border: 3px solid #fff;
+        box-shadow: 0 20px 52px rgba(92, 171, 190, 0.22);
+      }
+
+      .bot-wrap::before {
+        border-color: rgba(121, 213, 226, 0.38);
+      }
+
+      .bot-wrap::after {
+        border-color: rgba(255, 107, 107, 0.28);
+      }
+
+      .guide-tags span,
+      .demo-card header,
+      .prompt-box header {
+        border-color: rgba(234, 223, 212, 0.95);
+        color: #8b5cf6;
+      }
+
+      .mini-card span,
+      .eyebrow {
+        color: #a19086;
+      }
+
+      .section::before {
+        background: linear-gradient(180deg, transparent, rgba(255, 107, 107, 0.78), transparent);
+      }
+
+      .section p,
+      .guide-card p,
+      .timeline-item p,
+      .lesson p,
+      .demo-card div,
+      .plain-box p {
+        color: var(--text-secondary);
+      }
+
+      .quote {
+        border-left-color: #ff6b6b;
+        background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 255, 255, 0.78));
+        box-shadow: inset 0 0 0 1px rgba(255, 107, 107, 0.08), 0 18px 44px rgba(112, 76, 54, 0.08);
+      }
+
+      .core-line {
+        border-color: rgba(18, 168, 116, 0.24);
+        background:
+          radial-gradient(circle at 10% 50%, rgba(18, 168, 116, 0.16), transparent 34%),
+          rgba(255, 255, 255, 0.82);
+      }
+
+      .core-line span,
+      .lesson span {
+        background: rgba(18, 168, 116, 0.12);
+        color: #087857;
+      }
+
+      .dot {
+        background: rgba(255, 107, 107, 0.12);
+        color: #ff5d5d;
+      }
+
+      .demo-card.good {
+        border-color: rgba(18, 168, 116, 0.28);
+        box-shadow: 0 20px 52px rgba(18, 168, 116, 0.08);
+      }
+
+      .demo-card.good header {
+        color: #087857;
+      }
+
+      .prompt-box pre {
+        background: #fffaf3;
+        color: #211915;
+      }
+
+      .button.primary {
+        border: 0;
+        background: linear-gradient(135deg, #ff4f69 0%, #ff8a3d 52%, #8b5cf6 100%);
+        box-shadow: 0 16px 38px rgba(255, 107, 107, 0.24);
+      }
+
+      .button:hover,
+      .back:hover {
+        transform: translateY(-2px);
+      }
     </style>
   </head>
   <body>

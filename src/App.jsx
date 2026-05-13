@@ -256,8 +256,8 @@ function LumiBotIntro() {
       </div>
       <div>
         <span>Lumi Bot</span>
-        <h2>Trợ lý AI thử nghiệm của Lumi Labs.</h2>
-        <p>Mình sẽ xuất hiện khi các tool đang suy nghĩ, viết nháp hoặc gợi ý bước tiếp theo.</p>
+        <h2>Người dẫn đường nhỏ trong từng demo.</h2>
+        <p>Mình sẽ giúp bạn biết nên bấm gì, nhập gì, và vì sao AI trả ra kết quả như vậy.</p>
       </div>
     </aside>
   );
@@ -272,23 +272,23 @@ function Hero() {
           Làm công khai từ Việt Nam · Cho người không biết code
         </div>
         <h1 className="hero-h1">
-          Xem nhiều video AI rồi,
+          Xem rất nhiều video AI,
           <br />
-          nhưng vẫn chưa tự
+          nhưng vẫn chưa tự tay
           <br />
           <span>làm được gì?</span>
         </h1>
         <div className="hero-bot-pill">
           <img src="/lumi-bot.png" alt="" />
-          <span>Lumi Bot sẽ đồng hành trong các demo AI.</span>
+          <span>Lumi Bot sẽ dẫn bạn đi từng bước.</span>
         </div>
         <p>
-          Lumi Labs là nơi tôi dùng AI để tạo các công cụ thật cho công việc.
-          Mỗi project đều được giải thích đơn giản, có demo để bạn mở lên thử ngay.
+          Lumi Labs là nơi tôi biến những việc rất đời thường thành công cụ AI dùng được.
+          Không cần giỏi code. Bạn chỉ cần xem, thử, rồi làm lại theo cách của mình.
         </p>
         <div className="hero-actions">
           <a className="btn primary" href="#caption-ai">Thử Caption AI ngay →</a>
-          <a className="btn secondary" href="#upcoming">Xem dự án tiếp theo</a>
+          <a className="btn secondary" href="#upcoming">Xem lộ trình sắp tới</a>
         </div>
         <div className="trust-row">
           <span>Từng bước dễ hiểu</span>
@@ -431,8 +431,8 @@ function CaptionAISection() {
               <img src="/lumi-bot.png" alt="" />
             </span>
             <span>
-              <strong>Theo Lumi Bot vào phòng build</strong>
-              <small>Xem hậu trường tạo ra Caption AI →</small>
+              <strong>Đi cùng Lumi Bot xem câu chuyện thật</strong>
+              <small>Từ ý tưởng nhỏ đến tool dùng được →</small>
             </span>
             <i aria-hidden="true">→</i>
           </a>
