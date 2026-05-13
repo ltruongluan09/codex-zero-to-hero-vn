@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getUserProfile, hasSupabaseConfig, supabase } from "./supabaseClient";
 
 const navItems = [
   { label: "Trang chủ", href: "#home" },
@@ -99,6 +100,27 @@ const upcomingProjects = [
   },
 ];
 
+const projectCatalog = [
+  {
+    slug: "caption-ai",
+    title: "Caption AI",
+    desc: "Tool viết caption TikTok, Facebook và hashtag tiếng Việt.",
+    status: "Đang mở demo",
+  },
+  {
+    slug: "excel-report-ai",
+    title: "Excel Report AI",
+    desc: "Biến dữ liệu Excel thành báo cáo dễ đọc.",
+    status: "Sắp làm",
+  },
+  {
+    slug: "ai-office-tools",
+    title: "AI Office Tools",
+    desc: "Bộ công cụ AI cho dân văn phòng.",
+    status: "Ý tưởng",
+  },
+];
+
 const timelineItems = [
   {
     date: "Tháng 5 · 2026 — Hôm nay",
@@ -156,6 +178,170 @@ function useReveal() {
   }, []);
 }
 
+function useAuth() {
+  const [session, setSession] = useState(null);
+  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [followedProjects, setFollowedProjects] = useState([]);
+  const [membership, setMembership] = useState(null);
+  const [authLoading, setAuthLoading] = useState(hasSupabaseConfig);
+
+  const loadFollowedProjects = async (userId) => {
+    if (!supabase || !userId) return;
+
+    const { data } = await supabase
+      .from("followed_projects")
+      .select("project_slug")
+      .eq("user_id", userId);
+
+    setFollowedProjects((data || []).map((item) => item.project_slug));
+  };
+
+  const syncProfile = async (currentUser) => {
+    if (!supabase || !currentUser) return;
+    const nextProfile = getUserProfile(currentUser);
+    setProfile(nextProfile);
+    const provider = currentUser.app_metadata?.provider || "oauth";
+
+    await supabase.from("profiles").upsert(
+      {
+        id: currentUser.id,
+        email: nextProfile.email,
+        name: nextProfile.name,
+        avatar_url: nextProfile.avatar,
+        provider,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "id" }
+    );
+
+    await supabase.from("subscribers").upsert(
+      {
+        email: nextProfile.email,
+        user_id: currentUser.id,
+        name: nextProfile.name,
+        avatar_url: nextProfile.avatar,
+        source: "auth_login",
+        provider,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "email" }
+    );
+  };
+
+  const loadMembership = async (userId) => {
+    if (!supabase || !userId) return;
+
+    const { data, error } = await supabase
+      .from("memberships")
+      .select("plan,status,expires_at")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    if (!error) {
+      setMembership(data || { plan: "free", status: "active" });
+    } else {
+      setMembership({ plan: "free", status: "active" });
+    }
+  };
+
+  useEffect(() => {
+    if (!supabase) {
+      setAuthLoading(false);
+      return undefined;
+    }
+
+    let active = true;
+
+    supabase.auth.getSession().then(async ({ data }) => {
+      if (!active) return;
+      const nextSession = data.session;
+      setSession(nextSession);
+      setUser(nextSession?.user || null);
+      if (nextSession?.user) {
+        await syncProfile(nextSession.user);
+        await loadFollowedProjects(nextSession.user.id);
+        await loadMembership(nextSession.user.id);
+        localStorage.setItem(DEMO_UNLOCK_KEY, "true");
+        window.dispatchEvent(new Event("lumi-demo-unlocked"));
+      }
+      setAuthLoading(false);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, nextSession) => {
+      setSession(nextSession);
+      setUser(nextSession?.user || null);
+      if (nextSession?.user) {
+        await syncProfile(nextSession.user);
+        await loadFollowedProjects(nextSession.user.id);
+        await loadMembership(nextSession.user.id);
+        localStorage.setItem(DEMO_UNLOCK_KEY, "true");
+        window.dispatchEvent(new Event("lumi-demo-unlocked"));
+      } else {
+        setProfile(null);
+        setFollowedProjects([]);
+        setMembership(null);
+      }
+    });
+
+    return () => {
+      active = false;
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
+  const signInWithProvider = async (provider) => {
+    if (!supabase) return;
+    await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+  };
+
+  const signInWithGoogle = () => signInWithProvider("google");
+  const signInWithFacebook = () => signInWithProvider("facebook");
+
+  const signOut = async () => {
+    if (!supabase) return;
+    await supabase.auth.signOut();
+  };
+
+  const followProject = async (projectSlug) => {
+    if (!supabase || !user) {
+      await signInWithGoogle();
+      return;
+    }
+
+    await supabase.from("followed_projects").upsert(
+      {
+        user_id: user.id,
+        project_slug: projectSlug,
+        created_at: new Date().toISOString(),
+      },
+      { onConflict: "user_id,project_slug" }
+    );
+
+    setFollowedProjects((items) =>
+      items.includes(projectSlug) ? items : [...items, projectSlug]
+    );
+  };
+
+  return {
+    session,
+    user,
+    profile,
+    followedProjects,
+    membership,
+    authLoading,
+    signInWithGoogle,
+    signInWithFacebook,
+    signOut,
+    followProject,
+  };
+}
+
 function Logo() {
   return (
     <a className="logo" href="#home" aria-label="Lumi Labs">
@@ -165,7 +351,44 @@ function Logo() {
   );
 }
 
-function Header() {
+function SocialLoginButton({ provider, onClick }) {
+  const label = provider === "facebook" ? "Đăng nhập bằng Facebook" : "Đăng nhập bằng Google";
+  const letter = provider === "facebook" ? "f" : "G";
+
+  return (
+    <button className={`social-login-btn ${provider}`} type="button" onClick={onClick}>
+      <span>{letter}</span>
+      {label}
+    </button>
+  );
+}
+
+function LoginButton({ onClick }) {
+  return (
+    <button className="login-entry-btn" type="button" onClick={onClick}>
+      Đăng nhập
+    </button>
+  );
+}
+
+function UserMenu({ profile, onSignOut }) {
+  return (
+    <div className="user-menu">
+      {profile?.avatar ? (
+        <img src={profile.avatar} alt="" />
+      ) : (
+        <span className="user-fallback">{profile?.name?.charAt(0) || "L"}</span>
+      )}
+      <span>
+        <strong>{profile?.name || "Bạn mới"}</strong>
+        <small>{profile?.email}</small>
+      </span>
+      <button type="button" onClick={onSignOut}>Đăng xuất</button>
+    </div>
+  );
+}
+
+function Header({ profile, onOpenLogin, onSignOut }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -186,9 +409,15 @@ function Header() {
               {item.label}
             </a>
           ))}
+          {profile && <a href="/dashboard">Dashboard</a>}
         </nav>
         <div className="nav-actions">
           <a className="nav-cta" href="#caption-ai">Thử Caption AI →</a>
+          {profile ? (
+            <UserMenu profile={profile} onSignOut={onSignOut} />
+          ) : (
+            <LoginButton onClick={onOpenLogin} />
+          )}
           <button className="hamburger" type="button" onClick={() => setOpen(true)} aria-label="Mở menu">
             ☰
           </button>
@@ -203,9 +432,15 @@ function Header() {
             {item.label}
           </a>
         ))}
+        {profile && <a href="/dashboard" onClick={() => setOpen(false)}>Dashboard</a>}
         <a className="nav-cta drawer-cta" href="#caption-ai" onClick={() => setOpen(false)}>
           Thử Caption AI →
         </a>
+        {profile ? (
+          <UserMenu profile={profile} onSignOut={onSignOut} />
+        ) : (
+          <LoginButton onClick={onOpenLogin} />
+        )}
       </div>
     </header>
   );
@@ -346,7 +581,7 @@ function buildCaption({ productName, description, mode }) {
   };
 }
 
-function CaptionAISection() {
+function CaptionAISection({ user }) {
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [mode, setMode] = useState("ban-hang");
@@ -357,12 +592,12 @@ function CaptionAISection() {
   const [isDemoUnlocked, setIsDemoUnlocked] = useState(false);
 
   useEffect(() => {
-    setIsDemoUnlocked(localStorage.getItem(DEMO_UNLOCK_KEY) === "true");
+    setIsDemoUnlocked(Boolean(user) || localStorage.getItem(DEMO_UNLOCK_KEY) === "true");
 
     const onUnlocked = () => setIsDemoUnlocked(true);
     window.addEventListener("lumi-demo-unlocked", onUnlocked);
     return () => window.removeEventListener("lumi-demo-unlocked", onUnlocked);
-  }, []);
+  }, [user]);
 
   const generate = async () => {
     if (!isDemoUnlocked) {
@@ -512,7 +747,7 @@ function CaptionAISection() {
               disabled={isGenerating || (isDemoUnlocked && !productName.trim())}
             >
               {!isDemoUnlocked
-                ? "Mở demo miễn phí để tạo caption"
+                ? "Mở demo"
                 : !productName.trim()
                 ? "Nhập tên sản phẩm để bắt đầu"
                 : isGenerating
@@ -526,7 +761,7 @@ function CaptionAISection() {
               {isGenerating
                 ? "AI đang đọc thông tin và viết bản nháp đầu tiên..."
                 : !isDemoUnlocked
-                ? "Bạn vẫn xem được preview. Nhập email ở góc dưới để mở demo cơ bản."
+                ? "Preview đang mở. Đăng nhập để tạo thử."
                 : source === "gemini"
                 ? "Đang dùng Gemini để viết caption thật."
                 : source === "fallback"
@@ -606,7 +841,7 @@ function CaptionAISection() {
                 <p>
                   {isDemoUnlocked
                     ? "Nhập tên sản phẩm, thêm mô tả ngắn rồi bấm tạo. Nếu muốn thử nhanh, hãy dùng ví dụ mẫu ở bên trái."
-                    : "Bạn có thể xem trước cách tool hoạt động. Khi nhập email, Lumi Bot sẽ mở phần tạo caption để bạn thử thật."}
+                    : "Bạn có thể xem trước cách tool hoạt động. Đăng nhập để tạo thử thật."}
                 </p>
                 <div className="empty-preview">
                   <span>TikTok caption</span>
@@ -622,7 +857,7 @@ function CaptionAISection() {
                 )}
                 {!isDemoUnlocked && (
                   <button className="unlock-demo-btn" type="button" onClick={() => window.dispatchEvent(new Event("lumi-open-unlock"))}>
-                    Mở demo miễn phí →
+                    Mở demo →
                   </button>
                 )}
               </article>
@@ -634,11 +869,43 @@ function CaptionAISection() {
   );
 }
 
-function JourneyWidget() {
+function LoginModal({ onClose, onGoogleLogin, onFacebookLogin }) {
+  return (
+    <div className="login-modal-backdrop" role="presentation" onClick={onClose}>
+      <div className="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" onClick={(event) => event.stopPropagation()}>
+        <button className="journey-widget-close" type="button" onClick={onClose} aria-label="Đóng đăng nhập">
+          ×
+        </button>
+        <div className="login-modal-hero">
+          <img src="/lumi-bot.png" alt="" />
+          <span>Lumi Bot</span>
+        </div>
+        <span className="follow-badge">Mở khóa nội dung</span>
+        <h3 id="login-modal-title">Đăng nhập để xem demo đầy đủ hơn</h3>
+        <p>
+          Bạn sẽ xem được phần thực hành chi tiết, lưu project đang theo dõi và nhận bản cập nhật khi có demo mới.
+        </p>
+        <div className="login-benefits">
+          <span>Xem demo đầy đủ</span>
+          <span>Lưu project yêu thích</span>
+          <span>Nhận bản mới sớm</span>
+        </div>
+        <div className="social-login-stack">
+          <SocialLoginButton provider="google" onClick={onGoogleLogin} />
+          <SocialLoginButton provider="facebook" onClick={onFacebookLogin} />
+        </div>
+        <small className="login-note">Không cần mật khẩu mới. Bạn có thể đăng xuất bất cứ lúc nào.</small>
+      </div>
+    </div>
+  );
+}
+
+function JourneyWidget({ user, profile, followedProjects, onOpenLogin, onFollowProject }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
   const [open, setOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
 
   useEffect(() => {
     const onOpenUnlock = () => setOpen(true);
@@ -691,20 +958,20 @@ function JourneyWidget() {
   };
 
   return (
-    <aside className={open ? "journey-widget open" : "journey-widget"} aria-label="Mở demo miễn phí">
+    <aside className={open ? "journey-widget open" : "journey-widget"} aria-label="Mở demo">
       <button className="journey-widget-main" type="button" onClick={() => setOpen((value) => !value)}>
         <span className="journey-widget-avatar">
           <img src="/lumi-bot.png" alt="" />
         </span>
         <span className="journey-widget-body">
           <span className="journey-widget-top">
-            <strong>Mở demo miễn phí</strong>
+            <strong>Mở demo</strong>
             <small>Project 1/21</small>
           </span>
           <span className="journey-widget-progress" aria-hidden="true">
             <i />
           </span>
-          <span className="journey-widget-action">{open ? "Đóng lại" : "Nhập email để thử demo"}</span>
+          <span className="journey-widget-action">{open ? "Đóng lại" : "Email hoặc Google"}</span>
         </span>
       </button>
 
@@ -718,39 +985,35 @@ function JourneyWidget() {
           >
             ×
           </button>
-          <span className="follow-badge">Miễn phí lúc bắt đầu</span>
-          <h3>Nhập email để mở demo và nhận project mới.</h3>
+          <span className="follow-badge">Tài khoản miễn phí</span>
+          <h3>Đăng nhập để xem được nhiều hơn.</h3>
           <p>
-            Bạn vẫn xem được trang chính bình thường. Email chỉ giúp Lumi Bot ghi nhớ bạn,
-            mở demo cơ bản và gửi những project mới dễ làm theo.
+            Lưu demo đã mở, theo dõi project bạn quan tâm và chuẩn bị cho bản đầy đủ sau này.
           </p>
-          <div className="follow-preview">
-            <span>Sau này có thể mở thêm</span>
-            <strong>“Biến file Excel thành báo cáo bằng AI”</strong>
-          </div>
-          <label htmlFor="journey-email">Email</label>
-          <div className="follow-input-row">
-            <input
-              id="journey-email"
-              type="email"
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-                if (status !== "loading") {
-                  setStatus("idle");
-                  setMessage("");
-                }
-              }}
-              placeholder="tenban@gmail.com"
-              aria-invalid={status === "error"}
-            />
-            <button type="submit" disabled={status === "loading" || !isValidEmail}>
-              {status === "loading" ? "Đang lưu..." : "Mở demo miễn phí"}
+          {!user ? (
+            <button className="widget-login-primary" type="button" onClick={onOpenLogin}>
+              Đăng nhập
             </button>
-          </div>
-          <p className={`follow-message ${status}`} aria-live="polite">
-            {message || "Không spam. Không cần tài khoản. Gói đầy đủ có thể mở sau khi mọi thứ đủ tốt."}
-          </p>
+          ) : (
+            <p className="follow-message success">Bạn đã đăng nhập. Demo đã được mở trên trình duyệt này.</p>
+          )}
+          {user && (
+            <button
+              className="follow-project-btn"
+              type="button"
+              onClick={() => onFollowProject("caption-ai")}
+            >
+              {followedProjects.includes("caption-ai")
+                ? "Đang theo dõi Project Caption AI"
+                : "Theo dõi Project Caption AI"}
+            </button>
+          )}
+          {profile && (
+            <div className="widget-user-line">
+              {profile.avatar ? <img src={profile.avatar} alt="" /> : <span>{profile.name.charAt(0)}</span>}
+              <small>{profile.email}</small>
+            </div>
+          )}
         </form>
       )}
     </aside>
@@ -854,6 +1117,96 @@ function ChallengeSection() {
   );
 }
 
+function DashboardPage({ profile, followedProjects, membership, authLoading, onGoogleLogin, onSignOut, onFollowProject }) {
+  const followed = projectCatalog.filter((project) => followedProjects.includes(project.slug));
+
+  return (
+    <main className="dashboard-page">
+      <section className="dashboard-hero">
+        <a className="back-home-link" href="/">← Về trang chủ</a>
+        <span className="section-label">Dashboard cá nhân</span>
+        <h1>Khu theo dõi project của bạn</h1>
+        <p>
+          Đây là nơi lưu các project bạn quan tâm. Trước mắt rất đơn giản:
+          đăng nhập Google, theo dõi project, rồi quay lại xem tiếp khi Lumi Labs cập nhật.
+        </p>
+      </section>
+
+      {authLoading ? (
+        <section className="dashboard-card">
+          <h2>Đang kiểm tra đăng nhập...</h2>
+        </section>
+      ) : !profile ? (
+        <section className="dashboard-card protected-card">
+          <img src="/lumi-bot.png" alt="" />
+          <div>
+            <span className="follow-badge">Cần đăng nhập</span>
+            <h2>Đăng nhập Google để mở dashboard.</h2>
+            <p>
+              Không cần mật khẩu mới. Google chỉ giúp Lumi Labs ghi nhớ bạn và các project bạn theo dõi.
+            </p>
+            <SocialLoginButton provider="google" onClick={onGoogleLogin} />
+          </div>
+        </section>
+      ) : (
+        <>
+          <section className="dashboard-card account-card">
+            {profile.avatar ? <img src={profile.avatar} alt="" /> : <span>{profile.name.charAt(0)}</span>}
+            <div>
+              <h2>{profile.name}</h2>
+              <p>{profile.email}</p>
+            </div>
+            <button type="button" onClick={onSignOut}>Đăng xuất</button>
+          </section>
+
+          <section className="dashboard-grid">
+            <article className="dashboard-card">
+              <span className="section-label">Đang theo dõi</span>
+              <h2>{followed.length || 0} project</h2>
+              <p>Project bạn follow sẽ hiện ở đây để sau này mở hướng dẫn sâu hơn.</p>
+            </article>
+            <article className="dashboard-card">
+              <span className="section-label">Quyền truy cập</span>
+              <h2>{membership?.plan === "vip" ? "VIP" : "Cơ bản"}</h2>
+              <p>
+                {membership?.plan === "vip"
+                  ? "Bạn có thể xem toàn bộ nội dung đang mở trong Lumi Labs."
+                  : "Homepage, demo cơ bản và project đang theo dõi. Gói đầy đủ có thể mở sau."}
+              </p>
+            </article>
+          </section>
+
+          <section className="dashboard-card">
+            <div className="dashboard-section-head">
+              <div>
+                <span className="section-label">Danh sách project</span>
+                <h2>Project của Lumi Labs</h2>
+              </div>
+            </div>
+            <div className="dashboard-project-list">
+              {projectCatalog.map((project) => {
+                const isFollowed = followedProjects.includes(project.slug);
+                return (
+                  <article key={project.slug} className="dashboard-project-item">
+                    <div>
+                      <small>{project.status}</small>
+                      <h3>{project.title}</h3>
+                      <p>{project.desc}</p>
+                    </div>
+                    <button type="button" onClick={() => onFollowProject(project.slug)}>
+                      {isFollowed ? "Đang theo dõi" : "Theo dõi"}
+                    </button>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        </>
+      )}
+    </main>
+  );
+}
+
 function Footer() {
   return (
     <footer id="community" className="footer">
@@ -870,18 +1223,66 @@ function Footer() {
 
 function App() {
   useReveal();
+  const auth = useAuth();
+  const isDashboard = window.location.pathname === "/dashboard";
+  const [loginOpen, setLoginOpen] = useState(false);
+
+  if (isDashboard) {
+    return (
+      <>
+        <Header
+          profile={auth.profile}
+          onOpenLogin={() => setLoginOpen(true)}
+          onSignOut={auth.signOut}
+        />
+        <DashboardPage
+          profile={auth.profile}
+          followedProjects={auth.followedProjects}
+          membership={auth.membership}
+          authLoading={auth.authLoading}
+          onGoogleLogin={auth.signInWithGoogle}
+          onSignOut={auth.signOut}
+          onFollowProject={auth.followProject}
+        />
+        {loginOpen && (
+          <LoginModal
+            onClose={() => setLoginOpen(false)}
+            onGoogleLogin={auth.signInWithGoogle}
+            onFacebookLogin={auth.signInWithFacebook}
+          />
+        )}
+      </>
+    );
+  }
 
   return (
     <>
-      <Header />
+      <Header
+        profile={auth.profile}
+        onOpenLogin={() => setLoginOpen(true)}
+        onSignOut={auth.signOut}
+      />
       <main>
         <Hero />
-        <CaptionAISection />
+        <CaptionAISection user={auth.user} />
         <UpcomingSection />
         <ChallengeSection />
       </main>
-      <JourneyWidget />
+      <JourneyWidget
+        user={auth.user}
+        profile={auth.profile}
+        followedProjects={auth.followedProjects}
+        onOpenLogin={() => setLoginOpen(true)}
+        onFollowProject={auth.followProject}
+      />
       <Footer />
+      {loginOpen && (
+        <LoginModal
+          onClose={() => setLoginOpen(false)}
+          onGoogleLogin={auth.signInWithGoogle}
+          onFacebookLogin={auth.signInWithFacebook}
+        />
+      )}
     </>
   );
 }

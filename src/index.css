@@ -123,6 +123,118 @@ button {
   gap: 10px;
 }
 
+.social-login-btn,
+.login-entry-btn {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid rgba(234, 223, 212, 0.95);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #40342f;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(112, 76, 54, 0.08);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.social-login-btn span {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4285f4, #10a37f, #f59e0b, #ef4444);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.social-login-btn.facebook span {
+  background: #1877f2;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+}
+
+.social-login-btn:hover,
+.login-entry-btn:hover {
+  border-color: rgba(255, 107, 107, 0.34);
+  transform: translateY(-1px);
+}
+
+.login-entry-btn {
+  min-height: 36px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 244, 236, 0.84));
+  color: #211915;
+  padding: 8px 14px;
+}
+
+.user-menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(234, 223, 212, 0.95);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 5px 7px 5px 5px;
+  box-shadow: 0 10px 26px rgba(112, 76, 54, 0.08);
+}
+
+.user-menu img,
+.user-fallback {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.user-fallback {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #ff6b6b, #8b5cf6);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.user-menu span {
+  min-width: 0;
+  display: grid;
+}
+
+.user-menu strong {
+  max-width: 92px;
+  overflow: hidden;
+  color: #211915;
+  font-size: 11px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu small {
+  max-width: 112px;
+  overflow: hidden;
+  color: #a19086;
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu button {
+  border-radius: 999px;
+  background: rgba(255, 107, 107, 0.1);
+  color: #b63b38;
+  padding: 6px 8px;
+  font-size: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
 .nav-cta,
 .btn {
   display: inline-flex;
@@ -3572,5 +3684,407 @@ body::before {
   .journey-widget-panel {
     width: min(340px, calc(100vw - 28px));
     left: 0;
+  }
+}
+
+.widget-login-primary {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff4f69 0%, #ff8a3d 52%, #8b5cf6 100%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 14px 32px rgba(255, 107, 107, 0.2);
+}
+
+.email-fallback {
+  margin-top: 12px;
+  border-top: 1px solid rgba(234, 223, 212, 0.95);
+  padding-top: 10px;
+}
+
+.email-fallback summary {
+  width: fit-content;
+  color: #8d7d73;
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.email-fallback[open] summary {
+  margin-bottom: 10px;
+  color: #b63b38;
+}
+
+.login-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  background: rgba(33, 25, 21, 0.24);
+  backdrop-filter: blur(8px);
+  padding: 16px;
+}
+
+.login-modal {
+  position: relative;
+  overflow: hidden;
+  width: min(430px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(121, 213, 226, 0.28), transparent 32%),
+    radial-gradient(circle at 94% 10%, rgba(255, 107, 107, 0.18), transparent 34%),
+    radial-gradient(circle at 52% 110%, rgba(139, 92, 246, 0.12), transparent 34%),
+    rgba(255, 255, 255, 0.96);
+  box-shadow: 0 34px 100px rgba(55, 36, 25, 0.26);
+  padding: 24px;
+  text-align: left;
+  animation: widgetPanelIn 0.22s ease-out;
+}
+
+.login-modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255, 107, 107, 0.13) 1px, transparent 1px);
+  background-size: 20px 20px;
+  mask-image: linear-gradient(180deg, #000 0%, transparent 72%);
+}
+
+.login-modal > * {
+  position: relative;
+  z-index: 1;
+}
+
+.login-modal-hero {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.login-modal-hero img {
+  width: 72px;
+  height: 72px;
+  border: 3px solid #fff;
+  border-radius: 24px;
+  object-fit: cover;
+  box-shadow: 0 16px 38px rgba(92, 171, 190, 0.22);
+  animation: botFloat 4.8s ease-in-out infinite;
+}
+
+.login-modal-hero span {
+  border: 1px solid rgba(121, 213, 226, 0.36);
+  border-radius: 999px;
+  background: rgba(121, 213, 226, 0.14);
+  color: #087857;
+  padding: 6px 9px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.login-modal h3 {
+  max-width: 360px;
+  margin: 14px 0 0;
+  color: #211915;
+  font-size: clamp(26px, 5vw, 34px);
+  line-height: 1.04;
+  letter-spacing: -0.8px;
+}
+
+.login-modal p {
+  margin: 12px 0 0;
+  color: #6f625b;
+  font-size: 15px;
+  line-height: 1.68;
+}
+
+.login-benefits {
+  display: grid;
+  gap: 8px;
+  margin: 18px 0;
+}
+
+.login-benefits span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(234, 223, 212, 0.95);
+  border-radius: 14px;
+  background: rgba(255, 250, 243, 0.72);
+  color: #40342f;
+  padding: 10px 11px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.login-benefits span::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 999px;
+  background: #12a874;
+  box-shadow: 0 0 0 5px rgba(18, 168, 116, 0.1);
+}
+
+.social-login-stack {
+  display: grid;
+  gap: 10px;
+}
+
+.login-modal .social-login-btn {
+  width: 100%;
+  min-height: 46px;
+}
+
+.login-note {
+  display: block;
+  margin-top: 12px;
+  color: #a19086;
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.follow-project-btn {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid rgba(18, 168, 116, 0.24);
+  border-radius: 12px;
+  background: rgba(18, 168, 116, 0.08);
+  color: #087857;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.widget-user-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: #8d7d73;
+  font-size: 11px;
+}
+
+.widget-user-line img,
+.widget-user-line span {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+}
+
+.widget-user-line img {
+  object-fit: cover;
+}
+
+.widget-user-line span {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #ff6b6b, #8b5cf6);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+/* Dashboard */
+.dashboard-page {
+  min-height: calc(100vh - 64px);
+  padding: 58px max(18px, 7vw) 80px;
+  background:
+    radial-gradient(circle at 12% 4%, rgba(255, 107, 107, 0.15), transparent 28%),
+    radial-gradient(circle at 88% 10%, rgba(139, 92, 246, 0.11), transparent 24%),
+    linear-gradient(180deg, #fffaf3, #fffdf9);
+  color: var(--text-primary);
+}
+
+.dashboard-hero,
+.dashboard-card {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+}
+
+.back-home-link {
+  display: inline-flex;
+  margin-bottom: 18px;
+  color: #b63b38;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.dashboard-hero h1 {
+  max-width: 720px;
+  margin: 12px 0 0;
+  color: #211915;
+  font-size: clamp(36px, 6vw, 68px);
+  line-height: 1;
+  letter-spacing: -1.4px;
+}
+
+.dashboard-hero p {
+  max-width: 620px;
+  margin: 18px 0 0;
+  color: #6f625b;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.dashboard-card {
+  border: 1px solid rgba(234, 223, 212, 0.95);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 20px 58px rgba(112, 76, 54, 0.1);
+  padding: 22px;
+}
+
+.dashboard-hero + .dashboard-card,
+.dashboard-hero + .dashboard-grid {
+  margin-top: 28px;
+}
+
+.protected-card,
+.account-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.protected-card > img {
+  width: 86px;
+  height: 86px;
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+.protected-card h2,
+.dashboard-card h2 {
+  margin: 8px 0 0;
+  color: #211915;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.protected-card p,
+.dashboard-card p {
+  margin: 8px 0 14px;
+  color: #6f625b;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.account-card {
+  margin-top: 28px;
+}
+
+.account-card img,
+.account-card > span {
+  width: 58px;
+  height: 58px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.account-card > span {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #ff6b6b, #8b5cf6);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.account-card button,
+.dashboard-project-item button {
+  margin-left: auto;
+  border-radius: 12px;
+  background: rgba(255, 107, 107, 0.1);
+  color: #b63b38;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.dashboard-grid {
+  width: min(1040px, 100%);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 14px auto;
+}
+
+.dashboard-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dashboard-project-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.dashboard-project-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: center;
+  border: 1px solid rgba(234, 223, 212, 0.95);
+  border-radius: 18px;
+  background: #fffaf3;
+  padding: 14px;
+}
+
+.dashboard-project-item small {
+  color: #8b5cf6;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.dashboard-project-item h3 {
+  margin: 6px 0 0;
+  color: #211915;
+  font-size: 16px;
+}
+
+.dashboard-project-item p {
+  margin-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .user-menu {
+    width: 100%;
+    border-radius: 16px;
+  }
+
+  .user-menu strong,
+  .user-menu small {
+    max-width: none;
+  }
+
+  .protected-card,
+  .account-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-grid,
+  .dashboard-project-item {
+    grid-template-columns: 1fr;
+  }
+
+  .account-card button,
+  .dashboard-project-item button {
+    width: 100%;
+    margin-left: 0;
   }
 }

@@ -26,7 +26,14 @@ export default async function handler(request, response) {
     return json(response, 405, { ok: false, error: "Method not allowed" });
   }
 
-  const { email: rawEmail } = parseBody(request);
+  const {
+    email: rawEmail,
+    user_id: userId = null,
+    name = "",
+    avatar_url: avatarUrl = "",
+    source = "follow_form",
+    provider = "email",
+  } = parseBody(request);
   const email = normalizeEmail(rawEmail);
 
   if (!EMAIL_PATTERN.test(email)) {
@@ -58,7 +65,15 @@ export default async function handler(request, response) {
         "Content-Type": "application/json",
         Prefer: "return=minimal",
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({
+        email,
+        user_id: userId,
+        name,
+        avatar_url: avatarUrl,
+        source,
+        provider,
+        updated_at: new Date().toISOString(),
+      }),
     });
 
     if (supabaseResponse.ok) {
