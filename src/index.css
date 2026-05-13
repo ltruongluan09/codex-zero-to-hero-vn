@@ -174,6 +174,10 @@ button {
 }
 
 .user-menu {
+  position: relative;
+}
+
+.user-menu-trigger {
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -182,6 +186,14 @@ button {
   background: rgba(255, 255, 255, 0.82);
   padding: 5px 7px 5px 5px;
   box-shadow: 0 10px 26px rgba(112, 76, 54, 0.08);
+  color: inherit;
+  cursor: pointer;
+}
+
+.user-menu-trigger:hover,
+.user-menu-trigger[aria-expanded="true"] {
+  border-color: rgba(255, 107, 107, 0.36);
+  background: rgba(255, 255, 255, 0.96);
 }
 
 .user-menu img,
@@ -225,14 +237,76 @@ button {
   white-space: nowrap;
 }
 
-.user-menu button {
-  border-radius: 999px;
-  background: rgba(255, 107, 107, 0.1);
-  color: #b63b38;
-  padding: 6px 8px;
-  font-size: 10px;
+.user-menu-chevron {
+  color: #a19086;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.user-menu-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 80;
+  width: min(260px, calc(100vw - 28px));
+  display: grid;
+  gap: 8px;
+  border: 1px solid rgba(234, 223, 212, 0.95);
+  border-radius: 18px;
+  background: rgba(255, 252, 248, 0.98);
+  padding: 10px;
+  box-shadow: 0 24px 70px rgba(95, 68, 51, 0.18);
+}
+
+.user-menu-card {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 8px;
+}
+
+.user-menu-card img,
+.user-menu-card .user-fallback {
+  width: 36px;
+  height: 36px;
+}
+
+.user-menu-card strong,
+.user-menu-card small {
+  max-width: 170px;
+}
+
+.user-menu-popover a,
+.user-menu-popover button {
+  width: 100%;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 12px;
   font-weight: 900;
   cursor: pointer;
+}
+
+.user-menu-popover a {
+  border: 1px solid rgba(234, 223, 212, 0.95);
+  background: rgba(255, 255, 255, 0.72);
+  color: #211915;
+}
+
+.user-menu-popover button {
+  border: 0;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.14), rgba(255, 159, 104, 0.16));
+  color: #b63b38;
+}
+
+.user-menu-popover button:disabled {
+  cursor: wait;
+  opacity: 0.7;
 }
 
 .nav-cta,
@@ -4063,7 +4137,22 @@ body::before {
 @media (max-width: 760px) {
   .user-menu {
     width: 100%;
+  }
+
+  .user-menu-trigger {
+    width: 100%;
+    justify-content: flex-start;
     border-radius: 16px;
+  }
+
+  .user-menu-chevron {
+    margin-left: auto;
+  }
+
+  .user-menu-popover {
+    position: static;
+    width: 100%;
+    margin-top: 8px;
   }
 
   .user-menu strong,
