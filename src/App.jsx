@@ -31,6 +31,8 @@ const captionExamples = [
   },
 ];
 
+const DEMO_UNLOCK_KEY = "lumi_demo_unlocked";
+
 const whoOptions = [
   {
     icon: "🙋",
@@ -352,8 +354,21 @@ function CaptionAISection() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [source, setSource] = useState("demo");
   const [copied, setCopied] = useState("");
+  const [isDemoUnlocked, setIsDemoUnlocked] = useState(false);
+
+  useEffect(() => {
+    setIsDemoUnlocked(localStorage.getItem(DEMO_UNLOCK_KEY) === "true");
+
+    const onUnlocked = () => setIsDemoUnlocked(true);
+    window.addEventListener("lumi-demo-unlocked", onUnlocked);
+    return () => window.removeEventListener("lumi-demo-unlocked", onUnlocked);
+  }, []);
 
   const generate = async () => {
+    if (!isDemoUnlocked) {
+      window.dispatchEvent(new Event("lumi-open-unlock"));
+      return;
+    }
     if (!productName.trim()) return;
     setIsGenerating(true);
     setCopied("");
@@ -422,9 +437,9 @@ function CaptionAISection() {
             Facebook và hashtag tiếng Việt để bạn đăng thử ngay.
           </p>
           <div className="caption-mini-proof">
-            <span>Không đăng ký</span>
+            <span>Xem cách hoạt động</span>
+            <span>Email để tạo thử</span>
             <span>Không cần tài khoản</span>
-            <span>Ra kết quả ngay</span>
           </div>
           <a className="caption-log-link" href="/project-01-caption-ai.html">
             <span className="caption-log-bot">
@@ -491,12 +506,14 @@ function CaptionAISection() {
               ))}
             </div>
             <button
-              className={!productName.trim() ? "generate-btn idle" : "generate-btn"}
+              className={!isDemoUnlocked || !productName.trim() ? "generate-btn idle" : "generate-btn"}
               type="button"
               onClick={generate}
-              disabled={isGenerating || !productName.trim()}
+              disabled={isGenerating || (isDemoUnlocked && !productName.trim())}
             >
-              {!productName.trim()
+              {!isDemoUnlocked
+                ? "Mở demo miễn phí để tạo caption"
+                : !productName.trim()
                 ? "Nhập tên sản phẩm để bắt đầu"
                 : isGenerating
                   ? "Đang viết caption..."
@@ -508,6 +525,8 @@ function CaptionAISection() {
             <p className="caption-source">
               {isGenerating
                 ? "AI đang đọc thông tin và viết bản nháp đầu tiên..."
+                : !isDemoUnlocked
+                ? "Bạn vẫn xem được preview. Nhập email ở góc dưới để mở demo cơ bản."
                 : source === "gemini"
                 ? "Đang dùng Gemini để viết caption thật."
                 : source === "fallback"
@@ -581,24 +600,160 @@ function CaptionAISection() {
                 </article>
               </>
             ) : (
-              <article className="empty-result">
+              <article className={isDemoUnlocked ? "empty-result" : "empty-result locked-preview"}>
                 <span>2. Xem kết quả</span>
-                <h3>Caption TikTok, Facebook và hashtag sẽ hiện ở đây.</h3>
+                <h3>{isDemoUnlocked ? "Caption TikTok, Facebook và hashtag sẽ hiện ở đây." : "Demo đang chờ bạn mở miễn phí."}</h3>
                 <p>
-                  Nhập tên sản phẩm, thêm mô tả ngắn rồi bấm tạo. Nếu muốn thử nhanh,
-                  hãy dùng ví dụ mẫu ở bên trái.
+                  {isDemoUnlocked
+                    ? "Nhập tên sản phẩm, thêm mô tả ngắn rồi bấm tạo. Nếu muốn thử nhanh, hãy dùng ví dụ mẫu ở bên trái."
+                    : "Bạn có thể xem trước cách tool hoạt động. Khi nhập email, Lumi Bot sẽ mở phần tạo caption để bạn thử thật."}
                 </p>
                 <div className="empty-preview">
                   <span>TikTok caption</span>
                   <span>Facebook caption</span>
                   <span>#Hashtag</span>
                 </div>
+                {!isDemoUnlocked && (
+                  <div className="locked-preview-card" aria-hidden="true">
+                    <small>Ví dụ kết quả sau khi mở demo</small>
+                    <p>Mấy bà công sở làm việc khuya mà vẫn muốn da sáng mịn thì thử em serum này nha...</p>
+                    <strong>#SerumPhucHoi #ChamSocDa #LumiLabs</strong>
+                  </div>
+                )}
+                {!isDemoUnlocked && (
+                  <button className="unlock-demo-btn" type="button" onClick={() => window.dispatchEvent(new Event("lumi-open-unlock"))}>
+                    Mở demo miễn phí →
+                  </button>
+                )}
               </article>
             )}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function JourneyWidget() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle");
+  const [message, setMessage] = useState("");
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onOpenUnlock = () => setOpen(true);
+    window.addEventListener("lumi-open-unlock", onOpenUnlock);
+    return () => window.removeEventListener("lumi-open-unlock", onOpenUnlock);
+  }, []);
+
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+
+  const submit = async (event) => {
+    event.preventDefault();
+    const cleanEmail = email.trim().toLowerCase();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      setStatus("error");
+      setMessage("Bạn nhập email giúp mình nhé. Ví dụ: tenban@gmail.com");
+      return;
+    }
+
+    setStatus("loading");
+    setMessage("Lumi Bot đang lưu email của bạn...");
+
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: cleanEmail }),
+      });
+      const data = await response.json();
+
+      if (!response.ok || !data.ok) {
+        setStatus("error");
+        setMessage(data.message || "Chưa đăng ký được. Bạn thử lại giúp mình nhé.");
+        return;
+      }
+
+      setStatus("success");
+      localStorage.setItem(DEMO_UNLOCK_KEY, "true");
+      window.dispatchEvent(new Event("lumi-demo-unlocked"));
+      setMessage(
+        data.status === "already_subscribed"
+          ? "Email này đã có rồi. Bạn có thể mở demo và nhận project mới."
+          : "Xong rồi. Bạn có thể mở demo và mình sẽ gửi project mới khi có."
+      );
+      setEmail("");
+    } catch {
+      setStatus("error");
+      setMessage("Kết nối hơi chập chờn. Bạn thử lại sau một chút nhé.");
+    }
+  };
+
+  return (
+    <aside className={open ? "journey-widget open" : "journey-widget"} aria-label="Mở demo miễn phí">
+      <button className="journey-widget-main" type="button" onClick={() => setOpen((value) => !value)}>
+        <span className="journey-widget-avatar">
+          <img src="/lumi-bot.png" alt="" />
+        </span>
+        <span className="journey-widget-body">
+          <span className="journey-widget-top">
+            <strong>Mở demo miễn phí</strong>
+            <small>Project 1/21</small>
+          </span>
+          <span className="journey-widget-progress" aria-hidden="true">
+            <i />
+          </span>
+          <span className="journey-widget-action">{open ? "Đóng lại" : "Nhập email để thử demo"}</span>
+        </span>
+      </button>
+
+      {open && (
+        <form className="journey-widget-panel" onSubmit={submit} noValidate>
+          <button
+            className="journey-widget-close"
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Đóng ghi chú hành trình"
+          >
+            ×
+          </button>
+          <span className="follow-badge">Miễn phí lúc bắt đầu</span>
+          <h3>Nhập email để mở demo và nhận project mới.</h3>
+          <p>
+            Bạn vẫn xem được trang chính bình thường. Email chỉ giúp Lumi Bot ghi nhớ bạn,
+            mở demo cơ bản và gửi những project mới dễ làm theo.
+          </p>
+          <div className="follow-preview">
+            <span>Sau này có thể mở thêm</span>
+            <strong>“Biến file Excel thành báo cáo bằng AI”</strong>
+          </div>
+          <label htmlFor="journey-email">Email</label>
+          <div className="follow-input-row">
+            <input
+              id="journey-email"
+              type="email"
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value);
+                if (status !== "loading") {
+                  setStatus("idle");
+                  setMessage("");
+                }
+              }}
+              placeholder="tenban@gmail.com"
+              aria-invalid={status === "error"}
+            />
+            <button type="submit" disabled={status === "loading" || !isValidEmail}>
+              {status === "loading" ? "Đang lưu..." : "Mở demo miễn phí"}
+            </button>
+          </div>
+          <p className={`follow-message ${status}`} aria-live="polite">
+            {message || "Không spam. Không cần tài khoản. Gói đầy đủ có thể mở sau khi mọi thứ đủ tốt."}
+          </p>
+        </form>
+      )}
+    </aside>
   );
 }
 
@@ -725,6 +880,7 @@ function App() {
         <UpcomingSection />
         <ChallengeSection />
       </main>
+      <JourneyWidget />
       <Footer />
     </>
   );
