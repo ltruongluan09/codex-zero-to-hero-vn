@@ -449,7 +449,6 @@ function Header({ profile, onOpenLogin, onSignOut }) {
           {profile && <a href="/dashboard">Dashboard</a>}
         </nav>
         <div className="nav-actions">
-          <a className="nav-cta" href="#caption-ai">Thử Caption AI →</a>
           {profile ? (
             <UserMenu profile={profile} onSignOut={onSignOut} />
           ) : (
@@ -470,9 +469,6 @@ function Header({ profile, onOpenLogin, onSignOut }) {
           </a>
         ))}
         {profile && <a href="/dashboard" onClick={() => setOpen(false)}>Dashboard</a>}
-        <a className="nav-cta drawer-cta" href="#caption-ai" onClick={() => setOpen(false)}>
-          Thử Caption AI →
-        </a>
         {profile ? (
           <UserMenu profile={profile} onSignOut={onSignOut} />
         ) : (

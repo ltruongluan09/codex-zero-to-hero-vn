@@ -168,9 +168,16 @@ button {
 
 .login-entry-btn {
   min-height: 36px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 244, 236, 0.84));
-  color: #211915;
-  padding: 8px 14px;
+  border: 0;
+  background: linear-gradient(135deg, #ff4f69 0%, #ff8a3d 52%, #8b5cf6 100%);
+  color: #fff;
+  padding: 9px 18px;
+  box-shadow: 0 16px 34px rgba(255, 107, 107, 0.24);
+}
+
+.login-entry-btn:hover {
+  border-color: transparent;
+  box-shadow: 0 18px 40px rgba(255, 107, 107, 0.3);
 }
 
 .user-menu {
@@ -257,6 +264,7 @@ button {
   border-radius: 18px;
   background: rgba(255, 252, 248, 0.98);
   padding: 10px;
+  overflow: hidden;
   box-shadow: 0 24px 70px rgba(95, 68, 51, 0.18);
 }
 
@@ -266,6 +274,7 @@ button {
   gap: 10px;
   align-items: center;
   padding: 8px;
+  min-width: 0;
 }
 
 .user-menu-card img,
@@ -276,12 +285,17 @@ button {
 
 .user-menu-card strong,
 .user-menu-card small {
-  max-width: 170px;
+  display: block;
+  max-width: 168px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .user-menu-popover a,
 .user-menu-popover button {
   width: 100%;
+  box-sizing: border-box;
   min-height: 38px;
   display: inline-flex;
   align-items: center;
@@ -290,6 +304,7 @@ button {
   font-size: 12px;
   font-weight: 900;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .user-menu-popover a {
