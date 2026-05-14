@@ -346,7 +346,7 @@ function useAuth() {
       options: {
         redirectTo,
         queryParams: {
-          prompt: "select_account",
+          prompt: "consent select_account",
         },
       },
     });
