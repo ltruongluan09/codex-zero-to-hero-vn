@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { getUserProfile, hasSupabaseConfig, supabase } from "./supabaseClient";
 
 const navItems = [
-  { label: "Trang chủ", href: "#home" },
-  { label: "Caption AI", href: "#caption-ai" },
-  { label: "Dự án tiếp theo", href: "#upcoming" },
-  { label: "Thử thách 21 ngày", href: "#challenge" },
+  { label: "Trang chủ", href: "/" },
+  { label: "Hành trình", href: "/challenge" },
+  { label: "Dự án", href: "/projects" },
+  { label: "Bài viết", href: "/project-01-caption-ai.html" },
+  { label: "Về mình", href: "/dashboard" },
 ];
 
 const captionModes = [
@@ -118,6 +119,27 @@ const projectCatalog = [
     title: "AI Office Tools",
     desc: "Bộ công cụ AI cho dân văn phòng.",
     status: "Ý tưởng",
+  },
+];
+
+const featuredProjects = [
+  {
+    title: "Caption AI",
+    desc: "Viết caption TikTok, Facebook và hashtag tiếng Việt.",
+    progress: 75,
+    tone: "coral",
+  },
+  {
+    title: "Excel Report AI",
+    desc: "Biến file Excel thành báo cáo dễ đọc cho sếp.",
+    progress: 25,
+    tone: "blue",
+  },
+  {
+    title: "AI Creator Tools",
+    desc: "Bộ công cụ nhỏ cho creator, shop và freelancer.",
+    progress: 35,
+    tone: "violet",
   },
 ];
 
@@ -350,9 +372,12 @@ function useAuth() {
 
 function Logo() {
   return (
-    <a className="logo" href="#home" aria-label="Lumi Labs">
-      <span className="logo-dot" />
-      <span>Lumi Labs</span>
+    <a className="logo" href="/" aria-label="Lumi Labs">
+      <span className="logo-bot"><img src="/lumi-bot.png" alt="" /></span>
+      <span>
+        <strong>Lumi Labs</strong>
+        <small>AI dễ hiểu cho mọi người ✨</small>
+      </span>
     </a>
   );
 }
@@ -372,7 +397,8 @@ function SocialLoginButton({ provider, onClick }) {
 function LoginButton({ onClick }) {
   return (
     <button className="login-entry-btn" type="button" onClick={onClick}>
-      Đăng nhập
+      <span>G</span>
+      Đăng nhập với Google
     </button>
   );
 }
@@ -428,6 +454,7 @@ function UserMenu({ profile, onSignOut }) {
 function Header({ profile, onOpenLogin, onSignOut }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const path = window.location.pathname;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -441,14 +468,15 @@ function Header({ profile, onOpenLogin, onSignOut }) {
       <div className="nav-inner">
         <Logo />
         <nav className="nav-links" aria-label="Điều hướng chính">
-          {navItems.map((item, index) => (
-            <a key={item.label} className={index === 0 ? "active" : ""} href={item.href}>
+          {navItems.map((item) => (
+            <a key={item.label} className={path === item.href ? "active" : ""} href={item.href}>
               {item.label}
             </a>
           ))}
           {profile && <a href="/dashboard">Dashboard</a>}
         </nav>
         <div className="nav-actions">
+          <a className="nav-cta" href="/dashboard">♡ Theo dõi hành trình</a>
           {profile ? (
             <UserMenu profile={profile} onSignOut={onSignOut} />
           ) : (
@@ -469,6 +497,9 @@ function Header({ profile, onOpenLogin, onSignOut }) {
           </a>
         ))}
         {profile && <a href="/dashboard" onClick={() => setOpen(false)}>Dashboard</a>}
+        <a className="nav-cta drawer-cta" href="/dashboard" onClick={() => setOpen(false)}>
+          ♡ Theo dõi hành trình
+        </a>
         {profile ? (
           <UserMenu profile={profile} onSignOut={onSignOut} />
         ) : (
@@ -520,59 +551,174 @@ function WhoCard() {
 
 function LumiBotIntro() {
   return (
-    <aside className="lumi-bot-card" data-reveal>
-      <div className="lumi-bot-avatar">
-        <img src="/lumi-bot.png" alt="Lumi Bot" />
-      </div>
-      <div>
-        <span>Lumi Bot</span>
-        <h2>Người dẫn đường nhỏ trong từng demo.</h2>
-        <p>Mình sẽ giúp bạn biết nên bấm gì, nhập gì, và vì sao AI trả ra kết quả như vậy.</p>
+    <aside className="hero-lumi-stage hero-image-stage" data-reveal>
+      <img src="/lumi-hero-journey.png" alt="Lumi Bot dẫn đường qua hành trình AI" />
+      <div className="hero-visual-effects" aria-hidden="true">
+        <span className="portal-title">CÙNG AI</span>
+        <span className="lumi-speech">
+          <strong>Xin chào! 👋</strong>
+          <small>Mình là Lumi. Mình sẽ đồng hành cùng bạn trên hành trình AI này!</small>
+        </span>
+        <span className="journey-step-label step-label-one">
+          <strong>1. Ý tưởng</strong>
+          <small>Bạn có ý tưởng gì?</small>
+        </span>
+        <span className="journey-step-label step-label-two">
+          <strong>2. Xây dựng</strong>
+          <small>AI giúp bạn tạo ra</small>
+        </span>
+        <span className="journey-step-label step-label-three">
+          <strong>3. Hoàn thành</strong>
+          <small>Biến ý tưởng thành sản phẩm thật</small>
+        </span>
+        <span className="portal-aura" />
+        <span className="path-glow" />
+        <span className="spark spark-one" />
+        <span className="spark spark-two" />
+        <span className="spark spark-three" />
+        <span className="step-pulse step-one" />
+        <span className="step-pulse step-two" />
+        <span className="step-pulse step-three" />
       </div>
     </aside>
   );
 }
 
-function Hero() {
+function HeroFeaturedProjects() {
   return (
-    <section id="home" className="hero">
+    <div className="home-cards" data-reveal>
+      <article className="home-project-card">
+        <h2>💼 Dự án đang thực hiện</h2>
+        <div className="home-project-content">
+          <div className="project-illustration">
+            <span>✦</span>
+            <strong>✎</strong>
+          </div>
+          <div>
+            <span className="status-pill">Đang phát triển</span>
+            <h3>Caption AI</h3>
+            <p>AI giúp bạn viết caption hấp dẫn cho Facebook, TikTok, YouTube, LinkedIn...</p>
+            <div className="mini-actions">
+              <span>💬 Viết caption</span>
+              <span>⚡ Viết hook</span>
+              <span>☷ Viết kịch bản</span>
+            </div>
+            <a href="/caption-ai">Xem chi tiết →</a>
+          </div>
+        </div>
+      </article>
+
+      <article className="home-article-card">
+        <div className="home-card-head">
+          <h2>📄 Bài viết mới nhất</h2>
+          <a href="/project-01-caption-ai.html">Xem tất cả →</a>
+        </div>
+        <div className="article-feature">
+          <img src="/lumi-bot.png" alt="" />
+          <div>
+            <span>Hướng dẫn · 2 ngày trước</span>
+            <h3>Prompt AI hiệu quả: 5 nguyên tắc đơn giản</h3>
+            <p>Viết prompt đúng cách để AI hiểu và cho ra kết quả tốt hơn.</p>
+          </div>
+        </div>
+        <ul className="article-list">
+          <li><a href="/project-01-caption-ai.html">Tự động hóa công việc với AI (Phần 1)</a><span>5 ngày trước</span></li>
+          <li><a href="/project-01-caption-ai.html">Hành trình xây dựng Caption AI</a><span>1 tuần trước</span></li>
+        </ul>
+      </article>
+    </div>
+  );
+}
+
+function HeroBenefits({ onOpenLogin }) {
+  return (
+    <div className="hero-benefits" data-reveal>
+      <article>
+        <span><img src="/lumi-bot.png" alt="" /></span>
+        <div>
+          <strong>Sứ mệnh của mình 💜</strong>
+          <small>Giúp mọi người khám phá và ứng dụng AI dễ dàng hơn mỗi ngày.</small>
+        </div>
+      </article>
+      <article>
+        <span>▣</span>
+        <div>
+          <strong>Dễ hiểu</strong>
+          <small>Giải thích đơn giản, ai cũng hiểu được.</small>
+        </div>
+      </article>
+      <article>
+        <span>🚀</span>
+        <div>
+          <strong>Thực tế</strong>
+          <small>Ứng dụng AI vào công việc và cuộc sống hằng ngày.</small>
+        </div>
+      </article>
+      <article>
+        <span>💜</span>
+        <div>
+          <strong>Chân thật</strong>
+          <small>Chia sẻ hành trình thật, thử sai rồi làm lại.</small>
+        </div>
+      </article>
+      <article className="home-login-card">
+        <div className="home-login-bot">
+          <img src="/lumi-bot.png" alt="" />
+          <span />
+        </div>
+        <div className="home-login-copy">
+          <div className="demo-widget-head">
+            <strong>Mở demo</strong>
+            <small>Project 1/21</small>
+          </div>
+          <div className="demo-widget-progress">
+            <span />
+          </div>
+          <button type="button" onClick={onOpenLogin}>Email hoặc Google</button>
+        </div>
+      </article>
+    </div>
+  );
+}
+
+function Hero({ onOpenLogin }) {
+  return (
+    <section id="home" className="hero home-hero">
       <div className="hero-copy" data-reveal>
         <div className="badge-start">
           <span className="pulse-dot" />
-          Làm công khai từ Việt Nam · Cho người không biết code
+          ✨ AI không khó. Chỉ cần bắt đầu.
         </div>
         <h1 className="hero-h1">
-          Xem rất nhiều video AI,
+          Mình build
           <br />
-          nhưng vẫn chưa tự tay
-          <br />
-          <span>làm được gì?</span>
+          cùng <span>AI mỗi ngày.</span>
         </h1>
-        <div className="hero-bot-pill">
-          <img src="/lumi-bot.png" alt="" />
-          <span>Lumi Bot sẽ dẫn bạn đi từng bước.</span>
-        </div>
         <p>
-          Lumi Labs là nơi tôi biến những việc rất đời thường thành công cụ AI dùng được.
-          Không cần giỏi code. Bạn chỉ cần xem, thử, rồi làm lại theo cách của mình.
+          Mình chia sẻ hành trình thật khi tạo ra những sản phẩm với AI —
+          theo cách dễ hiểu để ai cũng có thể bắt đầu.
         </p>
         <div className="hero-actions">
-          <a className="btn primary" href="#caption-ai">Thử Caption AI ngay →</a>
-          <a className="btn secondary" href="#upcoming">Xem lộ trình sắp tới</a>
+          <a className="btn primary" href="/challenge">▶ Xem hành trình</a>
+          <a className="btn secondary" href="/projects">Khám phá thêm</a>
         </div>
-        <div className="trust-row">
-          <span>Từng bước dễ hiểu</span>
-          <span>Có hình ảnh & demo</span>
-          <span>Không cần biết code</span>
+        <div className="creator-proof">
+          <div className="avatar-stack">
+            <span />
+            <span />
+            <span />
+          </div>
+          <strong>1.200+ người đang theo dõi hành trình</strong>
         </div>
       </div>
       <div className="hero-side">
         <LumiBotIntro />
       </div>
+      <HeroFeaturedProjects />
+      <HeroBenefits onOpenLogin={onOpenLogin} />
     </section>
   );
 }
-
 function normalizeHashtag(value) {
   return value
     .normalize("NFD")
@@ -1256,7 +1402,11 @@ function Footer() {
 function App() {
   useReveal();
   const auth = useAuth();
-  const isDashboard = window.location.pathname === "/dashboard";
+  const currentPath = window.location.pathname;
+  const isDashboard = currentPath === "/dashboard";
+  const isCaptionPage = currentPath === "/caption-ai";
+  const isProjectsPage = currentPath === "/projects";
+  const isChallengePage = currentPath === "/challenge";
   const [loginOpen, setLoginOpen] = useState(false);
 
   if (isDashboard) {
@@ -1286,6 +1436,37 @@ function App() {
     );
   }
 
+  if (isCaptionPage || isProjectsPage || isChallengePage) {
+    return (
+      <>
+        <Header
+          profile={auth.profile}
+          onOpenLogin={() => setLoginOpen(true)}
+          onSignOut={auth.signOut}
+        />
+        <main>
+          {isCaptionPage && <CaptionAISection user={auth.user} />}
+          {isProjectsPage && <UpcomingSection />}
+          {isChallengePage && <ChallengeSection />}
+        </main>
+        <JourneyWidget
+          user={auth.user}
+          profile={auth.profile}
+          followedProjects={auth.followedProjects}
+          onOpenLogin={() => setLoginOpen(true)}
+          onFollowProject={auth.followProject}
+        />
+        <Footer />
+        {loginOpen && (
+          <LoginModal
+            onClose={() => setLoginOpen(false)}
+            onGoogleLogin={auth.signInWithGoogle}
+          />
+        )}
+      </>
+    );
+  }
+
   return (
     <>
       <Header
@@ -1294,19 +1475,8 @@ function App() {
         onSignOut={auth.signOut}
       />
       <main>
-        <Hero />
-        <CaptionAISection user={auth.user} />
-        <UpcomingSection />
-        <ChallengeSection />
+        <Hero onOpenLogin={() => setLoginOpen(true)} />
       </main>
-      <JourneyWidget
-        user={auth.user}
-        profile={auth.profile}
-        followedProjects={auth.followedProjects}
-        onOpenLogin={() => setLoginOpen(true)}
-        onFollowProject={auth.followProject}
-      />
-      <Footer />
       {loginOpen && (
         <LoginModal
           onClose={() => setLoginOpen(false)}

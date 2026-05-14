@@ -5,6 +5,18 @@
     {
       "source": "/dashboard",
       "destination": "/"
+    },
+    {
+      "source": "/caption-ai",
+      "destination": "/"
+    },
+    {
+      "source": "/projects",
+      "destination": "/"
+    },
+    {
+      "source": "/challenge",
+      "destination": "/"
     }
   ]
 }
