@@ -314,12 +314,20 @@ function useAuth() {
 
   const signInWithProvider = async (provider) => {
     if (!supabase) return;
-    await supabase.auth.signInWithOAuth({
+    const redirectTo = `${window.location.origin}${window.location.pathname}`;
+    const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: window.location.origin,
+        redirectTo,
+        queryParams: {
+          prompt: "select_account",
+        },
       },
     });
+
+    if (error) {
+      console.error("OAuth login failed", error);
+    }
   };
 
   const signInWithGoogle = () => signInWithProvider("google");
