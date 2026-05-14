@@ -209,11 +209,25 @@ function useAuth() {
   const [membership, setMembership] = useState(null);
   const [authLoading, setAuthLoading] = useState(hasSupabaseConfig);
 
+  const getCleanAuthPath = () => {
+    const url = new URL(window.location.href);
+    const hadAuthHash = url.hash.includes("access_token=") || url.hash.includes("error=");
+    const hadAuthCode = url.searchParams.has("code");
+    ["code", "error", "error_code", "error_description"].forEach((key) => {
+      url.searchParams.delete(key);
+    });
+    if (hadAuthHash) {
+      url.hash = "";
+    }
+    const cleanPath = `${url.pathname}${url.search}${url.hash}` || "/";
+    return { cleanPath, shouldClean: hadAuthHash || hadAuthCode };
+  };
+
   const finishAuthRedirect = () => {
     const returnPath = localStorage.getItem(AUTH_RETURN_PATH_KEY);
-    const currentPath = `${window.location.pathname}${window.location.search}`;
+    const { cleanPath, shouldClean } = getCleanAuthPath();
 
-    if (returnPath && returnPath !== currentPath) {
+    if (returnPath && returnPath !== cleanPath) {
       localStorage.removeItem(AUTH_RETURN_PATH_KEY);
       window.location.replace(returnPath);
       return true;
@@ -221,8 +235,8 @@ function useAuth() {
 
     localStorage.removeItem(AUTH_RETURN_PATH_KEY);
 
-    if (window.location.hash.includes("access_token=")) {
-      window.history.replaceState(null, "", currentPath || "/");
+    if (shouldClean) {
+      window.history.replaceState(null, "", cleanPath);
     }
 
     return false;
@@ -295,9 +309,8 @@ function useAuth() {
 
     let active = true;
 
-    supabase.auth.getSession().then(async ({ data }) => {
-      if (!active) return;
-      const nextSession = data.session;
+    const applySession = async (nextSession) => {
+      if (!active) return false;
       setSession(nextSession);
       setUser(nextSession?.user || null);
       if (nextSession?.user) {
@@ -307,25 +320,34 @@ function useAuth() {
         localStorage.setItem(DEMO_UNLOCK_KEY, "true");
         window.dispatchEvent(new Event("lumi-demo-unlocked"));
         if (finishAuthRedirect()) return;
-      }
-      setAuthLoading(false);
-    });
-
-    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, nextSession) => {
-      setSession(nextSession);
-      setUser(nextSession?.user || null);
-      if (nextSession?.user) {
-        await syncProfile(nextSession.user);
-        await loadFollowedProjects(nextSession.user.id);
-        await loadMembership(nextSession.user.id);
-        localStorage.setItem(DEMO_UNLOCK_KEY, "true");
-        window.dispatchEvent(new Event("lumi-demo-unlocked"));
-        finishAuthRedirect();
       } else {
         setProfile(null);
         setFollowedProjects([]);
         setMembership(null);
       }
+      return true;
+    };
+
+    const initAuth = async () => {
+      const url = new URL(window.location.href);
+
+      if (url.searchParams.has("code")) {
+        try {
+          await supabase.auth.exchangeCodeForSession(url.searchParams.get("code"));
+        } catch (error) {
+          console.error("OAuth callback exchange failed", error);
+        }
+      }
+
+      const { data } = await supabase.auth.getSession();
+      await applySession(data.session);
+      if (active) setAuthLoading(false);
+    };
+
+    initAuth();
+
+    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, nextSession) => {
+      await applySession(nextSession);
     });
 
     return () => {
@@ -489,6 +511,7 @@ function Header({ profile, onOpenLogin, onSignOut }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const path = window.location.pathname;
+  const mobileInitial = profile?.name?.charAt(0) || profile?.email?.charAt(0) || "L";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -515,6 +538,11 @@ function Header({ profile, onOpenLogin, onSignOut }) {
             <UserMenu profile={profile} onSignOut={onSignOut} />
           ) : (
             <LoginButton onClick={onOpenLogin} />
+          )}
+          {profile && (
+            <a className="mobile-user-avatar" href="/dashboard" aria-label="Dashboard của tôi">
+              {profile.avatar ? <img src={profile.avatar} alt="" /> : <span>{mobileInitial}</span>}
+            </a>
           )}
           <button className="hamburger" type="button" onClick={() => setOpen(true)} aria-label="Mở menu">
             ☰
@@ -1298,12 +1326,12 @@ function JourneyWidgetV2({ user, profile, followedProjects, onOpenLogin, onFollo
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
       setStatus("error");
-      setMessage("Nhap email dung de mo demo nhe.");
+      setMessage("Nhập email đúng để mở demo nhé.");
       return;
     }
 
     setStatus("loading");
-    setMessage("Lumi Bot dang mo demo...");
+    setMessage("Lumi Bot đang mở demo...");
 
     try {
       const response = await fetch("/api/subscribe", {
@@ -1319,57 +1347,57 @@ function JourneyWidgetV2({ user, profile, followedProjects, onOpenLogin, onFollo
           setMessage(data.message || "Email chua dung dinh dang.");
           return;
         }
-        unlockDemo("Demo da mo. Email se duoc luu khi he thong san sang.");
+        unlockDemo("Demo đã mở. Email sẽ được lưu khi hệ thống sẵn sàng.");
         setEmail("");
         return;
       }
 
-      unlockDemo(data.status === "already_subscribed" ? "Email nay da co roi. Demo da mo." : "Xong roi. Demo da mo.");
+      unlockDemo(data.status === "already_subscribed" ? "Email này đã có rồi. Demo đã mở." : "Xong rồi. Demo đã mở.");
       setEmail("");
     } catch {
-      unlockDemo("Demo da mo tren trinh duyet nay.");
+      unlockDemo("Demo đã mở trên trình duyệt này.");
       setEmail("");
     }
   };
 
   return (
-    <aside className={open ? "journey-widget open" : "journey-widget"} aria-label="Dang nhap">
+    <aside className={open ? "journey-widget open" : "journey-widget"} aria-label="Mở demo">
       <button className="journey-widget-main" type="button" onClick={() => setOpen((value) => !value)}>
         <span className="journey-widget-avatar">
           <img src="/lumi-bot.png" alt="" />
         </span>
         <span className="journey-widget-body">
           <span className="journey-widget-top">
-            <strong>Dang nhap</strong>
+            <strong>Mở demo</strong>
             <small>Project 1/21</small>
           </span>
           <span className="journey-widget-progress" aria-hidden="true">
             <i />
           </span>
-          <span className="journey-widget-action">{open ? "Dong lai" : "Dang nhap"}</span>
+          <span className="journey-widget-action">{open ? "Đóng lại" : "Đăng nhập"}</span>
         </span>
       </button>
 
       {open && (
         <form className="journey-widget-panel" onSubmit={(event) => event.preventDefault()} noValidate>
-          <button className="journey-widget-close" type="button" onClick={() => setOpen(false)} aria-label="Dong">
-            x
+          <button className="journey-widget-close" type="button" onClick={() => setOpen(false)} aria-label="Đóng">
+            ×
           </button>
-          <span className="follow-badge">Mien phi</span>
-          <h3>Dang nhap de xem day du</h3>
-          <p>Dang nhap Google xong, Caption AI se mo full demo tu dong.</p>
+          <span className="follow-badge">Miễn phí</span>
+          <h3>Đăng nhập để xem demo đầy đủ</h3>
+          <p>Đăng nhập Google xong, Caption AI sẽ tự mở demo cho bạn.</p>
           {!user ? (
             <>
               <button className="widget-login-primary" type="button" onClick={onOpenLogin}>
-                Dang nhap Google
+                Đăng nhập Google
               </button>
             </>
           ) : (
-            <p className="follow-message success">Ban da dang nhap. Demo da mo.</p>
+            <p className="follow-message success">Bạn đã đăng nhập. Demo đã mở.</p>
           )}
           {user && (
             <button className="follow-project-btn" type="button" onClick={() => onFollowProject("caption-ai")}>
-              {followedProjects.includes("caption-ai") ? "Dang theo doi Caption AI" : "Theo doi Caption AI"}
+              {followedProjects.includes("caption-ai") ? "Đang theo dõi Caption AI" : "Theo dõi Caption AI"}
             </button>
           )}
           {profile && (
