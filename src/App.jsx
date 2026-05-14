@@ -34,6 +34,7 @@ const captionExamples = [
 ];
 
 const DEMO_UNLOCK_KEY = "lumi_demo_unlocked";
+const AUTH_RETURN_PATH_KEY = "lumi_auth_return_path";
 
 const whoOptions = [
   {
@@ -208,6 +209,25 @@ function useAuth() {
   const [membership, setMembership] = useState(null);
   const [authLoading, setAuthLoading] = useState(hasSupabaseConfig);
 
+  const finishAuthRedirect = () => {
+    const returnPath = localStorage.getItem(AUTH_RETURN_PATH_KEY);
+    const currentPath = `${window.location.pathname}${window.location.search}`;
+
+    if (returnPath && returnPath !== currentPath) {
+      localStorage.removeItem(AUTH_RETURN_PATH_KEY);
+      window.location.replace(returnPath);
+      return true;
+    }
+
+    localStorage.removeItem(AUTH_RETURN_PATH_KEY);
+
+    if (window.location.hash.includes("access_token=")) {
+      window.history.replaceState(null, "", currentPath || "/");
+    }
+
+    return false;
+  };
+
   const loadFollowedProjects = async (userId) => {
     if (!supabase || !userId) return;
 
@@ -286,6 +306,7 @@ function useAuth() {
         await loadMembership(nextSession.user.id);
         localStorage.setItem(DEMO_UNLOCK_KEY, "true");
         window.dispatchEvent(new Event("lumi-demo-unlocked"));
+        if (finishAuthRedirect()) return;
       }
       setAuthLoading(false);
     });
@@ -299,6 +320,7 @@ function useAuth() {
         await loadMembership(nextSession.user.id);
         localStorage.setItem(DEMO_UNLOCK_KEY, "true");
         window.dispatchEvent(new Event("lumi-demo-unlocked"));
+        finishAuthRedirect();
       } else {
         setProfile(null);
         setFollowedProjects([]);
@@ -314,7 +336,11 @@ function useAuth() {
 
   const signInWithProvider = async (provider) => {
     if (!supabase) return;
-    const redirectTo = `${window.location.origin}${window.location.pathname}`;
+    const returnPath = `${window.location.pathname}${window.location.search}`;
+    const isLuanDomain = /(^|\.)luanai\.io\.vn$/.test(window.location.hostname);
+    const redirectOrigin = isLuanDomain ? "https://luanai.io.vn" : window.location.origin;
+    const redirectTo = `${redirectOrigin}${window.location.pathname}`;
+    localStorage.setItem(AUTH_RETURN_PATH_KEY, returnPath || "/");
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
