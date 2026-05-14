@@ -1387,4 +1387,1163 @@ body {
   .logo strong {
     font-size: 18px !important;
   }
+
+  .journey-widget:not(.open) {
+    width: min(250px, calc(100vw - 28px)) !important;
+  }
+
+  .journey-widget:not(.open) .journey-widget-main {
+    grid-template-columns: 40px minmax(0, 1fr) !important;
+    padding: 8px !important;
+  }
+
+  .journey-widget:not(.open) .journey-widget-avatar {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .journey-widget:not(.open) .journey-widget-avatar img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .journey-widget:not(.open) .journey-widget-action {
+    font-size: 10px !important;
+  }
+}
+
+/* Caption AI product page: polished light SaaS layout for Project 1. */
+.caption-ai-section {
+  padding: clamp(18px, 2.4vw, 34px) max(16px, 3vw) 48px !important;
+  border-top: 0 !important;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(255, 255, 255, 0.96), transparent 28%),
+    radial-gradient(circle at 92% 5%, rgba(129, 86, 255, 0.14), transparent 32%),
+    linear-gradient(180deg, #fbfaff 0%, #f6f1ff 52%, #fffdfb 100%) !important;
+}
+
+.caption-shell {
+  width: min(1520px, 100%) !important;
+  min-height: calc(100vh - 140px) !important;
+  display: grid !important;
+  grid-template-columns: minmax(300px, 0.52fr) minmax(720px, 1.25fr) !important;
+  gap: 0 !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(219, 209, 255, 0.95) !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.94), transparent 36%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(248, 244, 255, 0.9)) !important;
+  box-shadow: 0 30px 90px rgba(86, 66, 150, 0.12) !important;
+}
+
+.caption-intro {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100% !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(219, 209, 255, 0.78) !important;
+  border-radius: 0 !important;
+  background:
+    radial-gradient(circle at 82% 96%, rgba(137, 93, 255, 0.1), transparent 26%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 255, 0.92)) !important;
+  padding: clamp(22px, 2.8vw, 34px) !important;
+}
+
+.caption-intro::after {
+  content: "AI" !important;
+  right: -18px !important;
+  bottom: -34px !important;
+  color: rgba(128, 82, 255, 0.055) !important;
+  font-size: clamp(110px, 12vw, 180px) !important;
+}
+
+.caption-badge {
+  width: fit-content !important;
+  border: 1px solid rgba(236, 207, 255, 0.95) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.86) !important;
+  color: #8a3ff3 !important;
+  padding: 10px 14px !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  box-shadow: 0 14px 34px rgba(106, 78, 180, 0.07) !important;
+}
+
+.caption-intro h2 {
+  margin: 28px 0 0 !important;
+  color: #080715 !important;
+  font-size: clamp(54px, 6vw, 82px) !important;
+  font-weight: 950 !important;
+  letter-spacing: -2.5px !important;
+  line-height: 0.98 !important;
+}
+
+.caption-intro h2::after {
+  content: "✦" !important;
+  display: inline-block !important;
+  margin-left: 10px !important;
+  background: linear-gradient(135deg, #7a4dff, #42b7ff) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  animation: captionSpark 2.4s ease-in-out infinite !important;
+}
+
+.caption-intro p {
+  max-width: 430px !important;
+  margin: 22px 0 0 !important;
+  color: #4d5472 !important;
+  font-size: 16px !important;
+  line-height: 1.85 !important;
+  font-weight: 600 !important;
+}
+
+.caption-mini-proof {
+  margin-top: 28px !important;
+  display: grid !important;
+  gap: 12px !important;
+}
+
+.caption-mini-proof span {
+  width: min(100%, 300px) !important;
+  min-height: 62px !important;
+  display: grid !important;
+  grid-template-columns: 44px 1fr !important;
+  column-gap: 12px !important;
+  align-items: center !important;
+  border: 1px solid rgba(221, 212, 244, 0.9) !important;
+  border-radius: 15px !important;
+  background: rgba(255, 255, 255, 0.74) !important;
+  color: #151a35 !important;
+  padding: 11px 14px !important;
+  box-shadow: 0 18px 48px rgba(75, 61, 125, 0.06) !important;
+}
+
+.caption-mini-proof span:not(:has(b)) {
+  position: relative !important;
+  display: block !important;
+  grid-template-columns: none !important;
+  font-size: 0 !important;
+  min-height: 76px !important;
+  padding-left: 72px !important;
+}
+
+.caption-mini-proof span:not(:has(b))::before {
+  position: absolute !important;
+  left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 42px !important;
+  height: 42px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, rgba(127, 82, 255, 0.14), rgba(255, 255, 255, 0.92)) !important;
+  color: #704dff !important;
+  font-size: 21px !important;
+}
+
+.caption-mini-proof span:not(:has(b))::after {
+  display: block !important;
+  position: absolute !important;
+  left: 72px !important;
+  right: 16px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: auto !important;
+  min-width: 0 !important;
+  justify-self: stretch !important;
+  white-space: pre-line !important;
+  color: #151a35 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  line-height: 1.45 !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.caption-mini-proof span:not(:has(b)):nth-child(1)::before {
+  content: "⚡" !important;
+}
+
+.caption-mini-proof span:not(:has(b)):nth-child(1)::after {
+  content: "Tạo caption siêu nhanh\A Chỉ trong vài giây" !important;
+}
+
+.caption-mini-proof span:not(:has(b)):nth-child(2)::before {
+  content: "◎" !important;
+}
+
+.caption-mini-proof span:not(:has(b)):nth-child(2)::after {
+  content: "Đúng nền tảng\A Tối ưu TikTok, Facebook" !important;
+}
+
+.caption-mini-proof span:not(:has(b)):nth-child(3)::before {
+  content: "◇" !important;
+}
+
+.caption-mini-proof span:not(:has(b)):nth-child(3)::after {
+  content: "Dễ dùng cho người mới\A Nhập vài dòng là có bản nháp" !important;
+}
+
+.caption-mini-proof span b {
+  grid-row: span 2 !important;
+  width: 42px !important;
+  height: 42px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, rgba(127, 82, 255, 0.14), rgba(255, 255, 255, 0.92)) !important;
+  color: #704dff !important;
+  font-size: 21px !important;
+  font-style: normal !important;
+}
+
+.caption-mini-proof span strong,
+.caption-mini-proof span small {
+  display: block !important;
+  min-width: 0 !important;
+}
+
+.caption-mini-proof span strong {
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+}
+
+.caption-mini-proof span small {
+  margin-top: 4px !important;
+  color: #6f7692 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.caption-log-link {
+  width: min(100%, 390px) !important;
+  margin-top: 28px !important;
+  overflow: visible !important;
+  grid-template-columns: 112px 1fr !important;
+  gap: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.caption-log-link::before {
+  display: none !important;
+}
+
+.caption-log-bot {
+  width: 116px !important;
+  height: 116px !important;
+  align-self: end !important;
+  transform: translateX(-4px) !important;
+}
+
+.caption-log-bot::after {
+  inset: 10px !important;
+  border-color: rgba(124, 77, 255, 0.25) !important;
+}
+
+.caption-log-link img {
+  width: 112px !important;
+  height: 112px !important;
+  border-radius: 28px !important;
+  object-fit: cover !important;
+  box-shadow: 0 20px 42px rgba(104, 79, 176, 0.12) !important;
+}
+
+.caption-log-link > span:not(.caption-log-bot) {
+  position: relative !important;
+  align-self: center !important;
+  border: 1px solid rgba(219, 209, 255, 0.92) !important;
+  border-radius: 16px !important;
+  border-bottom-left-radius: 4px !important;
+  background: rgba(255, 255, 255, 0.76) !important;
+  padding: 16px 18px !important;
+  box-shadow: 0 18px 54px rgba(84, 66, 145, 0.08) !important;
+  transform: translateX(-14px) !important;
+}
+
+.caption-log-link > span:not(.caption-log-bot)::before {
+  content: "" !important;
+  position: absolute !important;
+  left: -10px !important;
+  bottom: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  background: inherit !important;
+  border-left: 1px solid rgba(219, 209, 255, 0.92) !important;
+  border-bottom: 1px solid rgba(219, 209, 255, 0.92) !important;
+  transform: rotate(45deg) !important;
+}
+
+.caption-log-link strong {
+  color: #151a35 !important;
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+}
+
+.caption-log-link small {
+  margin-top: 7px !important;
+  color: #6a63a8 !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  font-weight: 700 !important;
+}
+
+.caption-log-link i {
+  display: none !important;
+}
+
+.caption-steps-card,
+.caption-progress-card {
+  position: relative !important;
+  z-index: 1 !important;
+  width: min(100%, 390px) !important;
+  border: 1px solid rgba(219, 209, 255, 0.92) !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.74) !important;
+  box-shadow: 0 18px 54px rgba(84, 66, 145, 0.06) !important;
+}
+
+.caption-steps-card {
+  margin-top: 26px !important;
+  padding: 20px !important;
+}
+
+.caption-steps-card > strong,
+.caption-progress-card > strong {
+  display: block !important;
+  color: #151a35 !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+}
+
+.caption-steps-card > div {
+  display: grid !important;
+  grid-template-columns: 44px 1fr 44px 1fr 44px !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: 18px !important;
+}
+
+.caption-steps-card span {
+  display: grid !important;
+  place-items: center !important;
+  gap: 8px !important;
+  color: #fff !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.caption-steps-card span::first-line {
+  line-height: 1 !important;
+}
+
+.caption-steps-card span {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, #7a4dff, #b344ff) !important;
+}
+
+.caption-steps-card span small {
+  width: 92px !important;
+  color: #6f7692 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  text-align: center !important;
+  transform: translateY(18px) !important;
+}
+
+.caption-steps-card i {
+  height: 1px !important;
+  background: linear-gradient(90deg, rgba(122, 77, 255, 0.12), rgba(122, 77, 255, 0.52), rgba(122, 77, 255, 0.12)) !important;
+}
+
+.caption-progress-card {
+  margin-top: auto !important;
+  padding: 22px !important;
+}
+
+.caption-progress-card strong {
+  text-align: right !important;
+  color: #6f6d86 !important;
+}
+
+.caption-progress-card span {
+  display: block !important;
+  height: 10px !important;
+  margin-top: 20px !important;
+  overflow: hidden !important;
+  border-radius: 999px !important;
+  background: #e8def8 !important;
+}
+
+.caption-progress-card span i {
+  display: block !important;
+  width: 20% !important;
+  height: 100% !important;
+  border-radius: inherit !important;
+  background: linear-gradient(90deg, #7a4dff, #b344ff) !important;
+}
+
+.caption-progress-card small {
+  display: block !important;
+  margin-top: 14px !important;
+  color: #6f7692 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+.caption-app {
+  grid-template-columns: minmax(300px, 0.95fr) minmax(360px, 1.25fr) !important;
+  gap: 20px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: rgba(255, 255, 255, 0.64) !important;
+  padding: clamp(16px, 2vw, 28px) !important;
+  box-shadow: none !important;
+}
+
+.caption-window-top {
+  min-height: 54px !important;
+  border: 1px solid rgba(219, 209, 255, 0.92) !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  color: #2e3146 !important;
+  padding: 0 20px !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+}
+
+.caption-window-top > span {
+  border-color: rgba(122, 77, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  color: #704dff !important;
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+}
+
+.caption-form,
+.caption-results article,
+.caption-result-head,
+.result-toolbar {
+  border: 1px solid rgba(219, 209, 255, 0.92) !important;
+  border-radius: 18px !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  box-shadow: 0 18px 54px rgba(84, 66, 145, 0.055) !important;
+}
+
+.caption-form {
+  gap: 16px !important;
+  padding: 24px !important;
+}
+
+.caption-form-head span,
+.caption-result-head strong {
+  color: #5a32f3 !important;
+  font-size: 16px !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+}
+
+.sample-btn {
+  border-color: rgba(122, 77, 255, 0.28) !important;
+  background: rgba(255, 255, 255, 0.82) !important;
+  color: #704dff !important;
+  padding: 9px 13px !important;
+  font-size: 12px !important;
+}
+
+.example-row {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 9px !important;
+}
+
+.example-row button,
+.mode-chip,
+.reset-btn {
+  border-color: rgba(219, 209, 255, 0.95) !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  color: #5f6380 !important;
+  min-height: 42px !important;
+  border-radius: 999px !important;
+  font-size: 13px !important;
+}
+
+.example-row button:hover,
+.mode-chip:hover,
+.mode-chip.active {
+  border-color: #7a4dff !important;
+  background: rgba(122, 77, 255, 0.08) !important;
+  color: #5a32f3 !important;
+}
+
+.caption-form label {
+  color: #151a35 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.caption-form input,
+.caption-form textarea {
+  min-height: 50px !important;
+  border-color: rgba(207, 211, 229, 0.92) !important;
+  border-radius: 13px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #151a35 !important;
+  padding: 14px 15px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+.caption-form textarea {
+  min-height: 112px !important;
+}
+
+.caption-form input::placeholder,
+.caption-form textarea::placeholder,
+.form-helper,
+.caption-source {
+  color: #9398ae !important;
+}
+
+.caption-form input:focus,
+.caption-form textarea:focus {
+  border-color: #7a4dff !important;
+  box-shadow: 0 0 0 4px rgba(122, 77, 255, 0.12) !important;
+}
+
+.mode-row {
+  display: grid !important;
+  gap: 10px !important;
+}
+
+.mode-chip {
+  width: fit-content !important;
+  padding: 0 14px !important;
+}
+
+.generate-btn,
+.reset-btn {
+  width: 100% !important;
+  border-radius: 13px !important;
+}
+
+.generate-btn {
+  min-height: 58px !important;
+  background: linear-gradient(135deg, #7a4dff, #9f38ff) !important;
+  color: #fff !important;
+  font-size: 18px !important;
+  box-shadow: 0 20px 54px rgba(122, 77, 255, 0.24) !important;
+}
+
+.generate-btn::before {
+  content: "✦" !important;
+  margin-right: 8px !important;
+}
+
+.generate-btn.idle {
+  background: linear-gradient(135deg, #7a4dff, #9f38ff) !important;
+  color: #fff !important;
+  opacity: 0.78 !important;
+}
+
+.reset-btn {
+  min-height: 50px !important;
+  color: #704dff !important;
+}
+
+.caption-result-head {
+  display: grid !important;
+  gap: 18px !important;
+  padding: 24px !important;
+}
+
+.caption-result-head small {
+  display: block !important;
+  margin-top: 8px !important;
+  color: #6f7692 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.caption-platform-tabs {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(219, 209, 255, 0.92) !important;
+  border-radius: 13px !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+}
+
+.caption-platform-tabs span {
+  display: grid !important;
+  place-items: center !important;
+  min-height: 48px !important;
+  color: #6f7692 !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.caption-platform-tabs span.active {
+  background: linear-gradient(135deg, #7a4dff, #9f38ff) !important;
+  color: #fff !important;
+}
+
+.caption-results {
+  gap: 14px !important;
+}
+
+.caption-results article {
+  padding: 20px !important;
+}
+
+.caption-results article > div {
+  margin-bottom: 12px !important;
+}
+
+.caption-results span {
+  color: #10a978 !important;
+  font-size: 13px !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.caption-results button {
+  border-color: rgba(122, 77, 255, 0.24) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: #704dff !important;
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+}
+
+.caption-results p {
+  color: #171a30 !important;
+  font-size: 15px !important;
+  line-height: 1.72 !important;
+}
+
+.result-toolbar {
+  background: rgba(243, 255, 250, 0.8) !important;
+}
+
+.result-toolbar span {
+  color: #10a978 !important;
+}
+
+.empty-result h3,
+.empty-result p {
+  color: #151a35 !important;
+}
+
+.empty-preview span {
+  background: rgba(122, 77, 255, 0.08) !important;
+  color: #704dff !important;
+}
+
+.ai-thinking {
+  min-height: 420px !important;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(122, 77, 255, 0.16), transparent 30%),
+    radial-gradient(circle at 86% 18%, rgba(16, 185, 129, 0.1), transparent 28%),
+    rgba(255, 255, 255, 0.8) !important;
+}
+
+.thinking-label {
+  color: #10a978 !important;
+  background: rgba(16, 185, 129, 0.08) !important;
+}
+
+.thinking-speech,
+.ai-thinking h3 {
+  color: #151a35 !important;
+}
+
+@keyframes captionSpark {
+  0%, 100% {
+    transform: translateY(-4px) scale(1);
+    filter: drop-shadow(0 0 0 rgba(122, 77, 255, 0));
+  }
+  50% {
+    transform: translateY(-10px) scale(1.08);
+    filter: drop-shadow(0 10px 18px rgba(122, 77, 255, 0.26));
+  }
+}
+
+@media (max-width: 1180px) {
+  .caption-shell {
+    grid-template-columns: 1fr !important;
+  }
+
+  .caption-intro {
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(219, 209, 255, 0.78) !important;
+  }
+
+  .caption-app {
+    grid-template-columns: 1fr !important;
+  }
+
+  .caption-progress-card {
+    margin-top: 26px !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .caption-ai-section {
+    padding: 12px 10px 34px !important;
+  }
+
+  .caption-shell {
+    border-radius: 20px !important;
+  }
+
+  .caption-intro {
+    padding: 22px 18px !important;
+  }
+
+  .caption-intro h2 {
+    font-size: clamp(48px, 15vw, 64px) !important;
+    letter-spacing: -1.8px !important;
+  }
+
+  .caption-intro p {
+    font-size: 14px !important;
+  }
+
+  .caption-mini-proof span,
+  .caption-steps-card,
+  .caption-progress-card {
+    width: 100% !important;
+  }
+
+  .caption-log-link {
+    width: 100% !important;
+    grid-template-columns: 88px 1fr !important;
+  }
+
+  .caption-log-bot,
+  .caption-log-link img {
+    width: 90px !important;
+    height: 90px !important;
+  }
+
+  .caption-log-link > span:not(.caption-log-bot) {
+    padding: 13px 14px !important;
+  }
+
+  .caption-app {
+    padding: 14px !important;
+  }
+
+  .caption-form,
+  .caption-result-head,
+  .caption-results article {
+    padding: 16px !important;
+  }
+
+  .example-row,
+  .caption-platform-tabs {
+    grid-template-columns: 1fr !important;
+  }
+
+  .caption-window-top {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    padding: 14px !important;
+  }
+
+  .caption-steps-card > div {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    justify-items: start !important;
+  }
+
+  .caption-steps-card span {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 46px !important;
+    grid-template-columns: 42px 1fr !important;
+    justify-content: start !important;
+    border-radius: 14px !important;
+    padding: 8px 12px !important;
+  }
+
+  .caption-steps-card span small {
+    width: auto !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    text-align: left !important;
+    transform: none !important;
+  }
+
+  .caption-steps-card i {
+    display: none !important;
+  }
+}
+
+/* Caption AI simple mode: less text, faster action for non-tech users. */
+.caption-shell {
+  grid-template-columns: minmax(280px, 0.42fr) minmax(720px, 1.3fr) !important;
+}
+
+.caption-intro {
+  justify-content: center !important;
+}
+
+.caption-badge {
+  font-size: 12px !important;
+  padding: 9px 13px !important;
+}
+
+.caption-intro h2 {
+  max-width: 340px !important;
+  font-size: clamp(56px, 5.2vw, 76px) !important;
+}
+
+.caption-intro p {
+  max-width: 360px !important;
+  margin-top: 18px !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+}
+
+.caption-mini-proof,
+.caption-steps-card,
+.caption-progress-card,
+.caption-source,
+.form-helper,
+.locked-preview-card,
+.empty-preview {
+  display: none !important;
+}
+
+.caption-log-link {
+  margin-top: 34px !important;
+  width: min(100%, 330px) !important;
+  grid-template-columns: 86px 1fr !important;
+}
+
+.caption-log-bot,
+.caption-log-link img {
+  width: 86px !important;
+  height: 86px !important;
+}
+
+.caption-log-link > span:not(.caption-log-bot) {
+  padding: 14px 16px !important;
+}
+
+.caption-log-link strong {
+  font-size: 13px !important;
+}
+
+.caption-log-link strong,
+.caption-log-link small {
+  font-size: 0 !important;
+}
+
+.caption-log-link strong::after {
+  content: "Lumi Bot hướng dẫn" !important;
+  display: block !important;
+  color: #151a35 !important;
+  font-size: 13px !important;
+  font-weight: 950 !important;
+  line-height: 1.3 !important;
+}
+
+.caption-log-link small::after {
+  content: "Nhập sản phẩm → bấm tạo → copy caption" !important;
+  display: block !important;
+  margin-top: 6px !important;
+  color: #6a63a8 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+}
+
+.caption-log-link small {
+  display: block !important;
+}
+
+.caption-app {
+  grid-template-columns: minmax(310px, 0.9fr) minmax(380px, 1.1fr) !important;
+  gap: 18px !important;
+}
+
+.caption-window-top {
+  min-height: 48px !important;
+}
+
+.caption-form,
+.caption-result-head,
+.caption-results article {
+  padding: 20px !important;
+}
+
+.caption-form {
+  gap: 13px !important;
+}
+
+.caption-form-head span,
+.caption-result-head strong {
+  font-size: 15px !important;
+}
+
+.sample-btn {
+  font-size: 11px !important;
+  padding: 8px 11px !important;
+}
+
+.example-row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.example-row button {
+  flex: 1 1 92px !important;
+  min-height: 38px !important;
+  font-size: 12px !important;
+}
+
+.caption-form input,
+.caption-form textarea {
+  min-height: 46px !important;
+  font-size: 14px !important;
+}
+
+.caption-form textarea {
+  min-height: 94px !important;
+}
+
+.mode-row {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.mode-chip {
+  min-height: 38px !important;
+  padding: 0 12px !important;
+  font-size: 12px !important;
+}
+
+.generate-btn {
+  min-height: 54px !important;
+  font-size: 17px !important;
+}
+
+.reset-btn {
+  min-height: 44px !important;
+}
+
+.caption-result-head {
+  gap: 14px !important;
+}
+
+.caption-result-head small {
+  display: none !important;
+}
+
+.caption-platform-tabs span {
+  min-height: 44px !important;
+  font-size: 13px !important;
+}
+
+.caption-results.empty .empty-result {
+  min-height: 318px !important;
+  display: grid !important;
+  place-content: center !important;
+  text-align: center !important;
+}
+
+.empty-result span {
+  color: #704dff !important;
+}
+
+.empty-result h3 {
+  max-width: 360px !important;
+  margin: 8px auto 0 !important;
+  font-size: clamp(22px, 3vw, 30px) !important;
+  line-height: 1.15 !important;
+}
+
+.empty-result p {
+  max-width: 360px !important;
+  margin: 12px auto 0 !important;
+  color: #6f7692 !important;
+  font-size: 14px !important;
+}
+
+.unlock-demo-btn {
+  width: fit-content !important;
+  margin: 18px auto 0 !important;
+}
+
+.widget-email-field {
+  display: grid !important;
+  gap: 7px !important;
+  margin-top: 12px !important;
+  color: #151a35 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+.widget-email-field input {
+  width: 100% !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(219, 209, 255, 0.92) !important;
+  border-radius: 12px !important;
+  outline: none !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #151a35 !important;
+  padding: 0 12px !important;
+  font: inherit !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+.widget-email-field input:focus {
+  border-color: #7a4dff !important;
+  box-shadow: 0 0 0 3px rgba(122, 77, 255, 0.12) !important;
+}
+
+.widget-email-submit {
+  width: 100% !important;
+  min-height: 42px !important;
+  margin-top: 10px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #7a4dff, #9f38ff) !important;
+  color: #fff !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  cursor: pointer !important;
+  box-shadow: 0 14px 34px rgba(122, 77, 255, 0.18) !important;
+}
+
+.widget-email-submit:disabled {
+  cursor: wait !important;
+  opacity: 0.72 !important;
+}
+
+.journey-widget-panel .follow-message {
+  margin: 10px 0 0 !important;
+  border-radius: 12px !important;
+  padding: 10px 12px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1.45 !important;
+}
+
+.journey-widget-panel .follow-message.success {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #0b9d70 !important;
+}
+
+.journey-widget-panel .follow-message.error {
+  background: rgba(255, 91, 111, 0.1) !important;
+  color: #d23b45 !important;
+}
+
+@media (max-width: 760px) {
+  .journey-widget:not(.open) {
+    width: min(245px, calc(100vw - 28px)) !important;
+    left: 12px !important;
+    right: auto !important;
+  }
+
+  .journey-widget:not(.open) .journey-widget-main {
+    grid-template-columns: 40px minmax(0, 1fr) !important;
+    padding: 8px !important;
+  }
+
+  .journey-widget:not(.open) .journey-widget-avatar {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .journey-widget:not(.open) .journey-widget-avatar img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+}
+
+@media (max-width: 1180px) {
+  .caption-shell,
+  .caption-app {
+    grid-template-columns: 1fr !important;
+  }
+
+  .caption-intro {
+    min-height: auto !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .caption-ai-section {
+    padding-top: 8px !important;
+    padding-bottom: 120px !important;
+  }
+
+  .caption-intro {
+    padding: 20px 18px 18px !important;
+  }
+
+  .caption-intro h2 {
+    max-width: 100% !important;
+    font-size: clamp(46px, 14vw, 58px) !important;
+  }
+
+  .caption-intro p {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+  }
+
+  .caption-log-link {
+    margin-top: 22px !important;
+  }
+
+  .caption-app {
+    gap: 12px !important;
+    padding: 12px !important;
+  }
+
+  .caption-window-top {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+
+  .caption-form,
+  .caption-result-head,
+  .caption-results article {
+    padding: 15px !important;
+  }
+
+  .mode-row {
+    flex-direction: column !important;
+  }
+
+  .mode-chip {
+    width: 100% !important;
+  }
+
+  .caption-platform-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .caption-platform-tabs span {
+    font-size: 12px !important;
+  }
 }
