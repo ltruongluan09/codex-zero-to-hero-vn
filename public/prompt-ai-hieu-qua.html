@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt AI hiệu quả: 5 nguyên tắc đơn giản - Lumi Labs</title>
+    <meta
+      name="description"
+      content="Một bài hướng dẫn rất dễ hiểu về cách giao việc cho AI để người không chuyên cũng dùng được ngay."
+    />
+    <style>
+      :root {
+        --ink: #15172f;
+        --text: #3f496d;
+        --muted: #7882a2;
+        --line: #eee3dd;
+        --soft: #fff8f2;
+        --paper: rgba(255, 255, 255, 0.9);
+        --violet: #7c4dff;
+        --violet-soft: #f1ebff;
+        --coral: #ff6b65;
+        --green: #13a875;
+        --red: #df4f61;
+        --shadow: 0 22px 70px rgba(85, 60, 120, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 12% 0%, rgba(255, 139, 117, 0.16), transparent 28%),
+          radial-gradient(circle at 86% 2%, rgba(124, 77, 255, 0.18), transparent 34%),
+          linear-gradient(180deg, #fffaf5 0%, #fbf8ff 45%, #fffdf8 100%);
+        font-family: Outfit, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-image: radial-gradient(circle, rgba(124, 77, 255, 0.08) 1px, transparent 1px);
+        background-size: 28px 28px;
+        mask-image: linear-gradient(180deg, black, transparent 78%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page {
+        width: min(1060px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 24px 0 44px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .brand,
+      .back,
+      .button,
+      .copy-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 850;
+      }
+
+      .brand {
+        gap: 10px;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ff6b65, var(--violet));
+        color: white;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 12px 32px rgba(124, 77, 255, 0.22);
+      }
+
+      .back {
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.78);
+        color: var(--text);
+        font-size: 14px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 310px;
+        gap: 38px;
+        align-items: center;
+        margin-bottom: 28px;
+      }
+
+      .badge {
+        width: fit-content;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 18px;
+        padding: 10px 14px;
+        border: 1px solid rgba(124, 77, 255, 0.18);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.78);
+        color: var(--violet);
+        font-size: 14px;
+        font-weight: 850;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--coral);
+        box-shadow: 0 0 0 6px rgba(255, 107, 101, 0.12);
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: clamp(42px, 6vw, 76px);
+        line-height: 1.02;
+        letter-spacing: -1.9px;
+      }
+
+      h1 span {
+        color: var(--violet);
+      }
+
+      .hero-copy {
+        max-width: 650px;
+        margin: 22px 0 0;
+        color: var(--text);
+        font-size: 20px;
+        font-weight: 620;
+        line-height: 1.7;
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 18px;
+        margin-top: 24px;
+        color: #344063;
+        font-size: 14px;
+        font-weight: 820;
+      }
+
+      .author {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .author img,
+      .bot-card img {
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .author img {
+        width: 42px;
+        height: 42px;
+        box-shadow: 0 8px 20px rgba(124, 77, 255, 0.16);
+      }
+
+      .bot-card {
+        position: relative;
+        border: 1px solid rgba(238, 227, 221, 0.95);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: var(--shadow);
+        padding: 24px;
+        overflow: hidden;
+      }
+
+      .bot-card::after {
+        content: "";
+        position: absolute;
+        right: -42px;
+        bottom: -56px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(124, 77, 255, 0.18), transparent 62%);
+      }
+
+      .bot-card img {
+        width: 112px;
+        height: 112px;
+        display: block;
+        margin-bottom: 18px;
+      }
+
+      .bot-card strong {
+        display: block;
+        font-size: 22px;
+        margin-bottom: 8px;
+      }
+
+      .bot-card p {
+        margin: 0;
+        color: var(--text);
+        font-size: 15px;
+        font-weight: 650;
+        line-height: 1.65;
+      }
+
+      .article {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 24px;
+        align-items: start;
+      }
+
+      .content,
+      .toc {
+        border: 1px solid rgba(238, 227, 221, 0.96);
+        border-radius: 28px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .content {
+        padding: clamp(22px, 4vw, 46px);
+      }
+
+      .toc {
+        position: sticky;
+        top: 18px;
+        padding: 18px;
+      }
+
+      .toc strong {
+        display: block;
+        margin-bottom: 12px;
+      }
+
+      .toc a {
+        display: block;
+        padding: 10px 0;
+        color: var(--text);
+        border-top: 1px solid rgba(238, 227, 221, 0.8);
+        font-size: 14px;
+        font-weight: 760;
+      }
+
+      .content p,
+      .content li {
+        color: var(--text);
+        font-size: 18px;
+        font-weight: 540;
+        line-height: 1.85;
+      }
+
+      .content p {
+        margin: 0 0 18px;
+      }
+
+      .content h2 {
+        margin: 40px 0 14px;
+        font-size: clamp(26px, 3vw, 36px);
+        line-height: 1.18;
+        letter-spacing: -0.6px;
+      }
+
+      .lead {
+        padding: 24px;
+        border: 1px solid rgba(124, 77, 255, 0.2);
+        border-radius: 22px;
+        background: linear-gradient(135deg, rgba(241, 235, 255, 0.92), rgba(255, 255, 255, 0.9));
+        color: var(--ink);
+        font-size: 21px;
+        font-weight: 850;
+        line-height: 1.55;
+      }
+
+      .callout {
+        margin: 28px 0;
+        padding: 22px 24px;
+        border-left: 5px solid var(--violet);
+        border-radius: 18px;
+        background: rgba(241, 235, 255, 0.75);
+      }
+
+      .callout strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 20px;
+      }
+
+      .example-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin: 22px 0;
+      }
+
+      .example-card,
+      .rule-card,
+      .prompt-box {
+        border: 1px solid rgba(238, 227, 221, 0.96);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.78);
+      }
+
+      .example-card {
+        padding: 18px;
+      }
+
+      .example-card span {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #ff6b65, var(--violet));
+        color: white;
+        font-size: 22px;
+        margin-bottom: 12px;
+      }
+
+      .example-card strong,
+      .rule-card strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      .example-card p,
+      .rule-card p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .rules {
+        display: grid;
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .rule-card {
+        padding: 20px;
+      }
+
+      .rule-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+
+      .num {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        border-radius: 13px;
+        background: var(--violet-soft);
+        color: var(--violet);
+        font-weight: 950;
+      }
+
+      .compare {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .bad,
+      .good {
+        padding: 14px;
+        border-radius: 16px;
+        font-size: 15px;
+        font-weight: 680;
+        line-height: 1.6;
+      }
+
+      .bad {
+        border: 1px solid rgba(223, 79, 97, 0.22);
+        background: rgba(255, 244, 245, 0.86);
+        color: #8f2d3a;
+      }
+
+      .good {
+        border: 1px solid rgba(19, 168, 117, 0.2);
+        background: rgba(241, 255, 249, 0.88);
+        color: #17694e;
+      }
+
+      .prompt-box {
+        overflow: hidden;
+        margin-top: 18px;
+      }
+
+      .prompt-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .copy-btn {
+        border: 0;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ff6b65, var(--violet));
+        color: white;
+        padding: 10px 14px;
+        cursor: pointer;
+      }
+
+      pre {
+        margin: 0;
+        padding: 18px;
+        white-space: pre-wrap;
+        color: #27304f;
+        font-size: 15px;
+        line-height: 1.65;
+        font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+      }
+
+      .ending {
+        margin-top: 30px;
+        padding: 24px;
+        border-radius: 24px;
+        background: linear-gradient(135deg, rgba(255, 107, 101, 0.12), rgba(124, 77, 255, 0.14));
+      }
+
+      .ending p {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .article {
+          grid-template-columns: 1fr;
+        }
+
+        .bot-card {
+          display: grid;
+          grid-template-columns: 96px 1fr;
+          gap: 18px;
+          align-items: center;
+        }
+
+        .bot-card img {
+          margin: 0;
+          width: 96px;
+          height: 96px;
+        }
+
+        .toc {
+          position: static;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .page {
+          width: min(100% - 22px, 1060px);
+          padding-top: 16px;
+        }
+
+        .back {
+          display: none;
+        }
+
+        h1 {
+          font-size: clamp(38px, 12vw, 54px);
+        }
+
+        .hero-copy,
+        .content p,
+        .content li {
+          font-size: 16px;
+        }
+
+        .example-grid,
+        .compare {
+          grid-template-columns: 1fr;
+        }
+
+        .content {
+          border-radius: 22px;
+        }
+
+        .bot-card {
+          grid-template-columns: 78px 1fr;
+          padding: 18px;
+        }
+
+        .bot-card img {
+          width: 78px;
+          height: 78px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <nav class="topbar">
+        <a class="brand" href="/">
+          <span class="brand-mark">AI</span>
+          <strong>AI Creator Hub</strong>
+        </a>
+        <a class="back" href="/">← Về trang chủ</a>
+      </nav>
+
+      <header class="hero">
+        <div>
+          <div class="badge"><span class="dot"></span> Bài viết cho người mới bắt đầu</div>
+          <h1>AI không kém thông minh. <span>Chỉ là mình đang giao việc hơi mơ hồ.</span></h1>
+          <p class="hero-copy">
+            Nếu bạn từng hỏi AI một câu rất ngắn rồi nhận lại một kết quả rất nhạt, bài này dành cho bạn.
+            Không cần học kỹ thuật. Chỉ cần học cách nhờ việc rõ hơn một chút.
+          </p>
+          <div class="meta">
+            <span class="author">
+              <img src="/lumi-bot.png" alt="" />
+              by Lumi Labs
+            </span>
+            <span>8 phút đọc</span>
+          </div>
+        </div>
+
+        <aside class="bot-card">
+          <img src="/lumi-bot.png" alt="Lumi Bot" />
+          <div>
+            <strong>Lumi Bot nói nhỏ</strong>
+            <p>Prompt tốt không phải là câu lệnh bí mật. Prompt tốt là một lời nhờ việc rõ ràng.</p>
+          </div>
+        </aside>
+      </header>
+
+      <main class="article">
+        <article class="content">
+          <div class="lead">
+            Nhiều người nghĩ AI phải tự hiểu mọi thứ. Nhưng trong công việc thật, ngay cả một đồng nghiệp giỏi cũng cần được giao việc rõ ràng.
+          </div>
+
+          <p>
+            Lúc đầu mình cũng từng nghĩ AI giống một chiếc máy thần kỳ: mình gõ vài chữ, nó sẽ tự hiểu hết ý trong đầu.
+            Nhưng dùng một thời gian, mình nhận ra điều ngược lại.
+          </p>
+
+          <p>
+            AI rất giỏi khi mình giao việc rõ. Và AI rất dễ trả lời chung chung khi mình giao việc vội.
+            Nó không biết sản phẩm của mình bán cho ai. Không biết giọng văn mình thích là nhẹ nhàng hay mạnh mẽ.
+            Không biết mình cần một email lịch sự, một caption gần gũi, hay một bản tóm tắt để gửi cho sếp trong 3 phút.
+          </p>
+
+          <div class="callout">
+            <strong>Vấn đề không nằm ở việc bạn không biết công nghệ.</strong>
+            <p>Vấn đề thường nằm ở chỗ mình đang nhờ AI giống như nhắn cho một người chưa biết gì về công việc của mình.</p>
+          </div>
+
+          <h2 id="quen-thuoc">3 tình huống rất quen thuộc</h2>
+          <div class="example-grid">
+            <section class="example-card">
+              <span>✍</span>
+              <strong>Bạn muốn viết caption bán hàng</strong>
+              <p>Bạn gõ: “Viết caption cho quán cơm này.” AI viết được, nhưng nghe hơi trơn, không giống khách hàng thật của bạn.</p>
+            </section>
+            <section class="example-card">
+              <span>▣</span>
+              <strong>Bạn muốn tóm tắt cuộc họp</strong>
+              <p>Bạn gõ: “Tóm tắt file này.” AI tóm tắt thật, nhưng lại bỏ mất phần quan trọng: ai làm gì, deadline khi nào.</p>
+            </section>
+            <section class="example-card">
+              <span>✉</span>
+              <strong>Bạn muốn soạn email phỏng vấn</strong>
+              <p>Bạn gõ vài chữ. AI trả về một email đúng ngữ pháp, nhưng hơi cứng và thiếu cảm giác thân thiện.</p>
+            </section>
+          </div>
+
+          <p>
+            Những chuyện này không có gì lạ. Người làm marketing, HR, sales, admin hay chủ shop nhỏ đều gặp.
+            Biết mình muốn gì trong đầu, nhưng khi đưa cho AI thì lại nói quá ngắn.
+          </p>
+
+          <h2 id="nguyen-tac">5 nguyên tắc đơn giản để AI hiểu bạn hơn</h2>
+          <p>
+            Bạn không cần học một công thức cao siêu. Chỉ cần nhớ 5 điều dưới đây, kết quả AI trả về sẽ khác hẳn.
+          </p>
+
+          <div class="rules">
+            <section class="rule-card">
+              <div class="rule-head">
+                <span class="num">1</span>
+                <strong>Nói rõ bạn muốn AI làm việc gì</strong>
+              </div>
+              <p>Đừng bắt đầu bằng một câu quá rộng. Hãy nói thẳng việc bạn cần làm.</p>
+              <div class="compare">
+                <div class="bad">Chưa rõ: “Làm nội dung cho sản phẩm này.”</div>
+                <div class="good">Rõ hơn: “Viết 3 caption Facebook cho quán cơm văn phòng giao trưa.”</div>
+              </div>
+            </section>
+
+            <section class="rule-card">
+              <div class="rule-head">
+                <span class="num">2</span>
+                <strong>Cho AI biết bối cảnh thật</strong>
+              </div>
+              <p>AI không biết khách hàng của bạn là ai, sản phẩm đang bán ở đâu, hay người đọc đang quan tâm điều gì.</p>
+              <div class="compare">
+                <div class="bad">Thiếu bối cảnh: “Viết email gửi khách hàng.”</div>
+                <div class="good">Có bối cảnh: “Viết email gửi khách đã hỏi giá nhưng chưa phản hồi sau 3 ngày.”</div>
+              </div>
+            </section>
+
+            <section class="rule-card">
+              <div class="rule-head">
+                <span class="num">3</span>
+                <strong>Nói kết quả bạn muốn nhận</strong>
+              </div>
+              <p>Nhiều khi AI trả lời không sai, chỉ là không đúng dạng bạn cần dùng.</p>
+              <div class="compare">
+                <div class="bad">AI phải đoán: “Tóm tắt cuộc họp này.”</div>
+                <div class="good">Dễ dùng hơn: “Tóm tắt thành 3 phần: quyết định, người phụ trách, deadline.”</div>
+              </div>
+            </section>
+
+            <section class="rule-card">
+              <div class="rule-head">
+                <span class="num">4</span>
+                <strong>Chia việc lớn thành việc nhỏ</strong>
+              </div>
+              <p>Nếu việc quá to, AI thường cố làm hết trong một lần và kết quả sẽ chung chung.</p>
+              <div class="compare">
+                <div class="bad">Quá rộng: “Làm kế hoạch marketing cho sản phẩm này.”</div>
+                <div class="good">Đi từng bước: “Trước tiên giúp tôi xác định 3 nhóm khách hàng phù hợp nhất.”</div>
+              </div>
+            </section>
+
+            <section class="rule-card">
+              <div class="rule-head">
+                <span class="num">5</span>
+                <strong>Cho phép AI hỏi lại nếu thiếu thông tin</strong>
+              </div>
+              <p>Câu này rất nhỏ, nhưng cực hữu ích. Nó giúp AI dừng lại trước khi tự đoán.</p>
+              <div class="compare">
+                <div class="bad">Dễ lệch ý: “Viết luôn cho tôi.”</div>
+                <div class="good">Tốt hơn: “Nếu thiếu thông tin quan trọng, hãy hỏi tôi tối đa 3 câu trước khi viết.”</div>
+              </div>
+            </section>
+          </div>
+
+          <h2 id="vi-du">Ví dụ rất đời: từ mơ hồ thành dùng được</h2>
+          <p>
+            Giả sử bạn có một quán cơm văn phòng giao buổi trưa. Câu mơ hồ là:
+            “Viết caption bán cơm.”
+          </p>
+
+          <p>
+            Câu đó không sai. Nhưng nó bắt AI phải đoán quá nhiều: bán cho ai, món gì nổi bật, khách đang cần nhanh hay cần ngon, giọng văn ra sao, muốn đăng ở đâu.
+            Nếu viết lại rõ hơn, bạn có thể dùng câu này:
+          </p>
+
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <strong>Một prompt bạn có thể copy ngay</strong>
+              <button class="copy-btn" type="button" data-copy>Copy prompt</button>
+            </div>
+            <pre id="promptText">Tôi muốn bạn viết giúp tôi 3 caption Facebook cho quán cơm văn phòng giao buổi trưa.
+
+Bối cảnh:
+- Khách hàng là nhân viên văn phòng ở khu gần quán.
+- Họ muốn ăn trưa nhanh, sạch, đủ no, giá hợp lý.
+- Món nổi bật hôm nay là cơm gà sốt tiêu, canh rau và trà đá miễn phí.
+- Quán có giao trong bán kính 3km, đặt trước 10h30 sẽ giao đúng giờ nghỉ trưa.
+- Giọng văn gần gũi, vui nhẹ, như một người chủ quán thật sự hiểu dân văn phòng.
+
+Yêu cầu:
+- Mỗi caption khoảng 100-150 chữ.
+- Không nói quá, không dùng từ quá quảng cáo.
+- Có lời kêu gọi hành động nhẹ nhàng.
+- Có 5 hashtag tiếng Việt ở cuối.
+
+Nếu thiếu thông tin quan trọng, hãy hỏi tôi tối đa 3 câu trước khi viết.</pre>
+          </div>
+
+          <h2 id="ket-luan">Điều quan trọng nhất</h2>
+          <p>
+            Prompt tốt không phải là nói cho thật dài. Prompt tốt là nói đủ rõ để AI không phải đoán mò.
+          </p>
+
+          <p>
+            Khi bạn biết cách giao việc, AI bắt đầu giống một cộng sự hơn là một ô chat may rủi.
+            Bạn không cần biết code. Không cần hiểu thuật ngữ. Chỉ cần bắt đầu từ những việc rất gần:
+            viết email, tóm tắt họp, làm checklist, viết mô tả Shopee, lên dàn ý nội dung.
+          </p>
+
+          <div class="ending">
+            <p>
+              Nếu hôm nay bạn chỉ nhớ một câu, hãy nhớ câu này:
+              <strong>AI càng hiểu bối cảnh của bạn, kết quả càng gần với việc thật của bạn.</strong>
+            </p>
+          </div>
+        </article>
+
+        <aside class="toc">
+          <strong>Trong bài này</strong>
+          <a href="#quen-thuoc">3 tình huống quen thuộc</a>
+          <a href="#nguyen-tac">5 nguyên tắc đơn giản</a>
+          <a href="#vi-du">Ví dụ copy dùng ngay</a>
+          <a href="#ket-luan">Điều quan trọng nhất</a>
+        </aside>
+      </main>
+    </div>
+
+    <script>
+      const copyBtn = document.querySelector("[data-copy]");
+      const promptText = document.querySelector("#promptText");
+
+      copyBtn?.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(promptText.innerText.trim());
+        copyBtn.textContent = "Đã copy";
+        setTimeout(() => {
+          copyBtn.textContent = "Copy prompt";
+        }, 1400);
+      });
+    </script>
+  </body>
+</html>

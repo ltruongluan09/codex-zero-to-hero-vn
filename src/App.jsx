@@ -673,16 +673,16 @@ function HeroFeaturedProjects() {
       <article className="home-article-card">
         <div className="home-card-head">
           <h2>📄 Bài viết mới nhất</h2>
-          <a href="/project-01-caption-ai.html">Xem tất cả →</a>
+          <a href="/prompt-ai-hieu-qua.html">Đọc bài này →</a>
         </div>
-        <div className="article-feature">
+        <a className="article-feature" href="/prompt-ai-hieu-qua.html">
           <img src="/lumi-bot.png" alt="" />
           <div>
             <span>Hướng dẫn · 2 ngày trước</span>
             <h3>Prompt AI hiệu quả: 5 nguyên tắc đơn giản</h3>
             <p>Viết prompt đúng cách để AI hiểu và cho ra kết quả tốt hơn.</p>
           </div>
-        </div>
+        </a>
         <ul className="article-list">
           <li><a href="/project-01-caption-ai.html">Tự động hóa công việc với AI (Phần 1)</a><span>5 ngày trước</span></li>
           <li><a href="/project-01-caption-ai.html">Hành trình xây dựng Caption AI</a><span>1 tuần trước</span></li>
