@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kho bài đọc Lumi Labs - AI dễ hiểu cho người mới</title>
+    <meta
+      name="description"
+      content="Kho bài đọc Lumi Labs dành cho người mới bắt đầu dùng AI trong công việc hằng ngày."
+    />
+    <style>
+      :root {
+        --ink: #15172f;
+        --text: #465174;
+        --muted: #7b85a4;
+        --line: #eee2dc;
+        --card: rgba(255, 255, 255, 0.86);
+        --violet: #7c4dff;
+        --coral: #ff6b65;
+        --green: #13a875;
+        --amber: #f59e0b;
+        --shadow: 0 24px 70px rgba(90, 66, 125, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 16% 0%, rgba(255, 139, 117, 0.15), transparent 30%),
+          radial-gradient(circle at 82% 0%, rgba(124, 77, 255, 0.18), transparent 34%),
+          linear-gradient(180deg, #fffaf5 0%, #fbf8ff 48%, #fffdf9 100%);
+        font-family: Outfit, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-image: radial-gradient(circle, rgba(124, 77, 255, 0.08) 1px, transparent 1px);
+        background-size: 28px 28px;
+        mask-image: linear-gradient(180deg, black, transparent 78%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 24px 0 48px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 34px;
+      }
+
+      .brand,
+      .back,
+      .pill,
+      .article-card,
+      .topic-card {
+        display: flex;
+      }
+
+      .brand {
+        align-items: center;
+        gap: 12px;
+        font-weight: 900;
+      }
+
+      .brand img {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        object-fit: cover;
+        box-shadow: 0 12px 28px rgba(124, 77, 255, 0.18);
+      }
+
+      .brand small {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 750;
+      }
+
+      .back {
+        align-items: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 850;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 330px;
+        gap: 26px;
+        align-items: stretch;
+        margin-bottom: 26px;
+      }
+
+      .hero-main,
+      .unlock-card,
+      .section {
+        border: 1px solid rgba(238, 226, 220, 0.95);
+        border-radius: 30px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(16px);
+      }
+
+      .hero-main {
+        padding: clamp(24px, 4vw, 46px);
+      }
+
+      .pill {
+        width: fit-content;
+        align-items: center;
+        gap: 9px;
+        padding: 10px 14px;
+        border: 1px solid rgba(124, 77, 255, 0.18);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.78);
+        color: var(--violet);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--green);
+        box-shadow: 0 0 0 6px rgba(19, 168, 117, 0.12);
+      }
+
+      h1 {
+        max-width: 720px;
+        margin: 20px 0 0;
+        font-size: clamp(42px, 6vw, 72px);
+        line-height: 1.02;
+        letter-spacing: -1.8px;
+      }
+
+      h1 span {
+        color: var(--violet);
+      }
+
+      .hero-main p {
+        max-width: 680px;
+        margin: 20px 0 0;
+        color: var(--text);
+        font-size: 19px;
+        font-weight: 620;
+        line-height: 1.72;
+      }
+
+      .stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .stats span {
+        border: 1px solid rgba(124, 77, 255, 0.14);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.72);
+        padding: 11px 14px;
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      .unlock-card {
+        position: relative;
+        padding: 22px;
+        overflow: hidden;
+      }
+
+      .unlock-card::after {
+        content: "";
+        position: absolute;
+        right: -50px;
+        bottom: -60px;
+        width: 170px;
+        height: 170px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(124, 77, 255, 0.18), transparent 62%);
+      }
+
+      .unlock-card img {
+        width: 74px;
+        height: 74px;
+        border-radius: 22px;
+        object-fit: cover;
+        margin-bottom: 16px;
+      }
+
+      .unlock-card strong {
+        display: block;
+        font-size: 22px;
+        margin-bottom: 8px;
+      }
+
+      .unlock-card p {
+        margin: 0 0 16px;
+        color: var(--text);
+        font-size: 15px;
+        font-weight: 650;
+        line-height: 1.6;
+      }
+
+      .progress {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #ebe4ef;
+      }
+
+      .progress i {
+        display: block;
+        width: 22%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--coral), var(--violet));
+      }
+
+      .unlock-note {
+        display: block;
+        margin-top: 12px;
+        color: #c94755;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .section {
+        margin-top: 22px;
+        padding: clamp(20px, 3vw, 30px);
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: clamp(26px, 3vw, 36px);
+        letter-spacing: -0.5px;
+      }
+
+      .section-head p {
+        max-width: 520px;
+        margin: 8px 0 0;
+        color: var(--text);
+        font-size: 15px;
+        font-weight: 650;
+        line-height: 1.6;
+      }
+
+      .article-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .article-card {
+        min-height: 246px;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid rgba(238, 226, 220, 0.95);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.76);
+        padding: 18px;
+        transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .article-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(124, 77, 255, 0.36);
+        box-shadow: 0 18px 50px rgba(90, 66, 125, 0.1);
+      }
+
+      .article-card .thumb {
+        width: 100%;
+        height: 112px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        background:
+          radial-gradient(circle at 28% 26%, rgba(255, 255, 255, 0.78), transparent 28%),
+          linear-gradient(135deg, #f7edff, #efe6ff);
+        color: var(--violet);
+        font-size: 42px;
+        margin-bottom: 14px;
+      }
+
+      .article-card img.thumb {
+        object-fit: cover;
+        padding: 0;
+        background: #f1ebff;
+      }
+
+      .tag-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        border-radius: 999px;
+        background: #f2ebff;
+        color: var(--violet);
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .time {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 820;
+      }
+
+      .article-card h3 {
+        margin: 0 0 8px;
+        color: var(--ink);
+        font-size: 21px;
+        line-height: 1.2;
+      }
+
+      .article-card p {
+        margin: 0;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 620;
+        line-height: 1.6;
+      }
+
+      .read-link {
+        display: inline-flex;
+        margin-top: 16px;
+        color: var(--violet);
+        font-weight: 950;
+      }
+
+      .locked {
+        opacity: 0.78;
+      }
+
+      .topic-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+
+      .topic-card {
+        align-items: center;
+        gap: 12px;
+        border: 1px solid rgba(238, 226, 220, 0.95);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.68);
+        padding: 16px;
+      }
+
+      .topic-card span {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        border-radius: 15px;
+        background: #f2ebff;
+        color: var(--violet);
+        font-size: 22px;
+      }
+
+      .topic-card strong {
+        display: block;
+      }
+
+      .topic-card small {
+        color: var(--muted);
+        font-weight: 750;
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .article-grid,
+        .topic-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .unlock-card {
+          display: grid;
+          grid-template-columns: 74px 1fr;
+          gap: 16px;
+          align-items: center;
+        }
+
+        .unlock-card img {
+          margin: 0;
+        }
+
+        .unlock-body {
+          min-width: 0;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          width: min(100% - 22px, 1120px);
+          padding-top: 14px;
+        }
+
+        .back {
+          display: none;
+        }
+
+        h1 {
+          font-size: clamp(38px, 12vw, 52px);
+        }
+
+        .hero-main,
+        .section {
+          border-radius: 24px;
+        }
+
+        .hero-main p {
+          font-size: 16px;
+        }
+
+        .section-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <nav class="topbar">
+        <a class="brand" href="/">
+          <img src="/lumi-bot.png" alt="" />
+          <span>
+            Lumi Labs
+            <small>AI dễ hiểu cho người mới</small>
+          </span>
+        </a>
+        <a class="back" href="/">← Về trang chủ</a>
+      </nav>
+
+      <header class="hero">
+        <section class="hero-main">
+          <div class="pill"><span class="dot"></span> Kho bài đọc Lumi Labs</div>
+          <h1>Đọc từng bài nhỏ. <span>Hiểu AI dễ hơn mỗi ngày.</span></h1>
+          <p>
+            Đây là nơi mình gom các bài viết dễ hiểu nhất về AI: cách giao việc cho AI,
+            dùng AI trong công việc, và những câu chuyện thật khi tự tay làm sản phẩm.
+          </p>
+          <div class="stats">
+            <span>1 bài đã mở</span>
+            <span>5 chủ đề đang chuẩn bị</span>
+            <span>Dành cho người không chuyên</span>
+          </div>
+        </section>
+
+        <aside class="unlock-card">
+          <img src="/lumi-bot.png" alt="Lumi Bot" />
+          <div class="unlock-body">
+            <strong>Mở kho bài đọc</strong>
+            <p>Hiện tại bạn có thể đọc bài đầu tiên. Các bài sâu hơn sẽ mở dần khi đăng nhập và theo dõi hành trình.</p>
+            <div class="progress"><i></i></div>
+            <span class="unlock-note">Project 1/21 · Đang mở dần</span>
+          </div>
+        </aside>
+      </header>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Bài viết cho người mới bắt đầu</h2>
+            <p>Những bài này giúp bạn hiểu AI bằng ngôn ngữ đời thường, không cần biết code, không cần biết thuật ngữ.</p>
+          </div>
+        </div>
+
+        <div class="article-grid">
+          <a class="article-card" href="/prompt-ai-hieu-qua.html">
+            <img class="thumb" src="/lumi-bot.png" alt="" />
+            <div>
+              <div class="tag-row">
+                <span class="tag">Đã mở</span>
+                <span class="time">8 phút đọc</span>
+              </div>
+              <h3>AI không kém thông minh. Chỉ là mình đang giao việc hơi mơ hồ.</h3>
+              <p>Cách viết yêu cầu rõ hơn để AI hiểu việc thật của bạn.</p>
+              <span class="read-link">Đọc bài →</span>
+            </div>
+          </a>
+
+          <article class="article-card locked">
+            <div class="thumb">✉</div>
+            <div>
+              <div class="tag-row">
+                <span class="tag">Sắp mở</span>
+                <span class="time">6 phút đọc</span>
+              </div>
+              <h3>Cách nhờ AI viết email không bị cứng</h3>
+              <p>Dành cho HR, sales, admin và người thường phải viết email mỗi ngày.</p>
+              <span class="read-link">Đang chuẩn bị</span>
+            </div>
+          </article>
+
+          <article class="article-card locked">
+            <div class="thumb">☑</div>
+            <div>
+              <div class="tag-row">
+                <span class="tag">Sắp mở</span>
+                <span class="time">7 phút đọc</span>
+              </div>
+              <h3>Tóm tắt cuộc họp bằng AI sao cho dùng được</h3>
+              <p>Không chỉ tóm tắt cho có, mà ra được việc cần làm tiếp theo.</p>
+              <span class="read-link">Đang chuẩn bị</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Chủ đề sẽ có trong kho tài liệu</h2>
+            <p>Mỗi chủ đề sẽ đi từ việc nhỏ, dễ hiểu, rồi mới tới project thật.</p>
+          </div>
+        </div>
+
+        <div class="topic-grid">
+          <div class="topic-card">
+            <span>✦</span>
+            <div><strong>Prompt dễ hiểu</strong><small>Giao việc cho AI rõ hơn</small></div>
+          </div>
+          <div class="topic-card">
+            <span>💼</span>
+            <div><strong>AI văn phòng</strong><small>Email, họp, báo cáo</small></div>
+          </div>
+          <div class="topic-card">
+            <span>✍</span>
+            <div><strong>Content AI</strong><small>Caption, hook, bài đăng</small></div>
+          </div>
+          <div class="topic-card">
+            <span>🚀</span>
+            <div><strong>Project thật</strong><small>Nhật ký tự tay làm app</small></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

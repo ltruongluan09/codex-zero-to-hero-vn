@@ -673,7 +673,7 @@ function HeroFeaturedProjects() {
       <article className="home-article-card">
         <div className="home-card-head">
           <h2>📄 Bài viết mới nhất</h2>
-          <a href="/prompt-ai-hieu-qua.html">Đọc bài này →</a>
+          <a href="/bai-viet.html">Xem tất cả →</a>
         </div>
         <a className="article-feature" href="/prompt-ai-hieu-qua.html">
           <img src="/lumi-bot.png" alt="" />
