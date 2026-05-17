@@ -354,22 +354,45 @@ function useAuth() {
   }, []);
 
   const signInWithProvider = async (provider) => {
-    if (!supabase) return;
+    if (!supabase) {
+      return {
+        ok: false,
+        message: "Chưa cấu hình đăng nhập ở môi trường này. Nếu đang chạy local, hãy thêm Supabase URL và Publishable Key vào file .env.local rồi khởi động lại dev server.",
+      };
+    }
     const returnPath = `${window.location.pathname}${window.location.search}`;
     const isLuanDomain = /(^|\.)luanai\.io\.vn$/.test(window.location.hostname);
     const redirectOrigin = isLuanDomain ? "https://luanai.io.vn" : window.location.origin;
     const redirectTo = `${redirectOrigin}${window.location.pathname}`;
     localStorage.setItem(AUTH_RETURN_PATH_KEY, returnPath || "/");
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
         redirectTo,
+        skipBrowserRedirect: true,
+        queryParams: {
+          prompt: "select_account",
+        },
       },
     });
 
     if (error) {
       console.error("OAuth login failed", error);
+      return {
+        ok: false,
+        message: error.message || "Chưa mở được màn hình đăng nhập Google. Bạn thử lại giúp mình nhé.",
+      };
     }
+
+    if (data?.url) {
+      window.location.assign(data.url);
+      return { ok: true };
+    }
+
+    return {
+      ok: false,
+      message: "Chưa lấy được đường dẫn đăng nhập Google. Bạn thử refresh trang rồi bấm lại nhé.",
+    };
   };
 
   const signInWithGoogle = () => signInWithProvider("google");
@@ -431,14 +454,14 @@ function Logo() {
   );
 }
 
-function SocialLoginButton({ provider, onClick }) {
-  const label = provider === "facebook" ? "Đăng nhập bằng Facebook" : "Đăng nhập bằng Google";
+function SocialLoginButton({ provider, onClick, disabled = false, label }) {
+  const defaultLabel = provider === "facebook" ? "Đăng nhập bằng Facebook" : "Đăng nhập bằng Google";
   const letter = provider === "facebook" ? "f" : "G";
 
   return (
-    <button className={`social-login-btn ${provider}`} type="button" onClick={onClick}>
+    <button className={`social-login-btn ${provider}`} type="button" onClick={onClick} disabled={disabled}>
       <span>{letter}</span>
-      {label}
+      {label || defaultLabel}
     </button>
   );
 }
@@ -1082,6 +1105,25 @@ function CaptionAISection() {
 }
 
 function LoginModal({ onClose, onGoogleLogin }) {
+  const [loginStatus, setLoginStatus] = useState("idle");
+  const [loginMessage, setLoginMessage] = useState("");
+
+  const handleGoogleLogin = async () => {
+    setLoginStatus("loading");
+    setLoginMessage("Đang mở màn hình đăng nhập Google...");
+    try {
+      const result = await onGoogleLogin();
+      if (result?.ok === false) {
+        setLoginStatus("error");
+        setLoginMessage(result.message);
+      }
+    } catch (error) {
+      console.error("Google login failed", error);
+      setLoginStatus("error");
+      setLoginMessage("Đăng nhập chưa chạy được. Bạn thử refresh trang rồi bấm lại giúp mình nhé.");
+    }
+  };
+
   return (
     <div className="login-modal-backdrop" role="presentation" onClick={onClose}>
       <div className="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" onClick={(event) => event.stopPropagation()}>
@@ -1103,8 +1145,18 @@ function LoginModal({ onClose, onGoogleLogin }) {
           <span>Mở dashboard cá nhân</span>
         </div>
         <div className="social-login-stack">
-          <SocialLoginButton provider="google" onClick={onGoogleLogin} />
+          <SocialLoginButton
+            provider="google"
+            onClick={handleGoogleLogin}
+            disabled={loginStatus === "loading"}
+            label={loginStatus === "loading" ? "Đang mở Google..." : undefined}
+          />
         </div>
+        {loginMessage && (
+          <p className={loginStatus === "error" ? "login-status error" : "login-status"}>
+            {loginMessage}
+          </p>
+        )}
         <small className="login-note">Không cần mật khẩu mới. Bạn có thể đăng xuất bất cứ lúc nào.</small>
       </div>
     </div>

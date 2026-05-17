@@ -1217,6 +1217,29 @@ body {
   box-shadow: 0 16px 36px rgba(255, 91, 127, 0.16) !important;
 }
 
+.login-modal .social-login-btn:disabled {
+  cursor: wait !important;
+  opacity: 0.78 !important;
+  transform: none !important;
+}
+
+.login-status {
+  margin: 10px 0 0 !important;
+  border-radius: 13px !important;
+  padding: 10px 12px !important;
+  background: rgba(124, 77, 255, 0.08) !important;
+  color: #5d45ce !important;
+  font-size: 12px !important;
+  font-weight: 850 !important;
+  line-height: 1.45 !important;
+  text-align: center !important;
+}
+
+.login-status.error {
+  background: rgba(255, 91, 111, 0.1) !important;
+  color: #d23b45 !important;
+}
+
 .challenge-banner {
   overflow: hidden !important;
   background:
