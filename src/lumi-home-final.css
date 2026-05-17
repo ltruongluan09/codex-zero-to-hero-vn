@@ -679,6 +679,23 @@ body {
     radial-gradient(circle at 16% 50%, rgba(124, 77, 255, 0.08), transparent 34%),
     linear-gradient(135deg, rgba(255, 252, 248, 0.96), rgba(255, 248, 241, 0.9)) !important;
   box-shadow: 0 14px 36px rgba(91, 72, 153, 0.08) !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  animation: demoWidgetFloat 3.4s ease-in-out infinite !important;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease !important;
+}
+
+.hero-benefits .home-login-card:hover,
+.hero-benefits .home-login-card:focus-visible {
+  border-color: rgba(124, 77, 255, 0.42) !important;
+  box-shadow:
+    0 18px 44px rgba(91, 72, 153, 0.13),
+    0 0 0 4px rgba(124, 77, 255, 0.08) !important;
+  filter: saturate(1.04) !important;
+  outline: none !important;
 }
 
 .home-login-bot {
@@ -755,21 +772,35 @@ body {
   border-radius: inherit !important;
   background: linear-gradient(90deg, #ff5b6f, #7a4dff) !important;
   box-shadow: none !important;
+  animation: demoProgressPulse 2.8s ease-in-out infinite !important;
 }
 
-.hero-benefits .home-login-card button {
-  width: auto !important;
-  min-width: 0 !important;
-  justify-self: start !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  background: transparent !important;
+.home-login-action {
+  width: fit-content !important;
   color: #d23b45 !important;
-  box-shadow: none !important;
   font-size: 12px !important;
   font-weight: 900 !important;
+  line-height: 1.2 !important;
+}
+
+@keyframes demoWidgetFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes demoProgressPulse {
+  0%,
+  100% {
+    width: 22%;
+  }
+  50% {
+    width: 31%;
+  }
 }
 
 @keyframes lumiBotFloat {
@@ -998,11 +1029,22 @@ body {
     linear-gradient(135deg, rgba(255, 252, 248, 0.96), rgba(255, 248, 241, 0.92)) !important;
   box-shadow: 0 16px 42px rgba(91, 72, 153, 0.12) !important;
   padding: 13px 14px !important;
+  cursor: pointer !important;
+  animation: demoWidgetFloat 3.4s ease-in-out infinite !important;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease !important;
 }
 
-.journey-widget-main:hover {
-  border-color: rgba(124, 77, 255, 0.25) !important;
-  box-shadow: 0 22px 58px rgba(91, 72, 153, 0.16) !important;
+.journey-widget-main:hover,
+.journey-widget-main:focus-visible {
+  border-color: rgba(124, 77, 255, 0.42) !important;
+  box-shadow:
+    0 22px 58px rgba(91, 72, 153, 0.16),
+    0 0 0 4px rgba(124, 77, 255, 0.08) !important;
+  filter: saturate(1.04) !important;
+  outline: none !important;
 }
 
 .journey-widget-avatar {
@@ -1029,19 +1071,12 @@ body {
 .journey-widget-progress i {
   width: 22% !important;
   background: linear-gradient(90deg, #ff5b6f, #7a4dff) !important;
+  animation: demoProgressPulse 2.8s ease-in-out infinite !important;
 }
 
 .journey-widget-action {
   color: #d23b45 !important;
   font-size: 12px !important;
-}
-
-.journey-widget-panel {
-  border: 1px solid rgba(234, 216, 198, 0.98) !important;
-  background:
-    radial-gradient(circle at 0% 0%, rgba(124, 77, 255, 0.08), transparent 36%),
-    rgba(255, 252, 248, 0.96) !important;
-  box-shadow: 0 26px 76px rgba(91, 72, 153, 0.16) !important;
 }
 
 @media (max-width: 640px) {
@@ -1082,10 +1117,6 @@ body {
 
   .journey-widget-top small {
     display: inline !important;
-  }
-
-  .journey-widget-panel {
-    width: 100% !important;
   }
 }
 
@@ -1177,7 +1208,6 @@ body {
 }
 
 .caption-form button[type="submit"],
-.widget-login-primary,
 .follow-project-btn,
 .dashboard-project-item button,
 .account-card button {
@@ -2470,25 +2500,6 @@ body {
 .widget-email-submit:disabled {
   cursor: wait !important;
   opacity: 0.72 !important;
-}
-
-.journey-widget-panel .follow-message {
-  margin: 10px 0 0 !important;
-  border-radius: 12px !important;
-  padding: 10px 12px !important;
-  font-size: 12px !important;
-  font-weight: 800 !important;
-  line-height: 1.45 !important;
-}
-
-.journey-widget-panel .follow-message.success {
-  background: rgba(16, 185, 129, 0.1) !important;
-  color: #0b9d70 !important;
-}
-
-.journey-widget-panel .follow-message.error {
-  background: rgba(255, 91, 111, 0.1) !important;
-  color: #d23b45 !important;
 }
 
 @media (max-width: 760px) {
