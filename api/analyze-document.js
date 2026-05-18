@@ -10,8 +10,11 @@ export const config = {
   },
 };
 
-const GEMINI_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
+
+function geminiUrl(model) {
+  return `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+}
 
 const NATIVE_FILE_TYPES = new Set(SUPPORTED_DOCUMENT_TYPES.native);
 const TEXT_FILE_TYPES = new Set(SUPPORTED_DOCUMENT_TYPES.text);
@@ -214,34 +217,45 @@ function buildGeminiParts({ buffer, fileBase64, mimeType, fileName }) {
   return undefined;
 }
 
-async function callGemini({ apiKey, parts }) {
-  const geminiResponse = await fetch(GEMINI_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-goog-api-key": apiKey,
-    },
-    body: JSON.stringify({
-      systemInstruction: {
-        parts: [{ text: DOCSCAN_SYSTEM_PROMPT }],
-      },
-      contents: [{ role: "user", parts }],
-      generationConfig: {
-        temperature: 0.1,
-        maxOutputTokens: 2048,
-        responseMimeType: "application/json",
-      },
-    }),
-  });
+async function callGemini({ apiKey, parts, systemPrompt = DOCSCAN_SYSTEM_PROMPT }) {
+  const warnings = [];
 
-  if (!geminiResponse.ok) {
-    const warning = await geminiResponse.text();
-    return { ok: false, warning };
+  for (const model of GEMINI_MODELS) {
+    try {
+      const geminiResponse = await fetch(geminiUrl(model), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+        },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: systemPrompt }],
+          },
+          contents: [{ role: "user", parts }],
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 2048,
+            responseMimeType: "application/json",
+          },
+        }),
+      });
+
+      if (!geminiResponse.ok) {
+        const warning = await geminiResponse.text();
+        warnings.push(`${model}: ${warning.slice(0, 220)}`);
+        continue;
+      }
+
+      const data = await geminiResponse.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+      return { ok: true, model, text, parsed: safeJson(text) };
+    } catch (error) {
+      warnings.push(`${model}: ${error.message}`);
+    }
   }
 
-  const data = await geminiResponse.json();
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-  return { ok: true, text, parsed: safeJson(text) };
+  return { ok: false, warning: warnings.join(" | ") };
 }
 
 export default async function handler(request, response) {
@@ -294,6 +308,7 @@ export default async function handler(request, response) {
     if (!parsed && firstTry.text) {
       const repairTry = await callGemini({
         apiKey,
+        systemPrompt: "Bạn chỉ chuyển nội dung sang JSON hợp lệ. Không thêm markdown.",
         parts: [{
           text: `Hãy chuyển nội dung sau thành đúng JSON theo schema DocScan. Chỉ trả JSON hợp lệ.\n\n${firstTry.text}`,
         }],
