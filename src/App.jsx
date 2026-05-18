@@ -399,13 +399,26 @@ function useAuth() {
   const signInWithFacebook = () => signInWithProvider("facebook");
 
   const signOut = async () => {
-    if (!supabase) return;
-    await supabase.auth.signOut();
-    setSession(null);
-    setUser(null);
-    setProfile(null);
-    setFollowedProjects([]);
-    setMembership(null);
+    const clearLocalAuth = () => {
+      setSession(null);
+      setUser(null);
+      setProfile(null);
+      setFollowedProjects([]);
+      setMembership(null);
+    };
+
+    try {
+      if (supabase) {
+        await Promise.race([
+          supabase.auth.signOut({ scope: "local" }),
+          new Promise((resolve) => setTimeout(resolve, 1600)),
+        ]);
+      }
+    } catch (error) {
+      console.warn("Supabase sign out did not finish cleanly", error);
+    } finally {
+      clearLocalAuth();
+    }
   };
 
   const followProject = async (projectSlug) => {
@@ -482,9 +495,9 @@ function UserMenu({ profile, onSignOut }) {
 
   const handleSignOut = async () => {
     setSigningOut(true);
+    setOpen(false);
     try {
       await onSignOut();
-      setOpen(false);
     } finally {
       setSigningOut(false);
     }
