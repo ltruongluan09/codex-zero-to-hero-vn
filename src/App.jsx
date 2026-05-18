@@ -222,20 +222,24 @@ function useAuth() {
     return { cleanPath, shouldClean: hadAuthHash || hadAuthCode };
   };
 
-  const finishAuthRedirect = () => {
-    const returnPath = localStorage.getItem(AUTH_RETURN_PATH_KEY);
+  const cleanAuthUrl = () => {
     const { cleanPath, shouldClean } = getCleanAuthPath();
-
-    if (returnPath && returnPath !== cleanPath) {
-      localStorage.removeItem(AUTH_RETURN_PATH_KEY);
-      window.location.replace(returnPath);
-      return true;
-    }
-
-    localStorage.removeItem(AUTH_RETURN_PATH_KEY);
 
     if (shouldClean) {
       window.history.replaceState(null, "", cleanPath);
+    }
+
+    return cleanPath;
+  };
+
+  const finishAuthRedirect = () => {
+    const returnPath = localStorage.getItem(AUTH_RETURN_PATH_KEY);
+    const cleanPath = cleanAuthUrl();
+    localStorage.removeItem(AUTH_RETURN_PATH_KEY);
+
+    if (returnPath && returnPath !== cleanPath) {
+      window.location.replace(returnPath);
+      return true;
     }
 
     return false;
@@ -333,6 +337,8 @@ function useAuth() {
           await supabase.auth.exchangeCodeForSession(url.searchParams.get("code"));
         } catch (error) {
           console.error("OAuth callback exchange failed", error);
+        } finally {
+          cleanAuthUrl();
         }
       }
 
@@ -406,6 +412,9 @@ function useAuth() {
       setFollowedProjects([]);
       setMembership(null);
     };
+
+    localStorage.removeItem(AUTH_RETURN_PATH_KEY);
+    cleanAuthUrl();
 
     try {
       if (supabase) {
