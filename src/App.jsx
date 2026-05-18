@@ -33,6 +33,67 @@ const captionExamples = [
   },
 ];
 
+const documentAnalysisTypes = [
+  { id: "contract", label: "Hợp đồng", hint: "Tìm rủi ro trước khi ký" },
+  { id: "quote", label: "Báo giá", hint: "Soát giá, điều kiện, bảo hành" },
+  { id: "finance", label: "Số liệu", hint: "Nhìn nhanh điểm bất thường" },
+  { id: "report", label: "Báo cáo", hint: "Tóm tắt ý chính dễ hiểu" },
+];
+
+const sampleDocumentResult = {
+  document_type: "Chưa đọc được nội dung thật",
+  summary:
+    "DocScan đã nhận file, nhưng chưa phân tích được nội dung thật của tài liệu này. Kết quả bên dưới chỉ là trạng thái an toàn, không phải nhận xét về file của bạn.",
+  key_points: [
+    {
+      label: "Trạng thái",
+      value: "File đã được chọn, nhưng AI chưa trả về bản phân tích bám theo nội dung thật.",
+      importance: "high",
+    },
+    {
+      label: "Nên làm gì",
+      value: "Hãy thử lại với file PDF, Word, Excel hoặc ảnh rõ nét hơn. Nếu vẫn lỗi, Lumi Labs cần kiểm tra kết nối AI.",
+      importance: "medium",
+    },
+  ],
+  risks_or_notes: [
+    {
+      title: "Chưa có nhận xét từ nội dung thật",
+      detail: "Lumi Bot chưa đọc được nội dung bên trong file, nên chưa thể chỉ ra điểm cần chú ý cụ thể.",
+      severity: "medium",
+    },
+  ],
+  suggested_questions: [
+    "File này có đúng định dạng được hỗ trợ không?",
+    "Tài liệu có bị mờ, scan lệch hoặc quá nặng không?",
+    "Nếu thử lại vẫn lỗi, Lumi Labs có cần kiểm tra kết nối AI không?",
+  ],
+  action_items: [
+    "Thử upload lại file rõ hơn hoặc nhỏ hơn 20MB.",
+    "Nếu vẫn chưa được, hãy thử lại sau ít phút.",
+  ],
+  score: 0,
+  verdict: "Chưa đọc được nội dung thật của file.",
+  verdict_icon: "🔒",
+  risks: [
+    {
+      level: "medium",
+      title: "Chưa có nhận xét từ nội dung thật",
+      body: "Lumi Bot chưa đọc được nội dung bên trong file, nên chưa thể chỉ ra điểm cần chú ý cụ thể.",
+    },
+  ],
+  keyPoints: [
+    "File đã được chọn nhưng chưa có bản phân tích thật.",
+    "Không hiển thị rủi ro giả nếu AI chưa đọc được tài liệu.",
+  ],
+  questions: [
+    "File này có đúng định dạng được hỗ trợ không?",
+    "Nếu thử lại vẫn lỗi, Lumi Labs có cần kiểm tra kết nối AI không?",
+  ],
+  plainSummary:
+    "DocScan đã nhận file nhưng chưa đọc được nội dung thật, nên chưa đưa ra nhận xét cụ thể.",
+};
+
 const AUTH_RETURN_PATH_KEY = "lumi_auth_return_path";
 
 const whoOptions = [
@@ -107,18 +168,32 @@ const projectCatalog = [
     title: "Caption AI",
     desc: "Tool viết caption TikTok, Facebook và hashtag tiếng Việt.",
     status: "Đang mở demo",
+    href: "/caption-ai",
+    icon: "✍️",
+  },
+  {
+    slug: "docscan-ai",
+    title: "DocScan AI",
+    desc: "Một chạm để AI đọc nhanh hợp đồng, báo giá hoặc báo cáo.",
+    status: "Dự án #2",
+    href: "/docscan-ai",
+    icon: "📄",
   },
   {
     slug: "excel-report-ai",
     title: "Excel Report AI",
     desc: "Biến dữ liệu Excel thành báo cáo dễ đọc.",
     status: "Sắp làm",
+    href: "/projects",
+    icon: "📊",
   },
   {
     slug: "ai-office-tools",
     title: "AI Office Tools",
     desc: "Bộ công cụ AI cho dân văn phòng.",
     status: "Ý tưởng",
+    href: "/projects",
+    icon: "🧰",
   },
 ];
 
@@ -685,26 +760,30 @@ function LumiBotIntro() {
 }
 
 function HeroFeaturedProjects() {
+  const activeProjects = projectCatalog.slice(0, 2);
+
   return (
     <div className="home-cards" data-reveal>
-      <article className="home-project-card">
-        <h2>💼 Dự án đang thực hiện</h2>
-        <div className="home-project-content">
-          <div className="project-illustration">
-            <span>✦</span>
-            <strong>✎</strong>
-          </div>
-          <div>
-            <span className="status-pill">Đang phát triển</span>
-            <h3>Caption AI</h3>
-            <p>AI giúp bạn viết caption hấp dẫn cho Facebook, TikTok, YouTube, LinkedIn...</p>
-            <div className="mini-actions">
-              <span>💬 Viết caption</span>
-              <span>⚡ Viết hook</span>
-              <span>☷ Viết kịch bản</span>
-            </div>
-            <a href="/caption-ai">Xem chi tiết →</a>
-          </div>
+      <article className="home-project-card project-hub-card">
+        <div className="home-card-head">
+          <h2>💼 Dự án đang thực hiện</h2>
+          <a href="/projects">Xem tất cả →</a>
+        </div>
+        <p className="project-hub-intro">
+          Mỗi dự án là một tool nhỏ, mở lên dùng ngay. Không cần biết code, không cần đọc hướng dẫn dài.
+        </p>
+        <div className="home-project-list">
+          {activeProjects.map((project, index) => (
+            <a className="home-project-row" href={project.href} key={project.slug}>
+              <span>{project.icon}</span>
+              <div>
+                <small>Project #{index + 1} · {project.status}</small>
+                <strong>{project.title}</strong>
+                <p>{project.desc}</p>
+              </div>
+              <i>→</i>
+            </a>
+          ))}
         </div>
       </article>
 
@@ -803,6 +882,33 @@ function Hero({ onOpenLogin }) {
     </section>
   );
 }
+
+function ProjectsPage() {
+  return (
+    <main className="projects-page">
+      <section className="projects-hero" data-reveal>
+        <span className="caption-badge">Kho project Lumi Labs</span>
+        <h1>Dự án AI đang thực hiện</h1>
+        <p>
+          Đây là nơi gom tất cả tool mình đang build. Mục tiêu rất đơn giản:
+          mở lên là hiểu, bấm là dùng, thấy được AI giúp gì cho công việc thật.
+        </p>
+      </section>
+      <section className="project-library-grid">
+        {projectCatalog.map((project, index) => (
+          <a className="project-library-card" href={project.href} key={project.slug} data-reveal>
+            <span>{project.icon}</span>
+            <small>Project #{index + 1} · {project.status}</small>
+            <h2>{project.title}</h2>
+            <p>{project.desc}</p>
+            <strong>{project.href === "/projects" ? "Đang chuẩn bị" : "Mở project →"}</strong>
+          </a>
+        ))}
+      </section>
+    </main>
+  );
+}
+
 function normalizeHashtag(value) {
   return value
     .normalize("NFD")
@@ -1126,6 +1232,263 @@ function CaptionAISection() {
   );
 }
 
+function SoiTaiLieuSectionSimple() {
+  const [file, setFile] = useState(null);
+  const [result, setResult] = useState(null);
+  const [source, setSource] = useState("sample");
+  const [loading, setLoading] = useState(false);
+  const [stepIndex, setStepIndex] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const [error, setError] = useState("");
+  const [dragActive, setDragActive] = useState(false);
+
+  const steps = ["Đọc tài liệu", "Tìm điểm chính", "Soi điểm cần chú ý", "Gợi ý bước tiếp theo"];
+
+  useEffect(() => {
+    if (!loading) return undefined;
+    const timer = setInterval(() => setStepIndex((value) => (value + 1) % steps.length), 800);
+    return () => clearInterval(timer);
+  }, [loading]);
+
+  const toBase64 = (nextFile) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result).split(",")[1] || "");
+      reader.onerror = () => reject(new Error("Không đọc được file."));
+      reader.readAsDataURL(nextFile);
+    });
+
+  const processFile = (nextFile) => {
+    if (!nextFile) return;
+    if (nextFile.size > 20 * 1024 * 1024) {
+      setError("File hơi lớn rồi. Bạn chọn file dưới 20MB giúp mình nhé.");
+      return;
+    }
+    setFile(nextFile);
+    setError("");
+    analyze(nextFile);
+  };
+
+  const selectFile = (event) => {
+    processFile(event.target.files?.[0]);
+    event.target.value = "";
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    setDragActive(false);
+    processFile(event.dataTransfer.files?.[0]);
+  };
+
+  const analyze = async (selectedFile = file) => {
+    if (!selectedFile) return;
+    setLoading(true);
+    setCopied(false);
+    setError("");
+    const startedAt = Date.now();
+
+    try {
+      const fileBase64 = await toBase64(selectedFile);
+      const response = await fetch("/api/analyze-document", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fileBase64,
+          mimeType: selectedFile.type || "application/octet-stream",
+          fileName: selectedFile.name,
+        }),
+      });
+      const rawText = await response.text();
+      let data = null;
+      try {
+        data = rawText ? JSON.parse(rawText) : null;
+      } catch {
+        data = null;
+      }
+      if (!response.ok) throw new Error(data?.error || "Chưa đọc được file.");
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < 1100) {
+        await new Promise((resolve) => setTimeout(resolve, 1100 - elapsed));
+      }
+      setResult(data.data || sampleDocumentResult);
+      setSource(data.source || "fallback");
+    } catch (nextError) {
+      console.warn("DocScan fallback", nextError);
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < 900) {
+        await new Promise((resolve) => setTimeout(resolve, 900 - elapsed));
+      }
+      setResult(sampleDocumentResult);
+      setSource("fallback");
+    } finally {
+      setLoading(false);
+      setStepIndex(0);
+    }
+  };
+
+  const copySummary = async () => {
+    if (!result) return;
+    const text = [
+      `Loại tài liệu: ${result.document_type || "Tài liệu"}`,
+      `Tóm tắt: ${result.summary || result.verdict}`,
+      "",
+      "Điểm cần chú ý:",
+      ...(result.risks || []).map((item) => `- ${item.title}: ${item.body}`),
+      "",
+      "Câu hỏi nên hỏi lại:",
+      ...(result.questions || result.suggested_questions || []).map((item) => `- ${item}`),
+      "",
+      "Việc nên làm tiếp:",
+      ...(result.action_items || []).map((item) => `- ${item}`),
+    ].join("\n");
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  return (
+    <section className="docscan-page">
+      <div className="docscan-shell" data-reveal>
+        <header className="docscan-top">
+          <div className="docscan-brand">
+            <span className="docscan-logo">▰</span>
+            <div>
+              <h1>DocScan <em>AI</em></h1>
+              <p>AI đọc tài liệu và chỉ ra điểm cần chú ý.</p>
+            </div>
+          </div>
+          <div className="docscan-helper">
+            <img src="/lumi-bot.png" alt="" />
+            <div>
+              <strong>AI sẽ giúp bạn hiểu tài liệu</strong>
+              <span>An toàn và bảo mật tuyệt đối.</span>
+            </div>
+          </div>
+        </header>
+
+        <div className={result ? "docscan-grid has-result" : "docscan-grid"}>
+          <section className="docscan-card docscan-upload-card">
+            <label
+              className={[
+                "docscan-drop",
+                file ? "has-file" : "",
+                dragActive ? "is-dragging" : "",
+              ].filter(Boolean).join(" ")}
+              onDragEnter={(event) => {
+                event.preventDefault();
+                setDragActive(true);
+              }}
+              onDragOver={(event) => event.preventDefault()}
+              onDragLeave={() => setDragActive(false)}
+              onDrop={handleDrop}
+            >
+              <input
+                type="file"
+                accept=".pdf,.docx,.xlsx,.xls,.csv,.txt,.png,.jpg,.jpeg,.webp"
+                onChange={selectFile}
+              />
+              <span className="docscan-file-icon"><i>+</i></span>
+              <strong>{file ? file.name : "Tải tài liệu lên"}</strong>
+              <p>{file ? "Lumi Bot đang chuẩn bị đọc file của bạn." : "Kéo và thả file vào đây hoặc chọn file từ máy"}</p>
+              <small>PDF, Word, Excel hoặc ảnh</small>
+              {error && <em className="docscan-error">{error}</em>}
+              <b>⇧ Chọn file</b>
+            </label>
+            <div className="docscan-safe-note">
+              <span>♙</span>
+              <div>
+              <strong>Tài liệu của bạn được xử lý an toàn.</strong>
+                <p>{source === "fallback" && result ? "Chưa đọc được nội dung thật, nên DocScan không đưa ra nhận xét giả." : "Không lưu trữ sau khi hoàn tất."}</p>
+              </div>
+            </div>
+          </section>
+
+          <section className="docscan-card docscan-result-card">
+            {loading ? (
+              <div className="docscan-loading">
+                <img src="/lumi-bot.png" alt="" />
+              <h2>{steps[stepIndex]}...</h2>
+                <p>Lumi Bot đang đọc trong một lần, rồi gom lại phần quan trọng nhất cho bạn.</p>
+                <div>{steps.map((step, index) => <span key={step} className={index <= stepIndex ? "active" : ""} />)}</div>
+              </div>
+            ) : result ? (
+              <div className="docscan-result-ready">
+                <div className="docscan-score-mini">
+                  <span>{result.verdict_icon}</span>
+                  <div>
+                    <small>{source === "gemini" ? "Đã đọc bằng AI" : "Chưa đọc nội dung thật"}</small>
+                    <h2>{result.document_type || "Đã đọc xong"}</h2>
+                    <p>{result.summary || result.verdict}</p>
+                  </div>
+                </div>
+                {(result.key_points || []).length > 0 && (
+                  <div className="docscan-keypoints">
+                    {result.key_points.slice(0, 3).map((point) => (
+                      <span key={`${point.label}-${point.value}`}>
+                        <b>{point.label}</b>
+                        {point.value}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <div className="docscan-result-list">
+                  <h3>Điểm cần chú ý</h3>
+                  {(result.risks || []).slice(0, 3).map((risk) => (
+                    <article key={risk.title}>
+                      <strong>{risk.title}</strong>
+                      <p>{risk.body}</p>
+                    </article>
+                  ))}
+                  {(result.questions || result.suggested_questions || []).length > 0 && (
+                    <article className="docscan-questions">
+                      <strong>Câu nên hỏi lại</strong>
+                      <p>{(result.questions || result.suggested_questions).slice(0, 3).join(" ")}</p>
+                    </article>
+                  )}
+                  {(result.action_items || []).length > 0 && (
+                    <article className="docscan-next-actions">
+                      <strong>Việc nên làm tiếp</strong>
+                      <p>{result.action_items.slice(0, 3).join(" ")}</p>
+                    </article>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="docscan-empty">
+                <span>▤</span>
+                <h2>Kết quả sẽ hiển thị ở đây</h2>
+                <p>Sau khi bạn tải tài liệu lên, AI sẽ đọc và chỉ ra những điểm cần chú ý và gợi ý câu hỏi nên làm rõ.</p>
+                <ul>
+                  <li>Phân tích tự động</li>
+                  <li>Dễ hiểu, dễ áp dụng</li>
+                  <li>Dễ dàng copy và sử dụng</li>
+                </ul>
+              </div>
+            )}
+          </section>
+        </div>
+
+        <footer className="docscan-summary">
+          <div>
+            <span>▣</span>
+            <div>
+              <strong>Tóm tắt để sử dụng</strong>
+              <p>Bạn có thể copy toàn bộ kết quả để lưu lại hoặc gửi cho người khác.</p>
+            </div>
+          </div>
+          <button type="button" onClick={copySummary} disabled={!result}>
+            {copied ? "Đã copy" : "Copy kết quả"}
+          </button>
+        </footer>
+      </div>
+    </section>
+  );
+}
+
 function LoginModal({ onClose, onGoogleLogin }) {
   const [loginStatus, setLoginStatus] = useState("idle");
   const [loginMessage, setLoginMessage] = useState("");
@@ -1392,6 +1755,7 @@ function App() {
   const currentPath = window.location.pathname;
   const isDashboard = currentPath === "/dashboard";
   const isCaptionPage = currentPath === "/caption-ai";
+  const isDocumentPage = currentPath === "/docscan-ai" || currentPath === "/soi-tai-lieu";
   const isProjectsPage = currentPath === "/projects";
   const isChallengePage = currentPath === "/challenge";
   const [loginOpen, setLoginOpen] = useState(false);
@@ -1423,7 +1787,7 @@ function App() {
     );
   }
 
-  if (isCaptionPage || isProjectsPage || isChallengePage) {
+  if (isCaptionPage || isDocumentPage || isProjectsPage || isChallengePage) {
     return (
       <>
         <Header
@@ -1433,7 +1797,8 @@ function App() {
         />
         <main>
           {isCaptionPage && <CaptionAISection />}
-          {isProjectsPage && <UpcomingSection />}
+          {isDocumentPage && <SoiTaiLieuSectionSimple />}
+          {isProjectsPage && <ProjectsPage />}
           {isChallengePage && <ChallengeSection />}
         </main>
         <Footer />
