@@ -4177,8 +4177,20 @@ body {
   color: #704dff;
 }
 
+.docscan-result-list .docscan-missing-info strong {
+  color: #d97706;
+}
+
 .docscan-result-list .docscan-next-actions strong {
   color: #12a979;
+}
+
+.docscan-result-list .docscan-evidence strong {
+  color: #4f46e5;
+}
+
+.docscan-result-list .docscan-evidence p {
+  font-style: italic;
 }
 
 .docscan-result-list p {

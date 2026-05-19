@@ -1328,18 +1328,24 @@ function SoiTaiLieuSectionSimple() {
 
   const copySummary = async () => {
     if (!result) return;
-    const text = [
+    const text = result.copy_ready_summary || [
       `Loại tài liệu: ${result.document_type || "Tài liệu"}`,
-      `Tóm tắt: ${result.summary || result.verdict}`,
+      `Kết luận nhanh: ${result.one_line_answer || result.summary || result.verdict}`,
+      "",
+      "Bạn cần biết ngay:",
+      ...(result.top_3_takeaways || result.key_points || []).map((item) => `- ${item.title || item.label}: ${item.detail || item.value}`),
       "",
       "Điểm cần chú ý:",
-      ...(result.risks || []).map((item) => `- ${item.title}: ${item.body}`),
+      ...(result.red_flags || result.risks || []).map((item) => `- ${item.title}: ${item.detail || item.body}`),
       "",
-      "Câu hỏi nên hỏi lại:",
-      ...(result.questions || result.suggested_questions || []).map((item) => `- ${item}`),
+      "Thông tin còn thiếu:",
+      ...(result.missing_information || []).map((item) => `- ${item}`),
+      "",
+      "Câu nên hỏi lại:",
+      ...(result.questions_to_ask || result.questions || []).map((item) => `- ${item}`),
       "",
       "Việc nên làm tiếp:",
-      ...(result.action_items || []).map((item) => `- ${item}`),
+      ...(result.next_actions || result.action_items || []).map((item) => `- ${item}`),
     ].join("\n");
     try {
       await navigator.clipboard.writeText(text);
@@ -1422,37 +1428,49 @@ function SoiTaiLieuSectionSimple() {
                   <div>
                     <small>{source === "gemini" ? "Đã đọc bằng AI" : "Chưa đọc nội dung thật"}</small>
                     <h2>{result.document_type || "Đã đọc xong"}</h2>
-                    <p>{result.summary || result.verdict}</p>
+                    <p>{result.one_line_answer || result.summary || result.verdict}</p>
                   </div>
                 </div>
-                {(result.key_points || []).length > 0 && (
+                {(result.top_3_takeaways || result.key_points || []).length > 0 && (
                   <div className="docscan-keypoints">
-                    {result.key_points.slice(0, 3).map((point) => (
-                      <span key={`${point.label}-${point.value}`}>
-                        <b>{point.label}</b>
-                        {point.value}
+                    {(result.top_3_takeaways || result.key_points).slice(0, 3).map((point) => (
+                      <span key={`${point.title || point.label}-${point.detail || point.value}`}>
+                        <b>{point.title || point.label}</b>
+                        {point.detail || point.value}
                       </span>
                     ))}
                   </div>
                 )}
                 <div className="docscan-result-list">
                   <h3>Điểm cần chú ý</h3>
-                  {(result.risks || []).slice(0, 3).map((risk) => (
+                  {(result.red_flags || result.risks || []).slice(0, 3).map((risk) => (
                     <article key={risk.title}>
                       <strong>{risk.title}</strong>
-                      <p>{risk.body}</p>
+                      <p>{risk.detail || risk.body}</p>
                     </article>
                   ))}
-                  {(result.questions || result.suggested_questions || []).length > 0 && (
-                    <article className="docscan-questions">
-                      <strong>Câu nên hỏi lại</strong>
-                      <p>{(result.questions || result.suggested_questions).slice(0, 3).join(" ")}</p>
+                  {(result.missing_information || []).length > 0 && (
+                    <article className="docscan-missing-info">
+                      <strong>Thông tin còn thiếu</strong>
+                      <p>{result.missing_information.slice(0, 3).join(" ")}</p>
                     </article>
                   )}
-                  {(result.action_items || []).length > 0 && (
+                  {(result.questions_to_ask || result.questions || result.suggested_questions || []).length > 0 && (
+                    <article className="docscan-questions">
+                      <strong>Câu nên hỏi lại</strong>
+                      <p>{(result.questions_to_ask || result.questions || result.suggested_questions).slice(0, 3).join(" ")}</p>
+                    </article>
+                  )}
+                  {(result.next_actions || result.action_items || []).length > 0 && (
                     <article className="docscan-next-actions">
                       <strong>Việc nên làm tiếp</strong>
-                      <p>{result.action_items.slice(0, 3).join(" ")}</p>
+                      <p>{(result.next_actions || result.action_items).slice(0, 3).join(" ")}</p>
+                    </article>
+                  )}
+                  {(result.evidence_snippets || []).length > 0 && (
+                    <article className="docscan-evidence">
+                      <strong>Căn cứ DocScan nhìn thấy</strong>
+                      <p>{result.evidence_snippets.slice(0, 3).map((item) => `“${item}”`).join(" ")}</p>
                     </article>
                   )}
                 </div>

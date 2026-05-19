@@ -11,17 +11,19 @@ export const config = {
 };
 
 const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
-
-function geminiUrl(model) {
-  return `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-}
+const MAX_FILE_SIZE = 20 * 1024 * 1024;
+const MAX_TEXT_CHARS = 150000;
+const MAX_EXCEL_ROWS_PER_SHEET = 120;
+const MAX_EXCEL_COLS = 18;
 
 const NATIVE_FILE_TYPES = new Set(SUPPORTED_DOCUMENT_TYPES.native);
 const TEXT_FILE_TYPES = new Set(SUPPORTED_DOCUMENT_TYPES.text);
 const XLSX_FILE_TYPES = new Set(SUPPORTED_DOCUMENT_TYPES.xlsx);
 const DOCX_FILE_TYPES = new Set(SUPPORTED_DOCUMENT_TYPES.docx);
 
-const MAX_FILE_SIZE = 20 * 1024 * 1024;
+function geminiUrl(model) {
+  return `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+}
 
 function inferMimeType(mimeType = "", fileName = "") {
   if (mimeType && mimeType !== "application/octet-stream") return mimeType;
@@ -42,37 +44,54 @@ function inferMimeType(mimeType = "", fileName = "") {
 function fallbackAnalysis({ fileName = "tài liệu" } = {}) {
   return normalizeDocScanResult({
     document_type: "Chưa đọc được nội dung thật",
+    one_line_answer: `DocScan đã nhận file "${fileName}", nhưng chưa phân tích được nội dung thật.`,
     summary:
-      `DocScan đã nhận file "${fileName}", nhưng chưa phân tích được nội dung thật. Kết quả này chỉ là trạng thái an toàn, không phải nhận xét về tài liệu của bạn.`,
-    key_points: [
+      "Kết quả này chỉ là trạng thái an toàn, không phải nhận xét về tài liệu của bạn. DocScan sẽ không đưa ra kết luận khi chưa có dữ liệu đủ tin cậy.",
+    top_3_takeaways: [
       {
-        label: "Trạng thái",
-        value: "File đã được gửi lên, nhưng AI chưa trả về bản phân tích bám theo nội dung thật.",
+        title: "Chưa có phân tích thật",
+        detail: "AI chưa trả về kết quả bám theo nội dung file.",
         importance: "high",
       },
       {
-        label: "Nên làm gì",
-        value: "Thử lại với file rõ hơn, nhỏ hơn 20MB. Nếu vẫn lỗi, Lumi Labs cần kiểm tra kết nối AI.",
+        title: "Không phán bừa",
+        detail: "DocScan không tự tạo rủi ro hoặc kết luận nếu chưa đọc được tài liệu.",
+        importance: "high",
+      },
+      {
+        title: "Thử lại",
+        detail: "Hãy thử file rõ hơn, nhỏ hơn 20MB hoặc thử lại sau ít phút.",
         importance: "medium",
       },
     ],
-    risks_or_notes: [
+    important_details: [
+      { label: "Tên file", value: fileName },
+      { label: "Trạng thái", value: "Chưa đọc được nội dung thật" },
+    ],
+    red_flags: [
       {
         title: "Chưa có nhận xét từ nội dung thật",
-        detail:
-          "Lumi Bot chưa đọc được nội dung bên trong file, nên chưa thể chỉ ra điểm cần chú ý cụ thể.",
+        detail: "Lumi Bot chưa đọc được nội dung bên trong file, nên chưa thể chỉ ra điểm cần chú ý cụ thể.",
         severity: "medium",
       },
     ],
-    suggested_questions: [
+    missing_information: ["Chưa có nội dung đủ tin cậy để phân tích."],
+    questions_to_ask: [
       "File này có đúng định dạng được hỗ trợ không?",
       "Tài liệu có bị mờ, scan lệch hoặc quá nặng không?",
       "Nếu thử lại vẫn lỗi, Lumi Labs có cần kiểm tra kết nối AI không?",
     ],
-    action_items: [
+    next_actions: [
       "Thử upload lại file rõ hơn hoặc nhỏ hơn 20MB.",
       "Nếu vẫn chưa được, hãy thử lại sau ít phút.",
     ],
+    evidence_snippets: [],
+    confidence: {
+      score: 0,
+      reason: "Chưa có phân tích thật từ nội dung tài liệu.",
+    },
+    copy_ready_summary:
+      "DocScan đã nhận file nhưng chưa đọc được nội dung thật. Chưa nên dùng kết quả này để ra quyết định. Hãy thử lại với file rõ hơn hoặc kiểm tra lại kết nối AI.",
   });
 }
 
@@ -84,33 +103,156 @@ function cleanBase64(base64) {
   return String(base64 || "").replace(/^data:.*;base64,/, "");
 }
 
+function cleanExtractedText(text = "") {
+  return String(text)
+    .replace(/\r/g, "\n")
+    .replace(/\t/g, " ")
+    .replace(/[ \u00a0]{2,}/g, " ")
+    .replace(/\n[ \u00a0]+/g, "\n")
+    .replace(/[ \u00a0]+\n/g, "\n")
+    .replace(/\n{4,}/g, "\n\n")
+    .trim()
+    .slice(0, MAX_TEXT_CHARS);
+}
+
+function uniq(values, limit = 12) {
+  return [...new Set(values.filter(Boolean).map((value) => String(value).trim()).filter(Boolean))].slice(0, limit);
+}
+
+function findMatches(text, regex, limit = 12) {
+  return uniq([...String(text).matchAll(regex)].map((match) => match[0]), limit);
+}
+
+function detectLikelyType({ fileName, mimeType, text = "" }) {
+  const haystack = `${fileName} ${text.slice(0, 12000)}`.toLowerCase();
+  const checks = [
+    ["contract", ["hợp đồng", "điều khoản", "bên a", "bên b", "chấm dứt", "phạt", "nghĩa vụ"]],
+    ["quotation", ["báo giá", "quotation", "quote", "đơn giá", "thành tiền", "vat", "bảo hành"]],
+    ["invoice", ["hóa đơn", "invoice", "mã số thuế", "tổng cộng", "thanh toán"]],
+    ["cv", ["cv", "curriculum", "ứng viên", "kinh nghiệm", "học vấn", "kỹ năng"]],
+    ["report", ["báo cáo", "kết quả", "phân tích", "tổng quan", "kpi", "doanh thu"]],
+    ["technical", ["technical", "kiến trúc", "api", "deploy", "frontend", "backend", "database", "mvp"]],
+    ["spreadsheet", ["sheet:", "doanh số", "số lượng", "stock", "inventory"]],
+  ];
+  const found = checks.find(([, keywords]) => keywords.some((keyword) => haystack.includes(keyword)));
+  if (found) return found[0];
+  if (mimeType.includes("spreadsheet") || mimeType.includes("excel")) return "spreadsheet";
+  if (mimeType.includes("image")) return "image_document";
+  if (mimeType.includes("pdf")) return "pdf_document";
+  return "general_document";
+}
+
+function extractSignals(text = "") {
+  const cleanText = String(text);
+  return {
+    money: findMatches(cleanText, /(?:\d[\d.,\s]{2,}\s?(?:vnd|vnđ|đ|usd|eur)|(?:vnd|vnđ|usd|eur)\s?\d[\d.,\s]{2,})/gi, 10),
+    dates: findMatches(cleanText, /\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{4}[/-]\d{1,2}[/-]\d{1,2}|ngày\s+\d{1,2}\s+tháng\s+\d{1,2}(?:\s+năm\s+\d{4})?)\b/gi, 12),
+    percentages: findMatches(cleanText, /\b\d{1,3}(?:[.,]\d+)?\s?%/g, 10),
+    emails: findMatches(cleanText, /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, 8),
+    phones: findMatches(cleanText, /\b(?:\+?84|0)(?:\s?\d){8,10}\b/g, 8),
+    deadline_terms: findMatches(cleanText, /\b(?:deadline|thời hạn|hạn chót|ngày giao|ngày hết hạn|hiệu lực|bàn giao|thanh toán)\b/gi, 12),
+    risk_terms: findMatches(cleanText, /\b(?:phạt|bồi thường|chấm dứt|không hoàn|phụ phí|trễ hạn|bảo mật|cam kết|trách nhiệm|điều kiện)\b/gi, 12),
+  };
+}
+
+function buildDocumentProfile({ fileName, mimeType, text = "", sizeBytes = 0 }) {
+  const signals = extractSignals(text);
+  const likelyType = detectLikelyType({ fileName, mimeType, text });
+  const headings = cleanExtractedText(text)
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length >= 4 && line.length <= 90)
+    .filter((line) => /^[A-Z0-9IVX]|^\d+\.|^Chương|^Mục|^Điều|^Phần/i.test(line))
+    .slice(0, 18);
+
+  return {
+    file_name: fileName,
+    mime_type: mimeType,
+    size_kb: Math.round(sizeBytes / 1024),
+    likely_document_type: likelyType,
+    extracted_characters: text.length,
+    detected_headings: uniq(headings, 18),
+    detected_signals: signals,
+  };
+}
+
+function buildAnalysisText({ profile, text }) {
+  return [
+    "Hãy phân tích tài liệu sau bằng DocScan AI.",
+    "",
+    "DOCUMENT_PROFILE:",
+    JSON.stringify(profile, null, 2),
+    "",
+    "NỘI DUNG ĐÃ TIỀN XỬ LÝ:",
+    text || "(Không có text trích xuất. Nếu là PDF/ảnh, hãy đọc trực tiếp từ file đính kèm.)",
+  ].join("\n");
+}
+
 function extractTextFile(buffer) {
-  return buffer.toString("utf8").slice(0, 120000);
+  return cleanExtractedText(buffer.toString("utf8"));
+}
+
+function formatCell(value) {
+  if (value === null || value === undefined) return "";
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  return String(value).replace(/\s+/g, " ").trim();
 }
 
 function extractExcel(buffer) {
-  const workbook = XLSX.read(buffer, { type: "buffer" });
-  return workbook.SheetNames.map((sheetName) => {
+  const workbook = XLSX.read(buffer, { type: "buffer", cellDates: true });
+  const sheetTexts = workbook.SheetNames.slice(0, 8).map((sheetName) => {
     const sheet = workbook.Sheets[sheetName];
-    return `Sheet: ${sheetName}\n${XLSX.utils.sheet_to_csv(sheet)}`;
-  }).join("\n\n").slice(0, 120000);
+    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "", raw: false })
+      .map((row) => row.map(formatCell).slice(0, MAX_EXCEL_COLS))
+      .filter((row) => row.some(Boolean));
+
+    if (!rows.length) return `Sheet: ${sheetName}\n(Trống)`;
+
+    const header = rows[0];
+    const body = rows.slice(1, MAX_EXCEL_ROWS_PER_SHEET + 1);
+    const table = body.map((row, index) => {
+      const cells = row.map((cell, cellIndex) => {
+        const label = header[cellIndex] || `Cột ${cellIndex + 1}`;
+        return `${label}: ${cell || "-"}`;
+      });
+      return `Dòng ${index + 1}: ${cells.join(" | ")}`;
+    });
+
+    return [
+      `Sheet: ${sheetName}`,
+      `Số dòng có dữ liệu: ${rows.length}`,
+      `Header: ${header.filter(Boolean).join(" | ") || "(không rõ)"}`,
+      ...table,
+    ].join("\n");
+  });
+
+  return cleanExtractedText(sheetTexts.join("\n\n---\n\n"));
 }
 
 async function extractDocx(buffer) {
   const result = await mammoth.extractRawText({ buffer });
-  return (result.value || "").slice(0, 120000);
+  return cleanExtractedText(result.value || "");
 }
 
 function safeJson(text) {
   if (!text) return null;
+  const cleaned = String(text)
+    .replace(/^```json\s*/i, "")
+    .replace(/^```\s*/i, "")
+    .replace(/```$/i, "")
+    .trim();
   try {
-    const cleaned = String(text)
-      .replace(/^```json\s*/i, "")
-      .replace(/^```\s*/i, "")
-      .replace(/```$/i, "")
-      .trim();
     return JSON.parse(cleaned);
   } catch {
+    const start = cleaned.indexOf("{");
+    const end = cleaned.lastIndexOf("}");
+    if (start >= 0 && end > start) {
+      try {
+        return JSON.parse(cleaned.slice(start, end + 1));
+      } catch {
+        return null;
+      }
+    }
     return null;
   }
 }
@@ -119,90 +261,143 @@ function normalizeImportance(value) {
   return ["high", "medium", "low"].includes(value) ? value : "medium";
 }
 
-function normalizeDocScanResult(result) {
-  const rawKeyPoints = Array.isArray(result?.key_points) ? result.key_points : [];
-  const rawRisks = Array.isArray(result?.risks_or_notes) ? result.risks_or_notes : [];
-  const rawQuestions = Array.isArray(result?.suggested_questions) ? result.suggested_questions : [];
-  const rawActions = Array.isArray(result?.action_items) ? result.action_items : [];
+function normalizeStringArray(values, limit = 5) {
+  return Array.isArray(values) ? values.filter(Boolean).map(String).slice(0, limit) : [];
+}
 
-  const key_points = rawKeyPoints.slice(0, 8).map((item, index) => {
+function normalizeCardArray(values, { titleKey = "title", detailKey = "detail", limit = 5 } = {}) {
+  if (!Array.isArray(values)) return [];
+  return values.slice(0, limit).map((item, index) => {
     if (typeof item === "string") {
       return {
-        label: `Điểm chính ${index + 1}`,
-        value: item,
+        title: `Mục ${index + 1}`,
+        detail: item,
         importance: "medium",
+        severity: "medium",
       };
     }
     return {
-      label: item?.label || `Điểm chính ${index + 1}`,
-      value: item?.value || "",
+      title: item?.[titleKey] || item?.label || `Mục ${index + 1}`,
+      detail: item?.[detailKey] || item?.value || item?.body || "",
       importance: normalizeImportance(item?.importance),
+      severity: normalizeImportance(item?.severity || item?.level),
+    };
+  }).filter((item) => item.detail);
+}
+
+function normalizeDetails(values) {
+  if (!Array.isArray(values)) return [];
+  return values.slice(0, 8).map((item, index) => {
+    if (typeof item === "string") return { label: `Chi tiết ${index + 1}`, value: item };
+    return {
+      label: item?.label || `Chi tiết ${index + 1}`,
+      value: item?.value || "",
     };
   }).filter((item) => item.value);
+}
 
-  const risks_or_notes = rawRisks.slice(0, 5).map((item, index) => ({
-    title: item?.title || `Điểm cần chú ý ${index + 1}`,
-    detail: item?.detail || item?.body || "",
-    severity: normalizeImportance(item?.severity || item?.level),
-  })).filter((item) => item.detail);
+function normalizeDocScanResult(result) {
+  const top_3_takeaways = normalizeCardArray(
+    result?.top_3_takeaways || result?.key_points,
+    { titleKey: "title", detailKey: "detail", limit: 3 },
+  );
+  const important_details = normalizeDetails(result?.important_details);
+  const red_flags = normalizeCardArray(
+    result?.red_flags || result?.risks_or_notes,
+    { titleKey: "title", detailKey: "detail", limit: 5 },
+  );
+  const missing_information = normalizeStringArray(result?.missing_information, 5);
+  const questions_to_ask = normalizeStringArray(result?.questions_to_ask || result?.suggested_questions, 5);
+  const next_actions = normalizeStringArray(result?.next_actions || result?.action_items, 4);
+  const evidence_snippets = normalizeStringArray(result?.evidence_snippets, 5)
+    .map((snippet) => snippet.split(/\s+/).slice(0, 24).join(" "));
 
-  const suggested_questions = rawQuestions.slice(0, 5).filter(Boolean);
-  const action_items = rawActions.slice(0, 4).filter(Boolean);
-
-  const scorePenalty = risks_or_notes.reduce((total, item) => {
-    if (item.severity === "high") return total + 18;
-    if (item.severity === "medium") return total + 10;
-    return total + 4;
-  }, 0);
   const isUnreadFallback = String(result?.document_type || "").toLowerCase().includes("chưa đọc");
-  const score = isUnreadFallback ? 0 : Math.max(55, Math.min(96, 92 - scorePenalty + Math.min(key_points.length, 4)));
-  const highestRisk = risks_or_notes.some((item) => item.severity === "high")
+  const confidenceScore = Number(result?.confidence?.score);
+  const score = isUnreadFallback
+    ? 0
+    : Number.isFinite(confidenceScore)
+      ? Math.max(0, Math.min(100, Math.round(confidenceScore)))
+      : Math.max(58, Math.min(94, 88 - red_flags.length * 7 - missing_information.length * 4 + evidence_snippets.length * 2));
+
+  const highestRisk = red_flags.some((item) => item.severity === "high")
     ? "high"
-    : risks_or_notes.some((item) => item.severity === "medium")
+    : red_flags.some((item) => item.severity === "medium")
       ? "medium"
       : "low";
 
   const summary =
     result?.summary ||
-    "DocScan đã đọc nhanh tài liệu và gom lại những điểm quan trọng để bạn dễ kiểm tra.";
+    result?.one_line_answer ||
+    "DocScan đã đọc tài liệu và gom lại những điểm quan trọng để bạn dễ kiểm tra.";
+
+  const one_line_answer = result?.one_line_answer || summary;
 
   return {
     document_type: result?.document_type || "Tài liệu",
+    one_line_answer,
     summary,
-    key_points,
-    risks_or_notes,
-    suggested_questions,
-    action_items,
+    top_3_takeaways,
+    important_details,
+    red_flags,
+    missing_information,
+    questions_to_ask,
+    next_actions,
+    evidence_snippets,
+    confidence: {
+      score,
+      reason: result?.confidence?.reason || (isUnreadFallback ? "Chưa có phân tích thật từ nội dung tài liệu." : "Đã phân tích dựa trên nội dung đọc được."),
+    },
+    copy_ready_summary:
+      result?.copy_ready_summary ||
+      [
+        one_line_answer,
+        top_3_takeaways.length ? `Điểm chính: ${top_3_takeaways.map((item) => item.title).join("; ")}` : "",
+        red_flags.length ? `Cần chú ý: ${red_flags.map((item) => item.title).join("; ")}` : "",
+        next_actions.length ? `Việc tiếp theo: ${next_actions.join(" ")}` : "",
+      ].filter(Boolean).join("\n"),
 
-    // Fields below keep the existing UI stable while the app moves to the new schema.
+    // Compatibility fields for the current UI.
     score,
-    verdict: summary,
+    verdict: one_line_answer,
     verdict_icon: isUnreadFallback ? "🔒" : highestRisk === "high" ? "⚠️" : highestRisk === "medium" ? "🔎" : "✅",
-    risks: risks_or_notes.map((item) => ({
+    key_points: top_3_takeaways.map((item) => ({
+      label: item.title,
+      value: item.detail,
+      importance: item.importance,
+    })),
+    risks: red_flags.map((item) => ({
       level: item.severity,
       title: item.title,
       body: item.detail,
     })),
-    keyPoints: key_points.map((item) => `${item.label}: ${item.value}`),
-    questions: suggested_questions,
-    plainSummary: [
-      summary,
-      action_items.length ? `Việc nên làm tiếp: ${action_items.join(" ")}` : "",
-    ].filter(Boolean).join("\n\n"),
+    questions: questions_to_ask,
+    action_items: next_actions,
+    plainSummary: result?.copy_ready_summary || summary,
   };
 }
 
-function buildGeminiParts({ buffer, fileBase64, mimeType, fileName }) {
+function buildGeminiParts({ buffer, fileBase64, mimeType, fileName, sizeBytes }) {
   if (NATIVE_FILE_TYPES.has(mimeType)) {
+    const profile = buildDocumentProfile({ fileName, mimeType, text: "", sizeBytes });
     return [
       { inlineData: { mimeType, data: cleanBase64(fileBase64) } },
-      { text: `Phân tích tài liệu này.\nTên file: ${fileName}` },
+      {
+        text: [
+          "Hãy đọc trực tiếp file đính kèm trước. Nếu là ảnh/PDF scan, hãy OCR bằng khả năng nhìn của bạn.",
+          "Sau đó phân tích theo schema DocScan.",
+          "",
+          "DOCUMENT_PROFILE:",
+          JSON.stringify(profile, null, 2),
+        ].join("\n"),
+      },
     ];
   }
 
   if (XLSX_FILE_TYPES.has(mimeType)) {
     const text = extractExcel(buffer);
-    return [{ text: `Phân tích tài liệu sau.\nTên file: ${fileName}\n\n${text}` }];
+    const profile = buildDocumentProfile({ fileName, mimeType, text, sizeBytes });
+    return [{ text: buildAnalysisText({ profile, text }) }];
   }
 
   if (DOCX_FILE_TYPES.has(mimeType)) {
@@ -211,7 +406,8 @@ function buildGeminiParts({ buffer, fileBase64, mimeType, fileName }) {
 
   if (TEXT_FILE_TYPES.has(mimeType)) {
     const text = extractTextFile(buffer);
-    return [{ text: `Phân tích tài liệu sau.\nTên file: ${fileName}\n\n${text}` }];
+    const profile = buildDocumentProfile({ fileName, mimeType, text, sizeBytes });
+    return [{ text: buildAnalysisText({ profile, text }) }];
   }
 
   return undefined;
@@ -235,7 +431,7 @@ async function callGemini({ apiKey, parts, systemPrompt = DOCSCAN_SYSTEM_PROMPT 
           contents: [{ role: "user", parts }],
           generationConfig: {
             temperature: 0.1,
-            maxOutputTokens: 2048,
+            maxOutputTokens: 4096,
             responseMimeType: "application/json",
           },
         }),
@@ -284,11 +480,18 @@ export default async function handler(request, response) {
 
   try {
     const buffer = base64ToBuffer(cleanedBase64);
-    let parts = buildGeminiParts({ buffer, fileBase64: cleanedBase64, mimeType: effectiveMimeType, fileName });
+    let parts = buildGeminiParts({
+      buffer,
+      fileBase64: cleanedBase64,
+      mimeType: effectiveMimeType,
+      fileName,
+      sizeBytes,
+    });
 
     if (parts === null) {
       const text = await extractDocx(buffer);
-      parts = [{ text: `Phân tích tài liệu sau.\nTên file: ${fileName}\n\n${text}` }];
+      const profile = buildDocumentProfile({ fileName, mimeType: effectiveMimeType, text, sizeBytes });
+      parts = [{ text: buildAnalysisText({ profile, text }) }];
     }
 
     if (!parts) {
@@ -318,6 +521,7 @@ export default async function handler(request, response) {
 
     return response.status(200).json({
       source: parsed ? "gemini" : "fallback",
+      model: firstTry.model,
       data: parsed ? normalizeDocScanResult(parsed) : fallback,
     });
   } catch (error) {
