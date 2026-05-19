@@ -10,11 +10,13 @@ export const config = {
   },
 };
 
-const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
+const GEMINI_MODELS = ["gemini-2.0-flash", "gemini-2.5-flash"];
 const MAX_FILE_SIZE = 20 * 1024 * 1024;
 const MAX_TEXT_CHARS = 150000;
+const MAX_ANALYSIS_TEXT_CHARS = 60000;
 const MAX_EXCEL_ROWS_PER_SHEET = 120;
 const MAX_EXCEL_COLS = 18;
+const GEMINI_REQUEST_TIMEOUT_MS = 22000;
 
 const NATIVE_FILE_TYPES = new Set(SUPPORTED_DOCUMENT_TYPES.native);
 const TEXT_FILE_TYPES = new Set(SUPPORTED_DOCUMENT_TYPES.text);
@@ -178,6 +180,11 @@ function buildDocumentProfile({ fileName, mimeType, text = "", sizeBytes = 0 }) 
 }
 
 function buildAnalysisText({ profile, text }) {
+  const analysisText = String(text || "").slice(0, MAX_ANALYSIS_TEXT_CHARS);
+  const trimmedNote = text && text.length > MAX_ANALYSIS_TEXT_CHARS
+    ? `\n\n(Ghi chú hệ thống: tài liệu dài ${text.length} ký tự. Phần dưới đã được rút gọn để phân tích nhanh; DOCUMENT_PROFILE vẫn được tạo từ toàn bộ phần text đã trích xuất.)`
+    : "";
+
   return [
     "Hãy phân tích tài liệu sau bằng DocScan AI.",
     "",
@@ -185,7 +192,8 @@ function buildAnalysisText({ profile, text }) {
     JSON.stringify(profile, null, 2),
     "",
     "NỘI DUNG ĐÃ TIỀN XỬ LÝ:",
-    text || "(Không có text trích xuất. Nếu là PDF/ảnh, hãy đọc trực tiếp từ file đính kèm.)",
+    analysisText || "(Không có text trích xuất. Nếu là PDF/ảnh, hãy đọc trực tiếp từ file đính kèm.)",
+    trimmedNote,
   ].join("\n");
 }
 
@@ -423,9 +431,13 @@ async function callGemini({ apiKey, parts, systemPrompt = DOCSCAN_SYSTEM_PROMPT 
   const warnings = [];
 
   for (const model of GEMINI_MODELS) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), GEMINI_REQUEST_TIMEOUT_MS);
+
     try {
       const geminiResponse = await fetch(geminiUrl(model), {
         method: "POST",
+        signal: controller.signal,
         headers: {
           "Content-Type": "application/json",
           "x-goog-api-key": apiKey,
@@ -437,7 +449,7 @@ async function callGemini({ apiKey, parts, systemPrompt = DOCSCAN_SYSTEM_PROMPT 
           contents: [{ role: "user", parts }],
           generationConfig: {
             temperature: 0.1,
-            maxOutputTokens: 4096,
+            maxOutputTokens: 3072,
             responseMimeType: "application/json",
           },
         }),
@@ -453,7 +465,9 @@ async function callGemini({ apiKey, parts, systemPrompt = DOCSCAN_SYSTEM_PROMPT 
       const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
       return { ok: true, model, text, parsed: safeJson(text) };
     } catch (error) {
-      warnings.push(`${model}: ${error.message}`);
+      warnings.push(`${model}: ${error.name === "AbortError" ? "timeout" : error.message}`);
+    } finally {
+      clearTimeout(timeout);
     }
   }
 
