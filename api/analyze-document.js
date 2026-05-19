@@ -44,6 +44,7 @@ function inferMimeType(mimeType = "", fileName = "") {
 function fallbackAnalysis({ fileName = "tài liệu" } = {}) {
   return normalizeDocScanResult({
     document_type: "Chưa đọc được nội dung thật",
+    extracted_text: "",
     one_line_answer: `DocScan đã nhận file "${fileName}", nhưng chưa phân tích được nội dung thật.`,
     summary:
       "Kết quả này chỉ là trạng thái an toàn, không phải nhận xét về tài liệu của bạn. DocScan sẽ không đưa ra kết luận khi chưa có dữ liệu đủ tin cậy.",
@@ -296,7 +297,7 @@ function normalizeDetails(values) {
   }).filter((item) => item.value);
 }
 
-function normalizeDocScanResult(result) {
+function normalizeDocScanResult(result, { extractedText = "" } = {}) {
   const top_3_takeaways = normalizeCardArray(
     result?.top_3_takeaways || result?.key_points,
     { titleKey: "title", detailKey: "detail", limit: 3 },
@@ -311,6 +312,7 @@ function normalizeDocScanResult(result) {
   const next_actions = normalizeStringArray(result?.next_actions || result?.action_items, 4);
   const evidence_snippets = normalizeStringArray(result?.evidence_snippets, 5)
     .map((snippet) => snippet.split(/\s+/).slice(0, 24).join(" "));
+  const normalizedExtractedText = cleanExtractedText(result?.extracted_text || extractedText || "");
 
   const isUnreadFallback = String(result?.document_type || "").toLowerCase().includes("chưa đọc");
   const confidenceScore = Number(result?.confidence?.score);
@@ -335,6 +337,7 @@ function normalizeDocScanResult(result) {
 
   return {
     document_type: result?.document_type || "Tài liệu",
+    extracted_text: normalizedExtractedText,
     one_line_answer,
     summary,
     top_3_takeaways,
@@ -380,24 +383,27 @@ function normalizeDocScanResult(result) {
 function buildGeminiParts({ buffer, fileBase64, mimeType, fileName, sizeBytes }) {
   if (NATIVE_FILE_TYPES.has(mimeType)) {
     const profile = buildDocumentProfile({ fileName, mimeType, text: "", sizeBytes });
-    return [
-      { inlineData: { mimeType, data: cleanBase64(fileBase64) } },
-      {
-        text: [
-          "Hãy đọc trực tiếp file đính kèm trước. Nếu là ảnh/PDF scan, hãy OCR bằng khả năng nhìn của bạn.",
-          "Sau đó phân tích theo schema DocScan.",
-          "",
-          "DOCUMENT_PROFILE:",
-          JSON.stringify(profile, null, 2),
-        ].join("\n"),
-      },
-    ];
+    return {
+      extractedText: "",
+      parts: [
+        { inlineData: { mimeType, data: cleanBase64(fileBase64) } },
+        {
+          text: [
+            "Hãy đọc trực tiếp file đính kèm trước. Nếu là ảnh/PDF scan, hãy OCR bằng khả năng nhìn của bạn.",
+            "Sau đó phân tích theo schema DocScan.",
+            "",
+            "DOCUMENT_PROFILE:",
+            JSON.stringify(profile, null, 2),
+          ].join("\n"),
+        },
+      ],
+    };
   }
 
   if (XLSX_FILE_TYPES.has(mimeType)) {
     const text = extractExcel(buffer);
     const profile = buildDocumentProfile({ fileName, mimeType, text, sizeBytes });
-    return [{ text: buildAnalysisText({ profile, text }) }];
+    return { extractedText: text, parts: [{ text: buildAnalysisText({ profile, text }) }] };
   }
 
   if (DOCX_FILE_TYPES.has(mimeType)) {
@@ -407,7 +413,7 @@ function buildGeminiParts({ buffer, fileBase64, mimeType, fileName, sizeBytes })
   if (TEXT_FILE_TYPES.has(mimeType)) {
     const text = extractTextFile(buffer);
     const profile = buildDocumentProfile({ fileName, mimeType, text, sizeBytes });
-    return [{ text: buildAnalysisText({ profile, text }) }];
+    return { extractedText: text, parts: [{ text: buildAnalysisText({ profile, text }) }] };
   }
 
   return undefined;
@@ -480,18 +486,24 @@ export default async function handler(request, response) {
 
   try {
     const buffer = base64ToBuffer(cleanedBase64);
-    let parts = buildGeminiParts({
+    const built = buildGeminiParts({
       buffer,
       fileBase64: cleanedBase64,
       mimeType: effectiveMimeType,
       fileName,
       sizeBytes,
     });
+    let parts;
+    let extractedTextForResponse = "";
 
-    if (parts === null) {
+    if (built === null) {
       const text = await extractDocx(buffer);
       const profile = buildDocumentProfile({ fileName, mimeType: effectiveMimeType, text, sizeBytes });
+      extractedTextForResponse = text;
       parts = [{ text: buildAnalysisText({ profile, text }) }];
+    } else if (built) {
+      extractedTextForResponse = built.extractedText || "";
+      parts = built.parts;
     }
 
     if (!parts) {
@@ -522,7 +534,7 @@ export default async function handler(request, response) {
     return response.status(200).json({
       source: parsed ? "gemini" : "fallback",
       model: firstTry.model,
-      data: parsed ? normalizeDocScanResult(parsed) : fallback,
+      data: parsed ? normalizeDocScanResult(parsed, { extractedText: extractedTextForResponse }) : fallback,
     });
   } catch (error) {
     return response.status(200).json({

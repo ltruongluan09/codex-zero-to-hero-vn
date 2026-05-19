@@ -1241,6 +1241,8 @@ function SoiTaiLieuSectionSimple() {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
   const [dragActive, setDragActive] = useState(false);
+  const [rawTextOpen, setRawTextOpen] = useState(false);
+  const [rawTextCopied, setRawTextCopied] = useState(false);
 
   const steps = ["Đọc tài liệu", "Tìm điểm chính", "Soi điểm cần chú ý", "Gợi ý bước tiếp theo"];
 
@@ -1284,6 +1286,8 @@ function SoiTaiLieuSectionSimple() {
     if (!selectedFile) return;
     setLoading(true);
     setCopied(false);
+    setRawTextOpen(false);
+    setRawTextCopied(false);
     setError("");
     const startedAt = Date.now();
 
@@ -1354,6 +1358,36 @@ function SoiTaiLieuSectionSimple() {
     } catch {
       setCopied(false);
     }
+  };
+
+  const rawText = result?.extracted_text?.trim() || "";
+
+  const copyRawText = async () => {
+    if (!rawText) return;
+    try {
+      await navigator.clipboard.writeText(rawText);
+      setRawTextCopied(true);
+      setTimeout(() => setRawTextCopied(false), 2000);
+    } catch {
+      setRawTextCopied(false);
+    }
+  };
+
+  const downloadRawText = () => {
+    if (!rawText) return;
+    const baseName = (file?.name || "docscan")
+      .replace(/\.[^.]+$/, "")
+      .replace(/[\\/:*?"<>|]/g, "-")
+      .trim() || "docscan";
+    const blob = new Blob([rawText], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${baseName}_text.txt`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -1474,6 +1508,32 @@ function SoiTaiLieuSectionSimple() {
                     </article>
                   )}
                 </div>
+                {rawText && (
+                  <section className={rawTextOpen ? "docscan-raw-text open" : "docscan-raw-text"}>
+                    <button
+                      className="docscan-raw-toggle"
+                      type="button"
+                      onClick={() => setRawTextOpen((value) => !value)}
+                      aria-expanded={rawTextOpen}
+                    >
+                      <span>📄 Văn bản gốc</span>
+                      <b>{rawTextOpen ? "Ẩn" : "Xem"}</b>
+                    </button>
+                    {rawTextOpen && (
+                      <div className="docscan-raw-body">
+                        <textarea readOnly value={rawText} />
+                        <div>
+                          <button type="button" onClick={copyRawText}>
+                            {rawTextCopied ? "Đã copy!" : "Copy text"}
+                          </button>
+                          <button type="button" onClick={downloadRawText}>
+                            Tải về .txt
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </section>
+                )}
               </div>
             ) : (
               <div className="docscan-empty">
