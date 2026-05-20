@@ -5,7 +5,7 @@ const navItems = [
   { label: "Trang chủ", href: "/" },
   { label: "Hành trình", href: "/challenge" },
   { label: "Dự án", href: "/projects" },
-  { label: "Bài viết", href: "/project-01-caption-ai.html" },
+  { label: "Bài viết", href: "/bai-viet.html" },
   { label: "Về mình", href: "/dashboard" },
 ];
 
@@ -166,34 +166,46 @@ const projectCatalog = [
   {
     slug: "caption-ai",
     title: "Caption AI",
-    desc: "Tool viết caption TikTok, Facebook và hashtag tiếng Việt.",
+    desc: "Nhập vài dòng, nhận caption TikTok/Facebook và hashtag tiếng Việt.",
+    outcome: "Giúp creator, shop nhỏ và freelancer bớt bí khi đăng bài.",
     status: "Đang mở demo",
     href: "/caption-ai",
+    journeyHref: "/project-01-caption-ai.html",
     icon: "✍️",
+    tag: "Content AI",
   },
   {
     slug: "docscan-ai",
     title: "DocScan AI",
-    desc: "Một chạm để AI đọc nhanh hợp đồng, báo giá hoặc báo cáo.",
+    desc: "Một chạm để AI đọc nhanh hợp đồng, báo giá, báo cáo hoặc ảnh chụp.",
+    outcome: "Giúp dân văn phòng hiểu tài liệu nhanh hơn trước khi chuyển tiếp.",
     status: "Dự án #2",
     href: "/docscan-ai",
+    journeyHref: "/project-02-docscan-ai.html",
     icon: "📄",
+    tag: "Document AI",
   },
   {
     slug: "excel-report-ai",
     title: "Excel Report AI",
     desc: "Biến dữ liệu Excel thành báo cáo dễ đọc.",
+    outcome: "Dành cho người cần gửi báo cáo nhanh cho sếp hoặc team.",
     status: "Sắp làm",
     href: "/projects",
+    journeyHref: "/projects",
     icon: "📊",
+    tag: "Office AI",
   },
   {
     slug: "ai-office-tools",
     title: "AI Office Tools",
     desc: "Bộ công cụ AI cho dân văn phòng.",
+    outcome: "Gom những việc lặp lại thành các tool nhỏ, dễ dùng.",
     status: "Ý tưởng",
     href: "/projects",
+    journeyHref: "/projects",
     icon: "🧰",
+    tag: "Toolkit",
   },
 ];
 
@@ -772,17 +784,23 @@ function HeroFeaturedProjects() {
         <p className="project-hub-intro">
           Mỗi dự án là một tool nhỏ, mở lên dùng ngay. Không cần biết code, không cần đọc hướng dẫn dài.
         </p>
-        <div className="home-project-list">
+        <div className="home-project-list unified-project-list">
           {activeProjects.map((project, index) => (
-            <a className="home-project-row" href={project.href} key={project.slug}>
-              <span>{project.icon}</span>
-              <div>
-                <small>Project #{index + 1} · {project.status}</small>
-                <strong>{project.title}</strong>
-                <p>{project.desc}</p>
+            <article className="unified-project-card compact" key={project.slug}>
+              <div className="project-card-top">
+                <span className="project-icon">{project.icon}</span>
+                <div>
+                  <small>Project #{index + 1} · {project.tag}</small>
+                  <h3>{project.title}</h3>
+                </div>
+                <b>{project.status}</b>
               </div>
-              <i>→</i>
-            </a>
+              <p>{project.desc}</p>
+              <div className="project-card-actions">
+                <a href={project.href}>Dùng thử</a>
+                <a className="ghost" href={project.journeyHref}>Xem hành trình</a>
+              </div>
+            </article>
           ))}
         </div>
       </article>
@@ -801,7 +819,7 @@ function HeroFeaturedProjects() {
           </div>
         </a>
         <ul className="article-list">
-          <li><a href="/project-01-caption-ai.html">Tự động hóa công việc với AI (Phần 1)</a><span>5 ngày trước</span></li>
+          <li><a href="/project-02-docscan-ai.html">7 ngày làm nên DocScan AI</a><span>Hôm nay</span></li>
           <li><a href="/project-01-caption-ai.html">Hành trình xây dựng Caption AI</a><span>1 tuần trước</span></li>
         </ul>
       </article>
@@ -896,13 +914,22 @@ function ProjectsPage() {
       </section>
       <section className="project-library-grid">
         {projectCatalog.map((project, index) => (
-          <a className="project-library-card" href={project.href} key={project.slug} data-reveal>
-            <span>{project.icon}</span>
-            <small>Project #{index + 1} · {project.status}</small>
-            <h2>{project.title}</h2>
+          <article className="project-library-card unified-project-card" key={project.slug} data-reveal>
+            <div className="project-card-top">
+              <span className="project-icon">{project.icon}</span>
+              <div>
+                <small>Project #{index + 1} · {project.tag}</small>
+                <h2>{project.title}</h2>
+              </div>
+              <b>{project.status}</b>
+            </div>
             <p>{project.desc}</p>
-            <strong>{project.href === "/projects" ? "Đang chuẩn bị" : "Mở project →"}</strong>
-          </a>
+            <em>{project.outcome}</em>
+            <div className="project-card-actions">
+              <a href={project.href}>{project.href === "/projects" ? "Đang chuẩn bị" : "Dùng thử"}</a>
+              <a className="ghost" href={project.journeyHref}>{project.journeyHref === "/projects" ? "Chưa có hành trình" : "Xem hành trình"}</a>
+            </div>
+          </article>
         ))}
       </section>
     </main>
@@ -1558,9 +1585,12 @@ function SoiTaiLieuSectionSimple() {
               <p>Bạn có thể copy toàn bộ kết quả để lưu lại hoặc gửi cho người khác.</p>
             </div>
           </div>
-          <button type="button" onClick={copySummary} disabled={!result}>
-            {copied ? "Đã copy" : "Copy kết quả"}
-          </button>
+          <div className="docscan-summary-actions">
+            <a href="/project-02-docscan-ai.html">Xem hành trình build</a>
+            <button type="button" onClick={copySummary} disabled={!result}>
+              {copied ? "Đã copy" : "Copy kết quả"}
+            </button>
+          </div>
         </footer>
       </div>
     </section>

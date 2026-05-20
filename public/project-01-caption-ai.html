@@ -6,21 +6,24 @@
     <title>Nhật ký Project 1 - Caption AI</title>
     <meta
       name="description"
-      content="Câu chuyện thật khi Lumi Labs build Caption AI, giải thích đơn giản để người non-tech có thể làm theo."
+      content="Hành trình làm Caption AI: tool viết caption tiếng Việt cho người không chuyên, từ một nỗi bí ý tưởng rất đời thường."
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
       :root {
-        --brand: #6366f1;
-        --brand-light: #818cf8;
-        --bg-base: #0a0a0f;
-        --bg-surface: #111118;
-        --bg-elevated: #1a1a24;
-        --bg-border: #2a2a38;
-        --text-primary: #f1f0ff;
-        --text-secondary: #a9acc0;
-        --text-muted: #70748b;
-        --green: #10b981;
-        --amber: #f59e0b;
+        --bg: #fff9f3;
+        --surface: #ffffff;
+        --surface-warm: #fff7ef;
+        --text: #17111d;
+        --soft: #5f526b;
+        --muted: #91859e;
+        --line: #eee2d9;
+        --brand: #7c3aed;
+        --brand-light: #a78bfa;
+        --coral: #ff5a66;
+        --pink: #f472b6;
       }
 
       * {
@@ -35,13 +38,13 @@
         margin: 0;
         overflow-x: hidden;
         background:
-          radial-gradient(circle at 18% 3%, rgba(99, 102, 241, 0.18), transparent 28%),
-          radial-gradient(circle at 92% 24%, rgba(16, 185, 129, 0.08), transparent 22%),
-          radial-gradient(circle, rgba(42, 42, 56, 0.52) 1px, transparent 1px),
-          var(--bg-base);
-        background-size: auto, auto, 26px 26px;
-        color: var(--text-primary);
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          radial-gradient(circle at 78% 0%, rgba(167, 139, 250, 0.23), transparent 34%),
+          radial-gradient(circle at 18% 10%, rgba(255, 154, 111, 0.2), transparent 28%),
+          radial-gradient(circle, rgba(124, 58, 237, 0.08) 1px, transparent 1px),
+          var(--bg);
+        background-size: auto, auto, 28px 28px;
+        color: var(--text);
+        font-family: Outfit, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
       a {
@@ -50,103 +53,158 @@
       }
 
       .page {
-        width: min(1080px, calc(100% - 32px));
+        width: min(1120px, calc(100% - 32px));
         margin: 0 auto;
       }
 
       .nav {
-        min-height: 64px;
+        position: sticky;
+        top: 14px;
+        z-index: 20;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
-        border-bottom: 1px solid var(--bg-border);
+        gap: 14px;
+        margin-top: 14px;
+        padding: 12px 14px;
+        border: 1px solid rgba(238, 226, 217, 0.95);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 18px 54px rgba(95, 82, 107, 0.1);
       }
 
       .logo,
-      .back,
+      .pill,
       .button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-weight: 800;
+        gap: 9px;
+        font-weight: 900;
       }
 
-      .logo {
-        gap: 10px;
+      .logo img {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        object-fit: cover;
       }
 
       .logo span {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        background: var(--brand);
-        box-shadow: 0 0 18px rgba(99, 102, 241, 0.8);
-      }
-
-      .back,
-      .button.secondary {
-        border: 1px solid var(--bg-border);
-        border-radius: 8px;
-        color: var(--text-secondary);
-        padding: 9px 12px;
-        font-size: 13px;
-      }
-
-      .hero {
-        display: grid;
-        grid-template-columns: 1fr 330px;
-        gap: 34px;
-        align-items: center;
-        padding: 64px 0 36px;
-      }
-
-      .badge {
-        width: fit-content;
-        border: 1px solid rgba(99, 102, 241, 0.3);
-        border-radius: 999px;
-        background: rgba(99, 102, 241, 0.1);
-        color: var(--brand-light);
-        padding: 8px 12px;
+        display: block;
+        color: var(--muted);
         font-size: 12px;
         font-weight: 800;
       }
 
+      .pill {
+        border: 1px solid rgba(124, 58, 237, 0.18);
+        border-radius: 999px;
+        background: rgba(124, 58, 237, 0.08);
+        color: var(--brand);
+        padding: 9px 13px;
+        font-size: 13px;
+      }
+
+      .button {
+        border: 0;
+        border-radius: 16px;
+        padding: 13px 18px;
+        color: #fff;
+        background: linear-gradient(135deg, #ff5a66 0%, #ff8a5c 44%, #8b5cf6 100%);
+        box-shadow: 0 18px 34px rgba(124, 58, 237, 0.18);
+      }
+
+      .button.secondary {
+        border: 1px solid var(--line);
+        color: var(--soft);
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: none;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 340px;
+        gap: 28px;
+        align-items: center;
+        padding: 64px 0 30px;
+      }
+
+      .badge {
+        width: fit-content;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(255, 90, 102, 0.22);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        color: #d43c55;
+        padding: 9px 13px;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
       h1 {
-        max-width: 760px;
+        max-width: 780px;
         margin: 18px 0 0;
-        font-size: clamp(38px, 7vw, 76px);
+        font-size: clamp(42px, 7vw, 82px);
         line-height: 0.98;
-        letter-spacing: -1px;
+        letter-spacing: -0.055em;
+      }
+
+      h1 span,
+      .step-num {
+        background: linear-gradient(135deg, var(--coral), var(--pink), var(--brand));
+        -webkit-background-clip: text;
+        color: transparent;
       }
 
       .lead {
-        max-width: 660px;
+        max-width: 690px;
         margin: 22px 0 0;
-        color: var(--text-secondary);
-        font-size: 17px;
-        line-height: 1.75;
+        color: var(--soft);
+        font-size: 18px;
+        line-height: 1.78;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 26px;
+      }
+
+      .guide-card,
+      .mini,
+      .step,
+      .lesson-box,
+      .prompt-box,
+      .cta {
+        border: 1px solid rgba(238, 226, 217, 0.96);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.76);
+        box-shadow: 0 16px 46px rgba(95, 82, 107, 0.075);
       }
 
       .guide-card {
-        position: sticky;
-        top: 24px;
+        position: relative;
         overflow: hidden;
-        border: 1px solid rgba(129, 140, 248, 0.3);
-        border-radius: 24px;
+        border-radius: 30px;
         background:
-          radial-gradient(circle at 50% 0%, rgba(129, 140, 248, 0.24), transparent 46%),
-          rgba(17, 17, 24, 0.86);
-        padding: 18px;
+          radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.22), transparent 48%),
+          rgba(255, 255, 255, 0.78);
+        padding: 22px;
+        box-shadow: 0 24px 70px rgba(95, 82, 107, 0.12);
       }
 
       .guide-card::after {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.055) 45%, transparent 70%);
+        background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.7) 48%, transparent 72%);
         transform: translateX(-110%);
-        animation: sweep 5.5s ease-in-out infinite;
+        animation: sweep 5s ease-in-out infinite;
       }
 
       .guide-card > * {
@@ -154,595 +212,245 @@
         z-index: 1;
       }
 
-      .bot-wrap {
-        position: relative;
-        width: 150px;
-        height: 150px;
+      .bot {
+        width: 148px;
+        height: 148px;
         display: grid;
         place-items: center;
-        margin: 0 auto 14px;
+        margin: 0 auto 16px;
+        border-radius: 36px;
+        background: rgba(255, 255, 255, 0.72);
       }
 
-      .bot-wrap::before,
-      .bot-wrap::after {
-        content: "";
-        position: absolute;
-        border: 1px solid rgba(129, 140, 248, 0.28);
-        border-radius: 999px;
-        animation: orbit 9s linear infinite;
-      }
-
-      .bot-wrap::before {
-        inset: 8px;
-      }
-
-      .bot-wrap::after {
-        inset: -4px;
-        border-color: rgba(16, 185, 129, 0.16);
-        animation-duration: 13s;
-        animation-direction: reverse;
-      }
-
-      .bot-wrap img {
-        position: relative;
-        z-index: 1;
-        width: 126px;
-        height: 126px;
-        border-radius: 30px;
+      .bot img {
+        width: 132px;
+        height: 132px;
+        border-radius: 32px;
         object-fit: cover;
-        box-shadow: 0 18px 48px rgba(99, 102, 241, 0.32);
-        animation: guideFloat 4.8s ease-in-out infinite;
+        box-shadow: 0 20px 44px rgba(124, 58, 237, 0.18);
+        animation: float 4.6s ease-in-out infinite;
       }
 
       .guide-card strong {
         display: block;
-        font-size: 17px;
+        font-size: 20px;
       }
 
       .guide-card p {
         margin: 8px 0 0;
-        color: var(--text-secondary);
-        font-size: 13px;
+        color: var(--soft);
         line-height: 1.65;
       }
 
-      .guide-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 14px;
-      }
-
-      .guide-tags span {
-        border: 1px solid var(--bg-border);
-        border-radius: 999px;
-        color: var(--text-secondary);
-        padding: 6px 8px;
-        font-size: 11px;
-        font-weight: 800;
-      }
-
-      .story-strip {
+      .summary-strip {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 12px;
-        margin: 12px 0 34px;
+        margin: 14px 0 34px;
       }
 
-      .mini-card,
-      .section,
-      .timeline-item,
-      .lesson,
-      .demo-card,
-      .prompt-box {
-        border: 1px solid var(--bg-border);
-        border-radius: 16px;
-        background: rgba(17, 17, 24, 0.78);
+      .mini {
+        padding: 18px;
       }
 
-      .mini-card {
-        padding: 16px;
-      }
-
-      .mini-card span,
-      .eyebrow {
+      .mini b {
         display: block;
-        color: var(--text-muted);
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+        margin-bottom: 5px;
       }
 
-      .mini-card strong {
-        display: block;
-        margin-top: 8px;
-        font-size: 20px;
-        line-height: 1.25;
-      }
-
-      .section {
-        position: relative;
-        overflow: hidden;
-        margin: 16px 0;
-        padding: 26px;
-      }
-
-      .section::before {
-        content: "";
-        position: absolute;
-        inset: 0 auto 0 0;
-        width: 3px;
-        background: linear-gradient(180deg, transparent, rgba(129, 140, 248, 0.92), transparent);
-        opacity: 0.45;
-      }
-
-      .section h2 {
-        margin: 8px 0 0;
-        font-size: clamp(26px, 4vw, 38px);
-        line-height: 1.12;
-      }
-
-      .section p {
-        color: var(--text-secondary);
-        line-height: 1.85;
-      }
-
-      .quote {
-        border-left: 3px solid var(--brand);
-        border-radius: 12px;
-        background: rgba(99, 102, 241, 0.1);
-        color: var(--text-primary);
-        padding: 16px;
-        font-size: 18px;
-        line-height: 1.6;
-        box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.08), 0 0 40px rgba(99, 102, 241, 0.12);
-      }
-
-      .core-line {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 12px;
-        align-items: center;
-        margin-top: 18px;
-        border: 1px solid rgba(16, 185, 129, 0.26);
-        border-radius: 16px;
-        background:
-          radial-gradient(circle at 10% 50%, rgba(16, 185, 129, 0.13), transparent 34%),
-          rgba(16, 185, 129, 0.07);
-        padding: 14px;
-      }
-
-      .core-line span {
-        width: 38px;
-        height: 38px;
-        display: grid;
-        place-items: center;
-        border-radius: 999px;
-        background: rgba(16, 185, 129, 0.14);
-        color: #a7f3d0;
-        font-weight: 900;
-        box-shadow: 0 0 24px rgba(16, 185, 129, 0.16);
-        animation: pulseDot 2.8s ease-in-out infinite;
-      }
-
-      .core-line strong {
-        display: block;
-        font-size: 16px;
-      }
-
-      .core-line p {
-        margin: 4px 0 0;
-        color: var(--text-secondary);
-        font-size: 13px;
+      .mini p {
+        margin: 0;
+        color: var(--soft);
         line-height: 1.55;
       }
 
-      .timeline {
+      .steps {
         display: grid;
-        gap: 12px;
-        margin-top: 20px;
+        gap: 22px;
       }
 
-      .timeline-item {
+      .step {
         display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 14px;
-        padding: 16px;
+        grid-template-columns: 134px minmax(0, 1fr);
+        gap: 18px;
+        padding: clamp(18px, 3vw, 30px);
       }
 
-      .dot {
-        width: 34px;
-        height: 34px;
-        display: grid;
-        place-items: center;
+      .step-num {
+        font-size: clamp(58px, 8vw, 96px);
+        line-height: 0.9;
+        font-weight: 900;
+        letter-spacing: -0.075em;
+      }
+
+      .step small {
+        display: inline-flex;
+        width: fit-content;
+        margin-bottom: 10px;
         border-radius: 999px;
-        background: rgba(99, 102, 241, 0.15);
-        color: var(--brand-light);
+        background: rgba(124, 58, 237, 0.08);
+        color: var(--brand);
+        padding: 7px 10px;
         font-weight: 900;
       }
 
-      .timeline-item h3 {
+      .step h2 {
         margin: 0;
-        font-size: 18px;
+        font-size: clamp(25px, 3.4vw, 42px);
+        line-height: 1.08;
+        letter-spacing: -0.045em;
       }
 
-      .timeline-item p {
-        margin: 7px 0 0;
-        font-size: 14px;
+      .step p {
+        margin: 14px 0 0;
+        color: var(--soft);
+        font-size: 17px;
+        line-height: 1.82;
       }
 
-      .demo-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-        margin-top: 18px;
-      }
-
-      .demo-card {
-        overflow: hidden;
-      }
-
-      .demo-card header,
-      .prompt-box header {
-        border-bottom: 1px solid var(--bg-border);
-        color: var(--text-muted);
-        padding: 12px 14px;
-        font-size: 12px;
+      .quote {
+        margin: 18px 0 0;
+        border-left: 4px solid var(--brand);
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.09), rgba(255, 90, 102, 0.05));
+        padding: 16px 18px;
+        color: var(--text);
+        font-size: 19px;
         font-weight: 900;
-        text-transform: uppercase;
+        line-height: 1.55;
       }
 
-      .demo-card div,
-      .prompt-box pre {
+      .lesson-box {
+        margin-top: 18px;
         padding: 16px;
-        color: var(--text-secondary);
-        font-size: 14px;
-        line-height: 1.75;
+        background: rgba(255, 247, 239, 0.78);
       }
 
-      .demo-card.good {
-        border-color: rgba(16, 185, 129, 0.34);
-        box-shadow: 0 0 44px rgba(16, 185, 129, 0.08);
-      }
-
-      .demo-card.good header {
-        color: #a7f3d0;
-      }
-
-      .lesson-list {
-        display: grid;
-        gap: 10px;
-        margin-top: 18px;
-      }
-
-      .lesson {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 12px;
-        padding: 14px;
-      }
-
-      .lesson span {
-        width: 28px;
-        height: 28px;
-        display: grid;
-        place-items: center;
-        border-radius: 999px;
-        background: rgba(16, 185, 129, 0.14);
-        color: #a7f3d0;
-        font-size: 13px;
-        font-weight: 900;
-      }
-
-      .lesson strong {
+      .lesson-box b {
         display: block;
+        margin-bottom: 8px;
       }
 
-      .lesson p {
-        margin: 5px 0 0;
-        font-size: 14px;
+      .lesson-box ul {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding-left: 18px;
+        color: var(--soft);
+        line-height: 1.6;
       }
 
       .prompt-box {
+        margin-top: 18px;
         overflow: hidden;
-        margin-top: 18px;
       }
 
-      .plain-box {
-        margin-top: 18px;
-        border: 1px solid rgba(129, 140, 248, 0.24);
-        border-radius: 16px;
-        background: rgba(99, 102, 241, 0.08);
-        padding: 16px;
-      }
-
-      .plain-box strong {
-        display: block;
-        font-size: 16px;
-      }
-
-      .plain-box p {
-        margin: 8px 0 0;
-        font-size: 14px;
+      .prompt-box header {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        color: var(--brand);
+        font-weight: 900;
       }
 
       .prompt-box pre {
         margin: 0;
+        overflow: auto;
+        padding: 18px;
+        color: #2f2540;
+        background: rgba(255, 250, 243, 0.82);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 13px;
+        line-height: 1.6;
         white-space: pre-wrap;
-        font-family: "JetBrains Mono", Consolas, monospace;
-        color: var(--text-primary);
-        background: rgba(10, 10, 15, 0.42);
       }
 
       .cta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin: 28px 0 64px;
+        margin: 28px 0 54px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 18px;
+        align-items: center;
+        padding: 24px;
+        background:
+          radial-gradient(circle at 88% 16%, rgba(124, 58, 237, 0.16), transparent 34%),
+          rgba(255, 255, 255, 0.82);
       }
 
-      .button {
-        border-radius: 8px;
-        padding: 12px 16px;
-        font-size: 14px;
+      .cta h2 {
+        margin: 0;
+        font-size: clamp(28px, 4vw, 46px);
+        line-height: 1.05;
+        letter-spacing: -0.055em;
       }
 
-      .button.primary {
-        background: var(--brand);
-        color: white;
+      .cta p {
+        margin: 10px 0 0;
+        color: var(--soft);
+        line-height: 1.65;
       }
 
-      @keyframes guideFloat {
-        0%,
-        100% {
-          transform: translateY(0) rotate(-1deg);
-        }
-        50% {
-          transform: translateY(-8px) rotate(1.5deg);
-        }
+      footer {
+        padding: 24px 0 40px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 13px;
       }
 
-      @keyframes orbit {
-        from {
-          transform: rotate(0deg) scaleX(1.08);
-        }
-        to {
-          transform: rotate(360deg) scaleX(1.08);
-        }
+      @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(-1deg); }
+        50% { transform: translateY(-8px) rotate(1.5deg); }
       }
 
       @keyframes sweep {
-        0%,
-        64%,
-        100% {
-          transform: translateX(-110%);
-        }
-        82% {
-          transform: translateX(110%);
-        }
-      }
-
-      @keyframes pulseDot {
-        0%,
-        100% {
-          transform: scale(1);
-          box-shadow: 0 0 18px rgba(16, 185, 129, 0.14);
-        }
-        50% {
-          transform: scale(1.08);
-          box-shadow: 0 0 30px rgba(16, 185, 129, 0.28);
-        }
+        0%, 42% { transform: translateX(-120%); }
+        70%, 100% { transform: translateX(120%); }
       }
 
       @media (max-width: 860px) {
         .hero,
-        .story-strip,
-        .demo-grid {
+        .step,
+        .cta {
           grid-template-columns: 1fr;
         }
 
         .guide-card {
-          position: relative;
-          top: auto;
-          display: grid;
-          grid-template-columns: auto 1fr;
-          gap: 14px;
-          align-items: center;
+          order: -1;
         }
 
-        .bot-wrap {
-          width: 92px;
-          height: 92px;
-          margin: 0;
+        .summary-strip {
+          grid-template-columns: 1fr;
         }
+      }
 
-        .bot-wrap img {
-          width: 78px;
-          height: 78px;
-          border-radius: 20px;
+      @media (max-width: 560px) {
+        .page {
+          width: min(100% - 22px, 1120px);
         }
 
         .nav {
           align-items: flex-start;
-          flex-direction: column;
-          padding: 16px 0;
+          border-radius: 20px;
         }
-      }
 
-      /* Warm creator theme - aligned with Lumi Labs homepage */
-      :root {
-        --brand: #ff6b6b;
-        --brand-light: #8b5cf6;
-        --bg-base: #fffaf3;
-        --bg-surface: #ffffff;
-        --bg-elevated: #fff4ec;
-        --bg-border: #eadfd4;
-        --text-primary: #211915;
-        --text-secondary: #6f625b;
-        --text-muted: #a19086;
-        --green: #12a874;
-        --amber: #f59e0b;
-      }
+        .nav .pill {
+          display: none;
+        }
 
-      body {
-        background:
-          radial-gradient(circle at 14% 4%, rgba(255, 107, 107, 0.18), transparent 27%),
-          radial-gradient(circle at 92% 18%, rgba(139, 92, 246, 0.12), transparent 24%),
-          radial-gradient(circle at 70% 72%, rgba(255, 184, 115, 0.14), transparent 28%),
-          radial-gradient(circle, rgba(232, 213, 196, 0.64) 1px, transparent 1px),
-          #fffaf3;
-        background-size: auto, auto, auto, 26px 26px, auto;
-        color: var(--text-primary);
-      }
+        .hero {
+          padding-top: 38px;
+        }
 
-      .nav {
-        border-bottom-color: rgba(234, 223, 212, 0.95);
-      }
+        .hero-actions {
+          display: grid;
+        }
 
-      .logo span {
-        background: linear-gradient(135deg, #ff6b6b, #8b5cf6);
-        box-shadow: 0 0 0 6px rgba(255, 107, 107, 0.08), 0 10px 24px rgba(255, 107, 107, 0.28);
-      }
+        .button {
+          width: 100%;
+        }
 
-      .back,
-      .button.secondary {
-        background: rgba(255, 255, 255, 0.72);
-        border-color: rgba(234, 223, 212, 0.95);
-        color: #5f514a;
-      }
-
-      .hero {
-        min-height: 560px;
-      }
-
-      .badge {
-        border-color: rgba(255, 107, 107, 0.24);
-        background: rgba(255, 255, 255, 0.76);
-        color: #b63b38;
-        box-shadow: 0 12px 30px rgba(112, 76, 54, 0.08);
-      }
-
-      h1 {
-        letter-spacing: -1.6px;
-      }
-
-      .lead {
-        color: #5f514a;
-      }
-
-      .guide-card,
-      .mini-card,
-      .section,
-      .timeline-item,
-      .lesson,
-      .demo-card,
-      .prompt-box,
-      .plain-box {
-        border-color: rgba(234, 223, 212, 0.95);
-        background: rgba(255, 255, 255, 0.78);
-        box-shadow: 0 22px 60px rgba(112, 76, 54, 0.1);
-      }
-
-      .guide-card {
-        border-color: rgba(255, 255, 255, 0.76);
-        background:
-          radial-gradient(circle at 48% 0%, rgba(121, 213, 226, 0.28), transparent 42%),
-          radial-gradient(circle at 92% 12%, rgba(255, 107, 107, 0.15), transparent 30%),
-          linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(255, 244, 236, 0.88));
-        box-shadow: 0 26px 76px rgba(112, 76, 54, 0.16);
-      }
-
-      .guide-card::after,
-      .caption-log-link::before {
-        background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.58) 45%, transparent 70%);
-      }
-
-      .bot-wrap img {
-        border: 3px solid #fff;
-        box-shadow: 0 20px 52px rgba(92, 171, 190, 0.22);
-      }
-
-      .bot-wrap::before {
-        border-color: rgba(121, 213, 226, 0.38);
-      }
-
-      .bot-wrap::after {
-        border-color: rgba(255, 107, 107, 0.28);
-      }
-
-      .guide-tags span,
-      .demo-card header,
-      .prompt-box header {
-        border-color: rgba(234, 223, 212, 0.95);
-        color: #8b5cf6;
-      }
-
-      .mini-card span,
-      .eyebrow {
-        color: #a19086;
-      }
-
-      .section::before {
-        background: linear-gradient(180deg, transparent, rgba(255, 107, 107, 0.78), transparent);
-      }
-
-      .section p,
-      .guide-card p,
-      .timeline-item p,
-      .lesson p,
-      .demo-card div,
-      .plain-box p {
-        color: var(--text-secondary);
-      }
-
-      .quote {
-        border-left-color: #ff6b6b;
-        background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 255, 255, 0.78));
-        box-shadow: inset 0 0 0 1px rgba(255, 107, 107, 0.08), 0 18px 44px rgba(112, 76, 54, 0.08);
-      }
-
-      .core-line {
-        border-color: rgba(18, 168, 116, 0.24);
-        background:
-          radial-gradient(circle at 10% 50%, rgba(18, 168, 116, 0.16), transparent 34%),
-          rgba(255, 255, 255, 0.82);
-      }
-
-      .core-line span,
-      .lesson span {
-        background: rgba(18, 168, 116, 0.12);
-        color: #087857;
-      }
-
-      .dot {
-        background: rgba(255, 107, 107, 0.12);
-        color: #ff5d5d;
-      }
-
-      .demo-card.good {
-        border-color: rgba(18, 168, 116, 0.28);
-        box-shadow: 0 20px 52px rgba(18, 168, 116, 0.08);
-      }
-
-      .demo-card.good header {
-        color: #087857;
-      }
-
-      .prompt-box pre {
-        background: #fffaf3;
-        color: #211915;
-      }
-
-      .button.primary {
-        border: 0;
-        background: linear-gradient(135deg, #ff4f69 0%, #ff8a3d 52%, #8b5cf6 100%);
-        box-shadow: 0 16px 38px rgba(255, 107, 107, 0.24);
-      }
-
-      .button:hover,
-      .back:hover {
-        transform: translateY(-2px);
+        .step {
+          padding: 18px;
+        }
       }
     </style>
   </head>
@@ -750,170 +458,150 @@
     <div class="page">
       <nav class="nav">
         <a class="logo" href="/">
-          <span></span>
-          Lumi Labs
+          <img src="/lumi-bot.png" alt="Lumi Bot" />
+          <div>
+            Lumi Labs
+            <span>AI dễ hiểu cho mọi người</span>
+          </div>
         </a>
-        <a class="back" href="/#caption-ai">← Quay lại Caption AI</a>
+        <span class="pill">#CaptionAI · Project 1 / 21</span>
+        <a class="button secondary" href="/caption-ai">Dùng thử Caption</a>
       </nav>
 
       <header class="hero">
-        <div>
-          <div class="badge">Project 01 · Chuyện làm thật · Không cần biết code</div>
-          <h1>Cái tool đầu tiên bắt đầu từ một chuyện rất nhỏ.</h1>
+        <section>
+          <div class="badge">✦ Nhật ký Project 1 · build thật</div>
+          <h1>Caption AI bắt đầu từ <span>một màn hình trống.</span></h1>
           <p class="lead">
-            Có hôm chỉ muốn đăng một bài bán hàng thôi. Sản phẩm thì biết rõ, khách hàng cũng biết là ai, nhưng con trỏ cứ nhấp nháy trên màn hình và câu đầu tiên vẫn chưa ra. Caption AI bắt đầu từ đúng khoảnh khắc khó chịu đó.
+            Có hôm chỉ muốn đăng một bài bán hàng thôi. Sản phẩm thì biết rõ, khách hàng cũng biết là ai,
+            nhưng câu đầu tiên vẫn chưa ra. Caption AI bắt đầu từ đúng khoảnh khắc rất đời đó.
           </p>
-        </div>
+          <div class="hero-actions">
+            <a class="button" href="#step-1">Đọc hành trình</a>
+            <a class="button secondary" href="/caption-ai">Thử công cụ trước</a>
+          </div>
+        </section>
 
         <aside class="guide-card">
-          <div class="bot-wrap">
-            <img src="/lumi-bot.png" alt="Lumi Bot" />
-          </div>
-          <div>
-            <strong>Lumi Bot sẽ đi cạnh bạn trong câu chuyện này</strong>
-            <p>Mình không kể bằng ngôn ngữ kỹ thuật. Mình kể như đang ngồi cạnh bạn: chỗ nào bí, chỗ nào sửa, và vì sao một tool nhỏ lại đáng làm.</p>
-            <div class="guide-tags">
-              <span>Có cảm xúc</span>
-              <span>Có quá trình</span>
-              <span>Làm theo được</span>
-            </div>
-          </div>
+          <div class="bot"><img src="/lumi-bot.png" alt="Lumi Bot" /></div>
+          <strong>Lumi sẽ kể lại theo cách dễ hiểu.</strong>
+          <p>
+            Không nói bằng ngôn ngữ kỹ thuật. Chỉ giữ lại vấn đề, quyết định, cách làm,
+            và điều người không biết code có thể học được.
+          </p>
         </aside>
       </header>
 
-      <section class="story-strip">
-        <article class="mini-card">
-          <span>Vấn đề</span>
-          <strong>Biết sản phẩm hay, nhưng không biết mở lời</strong>
+      <section class="summary-strip">
+        <article class="mini">
+          <b>Vấn đề rất đời</b>
+          <p>Biết sản phẩm hay, nhưng mở bài bán hàng vẫn bị bí.</p>
         </article>
-        <article class="mini-card">
-          <span>Giải pháp</span>
-          <strong>Đưa cho AI vài ý chính, nhận lại bản nháp</strong>
+        <article class="mini">
+          <b>Giải pháp rất gọn</b>
+          <p>Nhập tên sản phẩm và mô tả ngắn, AI viết bản nháp để sửa tiếp.</p>
         </article>
-        <article class="mini-card">
-          <span>Giá trị</span>
-          <strong>Không còn ngồi nhìn màn hình trống</strong>
+        <article class="mini">
+          <b>Giá trị thật</b>
+          <p>Không còn ngồi nhìn màn hình trống trước khi đăng bài.</p>
         </article>
       </section>
 
-      <section class="section">
-        <span class="eyebrow">Câu chuyện thật</span>
-        <h2>Mình không bắt đầu bằng câu hỏi “làm app gì cho hoành tráng?”.</h2>
-        <p>
-          Mình bắt đầu bằng một câu hỏi gần hơn: trong một ngày làm việc bình thường, có việc nhỏ nào khiến người ta mất thời gian, mất hứng, nhưng lại không đủ lớn để thuê người làm riêng không?
-        </p>
-        <p>
-          Với nhiều shop nhỏ, creator, freelancer hay bạn marketing một mình ôm đủ việc, câu trả lời là caption. Không phải họ không hiểu sản phẩm. Thật ra họ hiểu rất rõ. Nhưng hiểu trong đầu và viết thành một bài đăng nghe tự nhiên là hai chuyện khác nhau.
-        </p>
-        <p class="quote">
-          Caption AI không viết thay con người theo kiểu “bấm phát là xong”. Nó làm việc tử tế hơn: đưa cho bạn một bản nháp đủ tốt để bạn sửa, thêm giọng của mình, rồi đăng.
-        </p>
-        <div class="core-line">
-          <span>!</span>
-          <div>
-            <strong>Điểm cốt lõi: AI không thay bạn. AI kéo bạn qua bước bắt đầu.</strong>
-            <p>Khi đã có bản nháp, bạn không còn nhìn vào màn hình trống nữa. Bạn có thứ để sửa, để chọn, để đăng.</p>
-          </div>
-        </div>
-      </section>
+      <main class="steps">
+        <section class="step" id="step-1">
+          <div><div class="step-num">01</div></div>
+          <article>
+            <small>Bước 1 · Chọn vấn đề</small>
+            <h2>Mình không bắt đầu bằng “làm app gì cho hoành tráng”.</h2>
+            <p>
+              Mình bắt đầu bằng một câu hỏi gần hơn: trong một ngày làm việc bình thường,
+              có việc nhỏ nào khiến người ta mất hứng nhưng vẫn phải làm đi làm lại không?
+            </p>
+            <p>
+              Với shop nhỏ, creator, freelancer hay bạn marketing một mình ôm đủ việc, câu trả lời là caption.
+              Không phải họ không hiểu sản phẩm. Họ hiểu rất rõ. Nhưng biến điều đó thành một bài đăng tự nhiên là chuyện khác.
+            </p>
+            <div class="quote">Sản phẩm đầu tiên nên đủ nhỏ để làm xong, nhưng đủ thật để có người muốn dùng.</div>
+          </article>
+        </section>
 
-      <section class="section">
-        <span class="eyebrow">Người dùng được lợi gì?</span>
-        <h2>Cái lợi không nằm ở việc tiết kiệm vài phút. Nó nằm ở cảm giác “mình bắt đầu được rồi”.</h2>
-        <div class="demo-grid">
-          <article class="demo-card">
-            <header>Trước khi có tool</header>
-            <div>
-              Bạn mở Facebook hoặc TikTok, định đăng bài. Rồi bạn xóa câu đầu tiên. Viết lại. Xóa tiếp. Sau 15 phút, sản phẩm vẫn chưa được đăng, còn bạn bắt đầu thấy mệt.
+        <section class="step" id="step-2">
+          <div><div class="step-num">02</div></div>
+          <article>
+            <small>Bước 2 · Cắt bớt</small>
+            <h2>Người non-tech không cần một bảng điều khiển lớn.</h2>
+            <p>
+              Phiên bản đầu có thể rất dễ bị tham. Nhiều lựa chọn hơn, nhiều style hơn, nhiều ô nhập hơn.
+              Nhưng người dùng mới chỉ cần một đường đi rõ: nhập ý tưởng, bấm tạo, xem kết quả.
+            </p>
+            <p>
+              Vì vậy Caption AI được kéo về một format cực đơn giản. Không đăng ký bắt buộc. Không hướng dẫn dài.
+              Không hỏi quá nhiều trước khi cho người dùng thấy giá trị.
+            </p>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Muốn người khác dùng thử, hãy giảm số việc họ phải nghĩ.</li>
+                <li>Một nút chính tốt hơn ba nút khiến người dùng phân vân.</li>
+                <li>Tool nhỏ vẫn có thể tạo cảm giác “wow” nếu nó giải quyết đúng khoảnh khắc đau.</li>
+              </ul>
             </div>
           </article>
-          <article class="demo-card good">
-            <header>Sau khi có Caption AI</header>
-            <div>
-              Bạn nhập tên sản phẩm và vài dòng mô tả như đang nhắn tin cho đồng nghiệp. Lumi Bot đưa ra một bản nháp. Có thể chưa hoàn hảo, nhưng đủ để bạn sửa nhanh và đăng được.
-            </div>
-          </article>
-        </div>
-      </section>
+        </section>
 
-      <section class="section">
-        <span class="eyebrow">Hành trình làm</span>
-        <h2>Làm một tool thật không phải đi một đường thẳng.</h2>
-        <div class="timeline">
-          <article class="timeline-item">
-            <span class="dot">1</span>
-            <div>
-              <h3>Chọn một việc ai cũng từng kẹt</h3>
-              <p>Mình không chọn project phức tạp ngay. Caption là thứ rất đời: ai bán hàng, làm nội dung, làm dịch vụ cá nhân đều từng bí.</p>
-            </div>
+        <section class="step" id="step-3">
+          <div><div class="step-num">03</div></div>
+          <article>
+            <small>Bước 3 · Làm bản nháp có hồn</small>
+            <h2>AI không thay bạn. AI kéo bạn qua bước bắt đầu.</h2>
+            <p>
+              Caption AI không viết thay con người theo kiểu “bấm phát là xong”.
+              Nó làm việc tử tế hơn: đưa cho bạn một bản nháp đủ tốt để bạn sửa, thêm giọng của mình, rồi đăng.
+            </p>
+            <p>
+              Khi đã có bản nháp, bạn không còn nhìn vào màn hình trống nữa.
+              Bạn có thứ để sửa, để chọn, để đăng. Đó mới là lợi ích thật.
+            </p>
+            <div class="quote">Cái lợi không chỉ là tiết kiệm vài phút. Cái lợi là cảm giác: “mình bắt đầu được rồi”.</div>
           </article>
-          <article class="timeline-item">
-            <span class="dot">2</span>
-            <div>
-              <h3>Cắt hết những bước làm người mới ngại</h3>
-              <p>Không đăng ký. Không tài khoản. Không hỏi quá nhiều. Chỉ cần tên sản phẩm, mô tả ngắn và một nút tạo caption.</p>
-            </div>
-          </article>
-          <article class="timeline-item">
-            <span class="dot">3</span>
-            <div>
-              <h3>Nhận ra một form đẹp vẫn chưa đủ ấm</h3>
-              <p>Một cái form dù đẹp vẫn có thể lạnh. Lumi Bot xuất hiện để người dùng cảm thấy: có một trợ lý nhỏ đang xử lý cùng mình.</p>
-            </div>
-          </article>
-          <article class="timeline-item">
-            <span class="dot">4</span>
-            <div>
-              <h3>Thêm nhiều thứ rồi tự tay bớt lại</h3>
-              <p>Có lúc mình thêm nhiều lựa chọn hơn. Nhưng nhìn lại, người mới không cần một bảng điều khiển lớn. Họ cần một đường đi rõ. Nhập vào, bấm, thấy kết quả.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+        </section>
 
-      <section class="section">
-        <span class="eyebrow">Bạn có thể làm theo</span>
-        <h2>Nếu bạn chưa biết Codex là gì, hãy hiểu đơn giản thế này.</h2>
-        <p>
-          Codex giống như một nhân viên kỹ thuật AI ngồi cạnh bạn. Bạn không cần nói bằng ngôn ngữ lập trình. Bạn chỉ cần mô tả việc bạn muốn làm bằng tiếng Việt thật rõ.
-        </p>
-        <div class="plain-box">
-          <strong>Việc của bạn không phải là code. Việc của bạn là kể đúng vấn đề.</strong>
-          <p>Ví dụ: “Tôi hay mất thời gian viết caption cho sản phẩm. Tôi muốn một trang nhỏ để nhập sản phẩm, bấm một nút, rồi có caption để copy.” Chỉ vậy thôi đã là một yêu cầu rất tốt để bắt đầu.</p>
-        </div>
-        <div class="lesson-list">
-          <article class="lesson">
-            <span>1</span>
-            <div>
-              <strong>Nói việc bạn đang bị kẹt</strong>
-              <p>Ví dụ: “Mỗi lần đăng bài bán hàng tôi bị bí caption, mất nhiều thời gian.”</p>
+        <section class="step" id="step-4">
+          <div><div class="step-num">04</div></div>
+          <article>
+            <small>Bước 4 · Có Lumi Bot dẫn đường</small>
+            <h2>Một form đẹp vẫn có thể lạnh nếu không có cảm giác đồng hành.</h2>
+            <p>
+              Mình đưa Lumi Bot vào Caption AI để người dùng cảm thấy có một trợ lý nhỏ đang xử lý cùng mình.
+              Khi AI đang viết, Lumi Bot xuất hiện. Khi có kết quả, người dùng thấy rõ mình nên copy phần nào.
+            </p>
+            <p>
+              Đây là một chi tiết nhận diện quan trọng của Lumi Labs: mỗi project đều có Lumi Bot đi cùng,
+              không phải để trang trí, mà để làm trải nghiệm bớt khô.
+            </p>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Loading cũng là trải nghiệm, không chỉ là thời gian chờ.</li>
+                <li>Người dùng mới cần cảm giác được dẫn đường.</li>
+                <li>Thương hiệu tốt nằm ở những khoảnh khắc nhỏ lặp lại xuyên suốt.</li>
+              </ul>
             </div>
           </article>
-          <article class="lesson">
-            <span>2</span>
-            <div>
-              <strong>Nói bạn muốn nhập gì</strong>
-              <p>Ví dụ: “Tôi muốn nhập tên sản phẩm và mô tả ngắn.”</p>
-            </div>
-          </article>
-          <article class="lesson">
-            <span>3</span>
-            <div>
-              <strong>Nói bạn muốn nhận lại gì</strong>
-              <p>Ví dụ: “Tôi muốn nhận caption TikTok, caption Facebook và hashtag.”</p>
-            </div>
-          </article>
-          <article class="lesson">
-            <span>4</span>
-            <div>
-              <strong>Nhờ Codex làm bản đầu tiên</strong>
-              <p>Hãy coi Codex như người dựng bản demo. Bạn xem thử, thấy sai chỗ nào thì yêu cầu sửa tiếp.</p>
-            </div>
-          </article>
-        </div>
-        <div class="prompt-box">
-          <header>Prompt mẫu để copy vào Codex</header>
-          <pre>Tôi không biết code. Hãy giúp tôi tạo một web app đơn giản.
+        </section>
+
+        <section class="step" id="step-5">
+          <div><div class="step-num">05</div></div>
+          <article>
+            <small>Bước 5 · Công thức để tự làm theo</small>
+            <h2>Nếu bạn chưa biết code, hãy bắt đầu bằng cách kể đúng vấn đề.</h2>
+            <p>
+              Codex giống như một nhân viên kỹ thuật AI ngồi cạnh bạn. Bạn không cần nói bằng ngôn ngữ lập trình.
+              Bạn chỉ cần mô tả việc bạn muốn làm bằng tiếng Việt thật rõ.
+            </p>
+            <div class="prompt-box">
+              <header>Prompt mẫu để copy vào Codex</header>
+              <pre>Tôi không biết code. Hãy giúp tôi tạo một web app đơn giản.
 
 Mục tiêu:
 Người dùng nhập tên sản phẩm và mô tả ngắn.
@@ -923,24 +611,24 @@ Giao diện phải dễ hiểu cho người không biết code.
 Ưu tiên: ít bước, đẹp, dùng được ngay.
 
 Hãy làm bản demo đầu tiên trước. Sau đó hướng dẫn tôi cách chạy và cách sửa từng bước.</pre>
+            </div>
+          </article>
+        </section>
+      </main>
+
+      <section class="cta">
+        <div>
+          <h2>Đọc xong rồi, thử chính sản phẩm.</h2>
+          <p>
+            Nhập một sản phẩm thật, vài dòng mô tả thật, rồi để Lumi Bot tạo bản nháp caption cho bạn.
+          </p>
         </div>
+        <a class="button" href="/caption-ai">Dùng thử Caption AI</a>
       </section>
 
-      <section class="section">
-        <span class="eyebrow">Điều mình muốn người đọc cảm nhận</span>
-        <h2>Điều mình muốn bạn mang về sau khi đọc xong.</h2>
-        <p>
-          Bạn không cần trở thành lập trình viên để bắt đầu tạo công cụ. Nhưng bạn cần nhìn ra một việc thật trong đời sống hoặc công việc. Sau đó mô tả nó đủ rõ để AI có thể phụ bạn biến nó thành bản demo.
-        </p>
-        <p>
-          Caption AI chỉ là project đầu tiên. Nó nhỏ. Nhưng chính vì nhỏ nên nó dễ tin: nếu một tool viết caption có thể bắt đầu từ vài dòng mô tả, thì một tool đọc Excel, tạo báo cáo, viết email, lọc CV hay hỗ trợ bán hàng cũng có thể bắt đầu như vậy.
-        </p>
-      </section>
-
-      <div class="cta">
-        <a class="button primary" href="/?from=story#caption-ai">Thử Caption AI →</a>
-        <a class="button secondary" href="/">Về Lumi Labs</a>
-      </div>
+      <footer>
+        © 2026 Lumi Labs · Project 1 / 21 · Build công khai cho người không chuyên
+      </footer>
     </div>
   </body>
 </html>

@@ -3316,6 +3316,135 @@ body {
   color: #704dff;
 }
 
+/* Unified project format used on home and /projects */
+.unified-project-list {
+  gap: 14px;
+}
+
+.unified-project-card {
+  min-height: 0;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  border: 1px solid rgba(225, 214, 255, 0.94);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 88% 0%, rgba(112, 77, 255, 0.1), transparent 34%),
+    rgba(255, 255, 255, 0.82);
+  box-shadow: 0 20px 58px rgba(96, 71, 156, 0.09);
+}
+
+.unified-project-card.compact {
+  padding: 16px;
+}
+
+.project-library-card.unified-project-card {
+  min-height: 300px;
+  padding: 24px;
+  display: grid;
+  color: #17122b;
+}
+
+.project-card-top {
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  gap: 14px;
+  align-items: start;
+}
+
+.project-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fff, #f4edff);
+  box-shadow: 0 16px 34px rgba(112, 77, 255, 0.12);
+  font-size: 27px;
+}
+
+.project-card-top small {
+  display: block;
+  color: #704dff;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.project-card-top h2,
+.project-card-top h3 {
+  margin: 4px 0 0;
+  color: #17122b;
+  letter-spacing: -0.04em;
+}
+
+.project-card-top h2 {
+  font-size: 30px;
+}
+
+.project-card-top h3 {
+  font-size: 20px;
+}
+
+.project-card-top b {
+  white-space: nowrap;
+  border-radius: 999px;
+  background: rgba(112, 77, 255, 0.08);
+  color: #704dff;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.unified-project-card p {
+  margin: 0 !important;
+  color: #58627f !important;
+  line-height: 1.62 !important;
+}
+
+.unified-project-card em {
+  display: block;
+  margin-top: 4px;
+  color: #2f3653;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.project-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.project-card-actions a {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff5a66, #ff8a5c 45%, #8b5cf6);
+  color: #fff !important;
+  padding: 11px 14px;
+  text-decoration: none !important;
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 14px 30px rgba(112, 77, 255, 0.16);
+}
+
+.project-card-actions a.ghost {
+  border: 1px solid rgba(225, 214, 255, 0.94);
+  background: rgba(255, 255, 255, 0.86);
+  color: #704dff !important;
+  box-shadow: none;
+}
+
+.unified-project-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(124, 77, 255, 0.52);
+  box-shadow: 0 30px 80px rgba(112, 77, 255, 0.15);
+}
+
 .tool-ai-section {
   min-height: 100vh;
   padding: 150px max(18px, 6vw) 72px;
@@ -3714,6 +3843,30 @@ body {
   .magic-result-card {
     border-radius: 24px;
     padding: 18px;
+  }
+
+  .project-card-top {
+    grid-template-columns: 50px 1fr;
+  }
+
+  .project-card-top b {
+    grid-column: 1 / -1;
+    width: fit-content;
+  }
+
+  .project-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 17px;
+    font-size: 23px;
+  }
+
+  .project-card-actions {
+    display: grid;
+  }
+
+  .project-card-actions a {
+    width: 100%;
   }
 
   .one-touch-upload {
@@ -4293,6 +4446,27 @@ body {
   cursor: pointer;
 }
 
+.docscan-summary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.docscan-summary-actions a {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(225, 214, 255, 0.94);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.84);
+  color: #704dff;
+  padding: 15px 20px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
 .docscan-summary button:disabled {
   opacity: 0.35;
   cursor: not-allowed;
@@ -4400,9 +4574,15 @@ body {
   }
 
   .docscan-drop b,
-  .docscan-summary button {
+  .docscan-summary button,
+  .docscan-summary-actions a {
     min-width: 0;
     width: 100%;
+  }
+
+  .docscan-summary-actions {
+    display: grid;
+    justify-content: stretch;
   }
 }
 

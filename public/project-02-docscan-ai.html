@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhật ký Project 2 - DocScan AI</title>
+    <meta
+      name="description"
+      content="Hành trình 7 ngày làm DocScan AI: từ ý tưởng đọc tài liệu bằng AI tới một demo thật cho người không chuyên."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #fff9f3;
+        --surface: #ffffff;
+        --surface-warm: #fff7ef;
+        --text: #17111d;
+        --soft: #5f526b;
+        --muted: #91859e;
+        --line: #eee2d9;
+        --brand: #7c3aed;
+        --brand-light: #a78bfa;
+        --coral: #ff5a66;
+        --pink: #f472b6;
+        --green: #16a34a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background:
+          radial-gradient(circle at 78% 0%, rgba(167, 139, 250, 0.23), transparent 34%),
+          radial-gradient(circle at 18% 10%, rgba(255, 154, 111, 0.2), transparent 28%),
+          radial-gradient(circle, rgba(124, 58, 237, 0.08) 1px, transparent 1px),
+          var(--bg);
+        background-size: auto, auto, 28px 28px;
+        color: var(--text);
+        font-family: Outfit, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .nav {
+        position: sticky;
+        top: 14px;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-top: 14px;
+        padding: 12px 14px;
+        border: 1px solid rgba(238, 226, 217, 0.95);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 18px 54px rgba(95, 82, 107, 0.1);
+      }
+
+      .logo,
+      .pill,
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        font-weight: 900;
+      }
+
+      .logo img {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        object-fit: cover;
+      }
+
+      .logo span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .pill {
+        border: 1px solid rgba(124, 58, 237, 0.18);
+        border-radius: 999px;
+        background: rgba(124, 58, 237, 0.08);
+        color: var(--brand);
+        padding: 9px 13px;
+        font-size: 13px;
+      }
+
+      .button {
+        border: 0;
+        border-radius: 16px;
+        padding: 13px 18px;
+        color: #fff;
+        background: linear-gradient(135deg, #ff5a66 0%, #ff8a5c 44%, #8b5cf6 100%);
+        box-shadow: 0 18px 34px rgba(124, 58, 237, 0.18);
+      }
+
+      .button.secondary {
+        border: 1px solid var(--line);
+        color: var(--soft);
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: none;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 340px;
+        gap: 28px;
+        align-items: center;
+        padding: 64px 0 30px;
+      }
+
+      .badge {
+        width: fit-content;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(255, 90, 102, 0.22);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        color: #d43c55;
+        padding: 9px 13px;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      h1 {
+        max-width: 780px;
+        margin: 18px 0 0;
+        font-size: clamp(42px, 7vw, 82px);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+      }
+
+      h1 span,
+      .day-num,
+      .section-title span {
+        background: linear-gradient(135deg, var(--coral), var(--pink), var(--brand));
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      .lead {
+        max-width: 690px;
+        margin: 22px 0 0;
+        color: var(--soft);
+        font-size: 18px;
+        line-height: 1.78;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 26px;
+      }
+
+      .guide-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(238, 226, 217, 0.96);
+        border-radius: 30px;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.22), transparent 48%),
+          rgba(255, 255, 255, 0.78);
+        padding: 22px;
+        box-shadow: 0 24px 70px rgba(95, 82, 107, 0.12);
+      }
+
+      .guide-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.7) 48%, transparent 72%);
+        transform: translateX(-110%);
+        animation: sweep 5s ease-in-out infinite;
+      }
+
+      .guide-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .bot {
+        width: 148px;
+        height: 148px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 16px;
+        border-radius: 36px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .bot img {
+        width: 132px;
+        height: 132px;
+        border-radius: 32px;
+        object-fit: cover;
+        box-shadow: 0 20px 44px rgba(124, 58, 237, 0.18);
+        animation: float 4.6s ease-in-out infinite;
+      }
+
+      .guide-card strong {
+        display: block;
+        font-size: 20px;
+      }
+
+      .guide-card p {
+        margin: 8px 0 0;
+        color: var(--soft);
+        line-height: 1.65;
+      }
+
+      .progress {
+        margin-top: 18px;
+        height: 9px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #eadff7;
+      }
+
+      .progress i {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--coral), var(--brand));
+      }
+
+      .summary-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 14px 0 36px;
+      }
+
+      .mini,
+      .day,
+      .lesson-box,
+      .toc,
+      .cta {
+        border: 1px solid rgba(238, 226, 217, 0.96);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.76);
+        box-shadow: 0 16px 46px rgba(95, 82, 107, 0.075);
+      }
+
+      .mini {
+        padding: 18px;
+      }
+
+      .mini b {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .mini p {
+        margin: 0;
+        color: var(--soft);
+        line-height: 1.55;
+      }
+
+      .toc {
+        position: sticky;
+        top: 96px;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-bottom: 34px;
+        padding: 10px;
+        backdrop-filter: blur(12px);
+      }
+
+      .toc a {
+        border-radius: 16px;
+        background: var(--surface-warm);
+        color: var(--soft);
+        padding: 12px 10px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .toc a:hover {
+        color: var(--brand);
+        background: rgba(124, 58, 237, 0.08);
+      }
+
+      .days {
+        display: grid;
+        gap: 22px;
+      }
+
+      .day {
+        display: grid;
+        grid-template-columns: 134px minmax(0, 1fr);
+        gap: 18px;
+        padding: clamp(18px, 3vw, 30px);
+      }
+
+      .day-num {
+        font-size: clamp(58px, 8vw, 96px);
+        line-height: 0.9;
+        font-weight: 900;
+        letter-spacing: -0.075em;
+      }
+
+      .day small {
+        display: inline-flex;
+        width: fit-content;
+        margin-bottom: 10px;
+        border-radius: 999px;
+        background: rgba(124, 58, 237, 0.08);
+        color: var(--brand);
+        padding: 7px 10px;
+        font-weight: 900;
+      }
+
+      .day h2 {
+        margin: 0;
+        font-size: clamp(25px, 3.4vw, 42px);
+        line-height: 1.08;
+        letter-spacing: -0.045em;
+      }
+
+      .day p {
+        margin: 14px 0 0;
+        color: var(--soft);
+        font-size: 17px;
+        line-height: 1.82;
+      }
+
+      .quote {
+        margin: 18px 0 0;
+        border-left: 4px solid var(--brand);
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.09), rgba(255, 90, 102, 0.05));
+        padding: 16px 18px;
+        color: var(--text);
+        font-size: 19px;
+        font-weight: 900;
+        line-height: 1.55;
+      }
+
+      .lesson-box {
+        margin-top: 18px;
+        padding: 16px;
+        background: rgba(255, 247, 239, 0.78);
+      }
+
+      .lesson-box b {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .lesson-box ul {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding-left: 18px;
+        color: var(--soft);
+        line-height: 1.6;
+      }
+
+      .cta {
+        margin: 28px 0 54px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 18px;
+        align-items: center;
+        padding: 24px;
+        background:
+          radial-gradient(circle at 88% 16%, rgba(124, 58, 237, 0.16), transparent 34%),
+          rgba(255, 255, 255, 0.82);
+      }
+
+      .cta h2 {
+        margin: 0;
+        font-size: clamp(28px, 4vw, 46px);
+        line-height: 1.05;
+        letter-spacing: -0.055em;
+      }
+
+      .cta p {
+        margin: 10px 0 0;
+        color: var(--soft);
+        line-height: 1.65;
+      }
+
+      footer {
+        padding: 24px 0 40px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(-1deg); }
+        50% { transform: translateY(-8px) rotate(1.5deg); }
+      }
+
+      @keyframes sweep {
+        0%, 42% { transform: translateX(-120%); }
+        70%, 100% { transform: translateX(120%); }
+      }
+
+      @media (max-width: 860px) {
+        .hero,
+        .day,
+        .cta {
+          grid-template-columns: 1fr;
+        }
+
+        .guide-card {
+          order: -1;
+        }
+
+        .summary-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: static;
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      @media (max-width: 560px) {
+        .page {
+          width: min(100% - 22px, 1120px);
+        }
+
+        .nav {
+          align-items: flex-start;
+          border-radius: 20px;
+        }
+
+        .nav .pill {
+          display: none;
+        }
+
+        .hero {
+          padding-top: 38px;
+        }
+
+        .hero-actions {
+          display: grid;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .toc {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .day {
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <nav class="nav">
+        <a class="logo" href="/">
+          <img src="/lumi-bot.png" alt="Lumi Bot" />
+          <div>
+            Lumi Labs
+            <span>AI dễ hiểu cho mọi người</span>
+          </div>
+        </a>
+        <span class="pill">#DocScanAI · Project 2 / 21</span>
+        <a class="button secondary" href="/docscan-ai">Dùng thử DocScan</a>
+      </nav>
+
+      <header class="hero">
+        <section>
+          <div class="badge">✦ Nhật ký 7 ngày · build thật</div>
+          <h1>7 ngày làm nên <span>DocScan AI.</span></h1>
+          <p class="lead">
+            Đây không phải bài khoe sản phẩm. Đây là câu chuyện mình tự tay biến một nỗi đau rất văn phòng:
+            “đọc tài liệu quá mất thời gian” thành một demo AI có thể dùng thử ngay.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#day-1">Bắt đầu đọc từ ngày 1</a>
+            <a class="button secondary" href="/docscan-ai">Thử công cụ trước</a>
+          </div>
+        </section>
+
+        <aside class="guide-card">
+          <div class="bot"><img src="/lumi-bot.png" alt="Lumi Bot" /></div>
+          <strong>Lumi sẽ đi cùng bạn từng ngày.</strong>
+          <p>
+            Mỗi ngày chỉ giữ lại một quyết định quan trọng: vì sao làm, làm bằng gì,
+            vướng ở đâu, và người không biết code học được gì từ đó.
+          </p>
+          <div class="progress"><i></i></div>
+        </aside>
+      </header>
+
+      <section class="summary-strip">
+        <article class="mini">
+          <b>Không bắt đầu từ code</b>
+          <p>Bắt đầu từ một việc rất thật: tài liệu, ảnh chụp, hợp đồng, báo giá vẫn bị xử lý tay.</p>
+        </article>
+        <article class="mini">
+          <b>Một AI làm phần nặng</b>
+          <p>DocScan dùng AI để đọc, hiểu, chỉ ra điểm cần chú ý và trả lại text sạch.</p>
+        </article>
+        <article class="mini">
+          <b>Mục tiêu: dùng được ngay</b>
+          <p>Không hướng dẫn dài. Không setup. Mở lên, thả file vào, xem kết quả.</p>
+        </article>
+      </section>
+
+      <nav class="toc" aria-label="Chọn ngày">
+        <a href="#day-1">Ngày 1</a>
+        <a href="#day-2">Ngày 2</a>
+        <a href="#day-3">Ngày 3</a>
+        <a href="#day-4">Ngày 4</a>
+        <a href="#day-5">Ngày 5</a>
+        <a href="#day-6">Ngày 6</a>
+        <a href="#day-7">Ngày 7</a>
+      </nav>
+
+      <main class="days">
+        <section class="day" id="day-1">
+          <div><div class="day-num">01</div></div>
+          <article>
+            <small>Ngày 1 · Nhìn thấy vấn đề</small>
+            <h2>Khi tài liệu vẫn đang được xử lý bằng tay — năm 2026</h2>
+            <p>
+              Năm 2026 rồi, nhưng vẫn có người ngồi gõ lại từng dòng số liệu từ một tấm ảnh chụp gửi qua Zalo.
+              Chị kế toán đọc hóa đơn cuối ngày. Anh quản lý rà hợp đồng dài. Chủ doanh nghiệp nhìn báo giá nhà cung cấp
+              và muốn so sánh với lần trước, nhưng lại phải nhập lại từ đầu.
+            </p>
+            <p>
+              Ba câu chuyện khác nhau, nhưng cùng mất thời gian vào một việc không đáng mất:
+              biến tài liệu thành thứ có thể đọc, hiểu, copy và dùng tiếp.
+            </p>
+            <div class="quote">Không phải họ không giỏi. Chỉ là chưa có một công cụ đủ đơn giản cho đúng việc này.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Đừng bắt đầu bằng câu hỏi “làm app gì cho ngầu”.</li>
+                <li>Hãy bắt đầu bằng một việc đang làm bạn hoặc người xung quanh mất thời gian mỗi ngày.</li>
+                <li>Sản phẩm tốt thường bắt đầu từ một nỗi bực mình rất nhỏ.</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <section class="day" id="day-2">
+          <div><div class="day-num">02</div></div>
+          <article>
+            <small>Ngày 2 · Chọn cách làm đơn giản nhất</small>
+            <h2>Tại sao mình chọn một bộ não thay vì cả một đội ngũ</h2>
+            <p>
+              Để làm DocScan, nghe qua tưởng phải cần rất nhiều thứ: một công cụ đọc chữ trong ảnh,
+              một công cụ hiểu tài liệu, một công cụ phân tích rủi ro, rồi một công cụ trình bày lại kết quả.
+              Bốn việc. Bốn nơi có thể hỏng. Bốn cách làm sản phẩm chậm đi.
+            </p>
+            <p>
+              Mình tự hỏi: có thứ gì làm được cả bốn việc đó cùng lúc không? Câu trả lời là có: Gemini.
+              Nó có thể đọc ảnh, đọc file, hiểu nội dung và trả kết quả theo một cấu trúc rõ ràng.
+            </p>
+            <div class="quote">Một AI duy nhất. Đơn giản nhất có thể. Chạy được trước. Tối ưu sau.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Muốn làm MVP nhanh, đừng ghép quá nhiều công cụ ngay từ đầu.</li>
+                <li>Chỉ cần đủ tốt để người dùng thử được thật.</li>
+                <li>Bỏ bớt đôi khi là tiến độ thật sự.</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <section class="day" id="day-3">
+          <div><div class="day-num">03</div></div>
+          <article>
+            <small>Ngày 3 · Tính chi phí trước khi hưng phấn</small>
+            <h2>Làm sản phẩm AI với chi phí rẻ hơn một bữa ăn nhà hàng</h2>
+            <p>
+              Mình đặt ra một nguyên tắc: tận dụng tối đa những gì đang có, không chi thêm nếu chưa cần thiết.
+              Codex giúp mình xây giao diện và logic. Claude giúp mình suy nghĩ luồng sản phẩm. Gemini là bộ não chạy bên trong DocScan.
+            </p>
+            <p>
+              Điều quan trọng không chỉ là “AI nào mạnh nhất”. Với một MVP chưa có doanh thu, câu hỏi thực tế hơn là:
+              có đủ tốt không, có chạy được không, và có đủ rẻ để mình cho nhiều người thử không?
+            </p>
+            <div class="quote">Codex xây nhà. Claude vẽ bản thiết kế. Gemini là bộ não bên trong sản phẩm.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Đừng mua thêm công cụ chỉ vì thấy người khác dùng.</li>
+                <li>Mỗi công cụ phải có một vai trò rõ ràng.</li>
+                <li>Tiết kiệm chi phí là cách giúp MVP sống đủ lâu để được thử.</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <section class="day" id="day-4">
+          <div><div class="day-num">04</div></div>
+          <article>
+            <small>Ngày 4 · Làm cho ai cũng dám thử</small>
+            <h2>Từ màn hình phức tạp thành “một chạm, AI tự đọc”</h2>
+            <p>
+              Phiên bản đầu tiên có quá nhiều thứ muốn nói. Người dùng chưa kịp hiểu đã phải nhìn nhiều khối, nhiều nút,
+              nhiều trạng thái. Với người không chuyên, như vậy là mất điểm ngay.
+            </p>
+            <p>
+              Mình kéo mọi thứ về một luồng duy nhất: bên trái tải tài liệu, bên phải xem kết quả.
+              Không cần biết file được xử lý thế nào. Không cần biết bên trong gọi AI ra sao.
+              Chỉ cần hiểu: thả file vào, Lumi Bot đọc giúp.
+            </p>
+            <div class="quote">One touch, edit magic: một chạm để bắt đầu, sau đó người dùng chỉ cần đọc và chỉnh.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>UI tốt không phải là nhiều chức năng hiện ra cùng lúc.</li>
+                <li>UI tốt là người dùng nhìn vào biết làm gì tiếp theo.</li>
+                <li>Nếu phải giải thích quá nhiều, thiết kế vẫn chưa đủ rõ.</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <section class="day" id="day-5">
+          <div><div class="day-num">05</div></div>
+          <article>
+            <small>Ngày 5 · Kết quả phải có ích thật</small>
+            <h2>Khi AI đọc được file, nhưng trả lời vẫn chưa đáng tin</h2>
+            <p>
+              Có một khoảnh khắc hơi hụt hẫng: file đã upload được, AI đã trả kết quả, nhưng nội dung đầu ra chưa thật sự có giá trị.
+              Nó giống một bản nhận xét chung chung. Đọc xong vẫn chưa biết nên làm gì.
+            </p>
+            <p>
+              Mình sửa lại cách giao việc cho AI. Không chỉ nói “hãy phân tích tài liệu”.
+              Mình bắt nó trả về những phần người dùng thật sự cần: nội dung chính, điểm cần chú ý,
+              câu nên hỏi lại, việc nên làm tiếp, và căn cứ mà nó nhìn thấy trong tài liệu.
+            </p>
+            <div class="quote">AI không chỉ cần đọc được. AI phải trả lời theo cách giúp người dùng ra quyết định tốt hơn.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Kết quả AI tốt đến từ câu hỏi tốt và cấu trúc rõ.</li>
+                <li>Đừng chấp nhận câu trả lời “nghe có vẻ hay” nhưng không dùng được.</li>
+                <li>Luôn hỏi: người dùng đọc xong sẽ làm gì tiếp?</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <section class="day" id="day-6">
+          <div><div class="day-num">06</div></div>
+          <article>
+            <small>Ngày 6 · Làm cho người dùng tin hơn</small>
+            <h2>Thêm phần xem text gốc để không ai phải tin AI mù quáng</h2>
+            <p>
+              Một công cụ đọc tài liệu bằng AI không nên bắt người dùng tin tuyệt đối. Nếu AI nói có điểm cần chú ý,
+              người dùng phải có cách nhìn lại phần văn bản gốc mà AI đã đọc.
+            </p>
+            <p>
+              Vì vậy mình thêm phần “Văn bản gốc”. Mặc định ẩn để giao diện không rối.
+              Ai cần kiểm tra thì mở ra, copy text hoặc tải về file `.txt`.
+              Đây là chi tiết nhỏ, nhưng làm sản phẩm đáng tin hơn rất nhiều.
+            </p>
+            <div class="quote">AI hỗ trợ con người, không thay con người quyết định thay tất cả.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Công cụ AI tốt nên cho người dùng kiểm tra lại.</li>
+                <li>Đừng giấu quá trình nếu nó giúp người dùng yên tâm hơn.</li>
+                <li>Sự tin tưởng đến từ quyền kiểm soát, không phải từ lời quảng cáo.</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <section class="day" id="day-7">
+          <div><div class="day-num">07</div></div>
+          <article>
+            <small>Ngày 7 · Biến demo thành sản phẩm có cảm giác thật</small>
+            <h2>Polish lại tốc độ, loading và cảm giác dùng</h2>
+            <p>
+              Ngày cuối không phải để nhồi thêm tính năng. Ngày cuối là để làm cho mọi thứ mượt hơn:
+              upload file có phản hồi đẹp hơn, Lumi Bot có trạng thái đang đọc sống động hơn,
+              kết quả sắc nét hơn, và tốc độ phản hồi bớt chờ đợi hơn.
+            </p>
+            <p>
+              Đây là lúc mình học lại một điều rất quan trọng: sản phẩm AI không chỉ thắng vì “có AI”.
+              Nó thắng khi người dùng cảm thấy yên tâm, dễ hiểu, và muốn thử thêm lần nữa.
+            </p>
+            <div class="quote">Một MVP tốt không cần hoàn hảo. Nhưng phải đủ rõ, đủ thật, và đủ dễ để người khác dám dùng.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Polish không phải làm màu. Polish là giảm cảm giác lo lắng khi dùng.</li>
+                <li>Loading cũng là một phần trải nghiệm, nhất là với AI.</li>
+                <li>Đừng đợi hoàn hảo mới cho người khác thử. Hãy cho thử khi nó đủ tử tế.</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+      </main>
+
+      <section class="cta">
+        <div>
+          <h2>Đọc xong rồi, thử chính sản phẩm.</h2>
+          <p>
+            Bạn có thể tải một file PDF, Word, Excel hoặc ảnh chụp lên DocScan AI.
+            Lumi Bot sẽ đọc và chỉ ra những điểm cần chú ý theo cách dễ hiểu nhất.
+          </p>
+        </div>
+        <a class="button" href="/docscan-ai">Dùng thử DocScan AI</a>
+      </section>
+
+      <footer>
+        © 2026 Lumi Labs · Project 2 / 21 · Build công khai cho người không chuyên
+      </footer>
+    </div>
+  </body>
+</html>
