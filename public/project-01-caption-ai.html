@@ -264,6 +264,37 @@
         line-height: 1.55;
       }
 
+      .toc {
+        position: sticky;
+        top: 96px;
+        z-index: 10;
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        margin: -14px 0 26px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 18px 54px rgba(95, 82, 107, 0.08);
+      }
+
+      .toc a {
+        flex: 0 0 auto;
+        border-radius: 999px;
+        padding: 10px 14px;
+        color: var(--soft);
+        font-size: 14px;
+        font-weight: 900;
+        transition: 0.2s ease;
+      }
+
+      .toc a:hover {
+        background: rgba(124, 58, 237, 0.1);
+        color: var(--brand);
+      }
+
       .steps {
         display: grid;
         gap: 22px;
@@ -420,6 +451,11 @@
         .summary-strip {
           grid-template-columns: 1fr;
         }
+
+        .toc {
+          position: static;
+          border-radius: 22px;
+        }
       }
 
       @media (max-width: 560px) {
@@ -451,6 +487,10 @@
         .step {
           padding: 18px;
         }
+
+        .toc {
+          margin-top: -8px;
+        }
       }
     </style>
   </head>
@@ -470,135 +510,219 @@
 
       <header class="hero">
         <section>
-          <div class="badge">✦ Nhật ký Project 1 · build thật</div>
-          <h1>Caption AI bắt đầu từ <span>một màn hình trống.</span></h1>
+          <div class="badge">✦ Nhật ký 7 ngày · build thật</div>
+          <h1>7 ngày làm nên <span>Caption AI.</span></h1>
           <p class="lead">
             Có hôm chỉ muốn đăng một bài bán hàng thôi. Sản phẩm thì biết rõ, khách hàng cũng biết là ai,
-            nhưng câu đầu tiên vẫn chưa ra. Caption AI bắt đầu từ đúng khoảnh khắc rất đời đó.
+            nhưng câu đầu tiên vẫn chưa ra. Đây là hành trình biến khoảnh khắc rất đời đó thành một tool dùng được ngay.
           </p>
           <div class="hero-actions">
-            <a class="button" href="#step-1">Đọc hành trình</a>
+            <a class="button" href="#day-1">Bắt đầu đọc từ ngày 1</a>
             <a class="button secondary" href="/caption-ai">Thử công cụ trước</a>
           </div>
         </section>
 
         <aside class="guide-card">
           <div class="bot"><img src="/lumi-bot.png" alt="Lumi Bot" /></div>
-          <strong>Lumi sẽ kể lại theo cách dễ hiểu.</strong>
+          <strong>Lumi sẽ đi cùng bạn từng ngày.</strong>
           <p>
-            Không nói bằng ngôn ngữ kỹ thuật. Chỉ giữ lại vấn đề, quyết định, cách làm,
-            và điều người không biết code có thể học được.
+            Mỗi ngày chỉ giữ lại một điều quan trọng: vấn đề thật là gì, mình đã bỏ bớt gì,
+            và người không biết code có thể học được gì để tự bắt đầu.
           </p>
         </aside>
       </header>
 
       <section class="summary-strip">
         <article class="mini">
-          <b>Vấn đề rất đời</b>
-          <p>Biết sản phẩm hay, nhưng mở bài bán hàng vẫn bị bí.</p>
+          <b>Không bắt đầu từ code</b>
+          <p>Bắt đầu từ một khoảnh khắc rất quen: biết sản phẩm hay, nhưng chưa viết được câu đầu.</p>
         </article>
         <article class="mini">
-          <b>Giải pháp rất gọn</b>
+          <b>Một bản nháp đầu tiên</b>
           <p>Nhập tên sản phẩm và mô tả ngắn, AI viết bản nháp để sửa tiếp.</p>
         </article>
         <article class="mini">
-          <b>Giá trị thật</b>
-          <p>Không còn ngồi nhìn màn hình trống trước khi đăng bài.</p>
+          <b>Mục tiêu: dùng được ngay</b>
+          <p>Không khóa demo, không bắt học thuật ngữ. Mở lên là thử được.</p>
         </article>
       </section>
 
+      <nav class="toc" aria-label="Chọn ngày">
+        <a href="#day-1">Ngày 1</a>
+        <a href="#day-2">Ngày 2</a>
+        <a href="#day-3">Ngày 3</a>
+        <a href="#day-4">Ngày 4</a>
+        <a href="#day-5">Ngày 5</a>
+        <a href="#day-6">Ngày 6</a>
+        <a href="#day-7">Ngày 7</a>
+      </nav>
+
       <main class="steps">
-        <section class="step" id="step-1">
+        <section class="step" id="day-1">
           <div><div class="step-num">01</div></div>
           <article>
-            <small>Bước 1 · Chọn vấn đề</small>
-            <h2>Mình không bắt đầu bằng “làm app gì cho hoành tráng”.</h2>
+            <small>Ngày 1 · Nhìn thấy vấn đề</small>
+            <h2>Câu đầu tiên luôn là phần tốn lực nhất.</h2>
             <p>
-              Mình bắt đầu bằng một câu hỏi gần hơn: trong một ngày làm việc bình thường,
-              có việc nhỏ nào khiến người ta mất hứng nhưng vẫn phải làm đi làm lại không?
+              Có hôm chủ shop nhỏ chỉ muốn đăng một bài giới thiệu món mới. Ảnh đã có. Giá đã có.
+              Khách hàng cũng biết là ai. Nhưng mở điện thoại lên, nhìn vào ô nhập caption, mọi thứ đứng lại.
             </p>
             <p>
-              Với shop nhỏ, creator, freelancer hay bạn marketing một mình ôm đủ việc, câu trả lời là caption.
-              Không phải họ không hiểu sản phẩm. Họ hiểu rất rõ. Nhưng biến điều đó thành một bài đăng tự nhiên là chuyện khác.
+              Không phải họ không hiểu sản phẩm. Thường thì họ hiểu rất rõ. Vấn đề là biến cái hiểu đó
+              thành vài dòng nghe tự nhiên, không bị sến, không bị bán hàng quá lố, lại đủ để người khác muốn đọc.
             </p>
-            <div class="quote">Sản phẩm đầu tiên nên đủ nhỏ để làm xong, nhưng đủ thật để có người muốn dùng.</div>
+            <div class="quote">Một sản phẩm AI tốt có thể bắt đầu từ một khoảnh khắc rất nhỏ: người dùng chưa biết viết câu đầu tiên.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Đừng bắt đầu bằng “mình muốn làm app AI”. Hãy bắt đầu bằng một việc bạn thấy người khác bị kẹt mỗi ngày.</li>
+                <li>Viết lại nỗi đau bằng một câu đời thường: “Tôi biết sản phẩm, nhưng bí cách đăng bài”.</li>
+                <li>Nếu câu đó đủ rõ, bạn đã có hạt giống đầu tiên của một tool.</li>
+              </ul>
+            </div>
           </article>
         </section>
 
-        <section class="step" id="step-2">
+        <section class="step" id="day-2">
           <div><div class="step-num">02</div></div>
           <article>
-            <small>Bước 2 · Cắt bớt</small>
-            <h2>Người non-tech không cần một bảng điều khiển lớn.</h2>
+            <small>Ngày 2 · Chọn phiên bản nhỏ nhất</small>
+            <h2>Mình phải bỏ bớt trước khi thêm bất kỳ thứ gì.</h2>
             <p>
-              Phiên bản đầu có thể rất dễ bị tham. Nhiều lựa chọn hơn, nhiều style hơn, nhiều ô nhập hơn.
-              Nhưng người dùng mới chỉ cần một đường đi rõ: nhập ý tưởng, bấm tạo, xem kết quả.
+              Phiên bản đầu rất dễ bị tham. Muốn có nhiều nền tảng, nhiều giọng văn, nhiều ngành hàng,
+              nhiều nút chỉnh, nhiều kiểu xuất kết quả. Nghe thì hay. Nhưng người mới nhìn vào sẽ mệt trước khi kịp thử.
             </p>
             <p>
-              Vì vậy Caption AI được kéo về một format cực đơn giản. Không đăng ký bắt buộc. Không hướng dẫn dài.
-              Không hỏi quá nhiều trước khi cho người dùng thấy giá trị.
+              Mình kéo Caption AI về đúng một luồng: nhập tên sản phẩm, viết vài dòng mô tả, bấm tạo caption.
+              Càng ít thứ phải nghĩ, cơ hội người dùng bấm thử càng cao.
             </p>
+            <div class="quote">Bỏ bớt lúc nào cũng khó hơn thêm vào.</div>
             <div class="lesson-box">
               <b>Bài học cho người mới</b>
               <ul>
-                <li>Muốn người khác dùng thử, hãy giảm số việc họ phải nghĩ.</li>
-                <li>Một nút chính tốt hơn ba nút khiến người dùng phân vân.</li>
-                <li>Tool nhỏ vẫn có thể tạo cảm giác “wow” nếu nó giải quyết đúng khoảnh khắc đau.</li>
+                <li>Hãy viết phiên bản đầu bằng một câu: “Người dùng nhập gì, bấm gì, nhận gì?”</li>
+                <li>Nếu phải giải thích quá lâu, tool vẫn đang phức tạp.</li>
+                <li>Một nút chính rõ ràng tốt hơn ba lựa chọn làm người dùng phân vân.</li>
               </ul>
             </div>
           </article>
         </section>
 
-        <section class="step" id="step-3">
+        <section class="step" id="day-3">
           <div><div class="step-num">03</div></div>
           <article>
-            <small>Bước 3 · Làm bản nháp có hồn</small>
-            <h2>AI không thay bạn. AI kéo bạn qua bước bắt đầu.</h2>
+            <small>Ngày 3 · Làm bản demo đầu tiên</small>
+            <h2>Chưa cần hoàn hảo. Cần một thứ có thể bấm thử.</h2>
             <p>
-              Caption AI không viết thay con người theo kiểu “bấm phát là xong”.
-              Nó làm việc tử tế hơn: đưa cho bạn một bản nháp đủ tốt để bạn sửa, thêm giọng của mình, rồi đăng.
+              Đây là ngày mình biến ý tưởng thành giao diện thật. Không phải bản cuối. Không phải sản phẩm hoàn chỉnh.
+              Chỉ là một màn hình đủ để ai đó nhập sản phẩm và thấy kết quả hiện ra.
             </p>
             <p>
-              Khi đã có bản nháp, bạn không còn nhìn vào màn hình trống nữa.
-              Bạn có thứ để sửa, để chọn, để đăng. Đó mới là lợi ích thật.
+              Với người không biết code, khoảnh khắc này rất quan trọng. Vì trước đó mọi thứ chỉ là lời nói.
+              Từ lúc có demo, bạn bắt đầu nhìn thấy: “À, ý tưởng của mình có thể thành thứ chạy được thật”.
             </p>
-            <div class="quote">Cái lợi không chỉ là tiết kiệm vài phút. Cái lợi là cảm giác: “mình bắt đầu được rồi”.</div>
-          </article>
-        </section>
-
-        <section class="step" id="step-4">
-          <div><div class="step-num">04</div></div>
-          <article>
-            <small>Bước 4 · Có Lumi Bot dẫn đường</small>
-            <h2>Một form đẹp vẫn có thể lạnh nếu không có cảm giác đồng hành.</h2>
-            <p>
-              Mình đưa Lumi Bot vào Caption AI để người dùng cảm thấy có một trợ lý nhỏ đang xử lý cùng mình.
-              Khi AI đang viết, Lumi Bot xuất hiện. Khi có kết quả, người dùng thấy rõ mình nên copy phần nào.
-            </p>
-            <p>
-              Đây là một chi tiết nhận diện quan trọng của Lumi Labs: mỗi project đều có Lumi Bot đi cùng,
-              không phải để trang trí, mà để làm trải nghiệm bớt khô.
-            </p>
+            <div class="quote">Chưa viết một dòng code nào bằng tay. Nhưng đây là lúc project bắt đầu có hình.</div>
             <div class="lesson-box">
               <b>Bài học cho người mới</b>
               <ul>
-                <li>Loading cũng là trải nghiệm, không chỉ là thời gian chờ.</li>
-                <li>Người dùng mới cần cảm giác được dẫn đường.</li>
-                <li>Thương hiệu tốt nằm ở những khoảnh khắc nhỏ lặp lại xuyên suốt.</li>
+                <li>Đừng đợi hiểu hết kỹ thuật mới mô tả sản phẩm.</li>
+                <li>Hãy nói với Codex như giao việc cho một người kỹ thuật: mục tiêu, người dùng, luồng thao tác, cảm giác giao diện.</li>
+                <li>Bản demo đầu tiên chỉ cần chứng minh: bấm được, thấy được, hiểu được.</li>
               </ul>
             </div>
           </article>
         </section>
 
-        <section class="step" id="step-5">
+        <section class="step" id="day-4">
+          <div><div class="step-num">04</div></div>
+          <article>
+            <small>Ngày 4 · Làm caption nghe giống người thật</small>
+            <h2>Kết quả không được chỉ đúng. Nó phải có hồn.</h2>
+            <p>
+              Bản đầu tiên tạo được caption, nhưng chưa phải lúc nào cũng “ra chất”. Có câu nghe quá sạch,
+              quá đều, giống một bài mẫu. Người dùng không cần thêm một đoạn văn đúng ngữ pháp nhưng vô hồn.
+              Họ cần thứ đủ tự nhiên để có thể sửa và đăng.
+            </p>
+            <p>
+              Mình chỉnh lại cách giao việc cho AI: phải hiểu sản phẩm, hiểu người mua, viết bằng tiếng Việt đời thường,
+              có nhịp gần gũi, và không nói quá. Từ đó output bắt đầu giống một bản nháp thật hơn.
+            </p>
+            <div class="quote">Prompt tốt không phải câu lệnh bí mật. Prompt tốt là một lời nhờ việc rõ ràng.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Đừng chỉ yêu cầu “viết caption”. Hãy nói rõ bán cho ai, giọng văn thế nào, tránh kiểu gì.</li>
+                <li>Nếu kết quả nghe giả, hãy sửa yêu cầu trước khi sửa giao diện.</li>
+                <li>AI viết tốt hơn khi bạn giao việc giống đang nhờ một đồng nghiệp thật.</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <section class="step" id="day-5">
           <div><div class="step-num">05</div></div>
           <article>
-            <small>Bước 5 · Công thức để tự làm theo</small>
-            <h2>Nếu bạn chưa biết code, hãy bắt đầu bằng cách kể đúng vấn đề.</h2>
+            <small>Ngày 5 · Thêm Lumi Bot</small>
+            <h2>Một tool AI cần cảm giác có người đang hỗ trợ.</h2>
             <p>
-              Codex giống như một nhân viên kỹ thuật AI ngồi cạnh bạn. Bạn không cần nói bằng ngôn ngữ lập trình.
-              Bạn chỉ cần mô tả việc bạn muốn làm bằng tiếng Việt thật rõ.
+              Một form đẹp vẫn có thể lạnh. Đặc biệt khi người dùng bấm tạo rồi phải chờ AI trả kết quả.
+              Nếu màn hình đứng yên, họ không biết có lỗi không, có đang chạy không, hay mình vừa bấm nhầm.
             </p>
+            <p>
+              Mình đưa Lumi Bot vào trạng thái xử lý. Không phải để làm màu. Lumi Bot xuất hiện như một người dẫn đường nhỏ:
+              “Mình đang viết bản nháp cho bạn”. Cảm giác chờ vì thế dễ chịu hơn.
+            </p>
+            <div class="quote">Loading cũng là trải nghiệm. Nhất là khi người dùng đang chờ AI nghĩ.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Khi AI đang xử lý, hãy cho người dùng biết chuyện gì đang xảy ra.</li>
+                <li>Một câu nói ngắn đúng lúc có thể làm sản phẩm thân thiện hơn rất nhiều.</li>
+                <li>Thương hiệu không chỉ nằm ở logo. Nó nằm ở cảm giác lặp lại trong từng project.</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <section class="step" id="day-6">
+          <div><div class="step-num">06</div></div>
+          <article>
+            <small>Ngày 6 · Làm lại giao diện cho người non-tech</small>
+            <h2>Đẹp thôi chưa đủ. Nhìn vào phải biết làm gì ngay.</h2>
+            <p>
+              Có lúc giao diện nhìn khá “wow”, nhưng lại hơi nhiều chữ. Với người non-tech, quá nhiều khối thông tin
+              có thể làm họ ngại thử. Họ không vào để học một hệ thống. Họ vào để giải quyết một việc nhỏ.
+            </p>
+            <p>
+              Vì vậy mình giảm bớt phần giải thích, đưa hành động chính lên rõ hơn, làm ô nhập giống chỗ nhắn tin,
+              và để kết quả nằm ngay bên cạnh. Triết lý là: nhìn phát hiểu, bấm phát chạy, copy phát dùng.
+            </p>
+            <div class="quote">Càng non-tech, giao diện càng phải tôn trọng sự đơn giản.</div>
+            <div class="lesson-box">
+              <b>Bài học cho người mới</b>
+              <ul>
+                <li>Đừng hỏi người dùng quá nhiều trước khi cho họ thấy giá trị.</li>
+                <li>Nếu một phần chữ không giúp người dùng hành động, hãy cắt bớt.</li>
+                <li>Thiết kế tốt là làm người dùng bớt sợ bấm thử.</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <section class="step" id="day-7">
+          <div><div class="step-num">07</div></div>
+          <article>
+            <small>Ngày 7 · Biến demo thành một sản phẩm có thể chia sẻ</small>
+            <h2>Khi người khác dùng thử, mình mới biết sản phẩm thật sự thiếu gì.</h2>
+            <p>
+              Ngày cuối không phải để thêm thật nhiều tính năng. Ngày cuối là để sản phẩm đủ tử tế để gửi cho người khác:
+              nút copy rõ hơn, output dễ đọc hơn, login không chặn demo, và hành trình build có một trang riêng để người mới hiểu vì sao project này tồn tại.
+            </p>
+            <p>
+              Lúc đó Caption AI không còn là một màn thử nghiệm trong máy mình nữa. Nó trở thành project đầu tiên của Lumi Labs:
+              nhỏ, dễ hiểu, dùng được ngay, và đủ thật để người khác tin rằng họ cũng có thể bắt đầu.
+            </p>
+            <div class="quote">Cái lợi không chỉ là có caption. Cái lợi là cảm giác: “mình cũng làm được một tool nhỏ”.</div>
             <div class="prompt-box">
               <header>Prompt mẫu để copy vào Codex</header>
               <pre>Tôi không biết code. Hãy giúp tôi tạo một web app đơn giản.

@@ -3,7 +3,6 @@ import { getUserProfile, hasSupabaseConfig, supabase } from "./supabaseClient";
 
 const navItems = [
   { label: "Trang chủ", href: "/" },
-  { label: "Hành trình", href: "/challenge" },
   { label: "Dự án", href: "/projects" },
   { label: "Bài viết", href: "/bai-viet.html" },
   { label: "Về mình", href: "/dashboard" },
@@ -168,7 +167,7 @@ const projectCatalog = [
     title: "Caption AI",
     desc: "Nhập vài dòng, nhận caption TikTok/Facebook và hashtag tiếng Việt.",
     outcome: "Giúp creator, shop nhỏ và freelancer bớt bí khi đăng bài.",
-    status: "Đang mở demo",
+    status: "Demo mở sẵn",
     href: "/caption-ai",
     journeyHref: "/project-01-caption-ai.html",
     icon: "✍️",
@@ -179,7 +178,7 @@ const projectCatalog = [
     title: "DocScan AI",
     desc: "Một chạm để AI đọc nhanh hợp đồng, báo giá, báo cáo hoặc ảnh chụp.",
     outcome: "Giúp dân văn phòng hiểu tài liệu nhanh hơn trước khi chuyển tiếp.",
-    status: "Dự án #2",
+    status: "Demo mở sẵn",
     href: "/docscan-ai",
     journeyHref: "/project-02-docscan-ai.html",
     icon: "📄",
@@ -880,8 +879,8 @@ function Hero({ onOpenLogin }) {
           theo cách dễ hiểu để ai cũng có thể bắt đầu.
         </p>
         <div className="hero-actions">
-          <a className="btn primary" href="/challenge">▶ Xem hành trình</a>
-          <a className="btn secondary" href="/projects">Khám phá thêm</a>
+          <a className="btn primary" href="/projects">Xem các dự án</a>
+          <a className="btn secondary" href="/bai-viet.html">Đọc bài mới</a>
         </div>
         <div className="creator-proof">
           <div className="avatar-stack">
