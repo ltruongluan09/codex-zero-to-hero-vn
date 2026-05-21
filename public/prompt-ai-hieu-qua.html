@@ -522,6 +522,7 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="/lumi-mini-lab.css" />
   </head>
   <body>
     <div class="page">
@@ -706,6 +707,43 @@ Yêu cầu:
 Nếu thiếu thông tin quan trọng, hãy hỏi tôi tối đa 3 câu trước khi viết.</pre>
           </div>
 
+          <section class="mini-lab" data-mini-lab="prompt" data-fields="goal,context,output">
+            <div class="mini-lab__head">
+              <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
+              <div>
+                <div class="mini-lab__eyebrow">Thực hành ngay trên trang</div>
+                <h2>Lumi Bot sửa prompt giúp bạn</h2>
+                <p>Gõ yêu cầu còn mơ hồ của bạn. Lumi Bot sẽ viết lại thành một prompt rõ hơn để bạn copy sang ChatGPT, Gemini hoặc Claude.</p>
+              </div>
+            </div>
+            <form class="mini-lab__form" data-mini-lab-form>
+              <div class="mini-lab__field">
+                <label>Bạn muốn AI giúp việc gì?</label>
+                <input name="goal" placeholder="Ví dụ: viết caption cho quán cơm văn phòng" />
+              </div>
+              <div class="mini-lab__field">
+                <label>Bối cảnh thật của bạn</label>
+                <textarea name="context" placeholder="Ví dụ: khách là nhân viên văn phòng, cần đặt cơm trưa nhanh, sạch, giá hợp lý..."></textarea>
+              </div>
+              <div class="mini-lab__field">
+                <label>Bạn muốn nhận kết quả kiểu gì?</label>
+                <input name="output" placeholder="Ví dụ: 3 caption ngắn, dễ đăng Facebook, có hashtag" />
+              </div>
+              <div class="mini-lab__actions">
+                <button class="mini-lab__run" type="submit" data-mini-lab-run>Sửa prompt cho tôi</button>
+                <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
+                <span class="mini-lab__hint">Đây là cách tập prompt nhanh nhất: thử bằng việc thật của bạn.</span>
+              </div>
+            </form>
+            <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Mình đang biến yêu cầu mơ hồ thành prompt rõ ràng hơn...</span></div>
+            <div class="mini-lab__error" data-mini-lab-error></div>
+            <div class="mini-lab__result">
+              <div class="mini-lab__result-title" data-mini-lab-title>Kết quả từ Lumi Bot</div>
+              <pre class="mini-lab__output" data-mini-lab-output></pre>
+              <div class="mini-lab__tips" data-mini-lab-tips></div>
+            </div>
+          </section>
+
           <h2 id="ket-luan">Điều quan trọng nhất</h2>
           <p>
             Prompt tốt không phải là nói cho thật dài. Prompt tốt là nói đủ rõ để AI không phải đoán mò.
@@ -747,5 +785,6 @@ Nếu thiếu thông tin quan trọng, hãy hỏi tôi tối đa 3 câu trước
         }, 1400);
       });
     </script>
+    <script src="/lumi-mini-lab.js"></script>
   </body>
 </html>

@@ -208,6 +208,57 @@ const projectCatalog = [
   },
 ];
 
+const beginnerArticles = [
+  {
+    title: "Prompt AI hiệu quả: 5 nguyên tắc đơn giản",
+    desc: "Biết cách giao việc để AI hiểu bạn hơn và trả kết quả dùng được ngay.",
+    href: "/prompt-ai-hieu-qua.html",
+    tag: "Hướng dẫn",
+    time: "8 phút đọc",
+    image: "/lumi-bot.png",
+  },
+  {
+    title: "Nhờ AI viết email dễ nghe hơn",
+    desc: "Soạn email lịch sự, rõ ý, không bị cứng cho công việc hằng ngày.",
+    href: "/ai-viet-email-de-hieu.html",
+    tag: "Văn phòng",
+    time: "5 phút đọc",
+    icon: "✉",
+  },
+  {
+    title: "Tóm tắt cuộc họp bằng AI sao cho ra việc",
+    desc: "Biến ghi chú họp thành việc cần làm, người phụ trách và deadline.",
+    href: "/ai-tom-tat-cuoc-hop.html",
+    tag: "Cuộc họp",
+    time: "5 phút đọc",
+    icon: "☑",
+  },
+  {
+    title: "Biến việc rối thành checklist bằng AI",
+    desc: "Khi chưa biết bắt đầu từ đâu, để AI chia việc thành từng bước nhỏ.",
+    href: "/ai-lap-checklist-cong-viec.html",
+    tag: "Checklist",
+    time: "6 phút đọc",
+    icon: "🧭",
+  },
+  {
+    title: "Chụp ảnh tài liệu rồi nhờ AI giải thích",
+    desc: "Dùng AI đọc hóa đơn, báo giá, hợp đồng ngắn hoặc ảnh chụp từ Zalo.",
+    href: "/ai-doc-anh-tai-lieu.html",
+    tag: "Tài liệu",
+    time: "6 phút đọc",
+    icon: "📄",
+  },
+  {
+    title: "Viết bài đăng bán hàng đầu tiên bằng AI",
+    desc: "Có bản nháp gần gũi để sửa nhanh, không còn nhìn màn hình trống.",
+    href: "/ai-viet-bai-dang-ban-hang.html",
+    tag: "Bán hàng",
+    time: "5 phút đọc",
+    icon: "✍",
+  },
+];
+
 const featuredProjects = [
   {
     title: "Caption AI",
@@ -772,6 +823,8 @@ function LumiBotIntro() {
 
 function HeroFeaturedProjects() {
   const activeProjects = projectCatalog.slice(0, 2);
+  const mainArticle = beginnerArticles[0];
+  const sideArticles = beginnerArticles.slice(1);
 
   return (
     <div className="home-cards" data-reveal>
@@ -806,20 +859,28 @@ function HeroFeaturedProjects() {
 
       <article className="home-article-card">
         <div className="home-card-head">
-          <h2>📄 Bài viết mới nhất</h2>
+          <h2>📄 Bài viết cho người mới</h2>
           <a href="/bai-viet.html">Xem tất cả →</a>
         </div>
-        <a className="article-feature" href="/prompt-ai-hieu-qua.html">
-          <img src="/lumi-bot.png" alt="" />
+        <a className="article-feature" href={mainArticle.href}>
+          <img src={mainArticle.image} alt="" />
           <div>
-            <span>Hướng dẫn · 2 ngày trước</span>
-            <h3>Prompt AI hiệu quả: 5 nguyên tắc đơn giản</h3>
-            <p>Viết prompt đúng cách để AI hiểu và cho ra kết quả tốt hơn.</p>
+            <span>{mainArticle.tag} · Có Mini Lab</span>
+            <h3>{mainArticle.title}</h3>
+            <p>{mainArticle.desc}</p>
+            <em>Đọc và thực hành ngay →</em>
           </div>
         </a>
         <ul className="article-list">
-          <li><a href="/project-02-docscan-ai.html">7 ngày làm nên DocScan AI</a><span>Hôm nay</span></li>
-          <li><a href="/project-01-caption-ai.html">Hành trình xây dựng Caption AI</a><span>1 tuần trước</span></li>
+          {sideArticles.map((article) => (
+            <li key={article.href}>
+              <a href={article.href}>
+                <span className="article-list-icon">{article.icon}</span>
+                <span>{article.title}</span>
+              </a>
+              <span>{article.time}</span>
+            </li>
+          ))}
         </ul>
       </article>
     </div>

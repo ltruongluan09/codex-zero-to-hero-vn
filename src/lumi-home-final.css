@@ -1207,6 +1207,50 @@ body {
   color: #704dff !important;
 }
 
+.home-article-card .article-feature em {
+  display: inline-flex !important;
+  margin-top: 10px !important;
+  color: #704dff !important;
+  font-style: normal !important;
+  font-size: 13px !important;
+  font-weight: 950 !important;
+}
+
+.home-article-card .article-list {
+  margin-top: 18px !important;
+}
+
+.home-article-card .article-list li {
+  align-items: center !important;
+  padding: 12px 0 !important;
+}
+
+.home-article-card .article-list li > a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+  color: #704dff !important;
+}
+
+.home-article-card .article-list li > a span:last-child {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.home-article-card .article-list-icon {
+  display: inline-grid !important;
+  place-items: center !important;
+  flex: 0 0 auto !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 10px !important;
+  background: #f4efff !important;
+  color: #704dff !important;
+  font-size: 14px !important;
+}
+
 .caption-form button[type="submit"],
 .follow-project-btn,
 .dashboard-project-item button,
