@@ -1,3 +1,5 @@
+import { checkRateLimitSmart, rateLimitResponse } from "./_rate-limit.js";
+
 const GEMINI_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
@@ -211,6 +213,11 @@ export default async function handler(request, response) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return response.status(200).json(fallbackResponse(type, cleanedInputs));
+  }
+
+  const limit = await checkRateLimitSmart(request, { key: "ai-demo", max: 5 });
+  if (!limit.allowed) {
+    return rateLimitResponse(response, limit);
   }
 
   try {

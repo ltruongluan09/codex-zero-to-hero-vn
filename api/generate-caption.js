@@ -1,3 +1,5 @@
+import { checkRateLimitSmart, rateLimitResponse } from "./_rate-limit.js";
+
 const GEMINI_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
@@ -35,11 +37,20 @@ export default async function handler(request, response) {
   const apiKey = process.env.GEMINI_API_KEY;
   const { productName = "", description = "", mode = "ban-hang" } = request.body || {};
 
+  if (!String(productName).trim()) {
+    return response.status(400).json({ error: "Bạn nhập tên sản phẩm trước khi tạo caption nhé." });
+  }
+
   if (!apiKey) {
     return response.status(200).json({
       source: "fallback",
       ...fallbackCaption({ productName, description }),
     });
+  }
+
+  const limit = await checkRateLimitSmart(request, { key: "ai-demo", max: 5 });
+  if (!limit.allowed) {
+    return rateLimitResponse(response, limit);
   }
 
   const prompt = `

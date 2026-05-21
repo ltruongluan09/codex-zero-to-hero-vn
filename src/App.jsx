@@ -1045,10 +1045,12 @@ function CaptionAISection() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [source, setSource] = useState("demo");
   const [copied, setCopied] = useState("");
+  const [error, setError] = useState("");
   const generate = async () => {
     if (!productName.trim()) return;
     setIsGenerating(true);
     setCopied("");
+    setError("");
     try {
       const response = await fetch("/api/generate-caption", {
         method: "POST",
@@ -1056,6 +1058,10 @@ function CaptionAISection() {
         body: JSON.stringify({ productName, description, mode }),
       });
       const data = await response.json();
+      if (!response.ok || data.error) {
+        setError(data.error || "Lumi Bot chưa tạo được caption lúc này. Bạn thử lại sau vài giây nhé.");
+        return;
+      }
       setResult({
         tiktok: data.tiktok,
         facebook: data.facebook,
@@ -1063,8 +1069,7 @@ function CaptionAISection() {
       });
       setSource(data.source === "gemini" ? "gemini" : "fallback");
     } catch {
-      setResult(buildCaption({ productName, description, mode }));
-      setSource("fallback");
+      setError("Kết nối hơi chập chờn. Lumi Bot chưa gửi được yêu cầu, bạn thử lại sau vài giây nhé.");
     } finally {
       setIsGenerating(false);
     }
@@ -1093,6 +1098,7 @@ function CaptionAISection() {
     setResult(null);
     setSource("demo");
     setCopied("");
+    setError("");
   };
 
   const copyAll = () => {
@@ -1212,6 +1218,7 @@ function CaptionAISection() {
             <button className="reset-btn" type="button" onClick={resetCaption}>
               Làm lại từ đầu
             </button>
+            {error && <em className="caption-error">{error}</em>}
             <p className="caption-source">
               {isGenerating
                 ? "AI đang đọc thông tin và viết bản nháp đầu tiên..."
@@ -1395,6 +1402,11 @@ function SoiTaiLieuSectionSimple() {
         data = rawText ? JSON.parse(rawText) : null;
       } catch {
         data = null;
+      }
+      if (response.status === 429) {
+        setError(data?.error || "Hôm nay bạn đã dùng hết lượt AI miễn phí. Bạn quay lại sau nhé.");
+        setResult(null);
+        return;
       }
       if (!response.ok) throw new Error(data?.error || "Chưa đọc được file.");
       const elapsed = Date.now() - startedAt;

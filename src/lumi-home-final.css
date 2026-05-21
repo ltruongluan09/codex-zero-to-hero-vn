@@ -2048,6 +2048,19 @@ body {
   color: #9398ae !important;
 }
 
+.caption-error {
+  display: block;
+  padding: 12px 14px;
+  border: 1px solid rgba(207, 61, 85, 0.22);
+  border-radius: 16px;
+  background: rgba(255, 245, 246, 0.86);
+  color: #cf3d55;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
 .caption-form input:focus,
 .caption-form textarea:focus {
   border-color: #7a4dff !important;

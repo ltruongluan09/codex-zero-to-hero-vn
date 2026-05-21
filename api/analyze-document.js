@@ -1,6 +1,7 @@
 import mammoth from "mammoth";
 import * as XLSX from "xlsx";
 import { DOCSCAN_SYSTEM_PROMPT, SUPPORTED_DOCUMENT_TYPES } from "../lib/document-prompts.js";
+import { checkRateLimitSmart, rateLimitResponse } from "./_rate-limit.js";
 
 export const config = {
   api: {
@@ -496,6 +497,11 @@ export default async function handler(request, response) {
 
   if (!apiKey) {
     return response.status(200).json({ source: "fallback", data: fallback });
+  }
+
+  const limit = await checkRateLimitSmart(request, { key: "ai-demo", max: 5 });
+  if (!limit.allowed) {
+    return rateLimitResponse(response, limit);
   }
 
   try {
