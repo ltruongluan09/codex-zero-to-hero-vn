@@ -922,6 +922,17 @@ function HeroBenefits() {
   );
 }
 
+function SecurityTrustStrip() {
+  return (
+    <aside className="security-trust-strip" aria-label="Cam kết an toàn khi trải nghiệm">
+      <strong>An toàn khi trải nghiệm</strong>
+      <span>Không bắt buộc đăng nhập</span>
+      <span>Không lưu file bạn tải lên</span>
+      <span>Giới hạn lượt AI để hệ thống ổn định</span>
+    </aside>
+  );
+}
+
 function Hero({ onOpenLogin }) {
   return (
     <section id="home" className="hero home-hero">
@@ -933,7 +944,9 @@ function Hero({ onOpenLogin }) {
         <h1 className="hero-h1">
           Mình build
           <br />
-          cùng <span>AI mỗi ngày.</span>
+          cùng <span>AI mỗi</span>
+          <br />
+          <span>ngày.</span>
         </h1>
         <p>
           Mình chia sẻ hành trình thật khi tạo ra những sản phẩm với AI —
@@ -957,6 +970,7 @@ function Hero({ onOpenLogin }) {
       </div>
       <HeroFeaturedProjects />
       <HeroBenefits />
+      <SecurityTrustStrip />
     </section>
   );
 }
