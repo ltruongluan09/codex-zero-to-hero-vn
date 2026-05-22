@@ -687,6 +687,10 @@ function Header({ profile, onOpenLogin, onSignOut }) {
   const [scrolled, setScrolled] = useState(false);
   const path = window.location.pathname;
   const mobileInitial = profile?.name?.charAt(0) || profile?.email?.charAt(0) || "L";
+  const openLoginFromDrawer = () => {
+    setOpen(false);
+    onOpenLogin();
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -740,7 +744,7 @@ function Header({ profile, onOpenLogin, onSignOut }) {
         {profile ? (
           <UserMenu profile={profile} onSignOut={onSignOut} />
         ) : (
-          <LoginButton onClick={onOpenLogin} />
+          <LoginButton onClick={openLoginFromDrawer} />
         )}
       </div>
     </header>

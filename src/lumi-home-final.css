@@ -5705,3 +5705,193 @@ body {
     font-size: clamp(38px, 13.5vw, 52px) !important;
   }
 }
+
+/* Public feedback fix: calmer first impression + stable mobile login. */
+.login-modal-backdrop {
+  z-index: 260 !important;
+  isolation: isolate !important;
+}
+
+.login-modal {
+  z-index: 261 !important;
+}
+
+.mobile-drawer:not(.open) {
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+.mobile-drawer.open {
+  pointer-events: auto !important;
+  visibility: visible !important;
+}
+
+.home-hero {
+  background:
+    radial-gradient(circle at 72% 12%, rgba(143, 107, 255, 0.12), transparent 34%),
+    radial-gradient(circle at 12% 14%, rgba(255, 255, 255, 0.92), transparent 28%),
+    linear-gradient(180deg, #fffdfb 0%, #faf7ff 54%, #ffffff 100%) !important;
+}
+
+.home-hero::after {
+  opacity: 0.48 !important;
+}
+
+.home-hero .hero-h1 {
+  max-width: 620px !important;
+}
+
+.home-hero .hero-h1 span {
+  background: linear-gradient(90deg, #ff6571 0%, #8a62ff 82%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+}
+
+.home-hero .hero-copy p {
+  color: #5b6688 !important;
+  max-width: 540px !important;
+}
+
+.home-hero .hero-image-stage {
+  filter: saturate(0.94) contrast(0.98) !important;
+}
+
+.home-project-card,
+.home-article-card,
+.hero-benefits,
+.security-trust-strip,
+.unified-project-card {
+  box-shadow: 0 18px 48px rgba(91, 72, 153, 0.065) !important;
+}
+
+@media (max-width: 640px) {
+  .mobile-drawer {
+    position: fixed !important;
+    inset: 0 0 0 auto !important;
+    width: min(86vw, 330px) !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    padding: 74px 18px 22px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    overflow-y: auto !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    border-left: 1px solid rgba(225, 214, 255, 0.95) !important;
+    border-radius: 28px 0 0 28px !important;
+    box-shadow: -24px 0 70px rgba(91, 72, 153, 0.16) !important;
+    backdrop-filter: blur(18px) !important;
+    transform: translateX(110%) !important;
+    transition: transform 0.24s ease, visibility 0.24s ease !important;
+    z-index: 180 !important;
+  }
+
+  .login-modal-backdrop {
+    z-index: 260 !important;
+    align-items: flex-start !important;
+    padding: 12px !important;
+    padding-top: max(14px, env(safe-area-inset-top)) !important;
+    overflow-y: auto !important;
+  }
+
+  .login-modal {
+    width: min(100%, 390px) !important;
+    max-height: calc(100svh - 24px) !important;
+    margin: 0 auto !important;
+    padding: 18px 16px !important;
+    border-radius: 22px !important;
+  }
+
+  .login-modal-hero {
+    margin-top: 0 !important;
+  }
+
+  .login-modal h3 {
+    font-size: 22px !important;
+    line-height: 1.16 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .login-modal p {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+
+  .login-benefits {
+    gap: 8px !important;
+  }
+
+  .login-benefits span {
+    padding: 9px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .login-modal .social-login-btn {
+    width: 100% !important;
+    min-height: 48px !important;
+  }
+
+  .mobile-drawer .login-entry-btn,
+  .mobile-drawer .user-menu {
+    display: inline-flex !important;
+    width: 100% !important;
+  }
+
+  .mobile-drawer .login-entry-btn {
+    justify-content: center !important;
+  }
+
+  .mobile-drawer a,
+  .mobile-drawer .drawer-cta,
+  .mobile-drawer .login-entry-btn {
+    position: static !important;
+    transform: none !important;
+    min-height: 48px !important;
+    border-radius: 16px !important;
+  }
+
+  .mobile-drawer .drawer-cta {
+    margin-top: 8px !important;
+    display: inline-flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .drawer-close {
+    position: absolute !important;
+    top: 18px !important;
+    right: 18px !important;
+    z-index: 2 !important;
+  }
+
+  .home-hero {
+    background:
+      radial-gradient(circle at 78% 8%, rgba(143, 107, 255, 0.12), transparent 32%),
+      linear-gradient(180deg, #fffdfb 0%, #fbf8ff 64%, #ffffff 100%) !important;
+  }
+
+  .home-hero .hero-h1 {
+    font-size: clamp(34px, 11.5vw, 46px) !important;
+    letter-spacing: -1.3px !important;
+  }
+
+  .home-hero .hero-copy p {
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+  }
+
+  .home-hero .hero-image-stage {
+    filter: saturate(0.9) contrast(0.97) !important;
+  }
+
+  .home-project-card,
+  .home-article-card,
+  .hero-benefits,
+  .security-trust-strip,
+  .unified-project-card {
+    box-shadow: 0 12px 32px rgba(91, 72, 153, 0.055) !important;
+  }
+}
