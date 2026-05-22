@@ -1480,6 +1480,18 @@ function SoiTaiLieuSectionSimple() {
   };
 
   const rawText = result?.extracted_text?.trim() || "";
+  const docscanRisks = (result?.red_flags || result?.risks || []).filter(Boolean);
+  const docscanMissingInfo = (result?.missing_information || []).filter(Boolean);
+  const docscanQuestions = (result?.questions_to_ask || result?.questions || result?.suggested_questions || []).filter(Boolean);
+  const docscanNextActions = (result?.next_actions || result?.action_items || []).filter(Boolean);
+  const docscanEvidence = (result?.evidence_snippets || []).filter(Boolean);
+  const hasDocscanAttention = Boolean(
+    docscanRisks.length ||
+    docscanMissingInfo.length ||
+    docscanQuestions.length ||
+    docscanNextActions.length ||
+    docscanEvidence.length,
+  );
 
   const copyRawText = async () => {
     if (!rawText) return;
@@ -1597,34 +1609,40 @@ function SoiTaiLieuSectionSimple() {
                 )}
                 <div className="docscan-result-list">
                   <h3>Điểm cần chú ý</h3>
-                  {(result.red_flags || result.risks || []).slice(0, 3).map((risk) => (
-                    <article key={risk.title}>
-                      <strong>{risk.title}</strong>
-                      <p>{risk.detail || risk.body}</p>
+                  {docscanRisks.slice(0, 3).map((risk) => (
+                    <article key={risk.title || risk.label}>
+                      <strong>{risk.title || risk.label}</strong>
+                      <p>{risk.detail || risk.body || risk.value}</p>
                     </article>
                   ))}
-                  {(result.missing_information || []).length > 0 && (
+                  {docscanMissingInfo.length > 0 && (
                     <article className="docscan-missing-info">
                       <strong>Thông tin còn thiếu</strong>
-                      <p>{result.missing_information.slice(0, 3).join(" ")}</p>
+                      <p>{docscanMissingInfo.slice(0, 3).join(" ")}</p>
                     </article>
                   )}
-                  {(result.questions_to_ask || result.questions || result.suggested_questions || []).length > 0 && (
+                  {docscanQuestions.length > 0 && (
                     <article className="docscan-questions">
                       <strong>Câu nên hỏi lại</strong>
-                      <p>{(result.questions_to_ask || result.questions || result.suggested_questions).slice(0, 3).join(" ")}</p>
+                      <p>{docscanQuestions.slice(0, 3).join(" ")}</p>
                     </article>
                   )}
-                  {(result.next_actions || result.action_items || []).length > 0 && (
+                  {docscanNextActions.length > 0 && (
                     <article className="docscan-next-actions">
                       <strong>Việc nên làm tiếp</strong>
-                      <p>{(result.next_actions || result.action_items).slice(0, 3).join(" ")}</p>
+                      <p>{docscanNextActions.slice(0, 3).join(" ")}</p>
                     </article>
                   )}
-                  {(result.evidence_snippets || []).length > 0 && (
+                  {docscanEvidence.length > 0 && (
                     <article className="docscan-evidence">
                       <strong>Căn cứ DocScan nhìn thấy</strong>
-                      <p>{result.evidence_snippets.slice(0, 3).map((item) => `“${item}”`).join(" ")}</p>
+                      <p>{docscanEvidence.slice(0, 3).map((item) => `“${item}”`).join(" ")}</p>
+                    </article>
+                  )}
+                  {!hasDocscanAttention && rawText && (
+                    <article className="docscan-neutral-note">
+                      <strong>Chưa thấy cảnh báo rõ</strong>
+                      <p>DocScan đã đọc được văn bản, nhưng chưa thấy điểm nào đủ rõ để cảnh báo. Nếu dùng tài liệu này để làm việc, bạn vẫn nên kiểm tra lại mục tiêu chính, deadline, chi phí và người phụ trách trước khi gửi tiếp.</p>
                     </article>
                   )}
                 </div>

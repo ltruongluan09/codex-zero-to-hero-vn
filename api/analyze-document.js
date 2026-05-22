@@ -306,22 +306,83 @@ function normalizeDetails(values) {
   }).filter((item) => item.value);
 }
 
+function buildDefaultAttentionFromText(text = "") {
+  const body = String(text || "");
+  if (!body.trim()) {
+    return { red_flags: [], questions_to_ask: [], next_actions: [] };
+  }
+
+  const lowerBody = body.toLowerCase();
+  const hasMoney = /(?:\d[\d.,\s]{2,}\s?(?:vnd|vnđ|đ|usd|eur)|(?:vnd|vnđ|usd|eur)\s?\d[\d.,\s]{2,})/i.test(body);
+  const hasDate = /\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{4}[/-]\d{1,2}[/-]\d{1,2})\b/i.test(body) ||
+    /deadline|thời hạn|hạn chót|ngày giao|ngày hết hạn|hiệu lực|bàn giao|thanh toán/i.test(lowerBody);
+  const hasTechnical = /api|frontend|backend|database|android|java|deploy|server|mvp|module|tích hợp|cấu hình/i.test(lowerBody);
+
+  const red_flags = [];
+  if (hasMoney) {
+    red_flags.push({
+      title: "Có thông tin tiền hoặc chi phí cần kiểm tra",
+      detail: "DocScan thấy tài liệu có phần liên quan đến tiền/chi phí. Trước khi dùng tiếp, bạn nên kiểm tra lại số tiền, đơn vị tiền tệ, VAT/phụ phí và điều kiện thanh toán.",
+      severity: "medium",
+    });
+  }
+  if (hasDate) {
+    red_flags.push({
+      title: "Có mốc thời gian cần xác nhận",
+      detail: "Tài liệu có dấu hiệu nhắc đến ngày, deadline hoặc thời hạn. Bạn nên xác nhận mốc cuối cùng, người chịu trách nhiệm và điều gì xảy ra nếu trễ.",
+      severity: "medium",
+    });
+  }
+  if (hasTechnical) {
+    red_flags.push({
+      title: "Có phần kỹ thuật cần hỏi rõ trước khi làm",
+      detail: "Tài liệu có nội dung kỹ thuật. Nếu dùng để giao việc, bạn nên chốt rõ phạm vi, đầu ra mong muốn, môi trường chạy và tiêu chí nghiệm thu.",
+      severity: "medium",
+    });
+  }
+  if (!red_flags.length) {
+    red_flags.push({
+      title: "Chưa thấy cảnh báo lớn",
+      detail: "DocScan đã đọc được văn bản nhưng chưa thấy điểm rủi ro rõ. Dù vậy, bạn vẫn nên kiểm tra lại mục tiêu, người phụ trách, deadline và phần cần xác nhận trước khi gửi tiếp.",
+      severity: "low",
+    });
+  }
+
+  return {
+    red_flags,
+    questions_to_ask: [
+      "Mục tiêu chính của tài liệu này có đúng với việc bạn đang xử lý không?",
+      hasDate ? "Deadline hoặc thời hạn trong tài liệu đã được xác nhận chưa?" : "Tài liệu này có deadline hoặc thời hạn cần chốt thêm không?",
+      hasMoney ? "Số tiền, VAT, phụ phí và điều kiện thanh toán đã rõ chưa?" : "Có chi phí, điều kiện hoặc trách nhiệm nào chưa được ghi rõ không?",
+    ],
+    next_actions: [
+      "Đọc lại các phần DocScan đánh dấu trước khi chuyển tiếp tài liệu.",
+      "Gửi các câu hỏi cần làm rõ cho người gửi tài liệu.",
+      "Chỉ dùng kết quả này như bản đọc nhanh, không thay cho kiểm tra cuối cùng của con người.",
+    ],
+  };
+}
+
 function normalizeDocScanResult(result, { extractedText = "" } = {}) {
   const top_3_takeaways = normalizeCardArray(
     result?.top_3_takeaways || result?.key_points,
     { titleKey: "title", detailKey: "detail", limit: 3 },
   );
   const important_details = normalizeDetails(result?.important_details);
-  const red_flags = normalizeCardArray(
+  let red_flags = normalizeCardArray(
     result?.red_flags || result?.risks_or_notes,
     { titleKey: "title", detailKey: "detail", limit: 5 },
   );
   const missing_information = normalizeStringArray(result?.missing_information, 5);
-  const questions_to_ask = normalizeStringArray(result?.questions_to_ask || result?.suggested_questions, 5);
-  const next_actions = normalizeStringArray(result?.next_actions || result?.action_items, 4);
+  let questions_to_ask = normalizeStringArray(result?.questions_to_ask || result?.suggested_questions, 5);
+  let next_actions = normalizeStringArray(result?.next_actions || result?.action_items, 4);
   const evidence_snippets = normalizeStringArray(result?.evidence_snippets, 5)
     .map((snippet) => snippet.split(/\s+/).slice(0, 24).join(" "));
   const normalizedExtractedText = cleanExtractedText(result?.extracted_text || extractedText || "");
+  const defaultAttention = buildDefaultAttentionFromText(normalizedExtractedText);
+  if (!red_flags.length) red_flags = defaultAttention.red_flags;
+  if (!questions_to_ask.length) questions_to_ask = defaultAttention.questions_to_ask;
+  if (!next_actions.length) next_actions = defaultAttention.next_actions;
 
   const isUnreadFallback = String(result?.document_type || "").toLowerCase().includes("chưa đọc");
   const confidenceScore = Number(result?.confidence?.score);
