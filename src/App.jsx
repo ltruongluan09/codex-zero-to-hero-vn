@@ -1190,6 +1190,7 @@ function CaptionAISection() {
             <label>
               Tên sản phẩm
               <input
+                data-clarity-mask="True"
                 value={productName}
                 onChange={(event) => setProductName(event.target.value)}
                 placeholder="Ví dụ: Bánh biscotti healthy"
@@ -1198,6 +1199,7 @@ function CaptionAISection() {
             <label>
               Mô tả ngắn
               <textarea
+                data-clarity-mask="True"
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
                 placeholder="Ví dụ: ít ngọt, nhiều hạt, phù hợp dân văn phòng..."
@@ -1244,7 +1246,7 @@ function CaptionAISection() {
             </p>
           </div>
 
-          <div className={result ? "caption-results" : "caption-results empty"}>
+          <div className={result ? "caption-results" : "caption-results empty"} data-lumi-sensitive={result ? "true" : undefined}>
             <div className="caption-result-head">
               <div>
                 <strong>2. Kết quả caption</strong>
@@ -1540,6 +1542,7 @@ function SoiTaiLieuSectionSimple() {
               onDrop={handleDrop}
             >
               <input
+                data-clarity-mask="True"
                 type="file"
                 accept=".pdf,.docx,.xlsx,.xls,.csv,.txt,.png,.jpg,.jpeg,.webp"
                 onChange={selectFile}
@@ -1569,7 +1572,7 @@ function SoiTaiLieuSectionSimple() {
                 <div>{steps.map((step, index) => <span key={step} className={index <= stepIndex ? "active" : ""} />)}</div>
               </div>
             ) : result ? (
-              <div className="docscan-result-ready">
+              <div className="docscan-result-ready" data-lumi-sensitive>
                 <div className="docscan-score-mini">
                   <span>{result.verdict_icon}</span>
                   <div>
@@ -1634,7 +1637,7 @@ function SoiTaiLieuSectionSimple() {
                     </button>
                     {rawTextOpen && (
                       <div className="docscan-raw-body">
-                        <textarea readOnly value={rawText} />
+                        <textarea data-clarity-mask="True" readOnly value={rawText} />
                         <div>
                           <button type="button" onClick={copyRawText}>
                             {rawTextCopied ? "Đã copy!" : "Copy text"}
