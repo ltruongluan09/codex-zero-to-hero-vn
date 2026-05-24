@@ -453,9 +453,15 @@ function useAuth() {
       setSession(nextSession);
       setUser(nextSession?.user || null);
       if (nextSession?.user) {
-        await syncProfile(nextSession.user);
-        await loadFollowedProjects(nextSession.user.id);
-        await loadMembership(nextSession.user.id);
+        setProfile(getUserProfile(nextSession.user));
+        await Promise.race([
+          Promise.allSettled([
+            syncProfile(nextSession.user),
+            loadFollowedProjects(nextSession.user.id),
+            loadMembership(nextSession.user.id),
+          ]),
+          new Promise((resolve) => setTimeout(resolve, 1800)),
+        ]);
         if (finishAuthRedirect()) return;
       } else {
         setProfile(null);
@@ -478,9 +484,17 @@ function useAuth() {
         }
       }
 
-      const { data } = await supabase.auth.getSession();
-      await applySession(data.session);
-      if (active) setAuthLoading(false);
+      try {
+        const { data } = await Promise.race([
+          supabase.auth.getSession(),
+          new Promise((resolve) => setTimeout(() => resolve({ data: { session: null } }), 1800)),
+        ]);
+        await applySession(data.session);
+      } catch (error) {
+        console.warn("Auth init did not finish cleanly", error);
+      } finally {
+        if (active) setAuthLoading(false);
+      }
     };
 
     initAuth();
@@ -671,7 +685,7 @@ function UserMenu({ profile, onSignOut }) {
               <small>{profile?.email}</small>
             </div>
           </div>
-          <a href="/dashboard">Dashboard của tôi</a>
+          <a href="/dashboard">Khu bắt đầu nhanh</a>
           <button type="button" onClick={handleSignOut} disabled={signingOut}>
             {signingOut ? "Đang đăng xuất..." : "Đăng xuất"}
           </button>
@@ -708,7 +722,6 @@ function Header({ profile, onOpenLogin, onSignOut }) {
               {item.label}
             </a>
           ))}
-          {profile && <a href="/dashboard">Dashboard</a>}
         </nav>
         <div className="nav-actions">
           <a className="nav-cta" href="/projects">Thử demo</a>
@@ -718,7 +731,7 @@ function Header({ profile, onOpenLogin, onSignOut }) {
             <LoginButton onClick={onOpenLogin} />
           )}
           {profile && (
-            <a className="mobile-user-avatar" href="/dashboard" aria-label="Dashboard của tôi">
+            <a className="mobile-user-avatar" href="/dashboard" aria-label="Khu bắt đầu nhanh">
               {profile.avatar ? <img src={profile.avatar} alt="" /> : <span>{mobileInitial}</span>}
             </a>
           )}
@@ -736,7 +749,7 @@ function Header({ profile, onOpenLogin, onSignOut }) {
             {item.label}
           </a>
         ))}
-        {profile && <a href="/dashboard" onClick={() => setOpen(false)}>Dashboard</a>}
+        {profile && <a href="/dashboard" onClick={() => setOpen(false)}>Khu bắt đầu nhanh</a>}
         <a className="nav-cta drawer-cta" href="/projects" onClick={() => setOpen(false)}>
           Thử demo đang mở
         </a>
@@ -1954,35 +1967,65 @@ function ChallengeSection() {
 
 function DashboardPage({ profile, followedProjects, membership, authLoading, onGoogleLogin, onSignOut, onFollowProject }) {
   const followed = projectCatalog.filter((project) => followedProjects.includes(project.slug));
+  const readyProjects = projectCatalog.filter((project) => project.href !== "/projects");
 
   return (
-    <main className="dashboard-page">
-      <section className="dashboard-hero">
-        <a className="back-home-link" href="/">← Về trang chủ</a>
-        <span className="section-label">Dashboard cá nhân</span>
-        <h1>Khu theo dõi project của bạn</h1>
-        <p>
-          Đây là nơi lưu các project bạn quan tâm. Trước mắt rất đơn giản:
-          đăng nhập Google, theo dõi project, rồi quay lại xem tiếp khi Lumi Labs cập nhật.
-        </p>
+    <main className="dashboard-page dashboard-start-page">
+      <section className="dashboard-hero dashboard-start-hero">
+        <div>
+          <a className="back-home-link" href="/">← Về trang chủ</a>
+          <span className="section-label">Khu bắt đầu nhanh</span>
+          <h1>Bạn muốn thử gì tiếp?</h1>
+          <p>
+            Đây không phải trang quản trị phức tạp. Mình gom những lối đi hữu ích nhất ở đây
+            để bạn mở demo, đọc bài hướng dẫn hoặc quay lại project đang quan tâm.
+          </p>
+        </div>
+        <div className="dashboard-lumi-guide">
+          <img src="/lumi-bot.png" alt="" />
+          <strong>Lumi gợi ý</strong>
+          <span>Bắt đầu bằng 1 demo đang mở. Dùng được thì hãy lưu lại sau.</span>
+        </div>
       </section>
 
-      {authLoading ? (
-        <section className="dashboard-card">
-          <h2>Đang kiểm tra đăng nhập...</h2>
+      {authLoading && !profile && (
+        <section className="dashboard-card dashboard-status-card">
+          <span className="section-label">Đang kiểm tra phiên</span>
+          <p>Bạn vẫn có thể bấm thử demo trong lúc Lumi kiểm tra đăng nhập.</p>
         </section>
-      ) : !profile ? (
+      )}
+
+      <section className="dashboard-quick-grid">
+        <a className="dashboard-quick-card primary" href="/docscan-ai">
+          <span>📄</span>
+          <strong>Soi thử tài liệu</strong>
+          <small>Upload PDF, Word, Excel hoặc ảnh. DocScan chỉ ra điểm cần chú ý.</small>
+        </a>
+        <a className="dashboard-quick-card" href="/caption-ai">
+          <span>✍️</span>
+          <strong>Viết caption nhanh</strong>
+          <small>Nhập vài dòng, nhận caption TikTok/Facebook và hashtag.</small>
+        </a>
+        <a className="dashboard-quick-card" href="/bai-viet.html">
+          <span>📚</span>
+          <strong>Đọc bài cho người mới</strong>
+          <small>Học cách giao việc cho AI bằng ví dụ đời thường.</small>
+        </a>
+      </section>
+
+      {!profile ? (
         <section className="dashboard-card protected-card">
           <img src="/lumi-bot.png" alt="" />
           <div>
-            <span className="follow-badge">Không bắt buộc</span>
-            <h2>Bạn vẫn dùng demo miễn phí không cần đăng nhập.</h2>
+            <span className="follow-badge">Đăng nhập là tùy chọn</span>
+            <h2>Bạn có thể dùng demo ngay, không cần đăng nhập.</h2>
             <p>
-              Dashboard chỉ để lưu project bạn quan tâm và xem lại sau. Nếu chỉ muốn thử tool, bạn có thể quay lại khu dự án ngay.
+              Đăng nhập Google chỉ dùng để Lumi Labs nhớ bạn, lưu project bạn quan tâm
+              và sau này mở thêm nội dung riêng cho người theo dõi.
             </p>
             <div className="dashboard-soft-actions">
-              <a href="/projects">Xem demo đang mở</a>
-              <SocialLoginButton provider="google" onClick={onGoogleLogin} label="Đăng nhập để lưu lại" />
+              <a href="/projects">Xem tất cả demo</a>
+              <SocialLoginButton provider="google" onClick={onGoogleLogin} label="Đăng nhập nếu muốn lưu" />
             </div>
           </div>
         </section>
@@ -2000,50 +2043,53 @@ function DashboardPage({ profile, followedProjects, membership, authLoading, onG
           <section className="dashboard-grid">
             <article className="dashboard-card">
               <span className="section-label">Việc nên làm tiếp</span>
-              <h2>Chọn một demo để thử</h2>
-              <p>Dashboard hiện chỉ giữ vai trò lưu lại hành trình. Phần quan trọng nhất vẫn là mở tool và dùng thử.</p>
+              <h2>Mở một demo và dùng thử thật</h2>
+              <p>Phần quan trọng nhất của Lumi Labs vẫn là trải nghiệm tool thật, không phải ngồi trong dashboard.</p>
               <div className="dashboard-soft-actions">
-                <a href="/caption-ai">Thử Caption AI</a>
                 <a href="/docscan-ai">Thử DocScan AI</a>
+                <a href="/caption-ai">Thử Caption AI</a>
               </div>
             </article>
             <article className="dashboard-card">
-              <span className="section-label">Đang theo dõi</span>
-              <h2>{followed.length || 0} project</h2>
-              <p>{followed.length ? "Các project bạn lưu sẽ hiện bên dưới." : "Bạn chưa lưu project nào. Bấm Lưu lại ở project bạn muốn xem tiếp."}</p>
+              <span className="section-label">Đã lưu lại</span>
+              <h2>{followed.length ? `${followed.length} project` : "Chưa lưu project nào"}</h2>
+              <p>{followed.length ? "Project bạn quan tâm sẽ hiện bên dưới." : "Bạn cứ thử demo trước. Thích tool nào thì lưu lại sau cũng được."}</p>
             </article>
-          </section>
-
-          <section className="dashboard-card">
-            <div className="dashboard-section-head">
-              <div>
-                <span className="section-label">Danh sách project</span>
-                <h2>Project của Lumi Labs</h2>
-              </div>
-            </div>
-            <div className="dashboard-project-list">
-              {projectCatalog.map((project) => {
-                const isFollowed = followedProjects.includes(project.slug);
-                return (
-                  <article key={project.slug} className="dashboard-project-item">
-                    <div>
-                      <small>{project.status}</small>
-                      <h3>{project.title}</h3>
-                      <p>{project.desc}</p>
-                    </div>
-                    <div className="dashboard-project-actions">
-                      {project.href !== "/projects" && <a href={project.href}>Dùng thử</a>}
-                      <button type="button" onClick={() => onFollowProject(project.slug)}>
-                        {isFollowed ? "Đã lưu" : "Lưu lại"}
-                      </button>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
           </section>
         </>
       )}
+
+      <section className="dashboard-card">
+        <div className="dashboard-section-head">
+          <div>
+            <span className="section-label">Demo đang mở</span>
+            <h2>Tool bạn có thể dùng ngay</h2>
+          </div>
+          <a className="back-home-link" href="/projects">Xem trang demo →</a>
+        </div>
+        <div className="dashboard-project-list">
+          {readyProjects.map((project) => {
+            const isFollowed = followedProjects.includes(project.slug);
+            return (
+              <article key={project.slug} className="dashboard-project-item">
+                <div>
+                  <small>{project.tag}</small>
+                  <h3>{project.title}</h3>
+                  <p>{project.desc}</p>
+                </div>
+                <div className="dashboard-project-actions">
+                  <a href={project.href}>Dùng thử</a>
+                  {profile && (
+                    <button type="button" onClick={() => onFollowProject(project.slug)}>
+                      {isFollowed ? "Đã lưu" : "Lưu lại"}
+                    </button>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
     </main>
   );
 }
