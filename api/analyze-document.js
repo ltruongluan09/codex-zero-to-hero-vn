@@ -18,6 +18,27 @@ const MAX_ANALYSIS_TEXT_CHARS = 60000;
 const MAX_EXCEL_ROWS_PER_SHEET = 120;
 const MAX_EXCEL_COLS = 18;
 const GEMINI_REQUEST_TIMEOUT_MS = 22000;
+const GEMINI_ANALYSIS_OUTPUT_TOKENS = 8192;
+
+const DOCSCAN_OCR_PROMPT = `
+Bạn là OCR engine cho DocScan AI.
+Nhiệm vụ: đọc văn bản nhìn thấy trong ảnh/PDF scan càng đầy đủ càng tốt.
+
+Quy tắc:
+- Chỉ trích xuất chữ thật sự nhìn thấy. Không tự dịch, không tóm tắt, không suy diễn.
+- Nếu tài liệu dài, hãy đọc theo thứ tự từ trên xuống dưới, giữ cả phần đầu, giữa, cuối.
+- Nếu có chữ được tô sáng, gạch chân, ghi chú tay, hãy giữ lại trong extracted_text bằng cách thêm ghi chú ngắn trong ngoặc vuông, ví dụ: [tô sáng: ...], [ghi chú tay: ...].
+- Nếu có nhiều ngôn ngữ, giữ nguyên ngôn ngữ gốc.
+- Trả về JSON hợp lệ, không markdown.
+
+Schema:
+{
+  "extracted_text": "toàn bộ văn bản đọc được",
+  "document_language": "ngôn ngữ chính",
+  "visual_notes": ["điểm nhìn thấy như tô sáng, gạch chân, ghi chú tay, ảnh mờ, bị cắt"],
+  "confidence": 0
+}
+`;
 
 const NATIVE_FILE_TYPES = new Set(SUPPORTED_DOCUMENT_TYPES.native);
 const TEXT_FILE_TYPES = new Set(SUPPORTED_DOCUMENT_TYPES.text);
@@ -195,6 +216,11 @@ function buildAnalysisText({ profile, text }) {
     "NỘI DUNG ĐÃ TIỀN XỬ LÝ:",
     analysisText || "(Không có text trích xuất. Nếu là PDF/ảnh, hãy đọc trực tiếp từ file đính kèm.)",
     trimmedNote,
+    "",
+    "YÊU CẦU RIÊNG CHO PHẦN PHÂN TÍCH:",
+    "- Nếu đây là bài đọc/sách/vở/ngoại ngữ, hãy coi red_flags là 'điểm cần chú ý khi đọc/học', không phải rủi ro pháp lý.",
+    "- Luôn trả ít nhất 3 điểm cần chú ý nếu có đủ nội dung: ý chính, chỗ dễ bỏ sót, từ/cụm quan trọng, hoặc câu hỏi nên tự kiểm tra.",
+    "- Viết để người không chuyên đọc xong biết ngay tài liệu nói gì và nên làm gì tiếp.",
   ].join("\n");
 }
 
@@ -317,6 +343,7 @@ function buildDefaultAttentionFromText(text = "") {
   const hasDate = /\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{4}[/-]\d{1,2}[/-]\d{1,2})\b/i.test(body) ||
     /deadline|thời hạn|hạn chót|ngày giao|ngày hết hạn|hiệu lực|bàn giao|thanh toán/i.test(lowerBody);
   const hasTechnical = /api|frontend|backend|database|android|java|deploy|server|mvp|module|tích hợp|cấu hình/i.test(lowerBody);
+  const hasStudyText = /[\u3040-\u30ff\u3400-\u9fff]|bài học|bài đọc|đọc hiểu|giáo trình|từ vựng|ngữ pháp|sách|vở|học sinh|sinh viên|初めて|読みましょう/i.test(body);
 
   const red_flags = [];
   if (hasMoney) {
@@ -340,6 +367,13 @@ function buildDefaultAttentionFromText(text = "") {
       severity: "medium",
     });
   }
+  if (hasStudyText) {
+    red_flags.push({
+      title: "Đây là tài liệu học/đọc, nên tập trung vào ý chính",
+      detail: "DocScan thấy nội dung giống bài đọc hoặc tài liệu học. Bạn nên dùng kết quả để nắm nội dung chính, từ/cụm quan trọng, phần được đánh dấu và câu hỏi tự kiểm tra, không nên xem đây là cảnh báo rủi ro.",
+      severity: "low",
+    });
+  }
   if (!red_flags.length) {
     red_flags.push({
       title: "Chưa thấy cảnh báo lớn",
@@ -354,12 +388,13 @@ function buildDefaultAttentionFromText(text = "") {
       "Mục tiêu chính của tài liệu này có đúng với việc bạn đang xử lý không?",
       hasDate ? "Deadline hoặc thời hạn trong tài liệu đã được xác nhận chưa?" : "Tài liệu này có deadline hoặc thời hạn cần chốt thêm không?",
       hasMoney ? "Số tiền, VAT, phụ phí và điều kiện thanh toán đã rõ chưa?" : "Có chi phí, điều kiện hoặc trách nhiệm nào chưa được ghi rõ không?",
-    ],
+      hasStudyText ? "Có từ/cụm nào được tô sáng, gạch chân hoặc cần tra nghĩa kỹ hơn không?" : "",
+    ].filter(Boolean),
     next_actions: [
-      "Đọc lại các phần DocScan đánh dấu trước khi chuyển tiếp tài liệu.",
+      hasStudyText ? "Đọc lại phần ý chính và các từ/cụm DocScan đánh dấu trước khi học tiếp." : "Đọc lại các phần DocScan đánh dấu trước khi chuyển tiếp tài liệu.",
       "Gửi các câu hỏi cần làm rõ cho người gửi tài liệu.",
       "Chỉ dùng kết quả này như bản đọc nhanh, không thay cho kiểm tra cuối cùng của con người.",
-    ],
+    ].filter(Boolean),
   };
 }
 
@@ -378,7 +413,11 @@ function normalizeDocScanResult(result, { extractedText = "" } = {}) {
   let next_actions = normalizeStringArray(result?.next_actions || result?.action_items, 4);
   const evidence_snippets = normalizeStringArray(result?.evidence_snippets, 5)
     .map((snippet) => snippet.split(/\s+/).slice(0, 24).join(" "));
-  const normalizedExtractedText = cleanExtractedText(result?.extracted_text || extractedText || "");
+  const modelExtractedText = cleanExtractedText(result?.extracted_text || "");
+  const providedExtractedText = cleanExtractedText(extractedText || "");
+  const normalizedExtractedText = providedExtractedText.length > modelExtractedText.length
+    ? providedExtractedText
+    : modelExtractedText;
   const defaultAttention = buildDefaultAttentionFromText(normalizedExtractedText);
   if (!red_flags.length) red_flags = defaultAttention.red_flags;
   if (!questions_to_ask.length) questions_to_ask = defaultAttention.questions_to_ask;
@@ -450,6 +489,25 @@ function normalizeDocScanResult(result, { extractedText = "" } = {}) {
   };
 }
 
+function buildNativeOcrParts({ fileBase64, mimeType, fileName, sizeBytes }) {
+  return [
+    { inlineData: { mimeType, data: cleanBase64(fileBase64) } },
+    {
+      text: [
+        "Hãy OCR file đính kèm cho DocScan AI.",
+        "Đọc càng đầy đủ càng tốt. Không phân tích ở bước này.",
+        "",
+        "FILE_PROFILE:",
+        JSON.stringify({
+          file_name: fileName,
+          mime_type: mimeType,
+          size_kb: Math.round(sizeBytes / 1024),
+        }, null, 2),
+      ].join("\n"),
+    },
+  ];
+}
+
 function buildGeminiParts({ buffer, fileBase64, mimeType, fileName, sizeBytes }) {
   if (NATIVE_FILE_TYPES.has(mimeType)) {
     const profile = buildDocumentProfile({ fileName, mimeType, text: "", sizeBytes });
@@ -511,7 +569,7 @@ async function callGemini({ apiKey, parts, systemPrompt = DOCSCAN_SYSTEM_PROMPT 
           contents: [{ role: "user", parts }],
           generationConfig: {
             temperature: 0.1,
-            maxOutputTokens: 3072,
+            maxOutputTokens: GEMINI_ANALYSIS_OUTPUT_TOKENS,
             responseMimeType: "application/json",
           },
         }),
@@ -577,12 +635,40 @@ export default async function handler(request, response) {
     let parts;
     let extractedTextForResponse = "";
 
-    if (built === null) {
+    if (NATIVE_FILE_TYPES.has(effectiveMimeType)) {
+      const ocrTry = await callGemini({
+        apiKey,
+        systemPrompt: DOCSCAN_OCR_PROMPT,
+        parts: buildNativeOcrParts({
+          fileBase64: cleanedBase64,
+          mimeType: effectiveMimeType,
+          fileName,
+          sizeBytes,
+        }),
+      });
+      const ocrText = cleanExtractedText(ocrTry?.parsed?.extracted_text || "");
+      if (ocrText) {
+        const profile = buildDocumentProfile({ fileName, mimeType: effectiveMimeType, text: ocrText, sizeBytes });
+        extractedTextForResponse = ocrText;
+        parts = [{
+          text: [
+            buildAnalysisText({ profile, text: ocrText }),
+            "",
+            "OCR_VISUAL_NOTES:",
+            JSON.stringify(ocrTry.parsed?.visual_notes || [], null, 2),
+            "",
+            "Hãy phân tích dựa trên OCR ở trên. Nếu đây là ảnh chụp bài học/sách, hãy đưa ra ý chính, điểm đáng chú ý khi học, câu hỏi nên tự kiểm tra và phần nào cần đọc kỹ.",
+          ].join("\n"),
+        }];
+      }
+    }
+
+    if (!parts && built === null) {
       const text = await extractDocx(buffer);
       const profile = buildDocumentProfile({ fileName, mimeType: effectiveMimeType, text, sizeBytes });
       extractedTextForResponse = text;
       parts = [{ text: buildAnalysisText({ profile, text }) }];
-    } else if (built) {
+    } else if (!parts && built) {
       extractedTextForResponse = built.extractedText || "";
       parts = built.parts;
     }

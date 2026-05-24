@@ -1387,6 +1387,24 @@ function SoiTaiLieuSectionSimple() {
 
   const steps = ["Đọc tài liệu", "Tìm điểm chính", "Soi điểm cần chú ý", "Gợi ý bước tiếp theo"];
   const allowedExtensions = [".pdf", ".docx", ".xlsx", ".xls", ".csv", ".txt", ".png", ".jpg", ".jpeg", ".webp"];
+  const getFriendlyFileName = (nextFile) => {
+    if (!nextFile?.name) return "";
+    const name = nextFile.name;
+    const ext = name.match(/\.([a-z0-9]+)$/i)?.[1]?.toUpperCase();
+    const base = name.replace(/\.[^.]+$/, "");
+    const isCameraName = /^[0-9_\-\s]{12,}$/.test(base) || /^(img|image|photo|zalo|messenger|screenshot|pxl|dsc|dcim)[_\-\s0-9]+$/i.test(base);
+    if (nextFile.type?.startsWith("image/")) {
+      return ext ? `Ảnh tài liệu (${ext})` : "Ảnh tài liệu";
+    }
+    if (isCameraName) {
+      return ext ? `Tài liệu vừa chọn (${ext})` : "Tài liệu vừa chọn";
+    }
+    return name.length > 42 ? `${name.slice(0, 26)}...${name.slice(-10)}` : name;
+  };
+  const friendlyFileName = getFriendlyFileName(file);
+  const fileMeta = file
+    ? `${file.type?.startsWith("image/") ? "Ảnh chụp" : "File"} · ${Math.max(1, Math.round(file.size / 1024))}KB`
+    : "";
   const uploadStatus = loading
     ? "Đang đọc tài liệu..."
     : error
@@ -1640,7 +1658,7 @@ function SoiTaiLieuSectionSimple() {
                 onClick={(event) => event.stopPropagation()}
               />
               <span className="docscan-file-icon"><i>+</i></span>
-              <strong>{file ? file.name : "Tải tài liệu lên"}</strong>
+              <strong>{file ? friendlyFileName : "Tải tài liệu lên"}</strong>
               <p>
                 {loading
                   ? "Lumi Bot đang đọc file. Bạn cứ chờ ở màn hình này nhé."
@@ -1650,7 +1668,7 @@ function SoiTaiLieuSectionSimple() {
                     ? "Đã nhận file. Kết quả sẽ hiện ở khung bên phải sau vài giây."
                     : "Bấm vào khung này, dấu cộng hoặc nút bên dưới để chọn file."}
               </p>
-              <small>PDF, Word, Excel hoặc ảnh</small>
+              <small>{file ? fileMeta : "PDF, Word, Excel hoặc ảnh"}</small>
               {error && <em className="docscan-error">{error}</em>}
               <button type="button" onClick={(event) => {
                 event.stopPropagation();
