@@ -970,7 +970,7 @@ function Hero({ onOpenLogin }) {
         </p>
         <div className="hero-actions">
           <a className="btn primary" href="/projects">Thử demo đang mở</a>
-          <a className="btn secondary" href="/docscan-ai">Soi thử tài liệu</a>
+          <a className="btn secondary" href="/docscan-ai">Đọc thử tài liệu</a>
         </div>
         <div className="creator-proof">
           <div className="avatar-stack">
@@ -996,7 +996,7 @@ function ProjectsPage() {
   const comingProjects = projectCatalog.filter((project) => project.href === "/projects");
   const ctaLabel = {
     "caption-ai": "Viết caption ngay",
-    "docscan-ai": "Soi tài liệu ngay",
+    "docscan-ai": "Đọc tài liệu ngay",
   };
   const usefulFor = {
     "caption-ai": "Phù hợp shop nhỏ, creator, freelancer, nhân viên marketing cần đăng bài nhanh.",
@@ -1114,7 +1114,129 @@ function buildCaption({ productName, description, mode }) {
   };
 }
 
-function CaptionAISection() {
+function LumiFeedbackCard({ project, projectLabel, context = "", profile = null, metadata = {} }) {
+  const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
+  const [status, setStatus] = useState("idle");
+  const [message, setMessage] = useState("");
+
+  const ratingOptions = [
+    {
+      id: "good",
+      icon: "😍",
+      label: "Hữu ích",
+      note: "Đúng thứ mình cần",
+    },
+    {
+      id: "okay",
+      icon: "🙂",
+      label: "Tạm ổn",
+      note: "Cần chỉnh thêm",
+    },
+    {
+      id: "bad",
+      icon: "😢",
+      label: "Chưa đúng",
+      note: "Lumi cần học lại",
+    },
+  ];
+
+  const submitFeedback = async (nextRating = rating) => {
+    if (!nextRating || status === "sending") return;
+    setStatus("sending");
+    setMessage("Lumi đang ghi nhận góp ý của bạn...");
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          project,
+          rating: nextRating,
+          comment,
+          page_path: `${window.location.pathname}${window.location.search}`,
+          profile: profile ? { name: profile.name, email: profile.email } : {},
+          metadata: {
+            context,
+            ...metadata,
+          },
+        }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) {
+        throw new Error(data.message || "Chưa gửi được góp ý.");
+      }
+      setStatus("sent");
+      setMessage(
+        nextRating === "good"
+          ? "Cảm ơn bạn. Lumi sẽ học từ những lần dùng thật như thế này."
+          : "Cảm ơn bạn. Góp ý này giúp Lumi biết cần sửa đúng chỗ nào."
+      );
+    } catch {
+      setStatus("sent");
+      setMessage("Cảm ơn bạn. Lumi đã nhận tín hiệu này, mình sẽ kiểm tra lại phần lưu góp ý.");
+    }
+  };
+
+  const chooseRating = (nextRating) => {
+    setRating(nextRating);
+    setMessage("");
+    if (nextRating === "good") {
+      submitFeedback(nextRating);
+    } else {
+      setStatus("idle");
+    }
+  };
+
+  return (
+    <section className="lumi-feedback-card" aria-label={`Góp ý cho ${projectLabel}`}>
+      <div className="lumi-feedback-bot" aria-hidden="true">
+        <span></span>
+        <img src="/lumi-bot.png" alt="" />
+      </div>
+      <div className="lumi-feedback-copy">
+        <span className="lumi-feedback-kicker">Lumi hỏi nhanh nhé</span>
+        <h3>Kết quả này có giúp bạn không?</h3>
+        <p>Chỉ một chạm thôi. Lumi Labs sẽ dựa vào phản hồi thật để làm tool này dễ dùng hơn cho mọi người.</p>
+      </div>
+      <div className="lumi-feedback-actions">
+        {ratingOptions.map((option) => (
+          <button
+            key={option.id}
+            type="button"
+            className={rating === option.id ? "active" : ""}
+            onClick={() => chooseRating(option.id)}
+            disabled={status === "sending"}
+          >
+            <span>{option.icon}</span>
+            <strong>{option.label}</strong>
+            <small>{option.note}</small>
+          </button>
+        ))}
+      </div>
+      {rating && rating !== "good" && (
+        <div className="lumi-feedback-comment">
+          <label>
+            Bạn muốn Lumi làm tốt hơn chỗ nào?
+            <textarea
+              data-clarity-mask="True"
+              value={comment}
+              onChange={(event) => setComment(event.target.value)}
+              placeholder="Ví dụ: đọc thiếu nội dung, tóm tắt chưa đúng, caption chưa giống giọng người Việt..."
+              rows="3"
+            />
+          </label>
+          <button type="button" onClick={() => submitFeedback()} disabled={status === "sending"}>
+            {status === "sending" ? "Đang gửi..." : "Gửi góp ý"}
+          </button>
+        </div>
+      )}
+      {message && <p className={status === "sent" ? "lumi-feedback-status done" : "lumi-feedback-status"}>{message}</p>}
+    </section>
+  );
+}
+
+function CaptionAISection({ profile = null }) {
   const [productName, setProductName] = useState(captionExamples[0].productName);
   const [description, setDescription] = useState(captionExamples[0].description);
   const [result, setResult] = useState(null);
@@ -1349,6 +1471,13 @@ function CaptionAISection() {
                   </div>
                   <p>{result.hashtags.join(" ")}</p>
                 </article>
+                <LumiFeedbackCard
+                  project="caption-ai"
+                  projectLabel="Caption AI"
+                  context="Sau khi tao caption"
+                  profile={profile}
+                  metadata={{ source, productName: productName.slice(0, 80) }}
+                />
               </>
             ) : (
               <article className="empty-result">
@@ -1371,7 +1500,7 @@ function CaptionAISection() {
   );
 }
 
-function SoiTaiLieuSectionSimple() {
+function DocScanAISection({ profile = null }) {
   const fileInputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);
@@ -1385,7 +1514,7 @@ function SoiTaiLieuSectionSimple() {
   const [rawTextOpen, setRawTextOpen] = useState(false);
   const [rawTextCopied, setRawTextCopied] = useState(false);
 
-  const steps = ["Đọc tài liệu", "Tìm điểm chính", "Soi điểm cần chú ý", "Gợi ý bước tiếp theo"];
+  const steps = ["Đọc tài liệu", "Tìm điểm chính", "Nhận diện điểm cần chú ý", "Gợi ý bước tiếp theo"];
   const allowedExtensions = [".pdf", ".docx", ".xlsx", ".xls", ".csv", ".txt", ".png", ".jpg", ".jpeg", ".webp"];
   const getFriendlyFileName = (nextFile) => {
     if (!nextFile?.name) return "";
@@ -1791,6 +1920,19 @@ function SoiTaiLieuSectionSimple() {
                     )}
                   </section>
                 )}
+                <LumiFeedbackCard
+                  project="docscan-ai"
+                  projectLabel="DocScan AI"
+                  context="Sau khi đọc tài liệu"
+                  profile={profile}
+                  metadata={{
+                    source,
+                    fileType: file?.type || "",
+                    fileSize: file?.size || 0,
+                    hasRawText: Boolean(rawText),
+                    attentionCount: docscanRisks.length + docscanMissingInfo.length + docscanQuestions.length + docscanNextActions.length,
+                  }}
+                />
               </div>
             ) : (
               <div className="docscan-empty">
@@ -2016,7 +2158,7 @@ function DashboardPage({ profile, followedProjects, membership, authLoading, onG
       <section className="dashboard-quick-grid">
         <a className="dashboard-quick-card primary" href="/docscan-ai">
           <span>📄</span>
-          <strong>Soi thử tài liệu</strong>
+          <strong>Đọc thử tài liệu</strong>
           <small>Upload PDF, Word, Excel hoặc ảnh. DocScan chỉ ra điểm cần chú ý.</small>
         </a>
         <a className="dashboard-quick-card" href="/caption-ai">
@@ -2132,7 +2274,7 @@ function App() {
   const currentPath = window.location.pathname;
   const isDashboard = currentPath === "/dashboard";
   const isCaptionPage = currentPath === "/caption-ai";
-  const isDocumentPage = currentPath === "/docscan-ai" || currentPath === "/soi-tai-lieu";
+  const isDocumentPage = currentPath === "/docscan-ai";
   const isProjectsPage = currentPath === "/projects";
   const isChallengePage = currentPath === "/challenge";
   const [loginOpen, setLoginOpen] = useState(false);
@@ -2173,8 +2315,8 @@ function App() {
           onSignOut={auth.signOut}
         />
         <main>
-          {isCaptionPage && <CaptionAISection />}
-          {isDocumentPage && <SoiTaiLieuSectionSimple />}
+          {isCaptionPage && <CaptionAISection profile={auth.profile} />}
+          {isDocumentPage && <DocScanAISection profile={auth.profile} />}
           {isProjectsPage && <ProjectsPage />}
           {isChallengePage && <ChallengeSection />}
         </main>

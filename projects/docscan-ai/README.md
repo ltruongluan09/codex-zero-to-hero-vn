@@ -23,7 +23,7 @@ DocScan AI không thay thế luật sư, kế toán hay chuyên gia. Nó chỉ g
 
 `/docscan-ai`
 
-Link cũ `/soi-tai-lieu` vẫn được giữ để tránh gãy đường dẫn.
+Đường dẫn chính của tool là `/docscan-ai`.
 
 ## Công nghệ
 
