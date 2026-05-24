@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getUserProfile, hasSupabaseConfig, supabase } from "./supabaseClient";
 
 const navItems = [
   { label: "Trang chủ", href: "/" },
-  { label: "Dự án", href: "/projects" },
+  { label: "Demo AI", href: "/projects" },
   { label: "Bài viết", href: "/bai-viet.html" },
-  { label: "Về mình", href: "/dashboard" },
 ];
 
 const captionModes = [
@@ -712,7 +711,7 @@ function Header({ profile, onOpenLogin, onSignOut }) {
           {profile && <a href="/dashboard">Dashboard</a>}
         </nav>
         <div className="nav-actions">
-          <a className="nav-cta" href="/dashboard">♡ Theo dõi hành trình</a>
+          <a className="nav-cta" href="/projects">Thử demo</a>
           {profile ? (
             <UserMenu profile={profile} onSignOut={onSignOut} />
           ) : (
@@ -738,8 +737,8 @@ function Header({ profile, onOpenLogin, onSignOut }) {
           </a>
         ))}
         {profile && <a href="/dashboard" onClick={() => setOpen(false)}>Dashboard</a>}
-        <a className="nav-cta drawer-cta" href="/dashboard" onClick={() => setOpen(false)}>
-          ♡ Theo dõi hành trình
+        <a className="nav-cta drawer-cta" href="/projects" onClick={() => setOpen(false)}>
+          Thử demo đang mở
         </a>
         {profile ? (
           <UserMenu profile={profile} onSignOut={onSignOut} />
@@ -834,11 +833,11 @@ function HeroFeaturedProjects() {
     <div className="home-cards" data-reveal>
       <article className="home-project-card project-hub-card">
         <div className="home-card-head">
-          <h2>💼 Dự án đang thực hiện</h2>
+          <h2>💼 Demo đang dùng được</h2>
           <a href="/projects">Xem tất cả →</a>
         </div>
         <p className="project-hub-intro">
-          Mỗi dự án là một tool nhỏ, mở lên dùng ngay. Không cần biết code, không cần đọc hướng dẫn dài.
+          Chọn một tool nhỏ và thử ngay. Không cần biết code, không cần đọc hướng dẫn dài.
         </p>
         <div className="home-project-list unified-project-list">
           {activeProjects.map((project, index) => (
@@ -957,8 +956,8 @@ function Hero({ onOpenLogin }) {
           theo cách dễ hiểu để ai cũng có thể bắt đầu.
         </p>
         <div className="hero-actions">
-          <a className="btn primary" href="/projects">Xem các dự án</a>
-          <a className="btn secondary" href="/bai-viet.html">Đọc bài mới</a>
+          <a className="btn primary" href="/projects">Thử demo đang mở</a>
+          <a className="btn secondary" href="/docscan-ai">Soi thử tài liệu</a>
         </div>
         <div className="creator-proof">
           <div className="avatar-stack">
@@ -980,37 +979,84 @@ function Hero({ onOpenLogin }) {
 }
 
 function ProjectsPage() {
+  const readyProjects = projectCatalog.filter((project) => project.href !== "/projects");
+  const comingProjects = projectCatalog.filter((project) => project.href === "/projects");
+  const ctaLabel = {
+    "caption-ai": "Viết caption ngay",
+    "docscan-ai": "Soi tài liệu ngay",
+  };
+  const usefulFor = {
+    "caption-ai": "Phù hợp shop nhỏ, creator, freelancer, nhân viên marketing cần đăng bài nhanh.",
+    "docscan-ai": "Phù hợp người cần đọc nhanh hợp đồng, báo giá, báo cáo, ảnh chụp tài liệu.",
+  };
+
   return (
-    <main className="projects-page">
+    <section className="projects-page">
       <section className="projects-hero" data-reveal>
-        <span className="caption-badge">Kho project Lumi Labs</span>
-        <h1>Dự án AI đang thực hiện</h1>
+        <span className="caption-badge">Chọn 1 demo để thử ngay</span>
+        <h1>Tool AI thật, mở lên là dùng được</h1>
         <p>
-          Đây là nơi gom tất cả tool mình đang build. Mục tiêu rất đơn giản:
-          mở lên là hiểu, bấm là dùng, thấy được AI giúp gì cho công việc thật.
+          Nếu bạn mới vào Lumi Labs, hãy bắt đầu bằng một trong hai demo đang chạy.
+          Không cần đăng nhập, không cần biết code, chỉ cần bấm thử.
         </p>
+        <div className="projects-quick-actions">
+          {readyProjects.map((project) => (
+            <a key={project.slug} href={project.href}>
+              <span>{project.icon}</span>
+              <strong>{ctaLabel[project.slug] || "Dùng thử ngay"}</strong>
+              <small>{project.title}</small>
+            </a>
+          ))}
+        </div>
       </section>
+
+      <section className="projects-ready-strip" data-reveal>
+        <strong>Đang dùng được ngay</strong>
+        <span>{readyProjects.length} demo mở sẵn · Không cần tài khoản · Dành cho người non-tech</span>
+      </section>
+
       <section className="project-library-grid">
-        {projectCatalog.map((project, index) => (
-          <article className="project-library-card unified-project-card" key={project.slug} data-reveal>
+        {readyProjects.map((project, index) => (
+          <article className="project-library-card unified-project-card ready-project" key={project.slug} data-reveal>
             <div className="project-card-top">
               <span className="project-icon">{project.icon}</span>
               <div>
                 <small>Project #{index + 1} · {project.tag}</small>
                 <h2>{project.title}</h2>
               </div>
-              <b>{project.status}</b>
+              <b>Dùng được</b>
             </div>
             <p>{project.desc}</p>
+            <p className="project-fit">{usefulFor[project.slug]}</p>
             <em>{project.outcome}</em>
             <div className="project-card-actions">
-              <a href={project.href}>{project.href === "/projects" ? "Đang chuẩn bị" : "Dùng thử"}</a>
+              <a href={project.href}>{ctaLabel[project.slug] || "Dùng thử ngay"}</a>
               <a className="ghost" href={project.journeyHref}>{project.journeyHref === "/projects" ? "Chưa có hành trình" : "Xem hành trình"}</a>
             </div>
           </article>
         ))}
       </section>
-    </main>
+
+      <section className="projects-coming-section" data-reveal>
+        <div>
+          <span className="section-label">Sắp tới</span>
+          <h2>Dự án tiếp theo</h2>
+          <p>Mình để các ý tưởng chưa sẵn sàng ở đây để bạn không bấm nhầm vào demo chưa hoàn thiện.</p>
+        </div>
+        <div className="projects-coming-list">
+          {comingProjects.map((project) => (
+            <article key={project.slug}>
+              <span>{project.icon}</span>
+              <div>
+                <strong>{project.title}</strong>
+                <small>{project.desc}</small>
+              </div>
+              <b>Sắp có</b>
+            </article>
+          ))}
+        </div>
+      </section>
+    </section>
   );
 }
 
@@ -1058,14 +1104,15 @@ function buildCaption({ productName, description, mode }) {
 function CaptionAISection() {
   const [productName, setProductName] = useState(captionExamples[0].productName);
   const [description, setDescription] = useState(captionExamples[0].description);
-  const [mode, setMode] = useState("ban-hang");
   const [result, setResult] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [source, setSource] = useState("demo");
   const [copied, setCopied] = useState("");
   const [error, setError] = useState("");
-  const generate = async () => {
-    if (!productName.trim()) return;
+  const generate = async (override = null) => {
+    const nextProductName = override?.productName ?? productName;
+    const nextDescription = override?.description ?? description;
+    if (!nextProductName.trim()) return;
     setIsGenerating(true);
     setCopied("");
     setError("");
@@ -1073,7 +1120,7 @@ function CaptionAISection() {
       const response = await fetch("/api/generate-caption", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productName, description, mode }),
+        body: JSON.stringify({ productName: nextProductName, description: nextDescription, mode: "ban-hang" }),
       });
       const data = await response.json();
       if (!response.ok || data.error) {
@@ -1108,15 +1155,7 @@ function CaptionAISection() {
     setDescription(sample.description);
     setResult(null);
     setSource("demo");
-  };
-
-  const resetCaption = () => {
-    setProductName("");
-    setDescription("");
-    setResult(null);
-    setSource("demo");
-    setCopied("");
-    setError("");
+    generate(sample);
   };
 
   const copyAll = () => {
@@ -1134,8 +1173,8 @@ function CaptionAISection() {
           <span className="caption-badge">Demo đầu tiên · dùng ngay</span>
           <h2>Caption AI</h2>
           <p>
-            Nhập tên sản phẩm và mô tả ngắn. Lumi Labs sẽ tạo nhanh caption TikTok,
-            Facebook và hashtag tiếng Việt để bạn đăng thử ngay.
+            Viết 1-2 dòng về thứ bạn muốn đăng. Lumi Bot sẽ tự tạo caption TikTok,
+            Facebook và hashtag tiếng Việt trong một lần bấm.
           </p>
           <div className="caption-mini-proof">
             <span>Xem cách hoạt động</span>
@@ -1179,50 +1218,31 @@ function CaptionAISection() {
           </div>
           <div className="caption-form">
             <div className="caption-form-head">
-              <span>1. Nhập ý tưởng</span>
+              <span>1. Bạn muốn đăng gì?</span>
               <button type="button" className="sample-btn" onClick={() => useSample()}>
-                Dùng ví dụ mẫu
+                Thử mẫu
               </button>
             </div>
-            <div className="example-row" aria-label="Chọn ví dụ nhanh">
-              {captionExamples.map((sample) => (
-                <button key={sample.label} type="button" onClick={() => useSample(sample)}>
-                  {sample.label}
-                </button>
-              ))}
-            </div>
             <label>
-              Tên sản phẩm
+              Sản phẩm / dịch vụ
               <input
                 data-clarity-mask="True"
                 value={productName}
                 onChange={(event) => setProductName(event.target.value)}
-                placeholder="Ví dụ: Bánh biscotti healthy"
+                placeholder="Ví dụ: Bánh chuối ít ngọt"
               />
             </label>
             <label>
-              Mô tả ngắn
+              Nói thêm một câu
               <textarea
                 data-clarity-mask="True"
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
-                placeholder="Ví dụ: ít ngọt, nhiều hạt, phù hợp dân văn phòng..."
+                placeholder="Ví dụ: Ăn sáng nhanh, phù hợp dân văn phòng, không quá ngọt..."
                 rows="4"
               />
             </label>
-            <p className="form-helper">Chỉ cần viết như đang nhắn tin cho nhân viên marketing.</p>
-            <div className="mode-row" aria-label="Chọn kiểu caption">
-              {captionModes.map((item) => (
-                <button
-                  key={item.id}
-                  className={mode === item.id ? "mode-chip active" : "mode-chip"}
-                  type="button"
-                  onClick={() => setMode(item.id)}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
+            <p className="form-helper">Không cần chọn nhiều. Lumi Bot tự viết bản dễ dùng nhất trước.</p>
             <button
               className={!productName.trim() ? "generate-btn idle" : "generate-btn"}
               type="button"
@@ -1230,13 +1250,10 @@ function CaptionAISection() {
               disabled={isGenerating || !productName.trim()}
             >
               {!productName.trim()
-                ? "Nhập tên sản phẩm để bắt đầu"
+                ? "Nhập sản phẩm để bắt đầu"
                 : isGenerating
                   ? "Đang viết caption..."
-                  : "Tạo caption ngay →"}
-            </button>
-            <button className="reset-btn" type="button" onClick={resetCaption}>
-              Làm lại từ đầu
+                  : "Viết caption cho tôi →"}
             </button>
             {error && <em className="caption-error">{error}</em>}
             <p className="caption-source">
@@ -1246,20 +1263,15 @@ function CaptionAISection() {
                 ? "Đang dùng Gemini để viết caption thật."
                 : source === "fallback"
                   ? "Đang dùng bản demo dự phòng. Thêm Gemini API key để kết quả hay hơn."
-                  : "Bản demo sẵn sàng. Thêm Gemini API key để dùng AI thật."}
+                  : "Một lần bấm sẽ có đủ TikTok, Facebook và hashtag."}
             </p>
           </div>
 
           <div className={result ? "caption-results" : "caption-results empty"} data-lumi-sensitive={result ? "true" : undefined}>
             <div className="caption-result-head">
               <div>
-                <strong>2. Kết quả caption</strong>
-                <small>Chọn nền tảng để xem kết quả phù hợp nhất.</small>
-              </div>
-              <div className="caption-platform-tabs" aria-label="Nền tảng caption">
-                <span className="active">TikTok</span>
-                <span>Facebook</span>
-                <span>Hashtag</span>
+                <strong>2. Kết quả sẵn sàng</strong>
+                <small>TikTok, Facebook và hashtag nằm chung một chỗ để bạn copy nhanh.</small>
               </div>
             </div>
             {isGenerating ? (
@@ -1328,9 +1340,9 @@ function CaptionAISection() {
             ) : (
               <article className="empty-result">
                 <span>2. Xem kết quả</span>
-                <h3>Caption TikTok, Facebook và hashtag sẽ hiện ở đây.</h3>
+                <h3>Caption sẽ hiện ở đây sau một lần bấm.</h3>
                 <p>
-                  Nhập tên sản phẩm, thêm mô tả ngắn rồi bấm tạo. Nếu muốn thử nhanh, hãy dùng ví dụ mẫu ở bên trái.
+                  Nhập sản phẩm, viết thêm một câu nếu muốn, rồi bấm nút tím. Không cần chọn nền tảng trước.
                 </p>
                 <div className="empty-preview">
                   <span>TikTok caption</span>
@@ -1347,6 +1359,7 @@ function CaptionAISection() {
 }
 
 function SoiTaiLieuSectionSimple() {
+  const fileInputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);
   const [source, setSource] = useState("sample");
@@ -1355,10 +1368,21 @@ function SoiTaiLieuSectionSimple() {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
   const [dragActive, setDragActive] = useState(false);
+  const [filePickerHint, setFilePickerHint] = useState(false);
   const [rawTextOpen, setRawTextOpen] = useState(false);
   const [rawTextCopied, setRawTextCopied] = useState(false);
 
   const steps = ["Đọc tài liệu", "Tìm điểm chính", "Soi điểm cần chú ý", "Gợi ý bước tiếp theo"];
+  const allowedExtensions = [".pdf", ".docx", ".xlsx", ".xls", ".csv", ".txt", ".png", ".jpg", ".jpeg", ".webp"];
+  const uploadStatus = loading
+    ? "Đang đọc tài liệu..."
+    : error
+      ? "Cần thử lại"
+      : result
+        ? "Đọc xong"
+        : file
+          ? "Đã nhận file"
+          : "Chưa chọn file";
 
   useEffect(() => {
     if (!loading) return undefined;
@@ -1376,18 +1400,47 @@ function SoiTaiLieuSectionSimple() {
 
   const processFile = (nextFile) => {
     if (!nextFile) return;
+    const fileName = nextFile.name || "";
+    const lowerName = fileName.toLowerCase();
+    const supported = allowedExtensions.some((ext) => lowerName.endsWith(ext));
+    if (!supported) {
+      setFile(null);
+      setResult(null);
+      setSource("sample");
+      setError("File này chưa được hỗ trợ. Bạn dùng PDF, Word, Excel, CSV, TXT hoặc ảnh nhé.");
+      return;
+    }
     if (nextFile.size > 20 * 1024 * 1024) {
+      setFile(null);
+      setResult(null);
+      setSource("sample");
       setError("File hơi lớn rồi. Bạn chọn file dưới 20MB giúp mình nhé.");
       return;
     }
     setFile(nextFile);
+    setResult(null);
+    setSource("sample");
     setError("");
     analyze(nextFile);
   };
 
   const selectFile = (event) => {
+    setFilePickerHint(false);
     processFile(event.target.files?.[0]);
     event.target.value = "";
+  };
+
+  const openFilePicker = () => {
+    if (loading) return;
+    setFilePickerHint(true);
+    fileInputRef.current?.click();
+    window.setTimeout(() => setFilePickerHint(false), 1600);
+  };
+
+  const handleUploadKeyDown = (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    openFilePicker();
   };
 
   const handleDrop = (event) => {
@@ -1543,12 +1596,20 @@ function SoiTaiLieuSectionSimple() {
 
         <div className={result ? "docscan-grid has-result" : "docscan-grid"}>
           <section className="docscan-card docscan-upload-card">
-            <label
+            <div
+              role="button"
+              tabIndex={0}
+              aria-label="Chọn tài liệu để DocScan AI phân tích"
               className={[
                 "docscan-drop",
                 file ? "has-file" : "",
+                loading ? "is-analyzing" : "",
+                error ? "has-error" : "",
+                filePickerHint ? "is-picking" : "",
                 dragActive ? "is-dragging" : "",
               ].filter(Boolean).join(" ")}
+              onClick={openFilePicker}
+              onKeyDown={handleUploadKeyDown}
               onDragEnter={(event) => {
                 event.preventDefault();
                 setDragActive(true);
@@ -1558,18 +1619,45 @@ function SoiTaiLieuSectionSimple() {
               onDrop={handleDrop}
             >
               <input
+                ref={fileInputRef}
                 data-clarity-mask="True"
                 type="file"
                 accept=".pdf,.docx,.xlsx,.xls,.csv,.txt,.png,.jpg,.jpeg,.webp"
                 onChange={selectFile}
+                onClick={(event) => event.stopPropagation()}
               />
               <span className="docscan-file-icon"><i>+</i></span>
               <strong>{file ? file.name : "Tải tài liệu lên"}</strong>
-              <p>{file ? "Lumi Bot đang chuẩn bị đọc file của bạn." : "Kéo và thả file vào đây hoặc chọn file từ máy"}</p>
+              <p>
+                {loading
+                  ? "Lumi Bot đang đọc file. Bạn cứ chờ ở màn hình này nhé."
+                  : filePickerHint
+                    ? "Đang mở hộp chọn file..."
+                  : file
+                    ? "Đã nhận file. Kết quả sẽ hiện ở khung bên phải sau vài giây."
+                    : "Bấm vào khung này, dấu cộng hoặc nút bên dưới để chọn file."}
+              </p>
               <small>PDF, Word, Excel hoặc ảnh</small>
               {error && <em className="docscan-error">{error}</em>}
-              <b>⇧ Chọn file</b>
-            </label>
+              <button type="button" onClick={(event) => {
+                event.stopPropagation();
+                openFilePicker();
+              }}>
+                {loading ? "Đang phân tích..." : file ? "Chọn file khác" : "⇧ Chọn file"}
+              </button>
+            </div>
+            <div className={error ? "docscan-upload-state error" : loading ? "docscan-upload-state loading" : result ? "docscan-upload-state success" : "docscan-upload-state"}>
+              <span>{uploadStatus}</span>
+              <small>
+                {error
+                  ? "Không sao, bạn có thể chọn lại file khác ngay."
+                  : loading
+                    ? steps[stepIndex]
+                    : result
+                      ? "Bạn có thể copy kết quả hoặc thử file khác."
+                      : "Một lần chọn file là DocScan tự bắt đầu đọc."}
+              </small>
+            </div>
             <div className="docscan-safe-note">
               <span>♙</span>
               <div>
@@ -1887,12 +1975,15 @@ function DashboardPage({ profile, followedProjects, membership, authLoading, onG
         <section className="dashboard-card protected-card">
           <img src="/lumi-bot.png" alt="" />
           <div>
-            <span className="follow-badge">Cần đăng nhập</span>
-            <h2>Đăng nhập Google để mở dashboard.</h2>
+            <span className="follow-badge">Không bắt buộc</span>
+            <h2>Bạn vẫn dùng demo miễn phí không cần đăng nhập.</h2>
             <p>
-              Không cần mật khẩu mới. Google chỉ giúp Lumi Labs ghi nhớ bạn và các project bạn theo dõi.
+              Dashboard chỉ để lưu project bạn quan tâm và xem lại sau. Nếu chỉ muốn thử tool, bạn có thể quay lại khu dự án ngay.
             </p>
-            <SocialLoginButton provider="google" onClick={onGoogleLogin} />
+            <div className="dashboard-soft-actions">
+              <a href="/projects">Xem demo đang mở</a>
+              <SocialLoginButton provider="google" onClick={onGoogleLogin} label="Đăng nhập để lưu lại" />
+            </div>
           </div>
         </section>
       ) : (
@@ -1908,18 +1999,18 @@ function DashboardPage({ profile, followedProjects, membership, authLoading, onG
 
           <section className="dashboard-grid">
             <article className="dashboard-card">
-              <span className="section-label">Đang theo dõi</span>
-              <h2>{followed.length || 0} project</h2>
-              <p>Project bạn follow sẽ hiện ở đây để sau này mở hướng dẫn sâu hơn.</p>
+              <span className="section-label">Việc nên làm tiếp</span>
+              <h2>Chọn một demo để thử</h2>
+              <p>Dashboard hiện chỉ giữ vai trò lưu lại hành trình. Phần quan trọng nhất vẫn là mở tool và dùng thử.</p>
+              <div className="dashboard-soft-actions">
+                <a href="/caption-ai">Thử Caption AI</a>
+                <a href="/docscan-ai">Thử DocScan AI</a>
+              </div>
             </article>
             <article className="dashboard-card">
-              <span className="section-label">Quyền truy cập</span>
-              <h2>{membership?.plan === "vip" ? "VIP" : "Cơ bản"}</h2>
-              <p>
-                {membership?.plan === "vip"
-                  ? "Bạn có thể xem toàn bộ nội dung đang mở trong Lumi Labs."
-                  : "Homepage, demo cơ bản và project đang theo dõi. Gói đầy đủ có thể mở sau."}
-              </p>
+              <span className="section-label">Đang theo dõi</span>
+              <h2>{followed.length || 0} project</h2>
+              <p>{followed.length ? "Các project bạn lưu sẽ hiện bên dưới." : "Bạn chưa lưu project nào. Bấm Lưu lại ở project bạn muốn xem tiếp."}</p>
             </article>
           </section>
 
@@ -1940,9 +2031,12 @@ function DashboardPage({ profile, followedProjects, membership, authLoading, onG
                       <h3>{project.title}</h3>
                       <p>{project.desc}</p>
                     </div>
-                    <button type="button" onClick={() => onFollowProject(project.slug)}>
-                      {isFollowed ? "Đang theo dõi" : "Theo dõi"}
-                    </button>
+                    <div className="dashboard-project-actions">
+                      {project.href !== "/projects" && <a href={project.href}>Dùng thử</a>}
+                      <button type="button" onClick={() => onFollowProject(project.slug)}>
+                        {isFollowed ? "Đã lưu" : "Lưu lại"}
+                      </button>
+                    </div>
                   </article>
                 );
               })}
