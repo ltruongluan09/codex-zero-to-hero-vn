@@ -12,13 +12,15 @@ export const config = {
 };
 
 const GEMINI_MODELS = ["gemini-2.0-flash", "gemini-2.5-flash"];
+const GEMINI_OCR_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
 const MAX_FILE_SIZE = 20 * 1024 * 1024;
 const MAX_TEXT_CHARS = 150000;
 const MAX_ANALYSIS_TEXT_CHARS = 60000;
 const MAX_EXCEL_ROWS_PER_SHEET = 120;
 const MAX_EXCEL_COLS = 18;
-const GEMINI_REQUEST_TIMEOUT_MS = 22000;
+const GEMINI_REQUEST_TIMEOUT_MS = 30000;
 const GEMINI_ANALYSIS_OUTPUT_TOKENS = 8192;
+const MIN_NATIVE_OCR_CHARS = 220;
 
 const DOCSCAN_OCR_PROMPT = `
 Bạn là OCR engine cho DocScan AI.
@@ -489,13 +491,23 @@ function normalizeDocScanResult(result, { extractedText = "" } = {}) {
   };
 }
 
-function buildNativeOcrParts({ fileBase64, mimeType, fileName, sizeBytes }) {
+function isUsefulNativeOcr(text = "", sizeBytes = 0) {
+  const cleaned = cleanExtractedText(text);
+  if (!cleaned) return false;
+  if (sizeBytes < 160 * 1024) return cleaned.length >= 40;
+  return cleaned.length >= MIN_NATIVE_OCR_CHARS;
+}
+
+function buildNativeOcrParts({ fileBase64, mimeType, fileName, sizeBytes, rescue = false }) {
   return [
     { inlineData: { mimeType, data: cleanBase64(fileBase64) } },
     {
       text: [
         "Hãy OCR file đính kèm cho DocScan AI.",
-        "Đọc càng đầy đủ càng tốt. Không phân tích ở bước này.",
+        rescue
+          ? "Lần đọc trước có thể quá ngắn. Hãy đọc lại kỹ hơn, chia ảnh thành nhiều vùng từ trên xuống dưới, đặc biệt phần giữa và cuối trang."
+          : "Đọc càng đầy đủ càng tốt. Không phân tích ở bước này.",
+        "Nếu thấy nhiều dòng chữ, đừng chỉ lấy vài dòng đầu. Hãy cố gắng lấy nội dung chính ở toàn trang.",
         "",
         "FILE_PROFILE:",
         JSON.stringify({
@@ -547,47 +559,56 @@ function buildGeminiParts({ buffer, fileBase64, mimeType, fileName, sizeBytes })
   return undefined;
 }
 
-async function callGemini({ apiKey, parts, systemPrompt = DOCSCAN_SYSTEM_PROMPT }) {
+async function callGemini({
+  apiKey,
+  parts,
+  systemPrompt = DOCSCAN_SYSTEM_PROMPT,
+  models = GEMINI_MODELS,
+  maxOutputTokens = GEMINI_ANALYSIS_OUTPUT_TOKENS,
+  attemptsPerModel = 1,
+}) {
   const warnings = [];
 
-  for (const model of GEMINI_MODELS) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), GEMINI_REQUEST_TIMEOUT_MS);
+  for (const model of models) {
+    for (let attempt = 1; attempt <= attemptsPerModel; attempt += 1) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), GEMINI_REQUEST_TIMEOUT_MS);
 
-    try {
-      const geminiResponse = await fetch(geminiUrl(model), {
-        method: "POST",
-        signal: controller.signal,
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey,
-        },
-        body: JSON.stringify({
-          systemInstruction: {
-            parts: [{ text: systemPrompt }],
+      try {
+        const geminiResponse = await fetch(geminiUrl(model), {
+          method: "POST",
+          signal: controller.signal,
+          headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": apiKey,
           },
-          contents: [{ role: "user", parts }],
-          generationConfig: {
-            temperature: 0.1,
-            maxOutputTokens: GEMINI_ANALYSIS_OUTPUT_TOKENS,
-            responseMimeType: "application/json",
-          },
-        }),
-      });
+          body: JSON.stringify({
+            systemInstruction: {
+              parts: [{ text: systemPrompt }],
+            },
+            contents: [{ role: "user", parts }],
+            generationConfig: {
+              temperature: 0.05,
+              maxOutputTokens,
+              responseMimeType: "application/json",
+            },
+          }),
+        });
 
-      if (!geminiResponse.ok) {
-        const warning = await geminiResponse.text();
-        warnings.push(`${model}: ${warning.slice(0, 220)}`);
-        continue;
+        if (!geminiResponse.ok) {
+          const warning = await geminiResponse.text();
+          warnings.push(`${model}#${attempt}: ${warning.slice(0, 220)}`);
+          continue;
+        }
+
+        const data = await geminiResponse.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        return { ok: true, model, text, parsed: safeJson(text) };
+      } catch (error) {
+        warnings.push(`${model}#${attempt}: ${error.name === "AbortError" ? "timeout" : error.message}`);
+      } finally {
+        clearTimeout(timeout);
       }
-
-      const data = await geminiResponse.json();
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-      return { ok: true, model, text, parsed: safeJson(text) };
-    } catch (error) {
-      warnings.push(`${model}: ${error.name === "AbortError" ? "timeout" : error.message}`);
-    } finally {
-      clearTimeout(timeout);
     }
   }
 
@@ -636,9 +657,12 @@ export default async function handler(request, response) {
     let extractedTextForResponse = "";
 
     if (NATIVE_FILE_TYPES.has(effectiveMimeType)) {
-      const ocrTry = await callGemini({
+      let ocrTry = await callGemini({
         apiKey,
         systemPrompt: DOCSCAN_OCR_PROMPT,
+        models: GEMINI_OCR_MODELS,
+        maxOutputTokens: 8192,
+        attemptsPerModel: 1,
         parts: buildNativeOcrParts({
           fileBase64: cleanedBase64,
           mimeType: effectiveMimeType,
@@ -646,7 +670,30 @@ export default async function handler(request, response) {
           sizeBytes,
         }),
       });
-      const ocrText = cleanExtractedText(ocrTry?.parsed?.extracted_text || "");
+
+      let ocrText = cleanExtractedText(ocrTry?.parsed?.extracted_text || "");
+      if (!isUsefulNativeOcr(ocrText, sizeBytes)) {
+        const rescueTry = await callGemini({
+          apiKey,
+          systemPrompt: DOCSCAN_OCR_PROMPT,
+          models: GEMINI_OCR_MODELS,
+          maxOutputTokens: 8192,
+          attemptsPerModel: 1,
+          parts: buildNativeOcrParts({
+            fileBase64: cleanedBase64,
+            mimeType: effectiveMimeType,
+            fileName,
+            sizeBytes,
+            rescue: true,
+          }),
+        });
+        const rescueText = cleanExtractedText(rescueTry?.parsed?.extracted_text || "");
+        if (rescueText.length > ocrText.length) {
+          ocrTry = rescueTry;
+          ocrText = rescueText;
+        }
+      }
+
       if (ocrText) {
         const profile = buildDocumentProfile({ fileName, mimeType: effectiveMimeType, text: ocrText, sizeBytes });
         extractedTextForResponse = ocrText;
@@ -677,7 +724,7 @@ export default async function handler(request, response) {
       return response.status(400).json({ error: "Loại file này chưa được hỗ trợ. Bạn dùng PDF, ảnh, Word, Excel, CSV hoặc TXT nhé." });
     }
 
-    const firstTry = await callGemini({ apiKey, parts });
+    const firstTry = await callGemini({ apiKey, parts, attemptsPerModel: 2 });
     if (!firstTry.ok) {
       return response.status(200).json({
         source: "fallback",
