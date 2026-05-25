@@ -949,6 +949,100 @@ function SecurityTrustStrip() {
   );
 }
 
+function LumiAssistant({ path }) {
+  const [open, setOpen] = useState(false);
+  const zaloCommunityUrl = "https://zalo.me/g/sf1nek4pce9gkmvz5cos";
+
+  const guideByPath = {
+    "/": {
+      eyebrow: "Lumi đang dẫn đường",
+      title: "Bạn mới vào Lumi Labs?",
+      desc: "Bắt đầu bằng một demo thật. Không cần biết code, không cần đọc hướng dẫn dài.",
+      primary: { label: "Đọc thử tài liệu", href: "/docscan-ai" },
+      secondary: { label: "Xem demo AI", href: "/projects" },
+      steps: ["Chọn một demo", "Thử trong 1 phút", "Gửi góp ý nếu thấy hữu ích"],
+    },
+    "/projects": {
+      eyebrow: "Chọn demo nhanh",
+      title: "Bạn muốn thử gì trước?",
+      desc: "DocScan dành cho tài liệu. Caption AI dành cho bài đăng mạng xã hội.",
+      primary: { label: "Thử DocScan", href: "/docscan-ai" },
+      secondary: { label: "Thử Caption AI", href: "/caption-ai" },
+      steps: ["Chọn tool đang mở", "Bấm dùng thử", "Xem kết quả mẫu nếu chưa có dữ liệu"],
+    },
+    "/docscan-ai": {
+      eyebrow: "DocScan AI",
+      title: "Mình sẽ đọc cùng bạn",
+      desc: "Bạn chọn ảnh, PDF, Word hoặc Excel. DocScan tự đọc và chỉ ra phần cần chú ý.",
+      primary: { label: "Tới vùng tải file", href: "#docscan-upload" },
+      secondary: { label: "Xem demo khác", href: "/projects" },
+      steps: ["Chọn file", "Đợi Lumi đọc", "Copy phần tóm tắt"],
+    },
+    "/caption-ai": {
+      eyebrow: "Caption AI",
+      title: "Viết caption dễ hơn",
+      desc: "Nhập tên sản phẩm hoặc ý tưởng. Lumi tạo bản nháp để bạn sửa nhẹ rồi đăng.",
+      primary: { label: "Tới khu viết caption", href: "#caption-ai" },
+      secondary: { label: "Thử DocScan", href: "/docscan-ai" },
+      steps: ["Nhập ý tưởng", "Tạo caption", "Copy bản hợp nhất"],
+    },
+    "/dashboard": {
+      eyebrow: "Khu cá nhân",
+      title: "Dashboard chỉ là nơi lưu lại",
+      desc: "Phần quan trọng nhất vẫn là trải nghiệm tool thật. Bạn có thể quay lại demo bất cứ lúc nào.",
+      primary: { label: "Xem demo AI", href: "/projects" },
+      secondary: { label: "Về trang chủ", href: "/" },
+      steps: ["Lưu project", "Theo dõi cập nhật", "Quay lại khi có demo mới"],
+    },
+  };
+  const guide = guideByPath[path] || guideByPath["/"];
+
+  const toggleOpen = () => {
+    setOpen((value) => !value);
+  };
+
+  return (
+    <aside className={open ? "lumi-assistant open" : "lumi-assistant"} aria-label="Lumi Assistant dẫn đường">
+      <button className="lumi-assistant-orb" type="button" onClick={toggleOpen} aria-expanded={open}>
+        <span className="lumi-orb-ring" />
+        <img src="/lumi-bot.png" alt="" />
+        <b>Lumi</b>
+      </button>
+      {open && (
+        <div className="lumi-assistant-panel">
+          <div className="lumi-assistant-head">
+            <span>{guide.eyebrow}</span>
+            <button type="button" onClick={toggleOpen} aria-label="Ẩn Lumi Assistant">×</button>
+          </div>
+          <h2>{guide.title}</h2>
+          <p>{guide.desc}</p>
+          <div className="lumi-assistant-steps">
+            {guide.steps.map((step, index) => (
+              <span key={step}><b>{index + 1}</b>{step}</span>
+            ))}
+          </div>
+          <div className="lumi-assistant-actions">
+            <a href={guide.primary.href}>{guide.primary.label}</a>
+            <a className="ghost" href={guide.secondary.href}>{guide.secondary.label}</a>
+          </div>
+          <a
+            className="lumi-assistant-community"
+            href={zaloCommunityUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>💬</span>
+            <div>
+              <strong>Vào nhóm Zalo cùng Lumi</strong>
+              <small>Hỏi nhanh, góp ý demo, theo dõi hành trình gần hơn.</small>
+            </div>
+          </a>
+        </div>
+      )}
+    </aside>
+  );
+}
+
 function Hero({ onOpenLogin }) {
   return (
     <section id="home" className="hero home-hero">
@@ -1817,7 +1911,7 @@ function DocScanAISection({ profile = null }) {
         </header>
 
         <div className={result ? "docscan-grid has-result" : "docscan-grid"}>
-          <section className="docscan-card docscan-upload-card">
+          <section id="docscan-upload" className="docscan-card docscan-upload-card">
             <div
               role="button"
               tabIndex={0}
@@ -2398,6 +2492,7 @@ function App() {
             onGoogleLogin={auth.signInWithGoogle}
           />
         )}
+        <LumiAssistant path={currentPath} />
       </>
     );
   }
@@ -2423,6 +2518,7 @@ function App() {
             onGoogleLogin={auth.signInWithGoogle}
           />
         )}
+        <LumiAssistant path={currentPath} />
       </>
     );
   }
@@ -2443,6 +2539,7 @@ function App() {
           onGoogleLogin={auth.signInWithGoogle}
         />
       )}
+      <LumiAssistant path={currentPath} />
     </>
   );
 }
