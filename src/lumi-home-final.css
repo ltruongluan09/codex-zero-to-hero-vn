@@ -586,6 +586,102 @@
   line-height: 1.35;
 }
 
+.lumi-assistant-intro {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.lumi-assistant-intro img {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  object-fit: cover;
+  background: #fff;
+  box-shadow:
+    0 16px 34px rgba(112, 77, 255, 0.16),
+    0 0 0 6px rgba(143, 107, 255, 0.06);
+  animation: lumiAssistantFloat 3.2s ease-in-out infinite;
+}
+
+.lumi-assistant-intro h2 {
+  margin-bottom: 5px;
+}
+
+.lumi-assistant-intro p {
+  margin: 0;
+}
+
+.lumi-assistant-quick-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.lumi-assistant-quick-actions a,
+.lumi-assistant-quick-actions button {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0 13px;
+  border: 1px solid rgba(225, 214, 255, 0.86);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.74);
+  color: #202542;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94);
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.lumi-assistant-quick-actions a:hover,
+.lumi-assistant-quick-actions button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(112, 77, 255, 0.34);
+  background: rgba(250, 247, 255, 0.95);
+}
+
+.lumi-assistant-reply {
+  margin: 11px 0 0 !important;
+  padding: 11px 12px;
+  border: 1px solid rgba(112, 77, 255, 0.18);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(244, 240, 255, 0.88), rgba(255, 255, 255, 0.72)),
+    radial-gradient(circle at 12% 20%, rgba(112, 77, 255, 0.12), transparent 40%);
+  color: #3f4164 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1.5 !important;
+}
+
+.lumi-assistant-community {
+  animation: lumiPanelEnter 0.3s cubic-bezier(.2,.9,.2,1) both;
+}
+
+.lumi-assistant-community a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  margin-top: 9px;
+  padding: 0 13px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #10b981, #41d6a2);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 950;
+  text-decoration: none;
+  box-shadow: 0 12px 24px rgba(16, 185, 129, 0.16);
+}
+
 @keyframes lumiAssistantFloat {
   0%, 100% {
     transform: translateY(0) rotate(-1deg);

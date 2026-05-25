@@ -951,54 +951,29 @@ function SecurityTrustStrip() {
 
 function LumiAssistant({ path }) {
   const [open, setOpen] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const [showCommunity, setShowCommunity] = useState(false);
+  const [assistantReply, setAssistantReply] = useState("");
   const zaloCommunityUrl = "https://zalo.me/g/sf1nek4pce9gkmvz5cos";
 
-  const guideByPath = {
-    "/": {
-      eyebrow: "Lumi đang dẫn đường",
-      title: "Bạn mới vào Lumi Labs?",
-      desc: "Bắt đầu bằng một demo thật. Không cần biết code, không cần đọc hướng dẫn dài.",
-      primary: { label: "Đọc thử tài liệu", href: "/docscan-ai" },
-      secondary: { label: "Xem demo AI", href: "/projects" },
-      steps: ["Chọn một demo", "Thử trong 1 phút", "Gửi góp ý nếu thấy hữu ích"],
-    },
-    "/projects": {
-      eyebrow: "Chọn demo nhanh",
-      title: "Bạn muốn thử gì trước?",
-      desc: "DocScan dành cho tài liệu. Caption AI dành cho bài đăng mạng xã hội.",
-      primary: { label: "Thử DocScan", href: "/docscan-ai" },
-      secondary: { label: "Thử Caption AI", href: "/caption-ai" },
-      steps: ["Chọn tool đang mở", "Bấm dùng thử", "Xem kết quả mẫu nếu chưa có dữ liệu"],
-    },
-    "/docscan-ai": {
-      eyebrow: "DocScan AI",
-      title: "Mình sẽ đọc cùng bạn",
-      desc: "Bạn chọn ảnh, PDF, Word hoặc Excel. DocScan tự đọc và chỉ ra phần cần chú ý.",
-      primary: { label: "Tới vùng tải file", href: "#docscan-upload" },
-      secondary: { label: "Xem demo khác", href: "/projects" },
-      steps: ["Chọn file", "Đợi Lumi đọc", "Copy phần tóm tắt"],
-    },
-    "/caption-ai": {
-      eyebrow: "Caption AI",
-      title: "Viết caption dễ hơn",
-      desc: "Nhập tên sản phẩm hoặc ý tưởng. Lumi tạo bản nháp để bạn sửa nhẹ rồi đăng.",
-      primary: { label: "Tới khu viết caption", href: "#caption-ai" },
-      secondary: { label: "Thử DocScan", href: "/docscan-ai" },
-      steps: ["Nhập ý tưởng", "Tạo caption", "Copy bản hợp nhất"],
-    },
-    "/dashboard": {
-      eyebrow: "Khu cá nhân",
-      title: "Dashboard chỉ là nơi lưu lại",
-      desc: "Phần quan trọng nhất vẫn là trải nghiệm tool thật. Bạn có thể quay lại demo bất cứ lúc nào.",
-      primary: { label: "Xem demo AI", href: "/projects" },
-      secondary: { label: "Về trang chủ", href: "/" },
-      steps: ["Lưu project", "Theo dõi cập nhật", "Quay lại khi có demo mới"],
-    },
-  };
-  const guide = guideByPath[path] || guideByPath["/"];
+  const quickActions = [
+    { label: "📄 Đọc thử tài liệu", href: "/docscan-ai" },
+    { label: "✍️ Tạo caption", href: "/caption-ai" },
+    { label: "🚀 Xem project mới", href: "/projects" },
+  ];
 
   const toggleOpen = () => {
     setOpen((value) => !value);
+  };
+
+  const rememberInteraction = () => {
+    setHasInteracted(true);
+  };
+
+  const helpMeStart = () => {
+    setHasInteracted(true);
+    setShowCommunity(true);
+    setAssistantReply("Nếu bạn mới bắt đầu, hãy thử DocScan trước. Chỉ cần upload tài liệu và xem AI phân tích.");
   };
 
   return (
@@ -1011,32 +986,39 @@ function LumiAssistant({ path }) {
       {open && (
         <div className="lumi-assistant-panel">
           <div className="lumi-assistant-head">
-            <span>{guide.eyebrow}</span>
+            <span>Lumi đang dẫn đường</span>
             <button type="button" onClick={toggleOpen} aria-label="Ẩn Lumi Assistant">×</button>
           </div>
-          <h2>{guide.title}</h2>
-          <p>{guide.desc}</p>
-          <div className="lumi-assistant-steps">
-            {guide.steps.map((step, index) => (
-              <span key={step}><b>{index + 1}</b>{step}</span>
-            ))}
-          </div>
-          <div className="lumi-assistant-actions">
-            <a href={guide.primary.href}>{guide.primary.label}</a>
-            <a className="ghost" href={guide.secondary.href}>{guide.secondary.label}</a>
-          </div>
-          <a
-            className="lumi-assistant-community"
-            href={zaloCommunityUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span>💬</span>
+          <div className="lumi-assistant-intro">
+            <img src="/lumi-bot.png" alt="" />
             <div>
-              <strong>Vào nhóm Zalo cùng Lumi</strong>
-              <small>Hỏi nhanh, góp ý demo, theo dõi hành trình gần hơn.</small>
+              <h2>Bạn mới vào Lumi Labs?</h2>
+              <p>Mình sẽ dẫn bạn thử nhanh một demo AI phù hợp.</p>
             </div>
-          </a>
+          </div>
+          <div className="lumi-assistant-quick-actions">
+            {quickActions.map((action) => (
+              <a key={action.href} href={action.href} onClick={rememberInteraction}>
+                {action.label}
+              </a>
+            ))}
+            <button type="button" onClick={helpMeStart}>
+              💬 Tôi chưa biết bắt đầu từ đâu
+            </button>
+          </div>
+          {assistantReply && <p className="lumi-assistant-reply">{assistantReply}</p>}
+          {showCommunity && (
+            <div className="lumi-assistant-community">
+              <span>💡</span>
+              <div>
+                <strong>Muốn theo dõi hành trình build AI Hub?</strong>
+                <small>Lumi thường update demo mới, workflow AI thực tế và nhận góp ý trong cộng đồng.</small>
+                <a href={zaloCommunityUrl} target="_blank" rel="noreferrer">
+                  Theo dõi hành trình
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </aside>
