@@ -1511,6 +1511,7 @@ function DocScanAISection({ profile = null }) {
   const [error, setError] = useState("");
   const [dragActive, setDragActive] = useState(false);
   const [filePickerHint, setFilePickerHint] = useState(false);
+  const [pickerNudge, setPickerNudge] = useState(false);
   const [rawTextOpen, setRawTextOpen] = useState(false);
   const [rawTextCopied, setRawTextCopied] = useState(false);
 
@@ -1560,6 +1561,7 @@ function DocScanAISection({ profile = null }) {
 
   const processFile = (nextFile) => {
     if (!nextFile) return;
+    setPickerNudge(false);
     const fileName = nextFile.name || "";
     const lowerName = fileName.toLowerCase();
     const supported = allowedExtensions.some((ext) => lowerName.endsWith(ext));
@@ -1586,15 +1588,75 @@ function DocScanAISection({ profile = null }) {
 
   const selectFile = (event) => {
     setFilePickerHint(false);
-    processFile(event.target.files?.[0]);
+    const nextFile = event.target.files?.[0];
+    if (!nextFile) {
+      setPickerNudge(true);
+      window.setTimeout(() => setPickerNudge(false), 5200);
+      return;
+    }
+    processFile(nextFile);
     event.target.value = "";
   };
 
   const openFilePicker = () => {
     if (loading) return;
+    setPickerNudge(false);
     setFilePickerHint(true);
     fileInputRef.current?.click();
-    window.setTimeout(() => setFilePickerHint(false), 1600);
+    window.setTimeout(() => {
+      setFilePickerHint(false);
+      if (!fileInputRef.current?.files?.length && !file && !loading) {
+        setPickerNudge(true);
+        window.setTimeout(() => setPickerNudge(false), 5200);
+      }
+    }, 2600);
+  };
+
+  const showSampleResult = () => {
+    setFile(null);
+    setError("");
+    setCopied(false);
+    setRawTextOpen(false);
+    setRawTextCopied(false);
+    setPickerNudge(false);
+    setFilePickerHint(false);
+    setSource("demo");
+    setResult({
+      document_type: "Kết quả mẫu DocScan",
+      summary: "Đây là ví dụ để bạn thấy DocScan sẽ trả về gì sau khi đọc một tài liệu thật.",
+      one_line_answer: "DocScan tóm tắt ý chính, chỉ ra phần nên kiểm tra và gợi ý câu nên hỏi lại.",
+      verdict: "Bản mẫu giúp người mới hiểu cách dùng trước khi upload file thật.",
+      verdict_icon: "✨",
+      top_3_takeaways: [
+        {
+          title: "Nội dung chính",
+          detail: "AI gom tài liệu dài thành vài ý dễ đọc, không bắt bạn tự dò từng dòng.",
+        },
+        {
+          title: "Điểm cần chú ý",
+          detail: "Những chỗ như deadline, chi phí, điều kiện hoặc phần đánh dấu sẽ được nhắc lại.",
+        },
+        {
+          title: "Việc nên làm tiếp",
+          detail: "Bạn nhận được câu hỏi nên xác nhận trước khi gửi tiếp hoặc ra quyết định.",
+        },
+      ],
+      red_flags: [
+        {
+          title: "Cần kiểm tra phần quan trọng",
+          detail: "Nếu tài liệu có số tiền, thời hạn, điều kiện hoặc cam kết, DocScan sẽ nhắc bạn xem kỹ.",
+        },
+      ],
+      questions_to_ask: [
+        "Thông tin quan trọng đã đủ rõ để mình quyết định chưa?",
+        "Có phần nào cần hỏi lại người gửi tài liệu không?",
+      ],
+      next_actions: [
+        "Sau khi xem mẫu, hãy thử upload ảnh, PDF, Word hoặc Excel của bạn.",
+      ],
+      copy_ready_summary: "DocScan AI: Kết quả mẫu gồm tóm tắt nội dung chính, điểm cần chú ý và câu nên hỏi lại.",
+      extracted_text: "",
+    });
   };
 
   const handleUploadKeyDown = (event) => {
@@ -1799,12 +1861,43 @@ function DocScanAISection({ profile = null }) {
               </p>
               <small>{file ? fileMeta : "PDF, Word, Excel hoặc ảnh"}</small>
               {error && <em className="docscan-error">{error}</em>}
-              <button type="button" onClick={(event) => {
-                event.stopPropagation();
-                openFilePicker();
-              }}>
-                {loading ? "Đang phân tích..." : file ? "Chọn file khác" : "⇧ Chọn file"}
-              </button>
+              {!file && !loading && (
+                <div className="docscan-mini-steps" aria-label="Cách dùng DocScan">
+                  <span>1. Chọn file</span>
+                  <span>2. AI đọc</span>
+                  <span>3. Nhận tóm tắt</span>
+                </div>
+              )}
+              {pickerNudge && !file && !loading && (
+                <em className="docscan-picker-nudge">Bạn chưa chọn file nào. Có thể chọn lại hoặc xem thử kết quả mẫu trước.</em>
+              )}
+              <div className="docscan-upload-actions">
+                <button type="button" onClick={(event) => {
+                  event.stopPropagation();
+                  openFilePicker();
+                }}>
+                  {loading ? "Đang phân tích..." : file ? "Chọn file khác" : "⇧ Chọn file"}
+                </button>
+                {!loading && !file && (
+                  <button
+                    className="docscan-sample-button"
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      showSampleResult();
+                    }}
+                  >
+                    Xem kết quả mẫu
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="docscan-guidance">
+              <img src="/lumi-bot.png" alt="" />
+              <div>
+                <strong>Lumi gợi ý</strong>
+                <p>Ảnh chụp rõ chữ, PDF, Word hoặc Excel đều được. Chọn file xong DocScan tự đọc, không cần bấm thêm.</p>
+              </div>
             </div>
             <div className={error ? "docscan-upload-state error" : loading ? "docscan-upload-state loading" : result ? "docscan-upload-state success" : "docscan-upload-state"}>
               <span>{uploadStatus}</span>
@@ -1840,7 +1933,7 @@ function DocScanAISection({ profile = null }) {
                 <div className="docscan-score-mini">
                   <span>{result.verdict_icon}</span>
                   <div>
-                    <small>{source === "gemini" ? "Đã đọc bằng AI" : "Chưa đọc nội dung thật"}</small>
+                    <small>{source === "gemini" ? "Đã đọc bằng AI" : source === "demo" ? "Kết quả mẫu" : "Chưa đọc nội dung thật"}</small>
                     <h2>{result.document_type || "Đã đọc xong"}</h2>
                     <p>{result.one_line_answer || result.summary || result.verdict}</p>
                   </div>
@@ -1944,6 +2037,9 @@ function DocScanAISection({ profile = null }) {
                   <li>Dễ hiểu, dễ áp dụng</li>
                   <li>Dễ dàng copy và sử dụng</li>
                 </ul>
+                <button className="docscan-empty-sample" type="button" onClick={showSampleResult}>
+                  Xem thử kết quả mẫu
+                </button>
               </div>
             )}
           </section>
