@@ -47,10 +47,21 @@ const app = file("src/App.jsx");
   "/docscan-ai",
   "/projects",
   "/dashboard",
+  "/bai-viet.html",
+  "/codex-training-thuc-chien.html",
+  "/codex-session-02-tao-tool-dau-tien.html",
   "/api/generate-caption",
   "/api/analyze-document",
 ].forEach((needle) => {
   assert(app.includes(needle), `App route/API reference missing: ${needle}`);
+});
+
+[
+  "Kho bài học & series",
+  "Vào series Codex",
+  "Xem buổi tạo tool",
+].forEach((needle) => {
+  assert(app.includes(needle), `Homepage missing learning hub entry: ${needle}`);
 });
 
 const articleIndex = file("public/bai-viet.html");
@@ -67,6 +78,7 @@ const articleIndex = file("public/bai-viet.html");
 });
 
 [
+  "Bắt đầu series Codex",
   "Bài nền tảng",
   "Series chuyên đề",
   "Hành trình project thật",

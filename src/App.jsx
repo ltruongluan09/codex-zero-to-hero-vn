@@ -4,7 +4,7 @@ import { getUserProfile, hasSupabaseConfig, supabase } from "./supabaseClient";
 const navItems = [
   { label: "Trang chủ", href: "/" },
   { label: "Demo AI", href: "/projects" },
-  { label: "Bài viết", href: "/bai-viet.html" },
+  { label: "Bài học", href: "/bai-viet.html" },
 ];
 
 const captionModes = [
@@ -848,7 +848,10 @@ function LumiBotIntro() {
 function HeroFeaturedProjects() {
   const activeProjects = projectCatalog.slice(0, 2);
   const mainArticle = beginnerArticles[0];
-  const sideArticles = beginnerArticles.slice(1);
+  const codexSeries = beginnerArticles.find((article) => article.href === "/codex-training-thuc-chien.html");
+  const sideArticles = beginnerArticles
+    .filter((article) => article.href !== codexSeries?.href)
+    .slice(1, 4);
 
   return (
     <div className="home-cards" data-reveal>
@@ -883,9 +886,26 @@ function HeroFeaturedProjects() {
 
       <article className="home-article-card">
         <div className="home-card-head">
-          <h2>📄 Bài viết cho người mới</h2>
-          <a href="/bai-viet.html">Xem tất cả →</a>
+          <h2>📚 Kho bài học & series</h2>
+          <a href="/bai-viet.html">Mở kho bài học →</a>
         </div>
+        <p className="article-hub-intro">
+          Nếu chưa biết bắt đầu ở đâu, đọc bài ngắn trước. Nếu muốn tự tạo tool, đi thẳng vào series Codex.
+        </p>
+        {codexSeries ? (
+          <div className="home-learning-series">
+            <span className="home-learning-series-icon">{codexSeries.icon}</span>
+            <div>
+              <small>{codexSeries.tag} · {codexSeries.time} · Có bài thực hành</small>
+              <h3>{codexSeries.title}</h3>
+              <p>{codexSeries.desc}</p>
+              <div className="home-learning-actions">
+                <a href={codexSeries.href}>Vào series Codex →</a>
+                <a className="secondary" href="/codex-session-02-tao-tool-dau-tien.html">Xem buổi tạo tool</a>
+              </div>
+            </div>
+          </div>
+        ) : null}
         <a className="article-feature" href={mainArticle.href}>
           <img src={mainArticle.image} alt="" />
           <div>
