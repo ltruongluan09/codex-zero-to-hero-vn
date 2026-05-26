@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Session 2 - Tạo tool đầu tiên bằng Codex</title>
+    <meta name="description" content="Buổi 2 của series Codex thực chiến: giúp người non-tech tạo Caption Mini Tool chạy local bằng Codex." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/codex-training-session.css" />
+  </head>
+  <body>
+    <div class="page">
+      <nav class="topbar">
+        <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
+        <a class="back" href="/codex-training-thuc-chien.html">← Về series Codex</a>
+      </nav>
+
+      <header class="hero">
+        <div class="pill">Session 2 · 90 phút</div>
+        <h1>Tạo tool đầu tiên bằng <span>ngôn ngữ tự nhiên.</span></h1>
+        <p class="lead">
+          Buổi này biến cảm giác “AI hay thật” thành “mình vừa làm được một tool”. Tool được chọn là Caption Mini Tool:
+          có ô nhập, nút bấm, kết quả và nút copy. Người mới nhìn vào là hiểu ngay.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#main-prompt">Copy prompt tạo tool</a>
+          <a class="button secondary" href="#test">Xem checklist test</a>
+        </div>
+      </header>
+
+      <section class="lumi-guide" aria-label="Lumi Bot dẫn đường">
+        <img src="/lumi-bot.png" alt="Lumi Bot" />
+        <div>
+          <span>Lumi Bot dẫn đường</span>
+          <strong>Đừng làm app lớn vội. Hôm nay chỉ cần một tool nhỏ chạy được.</strong>
+          <p>Nhập thông tin, bấm một nút, có kết quả, copy được. Khi tool chạy rồi, mình mới nhờ Codex làm đẹp và sửa logic.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Sau buổi này, bạn làm được gì?</h2>
+        <ul class="checklist">
+          <li>Mô tả một tool theo 3 phần: người dùng nhập gì, tool trả ra gì, giao diện cần gì.</li>
+          <li>Để Codex tự tạo project, code UI, chạy app và sửa lỗi.</li>
+          <li>Test app bằng mắt thay vì đọc code.</li>
+          <li>Yêu cầu Codex cải thiện giao diện, logic và trạng thái lỗi.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Trước khi bắt đầu cần chuẩn bị gì?</h2>
+        <p>Buổi này chỉ cần project demo từ buổi 1 hoặc một folder mới. Đừng thêm AI API, database hay đăng nhập ở bước đầu.</p>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <span>1</span>
+            <strong>Một folder để làm tool</strong>
+            <p>Có thể dùng folder mới tên <b>caption-mini-tool</b>. Nếu chưa biết tạo, nhờ Codex tạo giúp.</p>
+          </div>
+          <div class="guide-card">
+            <span>2</span>
+            <strong>Một ý tưởng thật nhỏ</strong>
+            <p>Tool này chỉ làm một việc: nhập thông tin sản phẩm, tạo vài caption, copy để dùng.</p>
+          </div>
+          <div class="guide-card">
+            <span>3</span>
+            <strong>Nguyên tắc: chạy được trước</strong>
+            <p>Đẹp và thông minh để sau. Trước tiên cần app mở được, bấm được, ra kết quả được.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Vì sao chọn Caption Mini Tool?</h2>
+        <p>
+          Vì nó gần với công việc hằng ngày: bán hàng, marketing, shop online, freelancer, creator đều hiểu.
+          Tool này đủ nhỏ để làm nhanh, nhưng đủ thật để bạn cảm thấy “à, mình có thể tạo công cụ riêng”.
+        </p>
+        <div class="note">
+          <strong>Nguyên tắc buổi 2</strong>
+          <p>Không cần backend. Không cần database. Không cần đăng nhập. Trước tiên chỉ cần một tool chạy được và dễ dùng.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Làm theo từng bước</h2>
+        <div class="step"><span>1</span><div><strong>Copy prompt tạo tool</strong><p>Dán prompt chính vào Codex. Nếu Codex hỏi chọn công nghệ, hãy bảo chọn cách đơn giản nhất.</p></div></div>
+        <div class="step"><span>2</span><div><strong>Để Codex tự tạo project và chạy thử</strong><p>Bạn không cần đọc từng file. Chỉ cần quan sát Codex có chạy app, sửa lỗi và build không.</p></div></div>
+        <div class="step"><span>3</span><div><strong>Mở app local và test bằng mắt</strong><p>Nhập một sản phẩm đời thường, ví dụ: “cơm gà văn phòng”, “dịch vụ chụp ảnh”, “bánh biscotti healthy”.</p></div></div>
+        <div class="step"><span>4</span><div><strong>Nếu kết quả chưa ổn, dùng prompt cải thiện UI/logic</strong><p>Đừng tự sửa code. Hãy nói rõ: nút khó thấy, caption nhạt, mobile bị lệch, copy chưa có phản hồi.</p></div></div>
+        <div class="step"><span>5</span><div><strong>Chạy build và commit</strong><p>Khi app đã ổn, yêu cầu Codex build và commit. Đây là cách lưu lại phiên bản tool đầu tiên.</p></div></div>
+      </section>
+
+      <section class="section">
+        <h2>Kết quả đúng sẽ trông như thế nào?</h2>
+        <div class="result-grid">
+          <div class="result-card">
+            <span>✓</span>
+            <strong>App có form nhập rõ ràng</strong>
+            <p>Có ô tên sản phẩm, ô mô tả ngắn, lựa chọn tone, nút tạo caption và khu vực kết quả.</p>
+          </div>
+          <div class="result-card">
+            <span>✓</span>
+            <strong>Bấm một nút là có bản nháp</strong>
+            <p>Kết quả chưa cần hoàn hảo. Chỉ cần đủ tốt để người dùng sửa nhẹ rồi đăng.</p>
+          </div>
+        </div>
+        <div class="stuck-card">
+          <strong>Nếu app không mở được</strong>
+          <p>Dùng prompt sửa lỗi bên dưới. Yêu cầu Codex tự đọc terminal, browser console, sửa và chạy lại. Người mới không cần tự đọc log dài.</p>
+        </div>
+      </section>
+
+      <section class="demo-card" id="main-prompt">
+        <header><strong>Prompt tạo Caption Mini Tool</strong><span class="pill">Copy dùng ngay</span></header>
+        <pre id="prompt-tool">Tôi là người non-tech. Hãy tạo cho tôi một web tool đơn giản tên caption-mini-tool.
+
+Tool cần có:
+- Ô nhập tên sản phẩm
+- Ô nhập mô tả ngắn
+- Lựa chọn tone: vui vẻ, chuyên nghiệp, sang trọng
+- Nút Generate
+- Hiển thị 3 caption tiếng Việt
+- Mỗi caption có nút Copy
+
+Yêu cầu:
+- Tự chọn stack đơn giản, ưu tiên Vite + React nếu phù hợp
+- Giao diện sạch, dễ dùng, responsive
+- Chưa cần AI API, hãy dùng logic/template local trước
+- Chạy local để kiểm tra
+- Nếu lỗi, tự sửa đến khi chạy được
+- Chạy build
+- Khởi tạo Git nếu chưa có
+- Commit code với message rõ nghĩa
+- Chưa push GitHub cho đến khi tôi báo
+
+Trong quá trình làm, giải thích ngắn gọn bằng tiếng Việt.</pre>
+        <div class="copy-row">
+          <small>Đây là prompt chính của buổi 2.</small>
+          <button class="copy-btn" data-copy="prompt-tool">Copy prompt</button>
+        </div>
+      </section>
+
+      <section class="section" id="test">
+        <h2>Checklist test bằng mắt</h2>
+        <div class="step"><span>1</span><div><strong>Nhập tên sản phẩm</strong><p>Ví dụ: “Bánh biscotti healthy”. Caption có nhắc đúng tên sản phẩm không?</p></div></div>
+        <div class="step"><span>2</span><div><strong>Nhập mô tả ngắn</strong><p>Ví dụ: “ít ngọt, nhiều hạt, phù hợp dân văn phòng”. Caption có dùng đúng ý không?</p></div></div>
+        <div class="step"><span>3</span><div><strong>Đổi tone</strong><p>Khi đổi từ vui vẻ sang chuyên nghiệp, giọng caption có khác không?</p></div></div>
+        <div class="step"><span>4</span><div><strong>Bấm Copy</strong><p>Copy xong có phản hồi rõ không? Người dùng có biết đã copy thành công không?</p></div></div>
+      </section>
+
+      <section class="section">
+        <h2>Bài tập tự làm sau buổi 2</h2>
+        <div class="exercise-card">
+          <strong>Đổi Caption Mini Tool thành một tool khác</strong>
+          <p>Chọn một trong ba ý tưởng: tool viết email phản hồi khách hàng, tool tạo checklist onboarding nhân viên, hoặc tool lên lịch đăng bài 7 ngày. Giữ nguyên công thức: input, output, giao diện, nút copy.</p>
+        </div>
+      </section>
+
+      <section class="demo-card">
+        <header><strong>Prompt sửa lỗi khi app chưa chạy</strong><span class="pill">Cứu hộ</span></header>
+        <pre id="prompt-fix">App đang lỗi hoặc chưa đúng yêu cầu.
+Hãy tự kiểm tra terminal, log, browser console nếu cần.
+Tìm nguyên nhân, sửa lỗi, chạy lại app/build.
+Lặp lại đến khi app chạy được.
+Giải thích ngắn gọn lỗi là gì và bạn đã sửa thế nào.</pre>
+        <div class="copy-row">
+          <small>Dùng khi bạn gặp màn hình trắng, lỗi build hoặc nút không hoạt động.</small>
+          <button class="copy-btn" data-copy="prompt-fix">Copy prompt</button>
+        </div>
+      </section>
+
+      <section class="demo-card">
+        <header><strong>Prompt cải thiện UI</strong><span class="pill">Làm đẹp vừa đủ</span></header>
+        <pre id="prompt-ui">Hãy cải thiện UI và logic của tool.
+
+Yêu cầu UI:
+- Giao diện gọn, hiện đại, dễ dùng
+- Mobile đọc được
+- Form rõ ràng
+- Kết quả hiện thành từng khối riêng
+- Nút Copy dễ thấy
+
+Yêu cầu logic:
+- Mỗi lần bấm Generate tạo 3 caption khác nhau
+- Caption phải có tên sản phẩm
+- Caption phải theo tone đã chọn
+- Nếu thiếu tên sản phẩm, hiện thông báo yêu cầu nhập
+- Nếu thiếu mô tả, vẫn tạo caption được nhưng ngắn hơn
+
+Sau khi sửa:
+- Chạy app để kiểm tra
+- Chạy build
+- Nếu build lỗi thì tự sửa đến khi pass</pre>
+        <div class="copy-row">
+          <small>Dùng sau khi app đã chạy, để nâng từ demo thô thành tool dễ dùng.</small>
+          <button class="copy-btn" data-copy="prompt-ui">Copy prompt</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Checklist cuối buổi</h2>
+        <ul class="checklist">
+          <li>Tool chạy được local.</li>
+          <li>Generate ra kết quả nhìn được.</li>
+          <li>Có validation khi thiếu thông tin quan trọng.</li>
+          <li>Build pass hoặc bạn biết prompt để yêu cầu Codex fix build.</li>
+          <li>Có commit rõ nghĩa.</li>
+        </ul>
+      </section>
+
+      <div class="session-nav">
+        <a href="/codex-session-01-bat-dau.html">← Session 1</a>
+        <a href="/codex-session-03-agents-memory-skill.html">Session 3: Làm Codex hiểu mình hơn →</a>
+      </div>
+
+      <footer>© 2026 Lumi Labs · Codex Training Session 2</footer>
+    </div>
+    <script src="/codex-training-copy.js"></script>
+  </body>
+</html>

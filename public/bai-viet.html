@@ -362,6 +362,112 @@
         line-height: 1.6;
       }
 
+      .article-card.wide {
+        min-height: auto;
+        display: grid;
+        grid-template-columns: 190px 1fr;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .article-card.wide .thumb {
+        height: 150px;
+        margin: 0;
+      }
+
+      .article-card.wide h3 {
+        font-size: clamp(24px, 3vw, 34px);
+      }
+
+      .path-grid,
+      .series-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .path-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .path-card,
+      .series-card {
+        border: 1px solid rgba(238, 226, 220, 0.95);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.76);
+        padding: 20px;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .path-card:hover,
+      .series-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(124, 77, 255, 0.32);
+        box-shadow: 0 18px 50px rgba(90, 66, 125, 0.1);
+      }
+
+      .path-card span,
+      .series-card .series-icon {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 14px;
+        border-radius: 17px;
+        background: #f2ebff;
+        color: var(--violet);
+        font-size: 24px;
+        font-weight: 950;
+      }
+
+      .path-card strong,
+      .series-card h3 {
+        display: block;
+        margin: 0 0 8px;
+        color: var(--ink);
+        font-size: 20px;
+        line-height: 1.25;
+      }
+
+      .path-card p,
+      .series-card p {
+        margin: 0;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 620;
+        line-height: 1.65;
+      }
+
+      .series-grid {
+        grid-template-columns: 1.25fr 0.875fr 0.875fr;
+        align-items: stretch;
+      }
+
+      .series-card.primary {
+        background:
+          radial-gradient(circle at 92% 12%, rgba(124, 77, 255, 0.18), transparent 28%),
+          rgba(255, 255, 255, 0.84);
+      }
+
+      .series-card.coming {
+        opacity: 0.86;
+      }
+
+      .series-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 14px 0 0;
+      }
+
+      .series-meta span {
+        border-radius: 999px;
+        background: #f8f3ff;
+        color: var(--violet);
+        padding: 7px 10px;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
       .read-link {
         display: inline-flex;
         margin-top: 16px;
@@ -412,8 +518,18 @@
       @media (max-width: 900px) {
         .hero,
         .article-grid,
-        .topic-grid {
+        .topic-grid,
+        .path-grid,
+        .series-grid {
           grid-template-columns: 1fr;
+        }
+
+        .article-card.wide {
+          grid-template-columns: 1fr;
+        }
+
+        .article-card.wide .thumb {
+          height: 126px;
         }
 
         .unlock-card {
@@ -478,15 +594,16 @@
       <header class="hero">
         <section class="hero-main">
           <div class="pill"><span class="dot"></span> Kho bài đọc Lumi Labs</div>
-          <h1>Đọc từng bài nhỏ. <span>Hiểu AI dễ hơn mỗi ngày.</span></h1>
+          <h1>Kho bài học Lumi Labs. <span>Đi từ dễ hiểu tới làm được.</span></h1>
           <p>
-            Đây là nơi mình gom các bài viết dễ hiểu nhất về AI: cách giao việc cho AI,
-            dùng AI trong công việc, và những câu chuyện thật khi tự tay làm sản phẩm.
+            Đây là nơi mình gom bài nền tảng, series chuyên đề và hành trình project thật.
+            Mục tiêu rất đơn giản: người không chuyên cũng biết dùng AI để tạo công cụ nhỏ cho công việc.
           </p>
           <div class="stats">
-            <span>6 bài cơ bản đọc được</span>
-            <span>6 Mini Lab thực hành ngay</span>
-            <span>Dành cho người không chuyên</span>
+            <span>Bài nền tảng</span>
+            <span>Series chuyên đề</span>
+            <span>Project thật</span>
+            <span>Mini Lab thực hành ngay</span>
           </div>
         </section>
 
@@ -502,6 +619,73 @@
       </header>
 
       <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Bạn nên bắt đầu ở đâu?</h2>
+            <p>Không cần đọc theo kiểu sách giáo khoa. Chọn đúng cửa vào theo mục tiêu hiện tại của bạn.</p>
+          </div>
+        </div>
+        <div class="path-grid">
+          <a class="path-card" href="#nguoi-moi">
+            <span>1</span>
+            <strong>Mới bắt đầu với AI</strong>
+            <p>Đọc các bài nền tảng ngắn, có ví dụ văn phòng Việt Nam và Mini Lab để thử ngay.</p>
+          </a>
+          <a class="path-card" href="#series">
+            <span>2</span>
+            <strong>Muốn tự tạo tool</strong>
+            <p>Đi theo series Codex 4 buổi: từ mô tả ý tưởng tới tool chạy được, có prompt copy sẵn.</p>
+          </a>
+          <a class="path-card" href="#project-that">
+            <span>3</span>
+            <strong>Muốn xem project thật</strong>
+            <p>Đọc nhật ký Caption AI, DocScan AI để thấy sản phẩm được làm ra từng bước thế nào.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" id="series">
+        <div class="section-head">
+          <div>
+            <h2>Series chuyên đề</h2>
+            <p>Mỗi series là một đường học riêng. Codex là series đầu tiên; sau này có thể mở thêm Claude, Cursor, Gemini, AI Office.</p>
+          </div>
+        </div>
+
+        <div class="series-grid">
+          <a class="series-card primary" href="/codex-training-thuc-chien.html">
+            <div class="series-icon">🎓</div>
+            <h3>Codex thực chiến: tự tạo tool bằng AI trong 4 buổi</h3>
+            <p>Bắt đầu từ số 0: biết giao việc cho Codex, tạo tool đầu tiên, sửa lỗi, đóng gói và chia sẻ project.</p>
+            <div class="series-meta">
+              <span>Đang mở</span>
+              <span>4 session</span>
+              <span>Có prompt copy</span>
+            </div>
+            <span class="read-link">Xem series →</span>
+          </a>
+          <article class="series-card coming">
+            <div class="series-icon">🧠</div>
+            <h3>Claude cho công việc văn phòng</h3>
+            <p>Cách nhờ Claude viết, tóm tắt, phân tích và biến ý tưởng thành bản nháp dễ dùng.</p>
+            <div class="series-meta">
+              <span>Sắp có</span>
+              <span>Cho non-tech</span>
+            </div>
+          </article>
+          <article class="series-card coming">
+            <div class="series-icon">⚡</div>
+            <h3>AI Automation cơ bản</h3>
+            <p>Cách nhìn công việc lặp lại và biến thành luồng tự động nhỏ, dễ hiểu, không quá kỹ thuật.</p>
+            <div class="series-meta">
+              <span>Sắp có</span>
+              <span>Workflow</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="nguoi-moi">
         <div class="section-head">
           <div>
             <h2>Bài viết cho người mới bắt đầu</h2>
@@ -590,7 +774,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" id="project-that">
         <div class="section-head">
           <div>
             <h2>Hành trình project thật</h2>

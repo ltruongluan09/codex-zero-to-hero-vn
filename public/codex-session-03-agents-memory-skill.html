@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Session 3 - AGENTS.md, Memory và Skill</title>
+    <meta name="description" content="Buổi 3 của series Codex thực chiến: giúp Codex hiểu cách bạn muốn làm việc qua AGENTS.md, Memory và Skill." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/codex-training-session.css" />
+  </head>
+  <body>
+    <div class="page">
+      <nav class="topbar">
+        <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
+        <a class="back" href="/codex-training-thuc-chien.html">← Về series Codex</a>
+      </nav>
+
+      <header class="hero">
+        <div class="pill">Session 3 · 90 phút</div>
+        <h1>Làm Codex hiểu <span>cách mình làm việc.</span></h1>
+        <p class="lead">
+          Sau khi tạo được tool đầu tiên, câu hỏi tiếp theo là: làm sao để lần sau Codex hiểu bạn nhanh hơn?
+          Buổi này giúp bạn tạo ba thứ rất thực tế: quy tắc project, thói quen cá nhân và workflow dùng lại.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#agents">Tạo AGENTS.md</a>
+          <a class="button secondary" href="#skill">Tạo skill kiểm tra</a>
+        </div>
+      </header>
+
+      <section class="lumi-guide" aria-label="Lumi Bot dẫn đường">
+        <img src="/lumi-bot.png" alt="Lumi Bot" />
+        <div>
+          <span>Lumi Bot dẫn đường</span>
+          <strong>Đây là lúc dạy Codex “gu làm việc” của bạn.</strong>
+          <p>AGENTS.md là nội quy, Memory là thói quen nên nhớ, Skill là checklist dùng lại. Không cần học sâu, chỉ cần biết dùng đúng lúc.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Giải thích cực dễ hiểu</h2>
+        <div class="step"><span>1</span><div><strong>AGENTS.md</strong><p>Là “nội quy làm việc” của Codex trong project. Ví dụ: luôn giải thích tiếng Việt, không xóa file nếu chưa hỏi, luôn chạy build trước khi kết thúc.</p></div></div>
+        <div class="step"><span>2</span><div><strong>Memory</strong><p>Là những thói quen cá nhân Codex nên nhớ qua nhiều lần làm việc. Ví dụ: bạn dùng Windows, thích câu trả lời ngắn, ưu tiên app đơn giản.</p></div></div>
+        <div class="step"><span>3</span><div><strong>Skill</strong><p>Là một workflow đóng gói để dùng lại. Ví dụ: trước khi push, kiểm tra Git status, build, test và gợi ý commit message.</p></div></div>
+      </section>
+
+      <section class="section">
+        <h2>Trước khi bắt đầu cần chuẩn bị gì?</h2>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <span>🧩</span>
+            <strong>Tool từ buổi 2 đã chạy được</strong>
+            <p>Nếu chưa có tool, vẫn học được. Nhưng tốt nhất là dùng chính project nhỏ bạn đã tạo ở Session 2.</p>
+          </div>
+          <div class="guide-card">
+            <span>📝</span>
+            <strong>Một vài điều bạn muốn Codex làm theo</strong>
+            <p>Ví dụ: trả lời tiếng Việt, không xóa file bừa, luôn báo rõ đã sửa gì, ưu tiên cách đơn giản.</p>
+          </div>
+          <div class="guide-card">
+            <span>🧠</span>
+            <strong>Hiểu đơn giản: đây là cách dạy Codex nhớ luật chơi</strong>
+            <p>Không phải học kỹ thuật mới. Bạn chỉ đang viết ra cách bạn muốn cộng sự AI làm việc cùng mình.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Làm theo từng bước</h2>
+        <div class="step">
+          <span>1</span>
+          <div>
+            <strong>Tạo AGENTS.md cho project</strong>
+            <p>Copy prompt ở phần dưới. Codex sẽ tạo một file nội quy để những lần sau làm việc ổn định hơn.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span>2</span>
+          <div>
+            <strong>Đọc lại nội quy cùng Codex</strong>
+            <p>Đừng bỏ qua bước này. Nếu có câu nào quá kỹ thuật, yêu cầu Codex viết lại cho người mới hiểu.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span>3</span>
+          <div>
+            <strong>Nhờ Codex đề xuất Memory</strong>
+            <p>Memory giống những thói quen cá nhân. Chỉ lưu điều giúp làm việc tốt hơn, không lưu mật khẩu hay API key.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span>4</span>
+          <div>
+            <strong>Tạo skill ship-check</strong>
+            <p>Skill này giống checklist trước khi giao bài: xem file đã đổi, chạy build/test, rồi gợi ý commit message.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span>5</span>
+          <div>
+            <strong>Dùng skill để kiểm tra project</strong>
+            <p>Sau khi tạo xong, hãy yêu cầu: “Dùng skill ship-check kiểm tra project này giúp tôi.”</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo-card" id="agents">
+        <header><strong>Prompt tạo AGENTS.md</strong><span class="pill">Nội quy project</span></header>
+        <pre id="prompt-agents">Hãy tạo file AGENTS.md cho project này để Codex làm việc phù hợp với tôi.
+
+Bối cảnh:
+- Tôi là người non-tech
+- Tôi muốn dùng ngôn ngữ tự nhiên để tạo và sửa tool
+- Tôi muốn Codex tự làm phần kỹ thuật nhiều nhất có thể
+- Tôi muốn giải thích ngắn gọn bằng tiếng Việt
+
+Quy tắc cần có:
+- Trước khi sửa code, đọc project để hiểu stack
+- Không xóa file nếu chưa hỏi
+- Không push GitHub nếu tôi chưa yêu cầu
+- Nếu app lỗi, tự đọc terminal/log/browser console và sửa
+- Sau khi sửa, chạy build/test nếu có
+- Cuối task, báo cáo file đã sửa, lệnh đã chạy, build/test, commit nếu có
+
+Hãy viết AGENTS.md ngắn gọn, dễ hiểu.
+Sau đó commit thay đổi này.</pre>
+        <div class="copy-row">
+          <small>Dùng khi muốn Codex có “luật làm việc” trong project.</small>
+          <button class="copy-btn" data-copy="prompt-agents">Copy prompt</button>
+        </div>
+      </section>
+
+      <section class="demo-card">
+        <header><strong>Prompt đề xuất Memory</strong><span class="pill">Thói quen cá nhân</span></header>
+        <pre id="prompt-memory">Hãy đề xuất những Memory nên lưu cho tôi khi làm việc với Codex.
+
+Bối cảnh của tôi:
+- Tôi là người non-tech
+- Tôi muốn tạo web tool đơn giản
+- Tôi thích Codex giải thích ngắn gọn bằng tiếng Việt
+- Tôi muốn Codex tự xử lý code, build, Git nếu có thể
+- Tôi chỉ muốn bị hỏi khi cần quyền, đăng nhập, push GitHub, tạo repo mới, hoặc quyết định sản phẩm
+
+Hãy trả về:
+- Danh sách Memory nên lưu
+- Memory nào không nên lưu
+- Câu lệnh/prompt để tôi báo Codex ghi nhớ</pre>
+        <div class="copy-row">
+          <small>Lưu ý quan trọng: không lưu API key, token, mật khẩu vào Memory.</small>
+          <button class="copy-btn" data-copy="prompt-memory">Copy prompt</button>
+        </div>
+      </section>
+
+      <section class="demo-card" id="skill">
+        <header><strong>Prompt tạo skill ship-check</strong><span class="pill">Workflow dùng lại</span></header>
+        <pre id="prompt-skill">Hãy tạo một skill repo-scoped tên ship-check cho project này.
+
+Mục đích skill:
+- Dùng trước khi kết thúc task hoặc trước khi push GitHub
+- Kiểm tra Git status
+- Xem file nào đã thay đổi
+- Chạy build/test phù hợp nếu có
+- Báo lỗi nếu build/test fail
+- Gợi ý commit message rõ nghĩa
+- Không push GitHub nếu tôi chưa yêu cầu
+
+Yêu cầu:
+- Tự tạo đúng cấu trúc skill phù hợp
+- Viết SKILL.md ngắn gọn, dễ hiểu
+- Sau khi tạo, giải thích cách dùng skill bằng 2 ví dụ prompt
+- Commit skill này</pre>
+        <div class="copy-row">
+          <small>Dùng để có một nghi thức kiểm tra trước khi giao bài.</small>
+          <button class="copy-btn" data-copy="prompt-skill">Copy prompt</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Kết quả đúng sẽ trông như thế nào?</h2>
+        <div class="result-grid">
+          <div class="result-card">
+            <strong>Project có file AGENTS.md</strong>
+            <p>Mở project lên sẽ thấy một file nội quy rõ ràng, ngắn gọn, đúng cách bạn muốn Codex làm việc.</p>
+          </div>
+          <div class="result-card">
+            <strong>Có danh sách Memory nên lưu</strong>
+            <p>Bạn biết điều nào nên ghi nhớ, điều nào không nên lưu để tránh lộ thông tin nhạy cảm.</p>
+          </div>
+          <div class="result-card">
+            <strong>Có workflow kiểm tra trước khi giao bài</strong>
+            <p>Codex biết cách kiểm tra Git status, build/test và báo cáo trước khi bạn kết thúc task.</p>
+          </div>
+        </div>
+        <div class="stuck-card">
+          <strong>Nếu Codex không biết tạo skill ở đâu?</strong>
+          <p>Không sao. Hãy yêu cầu Codex đọc lại project và giải thích “skill nên đặt ở đâu trong môi trường hiện tại”. Nếu vẫn chưa rõ, chỉ cần giữ AGENTS.md và Memory trước.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Bài tập tự làm sau buổi 3</h2>
+        <div class="exercise-card">
+          <strong>Tạo thêm một skill nhỏ tên ui-review</strong>
+          <p>
+            Hãy nhờ Codex tạo một skill giúp kiểm tra giao diện trước khi public: chữ có dễ đọc không, nút có rõ không,
+            mobile có vỡ layout không, và người non-tech có hiểu phải bấm gì không.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Checklist cuối buổi</h2>
+        <ul class="checklist">
+          <li>Project có AGENTS.md.</li>
+          <li>Học viên biết Memory nên lưu gì và không nên lưu gì.</li>
+          <li>Có skill ship-check hoặc hiểu cách yêu cầu Codex tạo skill.</li>
+          <li>Học viên hiểu đây là cách làm Codex ngày càng “hợp gu” hơn.</li>
+        </ul>
+      </section>
+
+      <div class="session-nav">
+        <a href="/codex-session-02-tao-tool-dau-tien.html">← Session 2</a>
+        <a href="/codex-session-04-github-mcp-hoan-thien.html">Session 4: GitHub, MCP và hoàn thiện →</a>
+      </div>
+
+      <footer>© 2026 Lumi Labs · Codex Training Session 3</footer>
+    </div>
+    <script src="/codex-training-copy.js"></script>
+  </body>
+</html>

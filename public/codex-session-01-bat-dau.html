@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Session 1 - Dùng Codex như một lập trình viên AI</title>
+    <meta name="description" content="Buổi 1 của series Codex thực chiến: giúp người non-tech hiểu Codex, kiểm tra môi trường và tạo commit đầu tiên." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/codex-training-session.css" />
+  </head>
+  <body>
+    <div class="page">
+      <nav class="topbar">
+        <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
+        <a class="back" href="/codex-training-thuc-chien.html">← Về series Codex</a>
+      </nav>
+
+      <header class="hero">
+        <div class="pill">Session 1 · 90 phút</div>
+        <h1>Dùng Codex như một <span>lập trình viên AI.</span></h1>
+        <p class="lead">
+          Buổi đầu tiên không cố dạy code. Mục tiêu là để bạn thấy Codex có thể đọc project, chạy lệnh,
+          sửa file và lưu lại thay đổi. Khi thấy Codex làm được việc thật, phần kỹ thuật sẽ bớt đáng sợ hơn nhiều.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#practice">Làm bài thực hành</a>
+          <a class="button secondary" href="#prompt">Copy prompt buổi 1</a>
+        </div>
+      </header>
+
+      <section class="lumi-guide" aria-label="Lumi Bot dẫn đường">
+        <img src="/lumi-bot.png" alt="Lumi Bot" />
+        <div>
+          <span>Lumi Bot dẫn đường</span>
+          <strong>Bắt đầu nhẹ thôi: kiểm tra môi trường, tạo README, lưu mốc đầu tiên.</strong>
+          <p>Nếu thấy Git, Node hay terminal hơi lạ, cứ để Codex kiểm tra giúp. Buổi này chỉ cần thấy Codex làm được việc thật.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Sau buổi này, bạn làm được gì?</h2>
+        <ul class="checklist">
+          <li>Hiểu Codex khác ChatGPT ở điểm nào bằng ngôn ngữ rất đời thường.</li>
+          <li>Biết đưa một yêu cầu tiếng Việt để Codex tự kiểm tra môi trường.</li>
+          <li>Hiểu 6 từ tối thiểu: project, terminal, build, Git, commit, push.</li>
+          <li>Tạo được một file README và có một commit local đầu tiên.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Trước khi bắt đầu cần chuẩn bị gì?</h2>
+        <p>Đừng để phần cài đặt làm người mới hoảng. Buổi này chỉ cần đủ để Codex mở được một folder và thử tạo file đầu tiên.</p>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <span>1</span>
+            <strong>Một folder trống</strong>
+            <p>Tạo folder tên dễ hiểu, ví dụ <b>codex-training-demo</b>. Đây là nơi Codex sẽ làm việc.</p>
+          </div>
+          <div class="guide-card">
+            <span>2</span>
+            <strong>Codex đang mở trong folder đó</strong>
+            <p>Nếu chưa chắc đang ở đúng folder, cứ nhờ Codex kiểm tra bằng prompt bên dưới.</p>
+          </div>
+          <div class="guide-card">
+            <span>3</span>
+            <strong>Tâm lý: chưa cần hiểu hết</strong>
+            <p>Git, Node, terminal nghe lạ cũng không sao. Hôm nay mình chỉ cần biết cái nào đã sẵn sàng.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Hãy hiểu buổi này như thế nào?</h2>
+        <p>
+          “Hôm nay mình không học lập trình theo kiểu ngồi học từng dòng code. Mình học cách giao việc cho Codex.
+          Bạn sẽ nói rõ mình muốn gì, nhìn kết quả, rồi yêu cầu Codex sửa. Những phần như đọc lỗi, chạy lệnh,
+          tạo file, commit code, mình để Codex làm.”
+        </p>
+        <div class="note">
+          <strong>Câu nhớ nhanh</strong>
+          <p>ChatGPT giống người tư vấn. Codex giống một dev AI đang ngồi trong project của bạn.</p>
+        </div>
+      </section>
+
+      <section class="section" id="practice">
+        <h2>Làm theo từng bước</h2>
+        <div class="step"><span>1</span><div><strong>Mở Codex trong folder rỗng</strong><p>Đặt tên folder rõ ràng, ví dụ: <b>codex-training-demo</b>. Đừng bắt đầu trong folder có quá nhiều file lạ.</p></div></div>
+        <div class="step"><span>2</span><div><strong>Paste prompt kiểm tra môi trường</strong><p>Copy prompt “kiểm tra môi trường” ở phần dưới, dán vào Codex, rồi chờ Codex báo cái gì đã có, cái gì còn thiếu.</p></div></div>
+        <div class="step"><span>3</span><div><strong>Đọc kết quả bằng mắt thường</strong><p>Nếu Codex báo thiếu GitHub CLI hoặc chưa đăng nhập GitHub, vẫn có thể học tiếp. Buổi này chưa cần push.</p></div></div>
+        <div class="step"><span>4</span><div><strong>Paste prompt tạo README</strong><p>README là cách nhẹ nhất để thấy Codex có thể tạo file thật trong project.</p></div></div>
+        <div class="step"><span>5</span><div><strong>Xem commit đầu tiên</strong><p>Commit là một lần lưu mốc thay đổi có ghi chú. Chưa cần học Git sâu, chỉ cần biết “mình đã lưu lại một phiên bản”.</p></div></div>
+      </section>
+
+      <section class="section">
+        <h2>Kết quả đúng sẽ trông như thế nào?</h2>
+        <div class="result-grid">
+          <div class="result-card">
+            <span>✓</span>
+            <strong>Trong folder có file README.md</strong>
+            <p>Mở ra thấy tên project, mục đích project và ghi chú cách chạy sẽ bổ sung sau.</p>
+          </div>
+          <div class="result-card">
+            <span>✓</span>
+            <strong>Codex báo đã commit hoặc báo lý do chưa commit</strong>
+            <p>Nếu chưa commit được vì thiếu Git, đó vẫn là kết quả tốt: bạn đã biết máy còn thiếu gì.</p>
+          </div>
+        </div>
+        <div class="stuck-card">
+          <strong>Nếu bị kẹt ở bước này</strong>
+          <p>Đừng tự mò lỗi. Copy prompt cứu hộ ở cuối bài và yêu cầu Codex nói bằng tiếng Việt: thiếu gì, có nghiêm trọng không, và có thể học tiếp không.</p>
+        </div>
+      </section>
+
+      <section class="demo-card" id="prompt">
+        <header><strong>Prompt kiểm tra môi trường</strong><span class="pill">Copy dùng ngay</span></header>
+        <pre id="prompt-env">Tôi là người non-tech.
+Hãy kiểm tra môi trường hiện tại đã sẵn sàng để làm web tool chưa.
+
+Kiểm tra giúp tôi:
+- Git đã có chưa
+- Node và npm đã có chưa
+- GitHub CLI đã có chưa
+- GitHub CLI đã đăng nhập chưa
+- Folder hiện tại đã có project/Git chưa
+
+Không sửa file.
+Hãy báo lại bằng tiếng Việt ngắn gọn, để tôi biết cái gì đã sẵn sàng và cái gì còn thiếu.</pre>
+        <div class="copy-row">
+          <small>Dùng ngay ở đầu buổi để thấy Codex biết tự kiểm tra.</small>
+          <button class="copy-btn" data-copy="prompt-env">Copy prompt</button>
+        </div>
+      </section>
+
+      <section class="demo-card">
+        <header><strong>Prompt tạo README và commit</strong><span class="pill">Bài tập nhỏ</span></header>
+        <pre id="prompt-readme">Hãy tạo một file README.md cho project demo này.
+
+Nội dung gồm:
+- Tên project: Codex Training Demo
+- Project này dùng để học cách điều khiển Codex
+- Cách chạy project sẽ bổ sung sau
+
+Sau đó:
+- Khởi tạo Git nếu project chưa có Git
+- Commit file README.md với message rõ nghĩa
+- Không push lên GitHub
+
+Hãy giải thích ngắn gọn bằng tiếng Việt khi xong.</pre>
+        <div class="copy-row">
+          <small>Đây là khoảnh khắc bạn thấy “mình vừa tạo được thứ thật”.</small>
+          <button class="copy-btn" data-copy="prompt-readme">Copy prompt</button>
+        </div>
+      </section>
+
+      <section class="demo-card">
+        <header><strong>Prompt cứu hộ khi setup bị lỗi</strong><span class="pill">Khi bị kẹt</span></header>
+        <pre id="prompt-rescue">Tôi là người non-tech.
+Hãy nói rõ tôi đang thiếu cái gì, mức độ quan trọng ra sao, và cách xử lý đơn giản nhất.
+
+Nếu có thể tiếp tục buổi học mà chưa cần cài phần đó, hãy đề xuất cách tiếp tục.
+Đừng giải thích quá kỹ thuật.
+Hãy trả lời bằng tiếng Việt ngắn gọn.</pre>
+        <div class="copy-row">
+          <small>Dùng khi Codex báo thiếu Git, Node, GitHub CLI hoặc lỗi quyền.</small>
+          <button class="copy-btn" data-copy="prompt-rescue">Copy prompt</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Bài tập tự làm sau buổi 1</h2>
+        <div class="exercise-card">
+          <strong>Đổi README thành một ý tưởng tool của riêng bạn</strong>
+          <p>Ví dụ: tool tạo checklist công việc, tool viết email phản hồi khách hàng, tool tính giá dịch vụ. Chưa cần code, chỉ cần mô tả rõ ý tưởng trong README.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Checklist cuối buổi</h2>
+        <ul class="checklist">
+          <li>Học viên biết đưa prompt vào Codex.</li>
+          <li>Học viên hiểu Codex đang làm gì ở mức đơn giản.</li>
+          <li>Project có README.</li>
+          <li>Có commit local hoặc hiểu vì sao chưa commit được.</li>
+        </ul>
+      </section>
+
+      <div class="session-nav">
+        <a href="/codex-training-thuc-chien.html">← Tổng quan series</a>
+        <a href="/codex-session-02-tao-tool-dau-tien.html">Session 2: Tạo tool đầu tiên →</a>
+      </div>
+
+      <footer>© 2026 Lumi Labs · Codex Training Session 1</footer>
+    </div>
+    <script src="/codex-training-copy.js"></script>
+  </body>
+</html>

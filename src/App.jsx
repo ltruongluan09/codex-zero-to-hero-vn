@@ -217,6 +217,14 @@ const beginnerArticles = [
     image: "/lumi-bot.png",
   },
   {
+    title: "Codex thực chiến: tự tạo tool bằng AI trong 4 buổi",
+    desc: "Một series từng bước để người không biết code vẫn biết giao việc cho Codex và tạo tool đầu tiên.",
+    href: "/codex-training-thuc-chien.html",
+    tag: "Series",
+    time: "4 buổi",
+    icon: "🎓",
+  },
+  {
     title: "Nhờ AI viết email dễ nghe hơn",
     desc: "Soạn email lịch sự, rõ ý, không bị cứng cho công việc hằng ngày.",
     href: "/ai-viet-email-de-hieu.html",
