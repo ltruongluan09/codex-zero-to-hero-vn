@@ -3,17 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Session 4 - GitHub, MCP và hoàn thiện tool</title>
-    <meta
-      name="description"
-      content="Buổi 4 của series Codex thực chiến: đóng gói tool, viết README, build, commit, push GitHub và hiểu MCP ở mức ứng dụng."
-    />
+    <title>Session 4 - Đóng gói project để chia sẻ</title>
+    <meta name="description" content="Buổi 4 của series Codex thực chiến: đóng gói tool, viết README, build/test, commit và chuẩn bị chia sẻ an toàn." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/codex-training-session.css" />
   </head>
   <body>
@@ -24,118 +18,66 @@
       </nav>
 
       <header class="hero">
-        <div class="pill">Session 4 · 90 phút</div>
-        <h1>Đóng gói tool để <span>người khác dùng được.</span></h1>
-        <p class="lead">
-          Buổi cuối giúp bạn đi từ “tool chạy trên máy mình” sang “tool có thể được chia sẻ”.
-          Bạn không cần trở thành kỹ sư phần mềm. Chỉ cần biết yêu cầu Codex kiểm tra, viết README, build, commit và chuẩn bị push an toàn.
-        </p>
+        <div class="pill">Session 4 · Sẵn sàng chia sẻ</div>
+        <h1>Đóng gói tool để <span>người khác hiểu và dùng thử.</span></h1>
+        <p class="lead">Tạo được tool là một chuyện. Làm cho người khác hiểu tool đó dùng để làm gì, chạy thế nào và có an toàn không mới là bước biến demo thành project thật.</p>
         <div class="hero-actions">
           <a class="button" href="#ship">Copy prompt đóng gói</a>
-          <a class="button secondary" href="#mcp">Hiểu MCP cực dễ</a>
+          <a class="button secondary" href="#github">Push GitHub an toàn</a>
         </div>
       </header>
+
+      <section class="quick-win">
+        <span>🚀</span>
+        <div>
+          <strong>Hôm nay bạn tạo được: một project có thể chia sẻ.</strong>
+          <p>README rõ, build/test đã kiểm tra, commit có ý nghĩa. Nếu chưa push GitHub, bạn vẫn biết chính xác bước tiếp theo.</p>
+        </div>
+      </section>
 
       <section class="lumi-guide" aria-label="Lumi Bot dẫn đường">
         <img src="/lumi-bot.png" alt="Lumi Bot" />
         <div>
           <span>Lumi Bot dẫn đường</span>
-          <strong>Trước khi chia sẻ, mình sẽ nhắc bạn kiểm tra cho chắc.</strong>
-          <p>README rõ, build/test đã chạy, commit có ý nghĩa. GitHub và MCP là bước nâng cấp, không phải thứ phải vội làm ngay.</p>
+          <strong>Đóng gói không phải làm cho sang. Đóng gói là để người khác không bị lạc.</strong>
+          <p>README là tờ hướng dẫn. Build/test là kiểm tra trước khi gửi đi. GitHub là nơi cất và chia sẻ khi bạn đã sẵn sàng.</p>
         </div>
       </section>
 
       <section class="section">
         <h2>Sau buổi này, bạn làm được gì?</h2>
-        <ul class="checklist">
-          <li>Biết README dùng để giải thích tool cho người khác.</li>
-          <li>Biết yêu cầu Codex chạy build/test trước khi kết thúc.</li>
-          <li>Biết commit thay đổi với message rõ nghĩa.</li>
-          <li>Biết push GitHub khi đã sẵn sàng và có quyền đăng nhập.</li>
-          <li>Hiểu MCP là “cổng kết nối” để Codex dùng thêm công cụ bên ngoài.</li>
+        <ul class="plain-list">
+          <li><strong>Biết README cần viết gì:</strong> tool làm gì, chạy thế nào, dùng ra sao, lỗi thì làm gì.</li>
+          <li><strong>Biết nhờ Codex kiểm tra:</strong> build/test pass hay fail, file nào đã sửa.</li>
+          <li><strong>Biết push GitHub an toàn:</strong> không push khi chưa rõ repo, quyền hoặc secret.</li>
         </ul>
       </section>
 
       <section class="section">
         <h2>Trước khi bắt đầu cần chuẩn bị gì?</h2>
-        <div class="guide-grid">
-          <div class="guide-card">
-            <span>✅</span>
-            <strong>Tool đã chạy local</strong>
-            <p>Chưa cần hoàn hảo. Chỉ cần mở lên được, bấm thử được và bạn hiểu tool đó giúp việc gì.</p>
-          </div>
-          <div class="guide-card">
-            <span>📘</span>
-            <strong>README sơ bộ</strong>
-            <p>Nếu chưa có README, đây là lúc nhờ Codex viết. README là tờ hướng dẫn để người khác chạy thử tool.</p>
-          </div>
-          <div class="guide-card">
-            <span>🔐</span>
-            <strong>GitHub chỉ làm khi đã sẵn sàng</strong>
-            <p>Nếu vướng đăng nhập, quyền truy cập hoặc chưa chắc repo nào, hãy dừng lại hỏi. Không cần cố push ngay.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Hãy hiểu bước đóng gói như thế nào?</h2>
-        <p>
-          “Tạo được tool là bước đầu. Nhưng nếu muốn người khác hiểu và dùng thử, mình cần đóng gói nó lại.
-          README giống tờ hướng dẫn sử dụng. Build giống bước kiểm tra trước khi gửi đi. GitHub giống nơi mình cất và chia sẻ code.”
-        </p>
-        <div class="note">
-          <strong>Câu nhớ nhanh</strong>
-          <p>Đừng push một project mà chính bạn chưa biết chạy. Hãy để Codex kiểm tra giúp trước.</p>
+        <div class="mini-flow">
+          <article><b>1</b><strong>Tool đã chạy được</strong><p>Chưa cần hoàn hảo. Chỉ cần mở lên, bấm thử và hiểu nó giúp gì.</p></article>
+          <article><b>2</b><strong>Biết ai sẽ dùng thử</strong><p>Bạn bè, đồng nghiệp, team nhỏ. README viết cho họ, không viết cho máy.</p></article>
+          <article><b>3</b><strong>Chưa cần vội push</strong><p>Nếu vướng đăng nhập/quyền, dừng lại hỏi. Không nhập secret vào code.</p></article>
         </div>
       </section>
 
       <section class="section">
         <h2>Làm theo từng bước</h2>
-        <div class="step">
-          <span>1</span>
-          <div>
-            <strong>Đóng gói tool bằng prompt ship</strong>
-            <p>Copy prompt “đóng gói tool” ở phần dưới. Codex sẽ đọc project, cập nhật README và kiểm tra script.</p>
-          </div>
-        </div>
-        <div class="step">
-          <span>2</span>
-          <div>
-            <strong>Chạy build/test</strong>
-            <p>Nếu project có lệnh build hoặc test, để Codex chạy. Nếu lỗi, để Codex sửa hoặc giải thích rõ lỗi nằm ở đâu.</p>
-          </div>
-        </div>
-        <div class="step">
-          <span>3</span>
-          <div>
-            <strong>Cập nhật README cho người mới</strong>
-            <p>README nên trả lời 4 câu: tool này làm gì, chạy thế nào, dùng thế nào, nếu lỗi thì làm gì.</p>
-          </div>
-        </div>
-        <div class="step">
-          <span>4</span>
-          <div>
-            <strong>Push GitHub nếu sẵn sàng</strong>
-            <p>Chỉ push khi đã biết repo nào, đã đăng nhập GitHub và hiểu mình đang đưa project nào lên.</p>
-          </div>
-        </div>
-        <div class="step">
-          <span>5</span>
-          <div>
-            <strong>Hiểu MCP như bước nâng cấp sau</strong>
-            <p>MCP không phải việc đầu tiên. Hãy dùng khi bạn thật sự cần Codex kết nối thêm GitHub, database, browser hoặc công cụ nội bộ.</p>
-          </div>
-        </div>
+        <div class="step"><span>1</span><div><strong>Copy prompt đóng gói</strong><p>Codex đọc project, cập nhật README, kiểm tra script.</p></div></div>
+        <div class="step"><span>2</span><div><strong>Chạy build/test</strong><p>Nếu lỗi, để Codex sửa hoặc báo rõ nguyên nhân.</p></div></div>
+        <div class="step"><span>3</span><div><strong>Commit rõ nghĩa</strong><p>Một commit giống một mốc lưu: “hoàn thiện Caption Mini Tool”.</p></div></div>
+        <div class="step"><span>4</span><div><strong>Push GitHub khi sẵn sàng</strong><p>Chỉ push khi bạn biết repo nào và đã đăng nhập đúng tài khoản.</p></div></div>
       </section>
 
       <section class="demo-card" id="ship">
-        <header><strong>Prompt đóng gói tool trước khi chia sẻ</strong><span class="pill">Copy dùng ngay</span></header>
+        <header><strong>Prompt đóng gói project</strong><span class="pill">Copy dùng ngay</span></header>
         <pre id="prompt-ship">Tôi muốn đóng gói project này để người khác có thể hiểu và chạy thử.
 
 Hãy làm giúp tôi:
 - Đọc project để hiểu tool này làm gì
 - Viết hoặc cập nhật README.md thật dễ hiểu
-- README cần có: mục tiêu tool, cách chạy local, cách dùng, lưu ý cho người mới
+- README cần có: mục tiêu tool, cách chạy local, cách dùng, lỗi thường gặp
 - Kiểm tra package/script hiện tại
 - Chạy build/test phù hợp nếu có
 - Nếu build/test lỗi, tự sửa đến khi pass hoặc báo rõ nguyên nhân
@@ -143,19 +85,15 @@ Hãy làm giúp tôi:
 - Commit thay đổi với message rõ nghĩa
 
 Không push GitHub nếu tôi chưa yêu cầu.
-Cuối cùng báo cáo ngắn gọn:
-- File nào đã sửa
-- Lệnh nào đã chạy
-- Build/test có pass không
-- Commit là gì</pre>
+Cuối cùng báo cáo ngắn gọn: file đã sửa, lệnh đã chạy, build/test, commit.</pre>
         <div class="copy-row">
-          <small>Dùng ở cuối buổi để biến demo thành một project có thể chia sẻ.</small>
+          <small>Dùng khi tool đã chạy và bạn muốn chuẩn bị chia sẻ.</small>
           <button class="copy-btn" data-copy="prompt-ship">Copy prompt</button>
         </div>
       </section>
 
-      <section class="demo-card">
-        <header><strong>Prompt push GitHub an toàn</strong><span class="pill">Khi môi trường đã sẵn sàng</span></header>
+      <section class="demo-card" id="github">
+        <header><strong>Prompt push GitHub an toàn</strong><span class="pill">Khi đã sẵn sàng</span></header>
         <pre id="prompt-github">Tôi muốn đưa project này lên GitHub.
 
 Trước khi push, hãy kiểm tra:
@@ -164,104 +102,52 @@ Trước khi push, hãy kiểm tra:
 - Remote GitHub đã có chưa
 - GitHub CLI đã đăng nhập chưa
 
-Nếu chưa có remote, hãy hướng dẫn tôi tạo repo hoặc hỏi tôi tên repo trước.
-Nếu cần quyền đăng nhập hoặc xác nhận, hãy dừng lại và hỏi tôi.
+Nếu chưa có remote, hãy hỏi tôi tên repo trước.
+Nếu cần đăng nhập hoặc xác nhận quyền, hãy dừng lại và hướng dẫn từng bước.
 
-Khi mọi thứ đã sẵn sàng:
+Khi mọi thứ sẵn sàng:
 - Push lên GitHub
 - Trả lại link repo
-- Nhắc tôi bước tiếp theo để deploy nếu phù hợp</pre>
+- Nhắc tôi bước deploy tiếp theo nếu phù hợp</pre>
         <div class="copy-row">
-          <small>Prompt này giúp người mới không vô tình push sai chỗ.</small>
+          <small>Dùng để tránh push nhầm chỗ hoặc lộ thông tin nhạy cảm.</small>
           <button class="copy-btn" data-copy="prompt-github">Copy prompt</button>
         </div>
       </section>
 
-      <section class="section" id="mcp">
-        <h2>MCP giải thích cho người mới</h2>
-        <p>
-          MCP có thể hiểu đơn giản là cách để Codex kết nối với những công cụ bên ngoài. Ví dụ: GitHub, database, trình duyệt,
-          hệ thống tài liệu hoặc công cụ nội bộ. Người học chưa cần hiểu kỹ thuật sâu. Chỉ cần hiểu: khi cần Codex làm việc với một hệ thống khác,
-          MCP là một trong những cách mở cổng kết nối.
-        </p>
-        <div class="step">
-          <span>1</span>
-          <div>
-            <strong>Không cần dùng MCP ngay từ đầu</strong>
-            <p>Với người mới, hãy tạo tool local chạy được trước. MCP để sau khi đã có nhu cầu thật.</p>
-          </div>
-        </div>
-        <div class="step">
-          <span>2</span>
-          <div>
-            <strong>Khi cần, hãy đưa link hướng dẫn cho Codex</strong>
-            <p>Codex có thể đọc tài liệu cài đặt, đề xuất cách cấu hình, và nói rõ bước nào cần bạn xác nhận.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="demo-card">
-        <header><strong>Prompt nhờ Codex cài MCP theo tài liệu</strong><span class="pill">Nâng cao nhẹ</span></header>
-        <pre id="prompt-mcp">Tôi muốn cài một MCP server theo tài liệu này:
-[dán link tài liệu hoặc hướng dẫn vào đây]
-
-Hãy làm giúp tôi:
-- Đọc kỹ tài liệu
-- Giải thích MCP này dùng để làm gì bằng tiếng Việt dễ hiểu
-- Kiểm tra môi trường hiện tại có phù hợp không
-- Đề xuất các bước cài đặt an toàn
-- Chỉ chạy lệnh khi không cần secret hoặc quyền đặc biệt
-- Nếu cần token/API key/quyền đăng nhập, hãy dừng lại và hướng dẫn tôi tự nhập
-
-Không ghi secret vào code.
-Không push thay đổi nếu tôi chưa yêu cầu.</pre>
-        <div class="copy-row">
-          <small>Dùng khi muốn tìm hiểu MCP mà không bị quá tải.</small>
-          <button class="copy-btn" data-copy="prompt-mcp">Copy prompt</button>
+      <section class="section">
+        <h2>MCP hiểu cực đơn giản</h2>
+        <p>MCP là “cổng kết nối” để Codex dùng thêm công cụ bên ngoài như GitHub, database, browser hoặc hệ thống nội bộ. Người mới chưa cần dùng ngay. Hãy tạo tool chạy được trước.</p>
+        <div class="note">
+          <strong>Câu nhớ nhanh</strong>
+          <p>Tool chưa chạy thì chưa cần MCP. Khi có nhu cầu kết nối thật, hãy để Codex đọc tài liệu và hướng dẫn an toàn.</p>
         </div>
       </section>
 
       <section class="section">
         <h2>Kết quả đúng sẽ trông như thế nào?</h2>
         <div class="result-grid">
-          <div class="result-card">
-            <strong>README đọc vào hiểu ngay</strong>
-            <p>Người khác biết tool này để làm gì, cách chạy local, cách dùng và những lỗi thường gặp.</p>
-          </div>
-          <div class="result-card">
-            <strong>Build/test đã được kiểm tra</strong>
-            <p>Nếu pass, ghi rõ pass. Nếu fail, ghi rõ lý do và bước cần làm tiếp. Không giấu lỗi.</p>
-          </div>
-          <div class="result-card">
-            <strong>Project sẵn sàng chia sẻ</strong>
-            <p>Có commit rõ nghĩa. Nếu chưa push GitHub, ít nhất bạn biết chính xác cần làm gì ở bước tiếp theo.</p>
-          </div>
-        </div>
-        <div class="stuck-card">
-          <strong>Nếu GitHub bị vướng đăng nhập?</strong>
-          <p>Dừng lại. Đây là chuyện bình thường. Hãy để Codex hướng dẫn từng bước, nhưng không nhập mật khẩu, token hay secret vào code.</p>
+          <div class="result-card"><span>✓</span><strong>README đọc vào hiểu ngay</strong><p>Người khác biết tool dùng để làm gì và chạy ra sao.</p></div>
+          <div class="result-card"><span>✓</span><strong>Build/test đã được kiểm tra</strong><p>Nếu pass thì ghi rõ. Nếu fail thì biết lỗi nằm ở đâu.</p></div>
         </div>
       </section>
 
       <section class="section">
-        <h2>Bài tập tự làm sau buổi 4</h2>
+        <h2>Bài tập tự làm</h2>
         <div class="exercise-card">
           <strong>Chọn một hướng nâng cấp tiếp theo</strong>
-          <p>
-            Hãy chọn một việc nhỏ: deploy lên Vercel, thêm AI API, làm đẹp UI, hoặc viết một bài nhật ký build.
-            Đừng làm tất cả cùng lúc. Mỗi lần chỉ nâng một phần để project không bị rối.
-          </p>
+          <p>Deploy Vercel, thêm AI API, làm đẹp UI hoặc viết nhật ký build. Mỗi lần chỉ chọn một việc để project không rối.</p>
         </div>
       </section>
 
       <section class="section">
-        <h2>Checklist kết thúc toàn series</h2>
+        <h2>Checklist cuối buổi</h2>
         <ul class="checklist">
-          <li>Học viên có ít nhất một tool chạy được.</li>
-          <li>Tool có README dễ hiểu.</li>
-          <li>Học viên biết prompt để yêu cầu Codex sửa lỗi.</li>
-          <li>Học viên biết prompt để đóng gói, commit và push khi cần.</li>
-          <li>Học viên hiểu mình không cần trở thành dev ngay, nhưng có thể bắt đầu tạo sản phẩm nhỏ bằng AI.</li>
+          <li>README dễ hiểu.</li>
+          <li>Build/test đã chạy hoặc biết vì sao chưa chạy được.</li>
+          <li>Có commit rõ nghĩa.</li>
+          <li>Biết cách push GitHub an toàn khi cần.</li>
+          <li>Hiểu MCP là phần nâng cấp sau, không phải rào cản bắt đầu.</li>
         </ul>
       </section>
 

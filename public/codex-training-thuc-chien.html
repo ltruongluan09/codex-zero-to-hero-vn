@@ -6,7 +6,7 @@
     <title>Codex thực chiến: tự tạo tool bằng AI trong 4 buổi - Lumi Labs</title>
     <meta
       name="description"
-      content="Series Codex thực chiến trong kho bài học Lumi Labs: giúp người non-tech dùng Codex để tạo tool đầu tiên trong 4 buổi."
+      content="Series Codex thực chiến của Lumi Labs: người không biết code đi từng bước để tạo tool đầu tiên bằng AI."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,485 +15,130 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/lumi-article.css" />
+    <link rel="stylesheet" href="/codex-training-session.css" />
     <style>
-      .trainer-grid,
-      .session-grid,
-      .outcome-grid {
-        display: grid;
-        gap: 14px;
-      }
-
-      .trainer-grid {
-        grid-template-columns: repeat(3, 1fr);
-        margin-top: 20px;
-      }
-
-      .session-grid {
-        grid-template-columns: repeat(2, 1fr);
-        margin-top: 18px;
-      }
-
-      .outcome-grid {
-        grid-template-columns: repeat(4, 1fr);
-        margin-top: 18px;
-      }
-
-      .trainer-card,
-      .session-card,
-      .outcome-card {
-        border: 1px solid var(--line);
-        border-radius: 22px;
-        background: rgba(255, 255, 255, 0.72);
-        padding: 18px;
-      }
-
-      .session-card {
-        color: inherit;
-        text-decoration: none;
-        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .session-card:hover {
-        transform: translateY(-3px);
-        border-color: rgba(124, 77, 255, 0.34);
-        box-shadow: 0 18px 44px rgba(90, 66, 125, 0.12);
-      }
-
-      .read-link {
-        display: inline-flex;
-        margin-top: 14px;
-        color: var(--violet);
-        font-weight: 950;
-      }
-
-      .trainer-card span,
-      .session-card .num,
-      .outcome-card span {
-        display: grid;
-        place-items: center;
-        width: 42px;
-        height: 42px;
-        margin-bottom: 12px;
-        border-radius: 15px;
-        background: #f2ebff;
-        color: var(--violet);
-        font-weight: 950;
-      }
-
-      .trainer-card strong,
-      .session-card strong,
-      .outcome-card strong {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 18px;
-      }
-
-      .trainer-card p,
-      .session-card p,
-      .outcome-card p {
-        margin: 0;
-        font-size: 15px;
-        line-height: 1.65;
-      }
-
-      .session-card ul,
-      .checklist {
-        margin: 12px 0 0;
-        padding-left: 20px;
-      }
-
-      .session-card li,
-      .checklist li {
-        font-size: 15px;
-        line-height: 1.62;
-      }
-
-      .timeline {
-        display: grid;
-        gap: 14px;
-        margin-top: 18px;
-      }
-
-      .timeline-item {
-        display: grid;
-        grid-template-columns: 76px 1fr;
-        gap: 14px;
-        align-items: start;
-        border-top: 1px solid var(--line);
-        padding-top: 16px;
-      }
-
-      .timeline-item:first-child {
-        border-top: 0;
-        padding-top: 0;
-      }
-
-      .timeline-item em {
-        border-radius: 999px;
-        background: linear-gradient(135deg, rgba(255, 107, 101, 0.12), rgba(124, 77, 255, 0.14));
-        color: var(--violet);
-        font-style: normal;
-        font-weight: 950;
-        padding: 8px 10px;
-        text-align: center;
-      }
-
-      .timeline-item h3 {
-        margin: 0 0 6px;
-        font-size: 22px;
-      }
-
-      .prompt-pack {
-        display: grid;
-        gap: 16px;
-      }
-
-      .prompt-pack .demo-card {
-        margin-top: 0;
-      }
-
-      .path-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 14px;
-        margin-top: 18px;
-      }
-
-      .path-card {
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.72);
-        padding: 18px;
-      }
-
-      .path-card strong {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 18px;
-      }
-
-      .path-card p {
-        margin: 0;
-        color: var(--text);
-        font-size: 15px;
-        line-height: 1.62;
-      }
-
-      @media (max-width: 820px) {
-        .trainer-grid,
-        .session-grid,
-        .outcome-grid,
-        .path-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .timeline-item {
-          grid-template-columns: 1fr;
-        }
-
-        .timeline-item em {
-          width: fit-content;
-        }
-      }
+      .page { width: min(1040px, calc(100% - 32px)); }
+      .session-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 18px; }
+      .session-card { border: 1px solid var(--line); border-radius: 22px; background: rgba(255,255,255,.74); padding: 18px; transition: .2s ease; }
+      .session-card:hover { transform: translateY(-3px); border-color: rgba(124,77,255,.34); box-shadow: 0 18px 44px rgba(90,66,125,.12); }
+      .session-card .num { display: grid; place-items: center; width: 42px; height: 42px; margin-bottom: 12px; border-radius: 15px; background: #f2ebff; color: var(--violet); font-weight: 950; }
+      .session-card strong { display: block; margin-bottom: 8px; font-size: 20px; line-height: 1.25; }
+      .session-card p { margin: 0; color: var(--text); font-size: 15px; line-height: 1.62; }
+      .session-card em { display: inline-flex; margin-top: 12px; color: var(--violet); font-style: normal; font-weight: 950; }
+      @media (max-width: 820px) { .session-grid { grid-template-columns: 1fr; } }
     </style>
   </head>
   <body>
     <div class="page">
       <nav class="topbar">
         <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
-        <a class="back" href="/bai-viet">← Kho bài viết</a>
+        <a class="back" href="/bai-viet">← Kho bài học</a>
       </nav>
 
       <header class="hero">
-        <div class="pill">🎓 Kho bài học · Series Codex</div>
-        <h1>Codex thực chiến: người không biết code vẫn <span>tạo được tool.</span></h1>
+        <div class="pill">🎓 Series thực hành · Không cần giỏi code</div>
+        <h1>4 buổi để tự tạo <span>tool đầu tiên bằng AI.</span></h1>
         <p class="lead">
-          Đây là đường đi đầu tiên của Lumi Labs dành cho người mới. Bạn không cần học lập trình theo kiểu truyền thống.
-          Bạn sẽ học cách nói rõ ý tưởng, để Codex tạo tool, rồi tự kiểm tra và cải thiện từng bước.
+          Không học lý thuyết dài. Bạn copy prompt, để Codex làm phần kỹ thuật, rồi tự kiểm tra kết quả bằng mắt.
+          Mục tiêu cuối series: có một tool nhỏ chạy được và biết cách nhờ Codex sửa tiếp.
         </p>
         <div class="hero-actions">
-          <a class="button" href="/codex-session-01-bat-dau.html">Bắt đầu từ buổi 1</a>
-          <a class="button secondary" href="#first-time">Tôi chưa biết Codex là gì</a>
+          <a class="button" href="/codex-session-01-bat-dau.html">Bắt đầu buổi 1</a>
+          <a class="button secondary" href="#sessions">Xem 4 buổi</a>
         </div>
       </header>
+
+      <section class="quick-win">
+        <span>✨</span>
+        <div>
+          <strong>Bạn không cần hiểu code trước. Bạn cần biết giao việc rõ.</strong>
+          <p>Codex giống một cộng sự kỹ thuật AI. Bạn nói muốn tạo gì, Codex đọc project, sửa file, chạy thử và báo lại.</p>
+        </div>
+      </section>
 
       <section class="lumi-guide" aria-label="Lumi Bot dẫn đường">
         <img src="/lumi-bot.png" alt="Lumi Bot" />
         <div>
           <span>Lumi Bot dẫn đường</span>
-          <strong>Mình sẽ đi cùng bạn qua từng buổi, không để bạn học lan man.</strong>
-          <p>
-            Cứ đi theo thứ tự: hiểu Codex, tạo tool nhỏ, sửa lỗi, rồi đóng gói. Mỗi trang đều có prompt để copy,
-            checklist để tự kiểm tra và bước cứu hộ khi bị kẹt.
-          </p>
-        </div>
-      </section>
-
-      <section class="section" id="first-time">
-        <h2>Nếu bạn chưa biết Codex là gì</h2>
-        <p>
-          Hãy hình dung Codex như một người bạn kỹ thuật đang ngồi trong project của bạn. Bạn nói muốn tạo tool gì,
-          Codex sẽ đọc file, sửa code, chạy thử, báo lỗi và giúp bạn đi tiếp. Việc của bạn không phải là thuộc code.
-          Việc của bạn là mô tả rõ điều mình muốn.
-        </p>
-        <div class="note">
-          <strong>Câu nhớ nhanh</strong>
-          <p>ChatGPT giúp bạn nghĩ. Codex giúp bạn làm trong project.</p>
+          <strong>Mình sẽ giữ cho bạn đi đúng đường: làm nhỏ, thấy kết quả, rồi nâng cấp.</strong>
+          <p>Mỗi buổi chỉ có một việc chính. Nếu bị lỗi, bạn có prompt cứu hộ. Nếu thấy quá kỹ thuật, quay lại câu hỏi: “hôm nay mình cần tạo ra thứ gì?”</p>
         </div>
       </section>
 
       <section class="section">
-        <h2>Trước khi bắt đầu, bạn cần gì?</h2>
-        <p>
-          Đừng chuẩn bị quá nhiều. Series này được thiết kế để bạn vừa đọc vừa làm, mỗi buổi chỉ cần một kết quả nhỏ nhìn thấy được.
-        </p>
-        <div class="path-grid">
-          <div class="path-card">
-            <strong>1. Một máy có thể mở Codex</strong>
-            <p>Nếu chưa chắc môi trường đã sẵn sàng, buổi 1 có prompt để Codex tự kiểm tra giúp.</p>
-          </div>
-          <div class="path-card">
-            <strong>2. Một ý tưởng tool rất nhỏ</strong>
-            <p>Ví dụ: tạo caption, viết email, tạo checklist, tóm tắt tài liệu. Nhỏ thôi để làm ra được trước.</p>
-          </div>
-          <div class="path-card">
-            <strong>3. Tâm lý thử từng bước</strong>
-            <p>Nếu lỗi, đó là một phần bình thường. Bạn sẽ học cách nhờ Codex đọc lỗi và sửa tiếp.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Cách học series này</h2>
-        <p>
-          Nếu bạn là người mới, đừng đọc hết một lần. Hãy đi theo từng buổi. Mỗi buổi có một kết quả nhìn thấy được,
-          một prompt để copy, và một checklist để biết mình đã làm đúng chưa.
-        </p>
-        <div class="path-grid">
-          <div class="path-card">
-            <strong>1. Hiểu trước</strong>
-            <p>Biết Codex là “dev AI trong project”, không phải một chatbot trả lời chung chung.</p>
-          </div>
-          <div class="path-card">
-            <strong>2. Làm ngay</strong>
-            <p>Tạo một tool nhỏ chạy được. Không cần backend, không cần đăng nhập, không cần học code sâu.</p>
-          </div>
-          <div class="path-card">
-            <strong>3. Lặp lại</strong>
-            <p>Biết cách yêu cầu Codex sửa lỗi, làm đẹp UI, lưu quy tắc làm việc và chuẩn bị chia sẻ.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Series này dành cho ai?</h2>
-        <p>
-          Nếu bạn từng xem nhiều video AI nhưng vẫn chưa tự tay làm được một tool nào, đây là điểm bắt đầu phù hợp.
-          Lumi Labs đi theo hướng: làm ra thứ nhỏ trước, rồi mới giải thích phần kỹ thuật cần thiết.
-        </p>
-        <div class="trainer-grid">
-          <div class="trainer-card">
-            <span>🌱</span>
-            <strong>Người mới muốn tự tạo tool</strong>
-            <p>Bạn không biết code nhưng muốn thử tạo một công cụ nhỏ cho công việc thật.</p>
-          </div>
-          <div class="trainer-card">
-            <span>💼</span>
-            <strong>Manager / BA / PM / dân văn phòng</strong>
-            <p>Bạn muốn biến yêu cầu, file, quy trình hoặc ý tưởng thành demo nhanh hơn.</p>
-          </div>
-          <div class="trainer-card">
-            <span>👩‍🏫</span>
-            <strong>Người hướng dẫn nội bộ</strong>
-            <p>Bạn cần một khung dạy thực tế để giúp team bắt đầu dùng Codex trong công việc.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Trước khi bắt đầu, hãy nhớ điều này</h2>
-        <p>
-          Bạn không học lập trình theo cách truyền thống. Bạn học cách giao việc cho Codex như giao việc cho một cộng sự kỹ thuật.
-          Bạn nói rõ muốn tool nào, kiểm tra kết quả bằng mắt, rồi yêu cầu Codex sửa nếu chưa đúng.
-        </p>
-        <div class="note">
-          <strong>Nếu bạn đang hướng dẫn team</strong>
-          <p>
-            Hãy bắt đầu bằng một demo nhỏ. Khi người học thấy Codex tạo được file, chạy được app và sửa được lỗi, họ sẽ bớt sợ kỹ thuật.
-          </p>
+        <h2>Bắt đầu trong 3 phút</h2>
+        <div class="mini-flow">
+          <article><b>1</b><strong>Mở Codex</strong><p>Mở một folder trống hoặc project nhỏ. Không cần chuẩn bị hoàn hảo.</p></article>
+          <article><b>2</b><strong>Copy prompt</strong><p>Mỗi buổi có prompt sẵn. Bạn chỉ cần dán và chờ Codex làm.</p></article>
+          <article><b>3</b><strong>Kiểm tra bằng mắt</strong><p>App có mở không? Nút có bấm được không? Kết quả có dùng được không?</p></article>
         </div>
       </section>
 
       <section class="section" id="sessions">
-        <h2>4 buổi, mỗi buổi có một thứ cầm được</h2>
-        <p>Đây không phải lộ trình để “biết thêm”. Đây là lộ trình để sau mỗi buổi bạn có một kết quả cụ thể.</p>
+        <h2>4 buổi, mỗi buổi làm ra một thứ thật</h2>
         <div class="session-grid">
           <a class="session-card" href="/codex-session-01-bat-dau.html">
             <span class="num">1</span>
-            <strong>Mở Codex và tạo dấu mốc đầu tiên</strong>
-            <p>Bạn hiểu Codex làm được gì, biết đưa yêu cầu bằng tiếng Việt và thấy Codex tự kiểm tra môi trường.</p>
-            <ul>
-              <li>Kết quả: có README.md đầu tiên.</li>
-              <li>Biết 6 từ tối thiểu: project, terminal, build, Git, commit, push.</li>
-              <li>Biết yêu cầu Codex commit local hoặc báo lý do chưa commit được.</li>
-            </ul>
-            <span class="read-link">Mở Session 1 →</span>
+            <strong>Thấy Codex tạo file đầu tiên</strong>
+            <p>Copy một prompt để Codex kiểm tra môi trường, tạo README và lưu mốc đầu tiên.</p>
+            <em>Mở Session 1 →</em>
           </a>
-
           <a class="session-card" href="/codex-session-02-tao-tool-dau-tien.html">
             <span class="num">2</span>
-            <strong>Tạo Caption Mini Tool chạy được</strong>
-            <p>Bạn biến một ý tưởng rất nhỏ thành web tool có ô nhập, nút bấm, kết quả và nút copy.</p>
-            <ul>
-              <li>Kết quả: Caption Mini Tool chạy local.</li>
-              <li>Biết mô tả input, output và giao diện.</li>
-              <li>Biết test bằng mắt và nhờ Codex sửa UI/logic.</li>
-            </ul>
-            <span class="read-link">Mở Session 2 →</span>
+            <strong>Tạo tool viết caption đầu tiên</strong>
+            <p>Một tool có ô nhập, nút bấm, kết quả và copy. Nhìn phát hiểu, bấm phát chạy.</p>
+            <em>Mở Session 2 →</em>
           </a>
-
           <a class="session-card" href="/codex-session-03-agents-memory-skill.html">
             <span class="num">3</span>
-            <strong>Dạy Codex cách làm việc với bạn</strong>
-            <p>Bạn tạo bộ luật làm việc cho project, lưu thói quen an toàn và đóng gói workflow để dùng lại.</p>
-            <ul>
-              <li>Kết quả: có AGENTS.md.</li>
-              <li>Có gợi ý Memory an toàn, không lưu secret.</li>
-              <li>Có skill nhỏ để kiểm tra trước khi kết thúc task.</li>
-            </ul>
-            <span class="read-link">Mở Session 3 →</span>
+            <strong>Dạy Codex làm đúng “gu” của bạn</strong>
+            <p>Tạo nội quy project, thói quen cần nhớ và checklist kiểm tra trước khi giao bài.</p>
+            <em>Mở Session 3 →</em>
           </a>
-
           <a class="session-card" href="/codex-session-04-github-mcp-hoan-thien.html">
             <span class="num">4</span>
-            <strong>Đóng gói để người khác hiểu và dùng thử</strong>
-            <p>Bạn viết README rõ ràng, kiểm tra build, commit thay đổi và chuẩn bị chia sẻ project an toàn.</p>
-            <ul>
-              <li>Kết quả: tool có README rõ ràng.</li>
-              <li>Build pass hoặc biết cách yêu cầu Codex fix.</li>
-              <li>Hiểu GitHub và MCP ở mức đủ dùng, không bị quá tải.</li>
-            </ul>
-            <span class="read-link">Mở Session 4 →</span>
+            <strong>Đóng gói để người khác dùng thử</strong>
+            <p>Viết README dễ hiểu, chạy build/test, commit và chuẩn bị chia sẻ an toàn.</p>
+            <em>Mở Session 4 →</em>
           </a>
         </div>
       </section>
 
       <section class="section">
-        <h2>Luồng học dễ hiểu cho người mới</h2>
-        <div class="timeline">
-          <div class="timeline-item">
-            <em>Buổi 1</em>
-            <div>
-              <h3>Thấy Codex đang làm việc thật</h3>
-              <p>Đừng bắt đầu bằng lý thuyết dài. Hãy để Codex kiểm tra môi trường, tạo README, commit. Bạn cần thấy máy đang chuyển động trước.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <em>Buổi 2</em>
-            <div>
-              <h3>Tạo một tool đủ nhỏ để ai cũng hiểu</h3>
-              <p>Caption Mini Tool là ví dụ tốt vì có ô nhập, nút bấm, kết quả và nút copy. Người mới nhìn phát hiểu ngay.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <em>Buổi 3</em>
-            <div>
-              <h3>Tạo cách làm việc lâu dài với Codex</h3>
-              <p>AGENTS.md, Memory và Skill không phải để nghe cho sang. Chúng giúp Codex nhớ cách làm việc của team.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <em>Buổi 4</em>
-            <div>
-              <h3>Đóng gói thành một sản phẩm có thể chia sẻ</h3>
-              <p>README, build, GitHub và MCP giúp bạn hiểu: demo không chỉ để xem, mà có thể tiếp tục nâng cấp thành một project thật.</p>
-            </div>
-          </div>
-        </div>
+        <h2>Series này hợp với ai?</h2>
+        <ul class="plain-list">
+          <li><strong>Người chưa từng code:</strong> muốn thấy AI có thể tạo tool thật, không chỉ trả lời chữ.</li>
+          <li><strong>Manager / BA / PM / dân văn phòng:</strong> muốn biến yêu cầu công việc thành demo nhanh.</li>
+          <li><strong>Creator / freelancer:</strong> muốn tự tạo công cụ nhỏ cho nội dung, tài liệu, khách hàng.</li>
+        </ul>
       </section>
 
-      <section class="section" id="prompt-pack">
-        <h2>Khi bị kẹt, copy 3 prompt này</h2>
-        <p>Đây là ba câu nhờ việc bạn có thể dùng đi dùng lại. Không cần nhớ lệnh kỹ thuật, chỉ cần nói rõ tình huống.</p>
-        <div class="prompt-pack">
-          <section class="demo-card">
-            <header><strong>Prompt 1: Nhờ Codex tự xử lý phần kỹ thuật</strong><span class="pill">Dùng cho bài tập chính</span></header>
-            <pre id="prompt-a-z">Tôi là người non-tech. Hãy làm task này từ đầu đến cuối.
+      <section class="demo-card">
+        <header><strong>Prompt cứu hộ chung</strong><span class="pill">Khi bị kẹt</span></header>
+        <pre id="prompt-a-z">Tôi là người non-tech.
+Hãy giúp tôi đi tiếp thật đơn giản.
 
-Task:
-[viết điều tôi muốn làm]
+Tình huống hiện tại:
+[mô tả lỗi hoặc điều tôi chưa hiểu]
 
-Bạn được phép:
-- Đọc project để hiểu đang dùng công nghệ gì
-- Tự chọn cách làm đơn giản nhất
-- Sửa code
-- Chạy app local để kiểm tra
-- Đọc lỗi terminal/browser console nếu có
-- Tự sửa lỗi đến khi app chạy được
-- Chạy build/test nếu có
-- Commit code với message rõ nghĩa
+Bạn hãy:
+- Nói lỗi/vấn đề bằng tiếng Việt dễ hiểu
+- Cho tôi biết có thể tiếp tục học không
+- Nếu cần sửa, hãy tự sửa và chạy lại
+- Nếu cần tôi bấm/đăng nhập/cấp quyền, hãy dừng lại và hướng dẫn từng bước
 
-Hãy hỏi tôi trước khi:
-- Tạo repo GitHub mới
-- Push code lên GitHub
-- Cần đăng nhập/cấp quyền
-- Cần API key/token
-- Cần quyết định về sản phẩm
-
-Cuối cùng báo cáo:
-- Đã làm gì
-- File nào đã sửa
-- Lệnh nào đã chạy
-- Build/test có pass không
-- Commit/branch là gì</pre>
-            <div class="copy-row">
-              <small>Dùng khi muốn Codex chủ động xử lý phần kỹ thuật.</small>
-              <button class="copy-btn" data-copy="prompt-a-z">Copy prompt</button>
-            </div>
-          </section>
-
-          <section class="demo-card">
-            <header><strong>Prompt 2: Sửa lỗi</strong><span class="pill">Khi app không chạy</span></header>
-            <pre id="prompt-fix">App đang lỗi.
-Hãy tự kiểm tra terminal, log, browser console nếu cần.
-Tìm nguyên nhân, sửa lỗi, chạy lại app/build.
-Lặp lại đến khi app chạy được.
-Giải thích ngắn gọn lỗi là gì và bạn đã sửa thế nào.</pre>
-            <div class="copy-row">
-              <small>Dùng khi bạn thấy màn hình lỗi và không biết đọc lỗi kỹ thuật.</small>
-              <button class="copy-btn" data-copy="prompt-fix">Copy prompt</button>
-            </div>
-          </section>
-
-          <section class="demo-card">
-            <header><strong>Prompt 3: Đơn giản hóa</strong><span class="pill">Khi Codex làm quá lớn</span></header>
-            <pre id="prompt-simple">Hãy đơn giản hóa cách làm.
-Không cần backend, database, login, deploy, hay API nếu chưa thật sự cần.
-Mục tiêu hiện tại là tool local chạy được, dễ dùng, build pass.</pre>
-            <div class="copy-row">
-              <small>Dùng khi Codex làm quá lớn so với mục tiêu buổi học.</small>
-              <button class="copy-btn" data-copy="prompt-simple">Copy prompt</button>
-            </div>
-          </section>
+Đừng giải thích quá kỹ thuật.</pre>
+        <div class="copy-row">
+          <small>Dùng ở bất kỳ buổi nào khi bạn bị đứng hình.</small>
+          <button class="copy-btn" data-copy="prompt-a-z">Copy prompt</button>
         </div>
       </section>
 
       <section class="section">
-        <h2>Khi nào bạn được xem là hoàn thành?</h2>
-        <ul class="checklist">
-          <li>Tự mở Codex và đưa một yêu cầu rõ ràng được.</li>
-          <li>Mô tả tool bằng input, output và giao diện được.</li>
-          <li>Biết yêu cầu Codex tạo project, sửa code và fix lỗi.</li>
-          <li>Có một tool chạy local hoặc hiểu rõ vì sao chưa chạy được.</li>
-          <li>Có README, có commit Git và biết prompt để push GitHub.</li>
-          <li>Hiểu AGENTS.md, Memory, Skill và MCP ở mức đủ dùng, không cần học sâu.</li>
-        </ul>
-        <div class="note">
-          <strong>Điều quan trọng nhất</strong>
-          <p>
-            Sau series này, thứ quan trọng không phải là bạn biết code. Thứ quan trọng là bạn biết biến ý tưởng thành yêu cầu rõ,
-            biết kiểm tra kết quả, và biết dùng Codex để đi tiếp từng bước.
-          </p>
+        <h2>Kết quả cuối cùng</h2>
+        <div class="result-grid">
+          <div class="result-card"><span>✓</span><strong>Có một tool chạy được</strong><p>Không cần hoàn hảo. Quan trọng là bạn đã tự tạo được công cụ đầu tiên bằng AI.</p></div>
+          <div class="result-card"><span>✓</span><strong>Biết cách đi tiếp</strong><p>Bạn biết prompt để tạo, sửa lỗi, làm đẹp, kiểm tra và đóng gói project.</p></div>
         </div>
       </section>
 
