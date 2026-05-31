@@ -1,30 +1,78 @@
 # Lumi Labs
 
-**Biến ý tưởng thành sản phẩm bằng AI.**
+Lumi Labs là AI Creator Hub tiếng Việt dành cho người non-tech: thử demo AI, đọc bài học thực chiến, theo dõi hành trình build sản phẩm AI thật.
 
-Lumi Labs là homepage thương hiệu cá nhân chia sẻ cách dùng AI để tạo sản phẩm, công cụ, tài liệu, automation và demo thực tế dành cho người không chuyên lập trình.
+Website hiện chạy tại:
 
-Codex Zero To Hero là learning path đầu tiên. Sau này website có thể mở rộng sang Claude Code, ChatGPT, Gemini, Cursor, n8n, AI Office Tools và AI Automation.
+- Production: `https://www.luanai.io.vn`
+- Stack: React + Vite + Vercel Serverless Functions
 
-## Tech stack
+## Mục tiêu sản phẩm
 
-- React
-- Vite
-- TailwindCSS
-- Framer Motion
-- Vercel Web Analytics
+- Build nhanh các MVP AI nhỏ, dùng được ngay.
+- Viết bài học AI dễ hiểu cho người mới.
+- Ghi lại hành trình build thật để người đọc có thể làm theo.
+- Dẫn người dùng từ demo → hiểu giá trị → feedback/community.
+
+## Cấu trúc quan trọng
+
+```text
+src/
+  App.jsx                    # Router mỏng, chỉ ghép layout/page
+  app/
+    auth/
+      useAuth.js             # Supabase Auth, profile, follow project
+    hooks/
+      useReveal.js           # Scroll reveal animation
+    routes/
+      DashboardPage.jsx      # Khu bắt đầu nhanh sau login
+      HomePage.jsx           # Trang chủ
+      ProjectsPage.jsx       # Trang danh sách demo/project
+  components/layout/
+    SiteHeader.jsx           # Header/navigation
+    SiteFooter.jsx           # Footer
+    LoginModal.jsx           # Modal đăng nhập
+    UserMenu.jsx             # Menu user sau login
+  components/lumi/
+    LumiAssistant.jsx        # Lumi Bot dẫn đường xuyên suốt Hub
+    LumiFeedbackCard.jsx     # Feedback chung cho các MVP
+  features/
+    caption-ai/
+      CaptionAISection.jsx   # Tool Caption AI
+    docscan-ai/
+      DocScanAISection.jsx   # Tool DocScan AI
+  content/
+    articles.js              # Registry bài viết/bài học
+    projects.js              # Registry MVP/tool
+    navigation.js            # Route và navigation chính
+  supabaseClient.js          # Supabase Auth client
+  clarity.js                 # Microsoft Clarity loader
+
+api/
+  analyze-document.js        # DocScan AI
+  generate-caption.js        # Caption AI
+  mini-lab.js                # Lab thực hành trong bài viết
+  feedback.js                # Feedback người dùng
+  subscribe.js               # Subscribe/follow
+  _rate-limit.js             # Rate limit đơn giản
+
+public/
+  bai-viet.html              # Kho bài viết
+  *.html                     # Bài viết, series, project journey
+  lumi-bot.png               # Lumi Bot
+
+tools/
+  content-audit.mjs          # Kiểm tra registry/content
+  smoke-test.mjs             # Smoke test route/link/API cơ bản
+
+docs/
+  ARCHITECTURE.md            # Quy chuẩn scale repo
+```
 
 ## Chạy local
 
-Cài dependencies:
-
 ```bash
 npm install
-```
-
-Chạy dev server:
-
-```bash
 npm run dev
 ```
 
@@ -34,46 +82,89 @@ Build production:
 npm run build
 ```
 
-Preview production build:
+## Kiểm tra trước khi public
+
+Chạy đủ 3 lệnh:
 
 ```bash
-npm run preview
+npm run audit:content
+npm run test:smoke
+npm run build
 ```
 
-## Deploy Vercel
+Ý nghĩa:
 
-Project đã sẵn sàng deploy lên Vercel.
+- `audit:content`: kiểm bài viết/project trong registry có đủ field, link đúng file.
+- `test:smoke`: kiểm route chính, bài viết, mini lab, API rate limit.
+- `build`: kiểm production build không lỗi.
+
+## Thêm một MVP mới
+
+1. Thêm project vào `src/content/projects.js`.
+2. Nếu có demo riêng, tạo route/page trong React app.
+3. Nếu cần AI, thêm API trong `api/`.
+4. Nếu có hành trình build, thêm file HTML trong `public/`.
+5. Chạy `npm run audit:content`, `npm run test:smoke`, `npm run build`.
+
+Mỗi MVP nên có:
+
+- tên dễ hiểu
+- một câu mô tả lợi ích
+- CTA dùng thử rõ ràng
+- nhóm người dùng chính
+- 2-4 use case cụ thể
+- trạng thái `ready`, `planned`, hoặc `idea`
+- link hành trình build nếu đã có
+
+## Thêm một bài viết/bài học
+
+1. Tạo file HTML trong `public/`.
+2. Thêm metadata vào `src/content/articles.js`.
+3. Đảm bảo `public/bai-viet.html` có link tới bài.
+4. Nếu bài có thực hành, dùng mini lab và kiểm bằng smoke test.
+
+Mỗi bài nên phục vụ người non-tech:
+
+- mở đầu bằng vấn đề đời thường
+- ví dụ gần công việc Việt Nam
+- có prompt hoặc thao tác làm thử
+- có kết quả đúng trông như thế nào
+- có bước tiếp theo rõ ràng
+
+Metadata bắt buộc nằm trong `src/content/articles.js`:
+
+- `type`: `article`, `series`, `session`, hoặc `project-journey`
+- `difficulty`: `beginner`, `practical`, hoặc `advanced`
+- `category`
+- `tool`
+- `audience`
+- `publishedAt` nếu bài đã public
+
+## Biến môi trường
+
+Tùy feature đang bật, Vercel có thể cần:
+
+```text
+GEMINI_API_KEY
+SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+VITE_CLARITY_PROJECT_ID
+```
+
+Không đưa secret vào frontend hoặc commit vào repo.
+
+## Deploy
+
+Nếu dùng GitHub integration, push lên `main` để Vercel tự deploy.
+
+Deploy thủ công:
 
 ```bash
 vercel deploy --prod
 ```
 
-Nếu dùng GitHub integration, chỉ cần push lên branch `main`, Vercel sẽ tự deploy.
+## Quy tắc scale
 
-## Vercel Web Analytics
-
-Project đã tích hợp Analytics component trong `src/main.jsx`:
-
-```jsx
-import { Analytics } from "@vercel/analytics/react";
-
-<Analytics />
-```
-
-Để bật analytics trên Vercel:
-
-1. Vào project trên Vercel.
-2. Mở tab **Analytics**.
-3. Enable **Web Analytics**.
-4. Deploy lại nếu Vercel yêu cầu.
-
-Không cần backend, database, login hoặc API key.
-
-## Nội dung hiện có
-
-- Homepage Lumi Labs ở `src/App.jsx`
-- Learning path đầu tiên: Codex Zero To Hero
-- Tài liệu Markdown trong `chapters/`
-- Prompt mẫu trong `prompts/`
-- Project demo trong `projects/`
-- Template trong `templates/`
+Nếu thêm một bài viết hoặc một MVP mà phải sửa nhiều nơi thủ công, cần đưa dữ liệu đó về `src/content/` trước. Registry là nguồn dữ liệu trung tâm để tránh mất kiểm soát khi Lumi Labs có nhiều tool và nhiều bài học hơn.

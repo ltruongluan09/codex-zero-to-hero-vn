@@ -1,11 +1,32 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { checkRateLimit } from "../api/_rate-limit.js";
+import { beginnerArticles } from "../src/content/articles.js";
+import { appRoutes, navItems, serverlessApiRoutes } from "../src/content/navigation.js";
+import { projectCatalog } from "../src/content/projects.js";
 
 const root = process.cwd();
 const requiredFiles = [
   "src/App.jsx",
+  "src/app/auth/useAuth.js",
+  "src/app/hooks/useReveal.js",
+  "src/app/routes/DashboardPage.jsx",
+  "src/app/routes/HomePage.jsx",
+  "src/app/routes/ProjectsPage.jsx",
+  "src/components/layout/LoginModal.jsx",
+  "src/components/layout/Logo.jsx",
+  "src/components/layout/SiteFooter.jsx",
+  "src/components/layout/SiteHeader.jsx",
+  "src/components/layout/UserMenu.jsx",
+  "src/components/lumi/LumiFeedbackCard.jsx",
+  "src/content/articles.js",
+  "src/content/navigation.js",
+  "src/content/projects.js",
+  "src/components/lumi/LumiAssistant.jsx",
+  "src/features/caption-ai/CaptionAISection.jsx",
+  "src/features/docscan-ai/DocScanAISection.jsx",
   "src/lumi-home-final.css",
+  "docs/ARCHITECTURE.md",
   "api/generate-caption.js",
   "api/analyze-document.js",
   "api/mini-lab.js",
@@ -42,6 +63,23 @@ for (const path of requiredFiles) {
 }
 
 const app = file("src/App.jsx");
+const appSources = [
+  app,
+  file("src/app/auth/useAuth.js"),
+  file("src/app/routes/DashboardPage.jsx"),
+  file("src/app/routes/HomePage.jsx"),
+  file("src/app/routes/ProjectsPage.jsx"),
+  file("src/components/layout/LoginModal.jsx"),
+  file("src/components/layout/SiteHeader.jsx"),
+  file("src/features/caption-ai/CaptionAISection.jsx"),
+  file("src/features/docscan-ai/DocScanAISection.jsx"),
+].join("\n");
+assert(appSources.includes("./content/navigation"), "App is not wired to navigation registry");
+assert(app.includes("./components/lumi/LumiAssistant"), "App is not wired to Lumi Assistant component");
+assert(app.includes("./components/layout/SiteHeader"), "App is not wired to site header");
+assert(app.includes("./components/layout/LoginModal"), "App is not wired to login modal");
+assert(app.includes("./app/routes/HomePage"), "App is not wired to Home page component");
+assert(app.includes("./app/routes/ProjectsPage"), "App is not wired to Projects page component");
 [
   "/caption-ai",
   "/docscan-ai",
@@ -53,7 +91,20 @@ const app = file("src/App.jsx");
   "/api/generate-caption",
   "/api/analyze-document",
 ].forEach((needle) => {
-  assert(app.includes(needle), `App route/API reference missing: ${needle}`);
+  assert(appSources.includes(needle), `App route/API reference missing: ${needle}`);
+});
+
+Object.values(appRoutes).forEach((route) => {
+  assert(route.startsWith("/"), `App route must start with slash: ${route}`);
+});
+
+serverlessApiRoutes.forEach((route) => {
+  assert(route.startsWith("/api/"), `API route must start with /api/: ${route}`);
+});
+
+navItems.forEach((item) => {
+  assert(item.label && item.href, `Nav item incomplete: ${JSON.stringify(item)}`);
+  assert(item.href.startsWith("/"), `Nav href must be internal absolute path: ${item.href}`);
 });
 
 [
@@ -61,7 +112,7 @@ const app = file("src/App.jsx");
   "Vào series Codex",
   "Xem buổi tạo tool",
 ].forEach((needle) => {
-  assert(app.includes(needle), `Homepage missing learning hub entry: ${needle}`);
+  assert(appSources.includes(needle), `Homepage missing learning hub entry: ${needle}`);
 });
 
 const articleIndex = file("public/bai-viet.html");
@@ -76,6 +127,27 @@ const articleIndex = file("public/bai-viet.html");
 ].forEach((href) => {
   assert(articleIndex.includes(href), `Article library missing link: ${href}`);
 });
+
+beginnerArticles
+  .filter((article) => article.status === "published")
+  .forEach((article) => {
+    assert(article.slug, `Article missing slug: ${article.title}`);
+    assert(article.title && article.desc && article.href, `Article registry item incomplete: ${article.slug}`);
+    assert(articleIndex.includes(article.href), `Article registry not reflected in article library: ${article.href}`);
+    if (article.href.endsWith(".html")) {
+      const publicPath = `public${article.href}`;
+      assert(existsSync(join(root, publicPath)), `Article registry points to missing file: ${publicPath}`);
+    }
+  });
+
+projectCatalog.forEach((project) => {
+  assert(project.slug, `Project missing slug: ${project.title}`);
+  assert(project.title && project.desc && project.href && project.stage, `Project registry item incomplete: ${project.slug}`);
+  assert(["ready", "planned", "idea"].includes(project.stage), `Project has invalid stage: ${project.slug}`);
+});
+
+assert(projectCatalog.some((project) => project.stage === "ready" && project.href === "/caption-ai"), "Caption AI is missing from ready projects");
+assert(projectCatalog.some((project) => project.stage === "ready" && project.href === "/docscan-ai"), "DocScan AI is missing from ready projects");
 
 [
   "Bắt đầu series Codex",
