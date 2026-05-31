@@ -28,21 +28,30 @@ Yêu cầu:
 - Không dùng thuật ngữ kỹ thuật khó hiểu.`,
   },
   email: {
-    title: "Lumi Bot soạn email dễ nghe hơn",
-    task: "Viết email tiếng Việt rõ ràng, lịch sự, tự nhiên cho dân văn phòng.",
+    title: "Lumi Bot soạn email HR sẵn gửi",
+    task: "Viết email tiếng Việt rõ ràng, lịch sự, tự nhiên cho HR, sales, manager hoặc nhân viên văn phòng. Người dùng chỉ mô tả tình huống bằng một câu.",
     resultShape:
-      "Trả kết quả gồm: (1) Tiêu đề email, (2) Bản email thân thiện, (3) Bản email trang trọng hơn, (4) Một câu nhắc người dùng nên sửa lại chi tiết nào trước khi gửi.",
+      "Trả kết quả gồm: (1) Tiêu đề email, (2) Email sẵn gửi, (3) Tin nhắn ngắn có thể gửi Zalo nếu phù hợp, (4) 2 điểm nên kiểm tra trước khi gửi. Không giải thích dài.",
     fields: ["brief"],
-    fallback: ({ brief = "" }) => `Tiêu đề: Trao đổi về việc cần xử lý
+    fallback: ({ brief = "" }) => `Tiêu đề: Xác nhận lịch phỏng vấn
 
 Chào anh/chị,
 
-Mình gửi email này để trao đổi về nội dung sau:
-${brief || "- Nội dung cần thống nhất\n- Thời gian mong muốn\n- Việc cần phản hồi"}
+Cảm ơn anh/chị đã quan tâm tới vị trí bên công ty.
 
-Nhờ anh/chị xem giúp và phản hồi khi thuận tiện.
+Mình gửi email này để xác nhận lại thông tin sau:
+${brief || "- Lịch phỏng vấn\n- Hình thức phỏng vấn\n- Thông tin cần ứng viên xác nhận"}
 
-Cảm ơn anh/chị.`,
+Anh/chị vui lòng phản hồi giúp mình để bên mình sắp xếp lịch phù hợp.
+
+Cảm ơn anh/chị và hẹn gặp trong buổi trao đổi.
+
+Tin nhắn Zalo ngắn:
+"Em/chị gửi lại lịch phỏng vấn qua email rồi ạ. Anh/chị xem giúp và xác nhận lại khi thuận tiện nhé."
+
+Trước khi gửi, nhớ kiểm tra:
+- Tên ứng viên.
+- Ngày giờ và hình thức phỏng vấn.`,
   },
   meeting: {
     title: "Lumi Bot biến ghi chú họp thành việc cần làm",

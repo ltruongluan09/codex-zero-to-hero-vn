@@ -3,147 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Biến ghi chú họp lộn xộn thành việc cần làm - Lumi Labs</title>
-    <meta name="description" content="Cách dùng AI để biến ghi chú họp lộn xộn thành quyết định, việc cần làm, người phụ trách và câu hỏi cần hỏi lại." />
+    <title>Manager không nên rời cuộc họp với một mớ ghi chú rối - Lumi Labs</title>
+    <meta name="description" content="Một demo Lumi Labs cho manager: Lumi biến ghi chú họp rời rạc thành quyết định, việc cần làm, người phụ trách và câu cần hỏi lại." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/lumi-article.css" />
     <link rel="stylesheet" href="/lumi-mini-lab.css" />
+    <link rel="stylesheet" href="/lumi-industry-demo.css" />
   </head>
   <body>
-    <div class="page">
+    <div class="page industry-page">
       <nav class="topbar">
         <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
         <a class="back" href="/bai-viet">← Kho bài viết</a>
       </nav>
 
-      <header class="hero">
-        <div class="pill">☑ Mini Lab · Sau cuộc họp biết làm gì</div>
-        <h1>Biến ghi chú họp lộn xộn <span>thành việc cần làm.</span></h1>
-        <p class="lead">
-          Sau cuộc họp, thứ có ích nhất không phải là một đoạn tóm tắt dài. Thứ có ích nhất là một danh sách rõ: đã quyết gì, ai làm, khi nào xong, còn điểm nào cần hỏi lại.
-        </p>
-        <div class="hero-actions">
-          <a class="button" href="#mini-lab">Thực hành ngay</a>
-          <a class="button secondary" href="/bai-viet">Xem bài khác</a>
+      <header class="industry-hero">
+        <div>
+          <div class="pill">Manager · Sau cuộc họp</div>
+          <h1>Cuộc họp xong rồi. <span>Nhưng ai làm gì thì vẫn mơ hồ.</span></h1>
+          <p class="lead">Lumi biến vài dòng ghi chú rối thành bản giao việc rõ ràng: đã chốt gì, ai làm, hạn nào, còn điểm nào cần hỏi lại.</p>
+          <div class="hero-actions">
+            <a class="button" href="#lumi-demo">Xem Lumi xử lý</a>
+            <a class="button secondary" href="/bai-viet">Xem bài khác</a>
+          </div>
+        </div>
+
+        <div class="industry-demo" data-industry-demo data-statuses="Lumi đang đọc ghi chú...|Lumi đang tách quyết định...|Lumi đang gom việc cần làm...|Xong. Bản gửi team đã sẵn sàng.">
+          <div class="industry-orbit"></div>
+          <div class="industry-agent">
+            <div class="industry-avatar"><img src="/lumi-bot.png" alt="Lumi Bot" /></div>
+            <div class="industry-speech">
+              <small>Lumi đang hỗ trợ</small>
+              <strong>Mình kéo việc quan trọng ra khỏi ghi chú rối.</strong>
+              <p>Không cần viết biên bản dài. Chỉ cần thấy team phải làm gì tiếp.</p>
+            </div>
+          </div>
+          <div class="industry-scenario">
+            <small>Tình huống mẫu</small>
+            <p>Họp marketing: đổi landing page, Lan viết nội dung, Huy gửi báo giá, thứ Sáu cần có bản nháp cho sếp duyệt.</p>
+          </div>
+          <div class="industry-flow">
+            <div class="industry-step" data-industry-step><span>1</span>Đọc ghi chú</div>
+            <div class="industry-step" data-industry-step><span>2</span>Tách quyết định</div>
+            <div class="industry-step" data-industry-step><span>3</span>Gom việc</div>
+            <div class="industry-step" data-industry-step><span>4</span>Nhắc câu hỏi</div>
+          </div>
+          <button class="industry-button" type="button" data-industry-rerun>✨ Cho Lumi sắp xếp lại</button>
         </div>
       </header>
 
-      <section class="quick-win">
-        <div>
-          <strong>Đọc xong làm được gì?</strong>
-          <p>Dán ghi chú họp vào AI và nhận lại bản bàn giao có việc, người phụ trách, deadline.</p>
-        </div>
-        <div>
-          <strong>Giảm hiểu nhầm trong team</strong>
-          <p>AI sẽ tách riêng phần chưa rõ để bạn hỏi lại, thay vì để mỗi người hiểu một kiểu.</p>
-        </div>
-        <div>
-          <strong>Thử ngay trên trang</strong>
-          <p>Mini Lab cuối bài giúp bạn biến vài dòng ghi chú rời rạc thành tin nhắn gửi team.</p>
-        </div>
+      <section class="industry-pain">
+        <div><b>Nỗi đau</b><span>Cuộc họp kết thúc nhưng ghi chú rời rạc, mỗi người hiểu một kiểu.</span></div>
+        <div><b>Lumi giải quyết</b><span>Tạo bản gửi team có quyết định, việc cần làm, deadline và điểm chưa rõ.</span></div>
+        <div><b>Bạn chỉ cần làm</b><span>Kiểm tra lại tên người phụ trách và gửi vào nhóm làm việc.</span></div>
       </section>
 
-      <section class="section">
-        <h2>Cuộc họp không mệt nhất ở lúc họp. Mệt nhất là lúc phải nhớ ai làm gì.</h2>
-        <p>
-          Anh quản lý vừa ra khỏi cuộc họp Teams. Trong đầu còn nhớ rất nhiều ý: đổi deadline, thêm một đầu việc, khách hàng muốn chỉnh lại proposal, team nội dung cần gửi bản nháp trước thứ Sáu.
-        </p>
-        <p>
-          Nhưng đến khi mở lại ghi chú, mọi thứ chỉ là vài dòng rời rạc. Có dòng ghi “check lại báo giá”. Có dòng ghi “Huy làm”. Có dòng ghi “tuần sau”. Nếu gửi nguyên như vậy vào nhóm, mỗi người sẽ hiểu một kiểu.
-        </p>
-        <p>
-          Đây là chỗ AI rất hữu ích. Không phải để làm cuộc họp thông minh hơn. Mà để biến phần lộn xộn sau cuộc họp thành một bản rõ ràng để team làm tiếp.
-        </p>
-        <p>
-          Khi dùng đúng, AI giống một người thư ký tỉnh táo: không tự quyết thay bạn, nhưng giúp bạn kéo những điểm quan trọng ra khỏi đống ghi chú lộn xộn.
-        </p>
-      </section>
-
-      <section class="section">
-        <h2>Lumi Labs nhìn việc này rất đơn giản</h2>
-        <p>
-          Đừng nhờ AI “tóm tắt cuộc họp” chung chung. Hãy nhờ AI tạo một bản bàn giao sau họp. Bản đó phải trả lời được bốn câu hỏi rất đời thường.
-        </p>
-        <div class="step"><span>1</span><div><strong>Cuộc họp vừa quyết điều gì?</strong><p>Không cần viết văn hay. Chỉ cần liệt kê những quyết định thật sự đã được chốt.</p></div></div>
-        <div class="step"><span>2</span><div><strong>Ai cần làm việc gì?</strong><p>Nếu ghi chú không nói rõ ai phụ trách, AI phải ghi “chưa rõ”, không được tự đoán.</p></div></div>
-        <div class="step"><span>3</span><div><strong>Deadline nào cần nhớ?</strong><p>Ngày tháng là phần dễ trôi nhất sau cuộc họp. Hãy bắt AI kéo nó ra riêng.</p></div></div>
-        <div class="step"><span>4</span><div><strong>Còn câu nào cần hỏi lại?</strong><p>Đây là phần quan trọng nhất. Một câu hỏi đúng có thể tránh cả tuần làm sai hướng.</p></div></div>
-      </section>
-
-      <section class="demo-card" id="demo">
-        <header><strong>Mẫu copy dùng ngay</strong><span class="pill">Dành cho họp</span></header>
-        <pre id="prompt">Tôi sẽ dán nội dung ghi chú cuộc họp bên dưới.
-
-Hãy giúp tôi chuyển thành bản tóm tắt dễ dùng cho team.
-
-Kết quả cần có:
-1. Tóm tắt 5 dòng dễ hiểu.
-2. Bảng việc cần làm gồm: việc, người phụ trách, deadline, mức ưu tiên.
-3. Những điểm chưa rõ cần hỏi lại.
-4. Tin nhắn ngắn để gửi vào group sau cuộc họp.
-
-Quy tắc:
-- Không tự bịa người phụ trách hoặc deadline.
-- Nếu thiếu thông tin, ghi rõ "chưa rõ".
-- Viết bằng tiếng Việt đơn giản.
-
-Nội dung cuộc họp:
-[Dán ghi chú cuộc họp ở đây]</pre>
-        <div class="copy-row">
-          <small>Dùng tốt với ghi chú Teams, Zoom, Zalo hoặc note cá nhân.</small>
-          <button class="copy-btn" data-copy="prompt">Copy mẫu</button>
+      <section class="industry-result" id="lumi-demo" data-mini-lab="meeting-preview">
+        <div class="industry-result-head">
+          <div><div class="pill">Lumi sắp xếp sẵn</div><h2>Bản gửi team sau cuộc họp</h2></div>
+          <div class="industry-status"><i></i><span data-industry-status>Lumi đang chuẩn bị...</span></div>
+        </div>
+        <div class="industry-output" data-industry-output>
+          <article class="industry-result-card industry-fade industry-delay-1">
+            <span class="industry-label">Tin nhắn gửi team</span>
+            <h3>Tóm tắt sau họp marketing</h3>
+            <ul>
+              <li><strong>Đã chốt:</strong> ưu tiên làm lại landing page trước khi chạy nội dung mới.</li>
+              <li><strong>Lan:</strong> viết lại phần mô tả lợi ích và gửi bản nháp trước 15h thứ Sáu.</li>
+              <li><strong>Huy:</strong> gửi báo giá media và danh sách hạng mục còn thiếu trước trưa mai.</li>
+              <li><strong>Team:</strong> sau khi có nội dung và báo giá, tổng hợp thành một bản trình sếp duyệt.</li>
+            </ul>
+          </article>
+          <aside class="industry-side-card industry-fade industry-delay-2">
+            <div class="industry-mini"><b>Câu cần hỏi lại</b><p>Deadline “thứ Sáu” là gửi bản nháp nội bộ hay bản cuối để trình sếp?</p></div>
+            <div class="industry-mini industry-fade industry-delay-3"><b>Điểm dễ bị quên</b><ul><li>Ai là người chốt bản cuối?</li><li>Có cần gửi kèm số liệu cũ không?</li><li>Huy gửi báo giá theo file hay trong nhóm chat?</li></ul></div>
+          </aside>
         </div>
       </section>
 
-      <section class="mini-lab" id="mini-lab" data-mini-lab="meeting" data-fields="brief">
-        <div class="mini-lab__head">
-          <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
-          <div>
-            <div class="mini-lab__eyebrow">Thử 1 chạm</div>
-            <h2>Lumi Bot biến ghi chú họp thành việc cần làm</h2>
-            <p>Dán vài dòng ghi chú. Lumi sẽ gom lại thành việc cần làm, điểm chưa rõ và tin nhắn có thể gửi team.</p>
-          </div>
-        </div>
-        <form class="mini-lab__form" data-mini-lab-form>
-          <div class="mini-lab__field">
-            <label>Dán ghi chú họp của bạn</label>
-            <textarea name="brief" placeholder="Ví dụ: Team thống nhất làm landing page mới. Huy phụ trách nội dung. Chưa rõ deadline. Cần gửi bản nháp cho sếp xem trong tuần này."></textarea>
-          </div>
-          <div class="mini-lab__actions">
-            <button class="mini-lab__run" type="submit" data-mini-lab-run>Nhờ Lumi gom việc</button>
-            <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
-            <span class="mini-lab__hint">Phù hợp cho manager, PM, HR hoặc bất kỳ ai vừa họp xong.</span>
-          </div>
-        </form>
-        <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Mình đang gom lại thành việc cần làm rõ ràng...</span></div>
-        <div class="mini-lab__error" data-mini-lab-error></div>
-        <div class="mini-lab__result">
-          <div class="mini-lab__result-title" data-mini-lab-title>Kết quả từ Lumi Bot</div>
-          <pre class="mini-lab__output" data-mini-lab-output></pre>
-          <div class="mini-lab__tips" data-mini-lab-tips></div>
-        </div>
-      </section>
-
-      <section class="note">
-        <strong>Điều quan trọng</strong>
-        <p>Cuộc họp tốt không kết thúc bằng một bản tóm tắt đẹp. Nó kết thúc khi mọi người biết mình cần làm gì tiếp theo.</p>
-      </section>
-
+      <section class="note"><strong>Điểm quan trọng</strong><p>Lumi không thay manager quyết định. Lumi giúp phần sau cuộc họp rõ hơn để team ít hiểu nhầm và làm nhanh hơn.</p></section>
       <footer>© 2026 Lumi Labs · Bài viết cho người mới bắt đầu</footer>
     </div>
-    <script>
-      document.querySelectorAll("[data-copy]").forEach((button) => {
-        button.addEventListener("click", async () => {
-          const text = document.getElementById(button.dataset.copy).innerText;
-          await navigator.clipboard.writeText(text);
-          const old = button.innerText;
-          button.innerText = "Đã copy!";
-          setTimeout(() => (button.innerText = old), 1600);
-        });
-      });
-    </script>
+    <script src="/lumi-industry-demo.js"></script>
     <script src="/lumi-mini-lab.js"></script>
   </body>
 </html>

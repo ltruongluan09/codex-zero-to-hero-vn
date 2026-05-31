@@ -3,152 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Không biết bắt đầu từ đâu? Nhờ Lumi chia việc thành từng bước - Lumi Labs</title>
-    <meta name="description" content="Một bài viết Lumi Labs cho người mới: cách dùng AI để chia một việc đang rối thành checklist nhỏ, rõ và làm được ngay." />
+    <title>Khách hỏi giá rồi im lặng, sales nên nhắn lại thế nào? - Lumi Labs</title>
+    <meta name="description" content="Một demo Lumi Labs cho sales và chủ shop: Lumi viết sẵn tin nhắn chăm khách nhẹ nhàng, không ép mua, có lý do để khách phản hồi." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/lumi-article.css" />
     <link rel="stylesheet" href="/lumi-mini-lab.css" />
+    <link rel="stylesheet" href="/lumi-industry-demo.css" />
   </head>
   <body>
-    <div class="page">
+    <div class="page industry-page">
       <nav class="topbar">
         <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
         <a class="back" href="/bai-viet">← Kho bài viết</a>
       </nav>
 
-      <header class="hero">
-        <div class="pill">🧭 Mini Lab · Bớt rối việc</div>
-        <h1>Không biết bắt đầu từ đâu? <span>Nhờ Lumi chia việc thành từng bước.</span></h1>
-        <p class="lead">
-          Nhiều việc không khó vì nó quá lớn. Nó khó vì mình nhìn vào thấy quá nhiều thứ cùng lúc. AI có thể giúp bạn tách việc lớn thành vài bước nhỏ, để biết ngay bước đầu tiên cần làm hôm nay.
-        </p>
-        <div class="hero-actions">
-          <a class="button" href="#mini-lab">Thực hành ngay</a>
-          <a class="button secondary" href="/bai-viet">Xem bài khác</a>
+      <header class="industry-hero">
+        <div>
+          <div class="pill">Sales · Chăm khách</div>
+          <h1>Khách hỏi giá rồi im lặng. <span>Nhắn tiếp sao cho không bị làm phiền?</span></h1>
+          <p class="lead">Lumi viết sẵn tin nhắn theo kiểu nhẹ nhàng, có ích, không ép mua. Người bán chỉ cần đọc lại rồi gửi.</p>
+          <div class="hero-actions">
+            <a class="button" href="#lumi-demo">Xem Lumi xử lý</a>
+            <a class="button secondary" href="/bai-viet">Xem bài khác</a>
+          </div>
+        </div>
+
+        <div class="industry-demo" data-industry-demo data-statuses="Lumi đang đọc tình huống khách...|Lumi đang chọn giọng nhắn nhẹ...|Lumi đang viết 3 bản theo dõi...|Xong. Tin nhắn đã sẵn sàng.">
+          <div class="industry-orbit"></div>
+          <div class="industry-agent">
+            <div class="industry-avatar"><img src="/lumi-bot.png" alt="Lumi Bot" /></div>
+            <div class="industry-speech">
+              <small>Lumi đang hỗ trợ</small>
+              <strong>Mình giúp bạn nhắn lại mà không tạo áp lực.</strong>
+              <p>Phù hợp cho sales, chủ shop nhỏ hoặc freelancer phải chăm khách mỗi ngày.</p>
+            </div>
+          </div>
+          <div class="industry-scenario">
+            <small>Tình huống mẫu</small>
+            <p>Khách hỏi giá gói thiết kế fanpage, đã xem báo giá từ hôm qua nhưng chưa phản hồi.</p>
+          </div>
+          <div class="industry-flow">
+            <div class="industry-step" data-industry-step><span>1</span>Hiểu khách</div>
+            <div class="industry-step" data-industry-step><span>2</span>Chọn giọng nhắn</div>
+            <div class="industry-step" data-industry-step><span>3</span>Viết tin nhắn</div>
+            <div class="industry-step" data-industry-step><span>4</span>Gợi ý thời điểm</div>
+          </div>
+          <button class="industry-button" type="button" data-industry-rerun>✨ Cho Lumi viết lại</button>
         </div>
       </header>
 
-      <section class="quick-win">
-        <div>
-          <strong>Đọc xong làm được gì?</strong>
-          <p>Biến một việc mơ hồ thành checklist có thứ tự, có ưu tiên và có bước đầu tiên.</p>
-        </div>
-        <div>
-          <strong>Ví dụ rất đời</strong>
-          <p>Chuẩn bị onboarding nhân viên mới, livestream bán hàng, viết báo cáo hoặc tổ chức workshop.</p>
-        </div>
-        <div>
-          <strong>Không cần kế hoạch hoàn hảo</strong>
-          <p>Mục tiêu là có bản đầu làm được ngay, rồi cải thiện dần sau khi đã bắt đầu.</p>
-        </div>
+      <section class="industry-pain">
+        <div><b>Nỗi đau</b><span>Nhắn lại thì sợ phiền. Không nhắn thì mất cơ hội bán hàng.</span></div>
+        <div><b>Lumi giải quyết</b><span>Tạo tin nhắn có lý do rõ ràng, ngắn, lịch sự và dễ phản hồi.</span></div>
+        <div><b>Bạn chỉ cần làm</b><span>Chọn bản hợp giọng mình nhất, sửa tên khách rồi gửi.</span></div>
       </section>
 
-      <section class="section">
-        <h2>Có những việc chưa làm đã thấy mệt, vì nó chưa có hình dạng rõ ràng.</h2>
-        <p>
-          Bạn được giao “chuẩn bị onboarding cho nhân viên mới”. Nghe thì không quá khó. Nhưng mở file ra lại thấy quá nhiều thứ: email chào mừng, tài khoản công ty, lịch gặp quản lý, tài liệu nội bộ, checklist ngày đầu, người phụ trách từng phần.
-        </p>
-        <p>
-          Hoặc bạn muốn làm một buổi livestream đầu tiên cho shop. Sản phẩm có rồi, điện thoại có rồi, nhưng vẫn chưa biết cần chuẩn bị gì trước, nói gì trong live, đăng thông báo ở đâu, sau live xử lý đơn thế nào.
-        </p>
-        <p>
-          Lúc này, điều cần nhất không phải là một kế hoạch hoành tráng. Điều cần nhất là một checklist đủ nhỏ để bắt đầu trong hôm nay.
-        </p>
-        <p>
-          Ở Lumi Labs, mình thích dùng AI cho những khoảnh khắc như vậy. Không phải để AI làm thay cả dự án. Mà để nó ngồi cạnh, giúp mình gỡ cục rối đầu tiên.
-        </p>
-        <p>
-          Khi việc đã được chia nhỏ, cảm giác “không biết làm gì” thường biến mất. Bạn chưa cần giỏi AI. Bạn chỉ cần biết nhờ AI chia việc theo cách đủ rõ để bắt đầu.
-        </p>
-      </section>
-
-      <section class="section">
-        <h2>Checklist tốt phải làm bạn nhẹ đầu hơn</h2>
-        <p>
-          Một checklist không tốt sẽ chỉ là một danh sách dài hơn nỗi lo của bạn. Một checklist tốt phải có thứ tự, có ưu tiên, và nói rõ bước nào có thể làm ngay.
-        </p>
-        <div class="step"><span>1</span><div><strong>Nói việc đang rối bằng lời thật</strong><p>Không cần viết đẹp. Cứ nói như đang nhắn cho đồng nghiệp: “mình cần chuẩn bị workshop nhưng chưa biết bắt đầu từ đâu”.</p></div></div>
-        <div class="step"><span>2</span><div><strong>Nói kết quả cuối cùng</strong><p>AI cần biết bạn muốn có một buổi workshop chạy được, một báo cáo gửi sếp, hay một kế hoạch đăng bài 7 ngày.</p></div></div>
-        <div class="step"><span>3</span><div><strong>Yêu cầu bỏ bớt</strong><p>Đây là phần quan trọng. Hãy nhờ AI chỉ ra việc nào có thể bỏ qua ở bản đầu, để bạn không tự làm khó mình.</p></div></div>
-      </section>
-
-      <section class="demo-card" id="demo">
-        <header><strong>Mẫu copy dùng ngay</strong><span class="pill">Dành cho checklist</span></header>
-        <pre id="prompt">Tôi đang có một việc hơi rối và muốn bạn giúp tôi chia thành checklist dễ làm.
-
-Việc tôi cần làm:
-[Mô tả việc của bạn]
-
-Kết quả tôi muốn có sau cùng:
-[Ví dụ: một buổi workshop chạy được / một báo cáo gửi sếp / một kế hoạch đăng bài 7 ngày]
-
-Thông tin hiện có:
-- [thông tin 1]
-- [thông tin 2]
-- [thông tin 3]
-
-Hãy giúp tôi:
-1. Chia việc này thành các bước nhỏ theo thứ tự.
-2. Ghi rõ bước nào làm trong 15 phút, bước nào cần nhiều thời gian hơn.
-3. Chỉ ra 3 việc có thể bỏ qua ở bản đầu.
-4. Viết checklist cuối cùng để tôi copy vào Notion/Google Docs.
-
-Viết thật dễ hiểu, dành cho người không chuyên.</pre>
-        <div class="copy-row">
-          <small>Rất hợp khi bạn đang bị kẹt ở câu “không biết bắt đầu từ đâu”.</small>
-          <button class="copy-btn" data-copy="prompt">Copy mẫu</button>
+      <section class="industry-result" id="lumi-demo" data-mini-lab="sales-follow-up-preview">
+        <div class="industry-result-head">
+          <div><div class="pill">Lumi viết sẵn</div><h2>3 tin nhắn chăm khách</h2></div>
+          <div class="industry-status"><i></i><span data-industry-status>Lumi đang chuẩn bị...</span></div>
+        </div>
+        <div class="industry-output" data-industry-output>
+          <article class="industry-result-card industry-fade industry-delay-1">
+            <span class="industry-label">Bản nhẹ nhàng nhất</span>
+            <h3>Tin nhắn có thể gửi hôm nay</h3>
+            <p>Chào anh/chị, em gửi lại thông tin gói thiết kế fanpage để mình tiện xem nhé. Nếu anh/chị đang phân vân phần nào, em có thể tóm tắt nhanh điểm khác nhau giữa các gói để dễ chọn hơn ạ.</p>
+            <p>Không cần chốt ngay hôm nay. Mình cứ xem trước, phần nào chưa rõ em giải thích thêm cho dễ quyết định.</p>
+          </article>
+          <aside class="industry-side-card industry-fade industry-delay-2">
+            <div class="industry-mini"><b>Bản ngắn hơn</b><p>Em nhắn nhẹ để hỏi anh/chị đã xem qua báo giá chưa. Nếu cần, em tóm tắt lại gói phù hợp nhất với nhu cầu hiện tại của mình ạ.</p></div>
+            <div class="industry-mini industry-fade industry-delay-3"><b>Khi nào gửi?</b><ul><li>Gửi sau 24 giờ nếu khách đã xem báo giá.</li><li>Không gửi quá 2 lần liên tục.</li><li>Luôn đưa ra sự hỗ trợ, không gây áp lực mua.</li></ul></div>
+          </aside>
         </div>
       </section>
 
-      <section class="mini-lab" id="mini-lab" data-mini-lab="checklist" data-fields="brief">
-        <div class="mini-lab__head">
-          <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
-          <div>
-            <div class="mini-lab__eyebrow">Thử 1 chạm</div>
-            <h2>Lumi Bot chia việc thành checklist</h2>
-            <p>Gõ một việc đang làm bạn rối. Lumi sẽ chia thành các bước nhỏ để bạn biết bắt đầu từ đâu.</p>
-          </div>
-        </div>
-        <form class="mini-lab__form" data-mini-lab-form>
-          <div class="mini-lab__field">
-            <label>Việc bạn đang muốn làm</label>
-            <textarea name="brief" placeholder="Ví dụ: Tôi là chủ shop nhỏ, muốn chuẩn bị buổi livestream bán hàng đầu tiên trong 2 ngày nhưng chưa biết bắt đầu từ đâu."></textarea>
-          </div>
-          <div class="mini-lab__actions">
-            <button class="mini-lab__run" type="submit" data-mini-lab-run>Nhờ Lumi chia bước</button>
-            <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
-            <span class="mini-lab__hint">Mục tiêu là có bước đầu tiên, không phải có kế hoạch hoàn hảo.</span>
-          </div>
-        </form>
-        <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Mình đang chia việc lớn thành những bước nhỏ hơn...</span></div>
-        <div class="mini-lab__error" data-mini-lab-error></div>
-        <div class="mini-lab__result">
-          <div class="mini-lab__result-title" data-mini-lab-title>Kết quả từ Lumi Bot</div>
-          <pre class="mini-lab__output" data-mini-lab-output></pre>
-          <div class="mini-lab__tips" data-mini-lab-tips></div>
-        </div>
-      </section>
-
-      <section class="note">
-        <strong>Điều quan trọng</strong>
-        <p>AI không làm bạn hết bận ngay. Nhưng nó có thể giúp việc mơ hồ trở thành vài bước rõ ràng. Và đôi khi chỉ vậy là đủ để bắt đầu.</p>
-      </section>
-
+      <section class="note"><strong>Điểm quan trọng</strong><p>Lumi không giúp bạn ép khách mua. Lumi giúp bạn giao tiếp rõ hơn, lịch sự hơn và giữ cơ hội mà không làm khách khó chịu.</p></section>
       <footer>© 2026 Lumi Labs · Bài viết cho người mới bắt đầu</footer>
     </div>
-    <script>
-      document.querySelectorAll("[data-copy]").forEach((button) => {
-        button.addEventListener("click", async () => {
-          const text = document.getElementById(button.dataset.copy).innerText;
-          await navigator.clipboard.writeText(text);
-          const old = button.innerText;
-          button.innerText = "Đã copy!";
-          setTimeout(() => (button.innerText = old), 1600);
-        });
-      });
-    </script>
+    <script src="/lumi-industry-demo.js"></script>
     <script src="/lumi-mini-lab.js"></script>
   </body>
 </html>

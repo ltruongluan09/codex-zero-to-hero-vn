@@ -3,147 +3,89 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Có giấy tờ khó hiểu? Lumi đọc nhanh phần cần chú ý - Lumi Labs</title>
-    <meta name="description" content="Một bài Lumi Labs cho nhân viên văn phòng, bán hàng, HR và manager: cách dùng Lumi để đọc nhanh báo giá, hợp đồng, hóa đơn, ảnh chụp tài liệu và biết điểm cần hỏi lại." />
+    <title>Nhận giấy tờ dài, đâu là phần cần chú ý? - Lumi Labs</title>
+    <meta name="description" content="Một demo Lumi Labs cho dân văn phòng: Lumi đọc một tài liệu dài và chỉ ra ý chính, điểm cần chú ý, câu nên hỏi lại." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/lumi-article.css" />
     <link rel="stylesheet" href="/lumi-mini-lab.css" />
+    <link rel="stylesheet" href="/lumi-industry-demo.css" />
   </head>
   <body>
-    <div class="page">
+    <div class="page industry-page">
       <nav class="topbar">
         <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
         <a class="back" href="/bai-viet">← Kho bài viết</a>
       </nav>
 
-      <header class="hero">
-        <div class="pill">📄 Bài cho văn phòng · bán hàng · manager</div>
-        <h1>Đừng đọc từng dòng nữa. <span>Đưa tài liệu cho Lumi đọc trước.</span></h1>
-        <p class="lead">
-          Bạn nhận một báo giá, hợp đồng, hóa đơn, file khách gửi hoặc ảnh chụp từ Zalo. Bạn không cần hiểu hết ngay. Trước mắt chỉ cần biết: nội dung chính là gì, điểm nào cần chú ý, và nên hỏi lại câu nào.
-        </p>
-        <div class="hero-actions">
-          <a class="button" href="#mini-lab">Thử với tình huống của bạn</a>
-          <a class="button secondary" href="/docscan-ai">Mở DocScan AI</a>
+      <header class="industry-hero">
+        <div>
+          <div class="pill">Văn phòng · Tài liệu</div>
+          <h1>Nhận một file dài. <span>Không biết phần nào mới đáng chú ý.</span></h1>
+          <p class="lead">Lumi đọc nhanh tài liệu mẫu và trả về ý chính, điểm rủi ro, câu nên hỏi lại. Người đọc thấy ngay cách DocScan giúp việc văn phòng nhẹ hơn.</p>
+          <div class="hero-actions">
+            <a class="button" href="#lumi-demo">Xem Lumi xử lý</a>
+            <a class="button secondary" href="/docscan-ai">Thử DocScan AI</a>
+          </div>
+        </div>
+
+        <div class="industry-demo" data-industry-demo data-statuses="Lumi đang đọc tài liệu...|Lumi đang tìm ý chính...|Lumi đang đánh dấu điểm cần hỏi...|Xong. Bản đọc nhanh đã sẵn sàng.">
+          <div class="industry-orbit"></div>
+          <div class="industry-agent">
+            <div class="industry-avatar"><img src="/lumi-bot.png" alt="Lumi Bot" /></div>
+            <div class="industry-speech">
+              <small>Lumi đang hỗ trợ</small>
+              <strong>Mình đọc trước và chỉ ra phần cần chú ý.</strong>
+              <p>Không thay bạn ký duyệt. Chỉ giúp bạn đỡ bỏ sót điểm quan trọng.</p>
+            </div>
+          </div>
+          <div class="industry-scenario">
+            <small>Tình huống mẫu</small>
+            <p>Một báo giá dịch vụ có điều khoản thanh toán, thời hạn triển khai và phần phụ phí chưa nói rõ.</p>
+          </div>
+          <div class="industry-flow">
+            <div class="industry-step" data-industry-step><span>1</span>Đọc file</div>
+            <div class="industry-step" data-industry-step><span>2</span>Rút ý chính</div>
+            <div class="industry-step" data-industry-step><span>3</span>Tìm điểm cần hỏi</div>
+            <div class="industry-step" data-industry-step><span>4</span>Gợi ý bước tiếp</div>
+          </div>
+          <button class="industry-button" type="button" data-industry-rerun>✨ Cho Lumi đọc lại</button>
         </div>
       </header>
 
-      <section class="quick-win">
-        <div>
-          <strong>Dành cho ai?</strong>
-          <p>Nhân viên văn phòng, sales, HR, kế toán/admin, chủ shop nhỏ và manager hay phải đọc file người khác gửi.</p>
+      <section class="industry-pain">
+        <div><b>Nỗi đau</b><span>File dài, chữ nhiều, không chắc phần nào ảnh hưởng đến tiền, thời hạn hoặc trách nhiệm.</span></div>
+        <div><b>Lumi giải quyết</b><span>Tạo bản đọc nhanh có ý chính, điểm cần chú ý và câu hỏi nên gửi lại.</span></div>
+        <div><b>Bạn chỉ cần làm</b><span>Đối chiếu file gốc và hỏi lại những điểm Lumi đánh dấu.</span></div>
+      </section>
+
+      <section class="industry-result" id="lumi-demo" data-mini-lab="document-preview">
+        <div class="industry-result-head">
+          <div><div class="pill">Lumi đọc sẵn</div><h2>Bản đọc nhanh tài liệu</h2></div>
+          <div class="industry-status"><i></i><span data-industry-status>Lumi đang chuẩn bị...</span></div>
         </div>
-        <div>
-          <strong>Bạn được gì ngay?</strong>
-          <p>Lumi giúp rút ra ý chính, số tiền/ngày tháng, điểm cần hỏi lại và việc nên làm tiếp.</p>
-        </div>
-        <div>
-          <strong>Chỉ cần một thao tác</strong>
-          <p>Kể bạn đang có tài liệu gì. Lumi làm mẫu ngay. Sau đó bạn có thể upload file thật vào DocScan AI.</p>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Tài liệu không đáng sợ. Đáng sợ là mình không biết nên nhìn vào đâu trước.</h2>
-        <p>
-          Một bạn sales nhận báo giá từ nhà cung cấp. File chỉ vài trang, nhưng trong đó có đơn giá, phí giao hàng, thời hạn thanh toán, bảo hành và điều kiện đổi trả. Nếu đọc vội, rất dễ bỏ sót một dòng nhỏ nhưng quan trọng.
-        </p>
-        <p>
-          Một bạn HR nhận hợp đồng cộng tác viên. Nhìn qua tưởng ổn, nhưng vẫn cần kiểm tra: thời hạn làm việc, trách nhiệm hai bên, cách thanh toán và điều kiện chấm dứt. Không phải ai cũng có thời gian đọc kỹ từng câu trong lúc công việc đang dồn.
-        </p>
-        <p>
-          Một manager nhận file báo cáo hoặc ảnh chụp giấy tờ trong nhóm chat. Việc cần nhất lúc đó không phải là đọc hết. Việc cần nhất là biết nhanh: “Có gì quan trọng? Có gì chưa rõ? Mình cần hỏi ai?”
-        </p>
-        <p>
-          Đó là cách nên dùng Lumi: không thay bạn quyết định, không làm chuyên gia pháp lý hay kế toán. Lumi chỉ đọc trước, gạch ra phần đáng chú ý, để bạn kiểm tra nhanh hơn và hỏi lại thông minh hơn.
-        </p>
-      </section>
-
-      <section class="section">
-        <h2>4 việc Lumi có thể làm giúp bạn khi gặp một tài liệu khó đọc</h2>
-        <div class="step"><span>1</span><div><strong>Nói tài liệu này đang nói về chuyện gì</strong><p>Ví dụ: báo giá thiết bị, hợp đồng dịch vụ, hóa đơn, phiếu giao hàng, chính sách nhân sự, file khách gửi.</p></div></div>
-        <div class="step"><span>2</span><div><strong>Kéo phần quan trọng ra trước</strong><p>Số tiền, ngày tháng, người phụ trách, thời hạn phản hồi, điều kiện thanh toán hoặc phần dễ bị hiểu nhầm.</p></div></div>
-        <div class="step"><span>3</span><div><strong>Chỉ ra câu nên hỏi lại</strong><p>Đây là phần có giá trị nhất. Nhiều khi một câu hỏi đúng giúp tránh cả ngày làm sai hướng.</p></div></div>
-        <div class="step"><span>4</span><div><strong>Gợi ý bước tiếp theo</strong><p>Gửi lại cho người phụ trách, hỏi thêm nhà cung cấp, lưu ý trước khi duyệt, hoặc đưa vào checklist công việc.</p></div></div>
-      </section>
-
-      <section class="section">
-        <h2>Ví dụ rất thật trong công việc</h2>
-        <div class="step"><span>Sales</span><div><strong>Nhận báo giá nhà cung cấp</strong><p>Lumi giúp xem tổng tiền, phí phát sinh, hạn thanh toán và câu cần hỏi lại trước khi gửi cho khách.</p></div></div>
-        <div class="step"><span>HR</span><div><strong>Nhận hợp đồng hoặc chính sách</strong><p>Lumi giúp tóm tắt quyền lợi, trách nhiệm, thời hạn và những điểm nên xác nhận lại.</p></div></div>
-        <div class="step"><span>Manager</span><div><strong>Nhận báo cáo hoặc file dài</strong><p>Lumi giúp rút ra ý chính, việc cần xử lý và điểm cần giao cho team kiểm tra tiếp.</p></div></div>
-      </section>
-
-      <section class="demo-card" id="demo">
-        <header><strong>Mẫu copy dùng ngay</strong><span class="pill">Dành cho tài liệu</span></header>
-        <pre id="prompt">Tôi sẽ gửi một ảnh hoặc file tài liệu.
-
-Bạn hãy đọc giúp tôi theo cách dễ hiểu cho người không chuyên.
-
-Kết quả tôi cần:
-1. Tài liệu này nói về việc gì?
-2. 5 ý chính cần biết.
-3. Số tiền, ngày tháng, thời hạn hoặc điều kiện quan trọng nếu có.
-4. Điểm nào cần chú ý trước khi duyệt, ký, chuyển tiếp hoặc trả lời.
-5. 3 câu nên hỏi lại người gửi tài liệu.
-6. Việc nên làm tiếp.
-
-Nếu có phần nào không đọc rõ, hãy nói "chưa đọc rõ", không tự đoán.</pre>
-        <div class="copy-row">
-          <small>Dùng được với báo giá, hóa đơn, hợp đồng ngắn, chính sách hoặc ảnh chụp từ Zalo.</small>
-          <button class="copy-btn" data-copy="prompt">Copy mẫu</button>
+        <div class="industry-output" data-industry-output>
+          <article class="industry-result-card industry-fade industry-delay-1">
+            <span class="industry-label">Ý chính</span>
+            <h3>Tài liệu này nói về báo giá triển khai dịch vụ</h3>
+            <ul>
+              <li>Khách cần xác nhận phạm vi công việc trước khi bắt đầu.</li>
+              <li>Thanh toán chia thành 2 đợt nhưng chưa ghi rõ ngày cụ thể.</li>
+              <li>Có nhắc phụ phí nếu thay đổi yêu cầu sau khi đã duyệt.</li>
+            </ul>
+          </article>
+          <aside class="industry-side-card industry-fade industry-delay-2">
+            <div class="industry-mini"><b>Điểm cần hỏi lại</b><p>Phụ phí phát sinh được tính theo giờ, theo hạng mục hay theo thỏa thuận riêng?</p></div>
+            <div class="industry-mini industry-fade industry-delay-3"><b>Việc nên làm tiếp</b><ul><li>Hỏi lại mốc thanh toán rõ ngày.</li><li>Xác nhận người duyệt cuối cùng.</li><li>Lưu ý phần thay đổi phạm vi công việc.</li></ul></div>
+          </aside>
         </div>
       </section>
 
-      <section class="mini-lab" id="mini-lab" data-mini-lab="imageDoc" data-fields="brief">
-        <div class="mini-lab__head">
-          <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
-          <div>
-            <div class="mini-lab__eyebrow">Thử 1 chạm</div>
-            <h2>Kể bạn đang có tài liệu gì. Lumi đọc thử hướng xử lý.</h2>
-            <p>Chỉ cần một câu. Lumi sẽ trả lời theo kiểu: nên xem gì trước, cần hỏi lại gì, và bước tiếp theo là gì.</p>
-          </div>
-        </div>
-        <form class="mini-lab__form" data-mini-lab-form>
-          <div class="mini-lab__field">
-            <label>Bạn đang có tài liệu gì?</label>
-            <textarea name="brief" placeholder="Ví dụ: Tôi là sales, vừa nhận báo giá thiết bị từ nhà cung cấp. Tôi muốn biết tổng tiền, hạn thanh toán và điểm nào cần hỏi lại trước khi gửi cho khách."></textarea>
-          </div>
-          <div class="mini-lab__actions">
-            <button class="mini-lab__run" type="submit" data-mini-lab-run>Nhờ Lumi đọc thử</button>
-            <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
-            <span class="mini-lab__hint">Không cần upload ở đây. Đây là bản thử nhanh để bạn thấy cách Lumi hỗ trợ.</span>
-          </div>
-        </form>
-        <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Lumi đang đọc tình huống và gợi ý phần cần chú ý...</span></div>
-        <div class="mini-lab__error" data-mini-lab-error></div>
-        <div class="mini-lab__result">
-          <div class="mini-lab__result-title" data-mini-lab-title>Kết quả từ Lumi Bot</div>
-          <pre class="mini-lab__output" data-mini-lab-output></pre>
-          <div class="mini-lab__tips" data-mini-lab-tips></div>
-        </div>
-      </section>
-
-      <section class="note">
-        <strong>Điều quan trọng</strong>
-        <p>Lumi không thay bạn ký, duyệt hay chịu trách nhiệm. Lumi giúp bạn đọc nhanh hơn, phát hiện điểm cần hỏi lại và chuẩn bị tốt hơn trước khi ra quyết định.</p>
-      </section>
-
+      <section class="note"><strong>Điểm quan trọng</strong><p>Lumi không thay bạn quyết định đúng sai của tài liệu. Lumi giúp bạn nhìn nhanh phần cần chú ý trước khi chuyển tiếp, ký duyệt hoặc hỏi lại.</p></section>
       <footer>© 2026 Lumi Labs · Bài viết cho người mới bắt đầu</footer>
     </div>
-    <script>
-      document.querySelectorAll("[data-copy]").forEach((button) => {
-        button.addEventListener("click", async () => {
-          const text = document.getElementById(button.dataset.copy).innerText;
-          await navigator.clipboard.writeText(text);
-          const old = button.innerText;
-          button.innerText = "Đã copy!";
-          setTimeout(() => (button.innerText = old), 1600);
-        });
-      });
-    </script>
+    <script src="/lumi-industry-demo.js"></script>
     <script src="/lumi-mini-lab.js"></script>
   </body>
 </html>

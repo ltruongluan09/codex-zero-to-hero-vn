@@ -3,153 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Viết bài đăng bán hàng đầu tiên khi chưa biết viết gì - Lumi Labs</title>
-    <meta name="description" content="Một bài viết Lumi Labs cho chủ shop, creator và freelancer: dùng AI để có bản nháp bán hàng gần gũi, dễ sửa và không quá quảng cáo." />
+    <title>Chủ shop không nên cạn ý mỗi lần đăng bài bán hàng - Lumi Labs</title>
+    <meta name="description" content="Một demo Lumi Labs cho chủ shop và marketing: Lumi biến một sản phẩm bình thường thành bài đăng Facebook/Zalo dễ đọc, có hook và gợi ý đăng." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/lumi-article.css" />
     <link rel="stylesheet" href="/lumi-mini-lab.css" />
+    <link rel="stylesheet" href="/lumi-industry-demo.css" />
   </head>
   <body>
-    <div class="page">
+    <div class="page industry-page">
       <nav class="topbar">
         <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
         <a class="back" href="/bai-viet">← Kho bài viết</a>
       </nav>
 
-      <header class="hero">
-        <div class="pill">✍ Mini Lab · Content bán hàng</div>
-        <h1>Viết bài đăng bán hàng đầu tiên <span>khi chưa biết viết gì.</span></h1>
-        <p class="lead">
-          Có hôm chỉ muốn đăng một bài thôi. Sản phẩm thì biết rõ, khách hàng cũng biết là ai, nhưng câu đầu tiên vẫn chưa ra. AI có thể giúp bạn có bản nháp đầu tiên để sửa, thay vì ngồi nhìn màn hình trắng.
-        </p>
-        <div class="hero-actions">
-          <a class="button" href="#mini-lab">Thực hành ngay</a>
-          <a class="button secondary" href="/caption-ai">Thử Caption AI</a>
+      <header class="industry-hero">
+        <div>
+          <div class="pill">Chủ shop · Marketing</div>
+          <h1>Có sản phẩm mới. <span>Nhưng không biết đăng bài sao cho dễ mua.</span></h1>
+          <p class="lead">Lumi lấy một tình huống bán hàng rất đời thường và tạo ngay bài đăng, câu mở đầu, hashtag và checklist trước khi đăng.</p>
+          <div class="hero-actions">
+            <a class="button" href="#lumi-demo">Xem Lumi xử lý</a>
+            <a class="button secondary" href="/caption-ai">Thử Caption AI</a>
+          </div>
+        </div>
+
+        <div class="industry-demo" data-industry-demo data-statuses="Lumi đang đọc sản phẩm...|Lumi đang chọn góc bán hàng...|Lumi đang viết bài đăng...|Xong. Bản nháp đã sẵn sàng.">
+          <div class="industry-orbit"></div>
+          <div class="industry-agent">
+            <div class="industry-avatar"><img src="/lumi-bot.png" alt="Lumi Bot" /></div>
+            <div class="industry-speech">
+              <small>Lumi đang hỗ trợ</small>
+              <strong>Mình biến sản phẩm thành bài đăng dễ hiểu.</strong>
+              <p>Không cần nghĩ câu mở đầu. Bạn xem bản mẫu trước rồi sửa theo giọng của shop.</p>
+            </div>
+          </div>
+          <div class="industry-scenario">
+            <small>Tình huống mẫu</small>
+            <p>Chủ shop bán bánh biscotti ít ngọt, nhiều hạt, phù hợp dân văn phòng ăn vặt lành mạnh.</p>
+          </div>
+          <div class="industry-flow">
+            <div class="industry-step" data-industry-step><span>1</span>Hiểu sản phẩm</div>
+            <div class="industry-step" data-industry-step><span>2</span>Chọn góc viết</div>
+            <div class="industry-step" data-industry-step><span>3</span>Viết bài đăng</div>
+            <div class="industry-step" data-industry-step><span>4</span>Gợi ý đăng</div>
+          </div>
+          <button class="industry-button" type="button" data-industry-rerun>✨ Cho Lumi viết lại</button>
         </div>
       </header>
 
-      <section class="quick-win">
-        <div>
-          <strong>Đọc xong làm được gì?</strong>
-          <p>Viết được bản nháp Facebook, TikTok hoặc Zalo cho sản phẩm thật của bạn.</p>
-        </div>
-        <div>
-          <strong>Không cần viết hay ngay</strong>
-          <p>AI tạo bản đầu. Bạn chỉ cần sửa lại cho đúng giọng và đúng sản phẩm của mình.</p>
-        </div>
-        <div>
-          <strong>Có đường tắt</strong>
-          <p>Nếu muốn nhanh hơn, bài này dẫn bạn sang Caption AI để nhập sản phẩm và tạo caption ngay.</p>
-        </div>
+      <section class="industry-pain">
+        <div><b>Nỗi đau</b><span>Sản phẩm tốt nhưng đăng bài mãi vẫn khô, giống quảng cáo và không có điểm chạm.</span></div>
+        <div><b>Lumi giải quyết</b><span>Tạo bản nháp có câu mở đầu, lợi ích đời thường, lời nhắn nhẹ và hashtag.</span></div>
+        <div><b>Bạn chỉ cần làm</b><span>Đọc lại đúng giá, đúng ưu đãi, thêm ảnh sản phẩm rồi đăng.</span></div>
       </section>
 
-      <section class="section">
-        <h2>Cái khó nhất không phải là bán. Cái khó là viết câu đầu tiên.</h2>
-        <p>
-          Một chủ shop nhỏ hiểu sản phẩm của mình hơn ai hết. Món nào bán chạy, khách hay hỏi gì, điểm nào khách thích, điểm nào khách còn lăn tăn. Tất cả đều nằm trong đầu.
-        </p>
-        <p>
-          Nhưng đến lúc viết bài đăng, màn hình trắng lại thắng. Viết câu mở đầu thế nào? Nói lợi ích sao cho không quá quảng cáo? Có nên dùng emoji không? Viết ngắn thì sợ thiếu, viết dài thì sợ không ai đọc.
-        </p>
-        <p>
-          Đây là lý do Caption AI ra đời, và cũng là lý do bài này tồn tại. AI không cần thay bạn bán hàng. AI chỉ cần giúp bạn có bản nháp đầu tiên đủ tốt để sửa tiếp.
-        </p>
-        <p>
-          Một bản nháp đủ tốt đôi khi quý hơn một ý tưởng hoàn hảo nằm trong đầu.
-        </p>
-        <p>
-          Với người mới dùng AI, mục tiêu không phải là để AI viết bài “viral” ngay lập tức. Mục tiêu là có một bản nháp đủ gần, đủ đời, để bạn nhìn vào và biết mình nên sửa gì.
-        </p>
-      </section>
-
-      <section class="section">
-        <h2>Muốn bài AI viết ra bớt giả, hãy cho nó chất liệu thật</h2>
-        <p>
-          AI viết dở khi bạn đưa cho nó quá ít đời sống. “Viết bài bán bánh” là một yêu cầu quá mỏng. Nó không biết bánh dành cho ai, khách mua vì ngon, vì tiện, vì rẻ hay vì cần một món ăn vặt đỡ áy náy.
-        </p>
-        <div class="step"><span>1</span><div><strong>Nói rõ người mua</strong><p>Dân văn phòng, mẹ bỉm, sinh viên, chủ shop, freelancer. Mỗi nhóm có nỗi bận tâm khác nhau.</p></div></div>
-        <div class="step"><span>2</span><div><strong>Nói lợi ích đời thường</strong><p>Đừng chỉ nói tính năng. Hãy nói sản phẩm giúp người mua đỡ tốn thời gian, đỡ phải nghĩ, đỡ lúng túng, hoặc thấy yên tâm hơn.</p></div></div>
-        <div class="step"><span>3</span><div><strong>Xin nhiều bản để chọn</strong><p>Một bản gần gũi, một bản ngắn gọn, một bản có câu mở đầu mạnh hơn. Bạn chọn bản giống mình nhất rồi sửa.</p></div></div>
-      </section>
-
-      <section class="demo-card" id="demo">
-        <header><strong>Mẫu copy dùng ngay</strong><span class="pill">Dành cho bán hàng</span></header>
-        <pre id="prompt">Tôi muốn bạn giúp tôi viết bài đăng bán hàng bằng tiếng Việt.
-
-Sản phẩm/dịch vụ:
-[Tên sản phẩm hoặc dịch vụ]
-
-Mô tả ngắn:
-[Sản phẩm này là gì, giúp gì, có điểm gì đáng chú ý]
-
-Khách hàng chính:
-[Ai sẽ mua hoặc dùng sản phẩm này]
-
-Giọng văn:
-Gần gũi, tự nhiên, không nói quá, không dùng từ sáo rỗng.
-
-Hãy viết:
-1. Một bài đăng Facebook khoảng 120-180 chữ.
-2. Một caption TikTok ngắn hơn.
-3. 5 hashtag tiếng Việt dễ dùng.
-4. 3 câu mở đầu khác nhau để tôi chọn.
-
-Nếu thông tin sản phẩm còn thiếu, hãy hỏi lại tôi tối đa 3 câu trước khi viết.</pre>
-        <div class="copy-row">
-          <small>Bạn cũng có thể thử nhanh hơn bằng Caption AI của Lumi Labs.</small>
-          <button class="copy-btn" data-copy="prompt">Copy mẫu</button>
+      <section class="industry-result" id="lumi-demo" data-mini-lab="sales-post-preview">
+        <div class="industry-result-head">
+          <div><div class="pill">Lumi viết sẵn</div><h2>Bài đăng mẫu cho chủ shop</h2></div>
+          <div class="industry-status"><i></i><span data-industry-status>Lumi đang chuẩn bị...</span></div>
+        </div>
+        <div class="industry-output" data-industry-output>
+          <article class="industry-result-card industry-fade industry-delay-1">
+            <span class="industry-label">Bài đăng Facebook/Zalo</span>
+            <h3>Ăn vặt lành mạnh hơn, không cần quá nghiêm khắc với bản thân</h3>
+            <p>Chiều làm việc mà bụng bắt đầu đói, nhiều người lại phân vân: ăn gì cho đỡ buồn miệng nhưng không quá ngọt?</p>
+            <p>Bánh biscotti ít ngọt, nhiều hạt là lựa chọn dễ chịu cho dân văn phòng: giòn, thơm, ăn gọn, không bị ngấy. Phù hợp để để ở bàn làm việc, mang đi họp hoặc nhâm nhi cùng cà phê.</p>
+            <p>Nếu bạn đang muốn đổi món ăn vặt theo hướng nhẹ nhàng hơn, thử một hũ nhỏ trước là vừa.</p>
+            <p><strong>#biscotti #anvatlanhmanh #danvanphong #banhhat #anvatkhongquangot</strong></p>
+          </article>
+          <aside class="industry-side-card industry-fade industry-delay-2">
+            <div class="industry-mini"><b>Câu mở đầu có thể dùng</b><p>“Chiều nào cũng thèm ăn vặt, nhưng không muốn nạp quá nhiều đường?”</p></div>
+            <div class="industry-mini industry-fade industry-delay-3"><b>Trước khi đăng</b><ul><li>Thêm giá hoặc combo nếu có.</li><li>Gắn ảnh thật của sản phẩm.</li><li>Để số điện thoại hoặc link đặt hàng rõ ràng.</li></ul></div>
+          </aside>
         </div>
       </section>
 
-      <section class="mini-lab" id="mini-lab" data-mini-lab="salesPost" data-fields="brief">
-        <div class="mini-lab__head">
-          <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
-          <div>
-            <div class="mini-lab__eyebrow">Thử 1 chạm</div>
-            <h2>Lumi Bot viết thử bài đăng bán hàng</h2>
-            <p>Kể sản phẩm hoặc dịch vụ bằng một câu. Lumi sẽ viết bản nháp dễ đăng, có câu mở đầu và hashtag.</p>
-          </div>
-        </div>
-        <form class="mini-lab__form" data-mini-lab-form>
-          <div class="mini-lab__field">
-            <label>Bạn đang bán gì?</label>
-            <textarea name="brief" placeholder="Ví dụ: Tôi bán cơm văn phòng giao trưa cho nhân viên quanh quận 1, giá hợp lý, giao trước 12h, món nổi bật hôm nay là cơm gà sốt tiêu."></textarea>
-          </div>
-          <div class="mini-lab__actions">
-            <button class="mini-lab__run" type="submit" data-mini-lab-run>Nhờ Lumi viết thử</button>
-            <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
-            <span class="mini-lab__hint">Phù hợp cho chủ shop, marketing, creator và freelancer.</span>
-          </div>
-        </form>
-        <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Mình đang tìm cách viết tự nhiên, dễ đăng hơn...</span></div>
-        <div class="mini-lab__error" data-mini-lab-error></div>
-        <div class="mini-lab__result">
-          <div class="mini-lab__result-title" data-mini-lab-title>Kết quả từ Lumi Bot</div>
-          <pre class="mini-lab__output" data-mini-lab-output></pre>
-          <div class="mini-lab__tips" data-mini-lab-tips></div>
-        </div>
-      </section>
-
-      <section class="note">
-        <strong>Điều quan trọng</strong>
-        <p>AI không biết câu chuyện thật của sản phẩm bằng bạn. Nhưng AI có thể đưa cho bạn một bản nháp để không phải bắt đầu từ màn hình trắng.</p>
-      </section>
-
+      <section class="note"><strong>Điểm quan trọng</strong><p>Lumi không thay bạn hiểu khách hàng. Lumi chỉ giúp bạn có bản nháp đủ tốt để bắt đầu, thay vì mắc kẹt ở màn hình trắng.</p></section>
       <footer>© 2026 Lumi Labs · Bài viết cho người mới bắt đầu</footer>
     </div>
-    <script>
-      document.querySelectorAll("[data-copy]").forEach((button) => {
-        button.addEventListener("click", async () => {
-          const text = document.getElementById(button.dataset.copy).innerText;
-          await navigator.clipboard.writeText(text);
-          const old = button.innerText;
-          button.innerText = "Đã copy!";
-          setTimeout(() => (button.innerText = old), 1600);
-        });
-      });
-    </script>
+    <script src="/lumi-industry-demo.js"></script>
     <script src="/lumi-mini-lab.js"></script>
   </body>
 </html>

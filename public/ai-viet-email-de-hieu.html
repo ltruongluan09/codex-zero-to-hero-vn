@@ -3,148 +3,595 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Viết email với Lumi mà vẫn nghe như người thật - Lumi Labs</title>
-    <meta name="description" content="Một bài viết Lumi Labs cho người mới: cách nhờ AI viết email rõ ràng, lịch sự, có cảm giác người thật và dùng được ngay trong công việc." />
+    <title>Nỗi vất vả của HR mỗi lần gửi email cho ứng viên - Lumi Labs</title>
+    <meta name="description" content="Một bài Lumi Labs dành cho HR: xem Lumi tự biến một tình huống tuyển dụng thành email, tin nhắn Zalo và checklist kiểm tra." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/lumi-article.css" />
     <link rel="stylesheet" href="/lumi-mini-lab.css" />
+    <style>
+      :root {
+        --ink: #181123;
+        --muted: #6d6684;
+        --line: #eadfff;
+        --purple: #7448ff;
+        --pink: #ff5d7d;
+        --soft: #fff8f3;
+      }
+
+      .compact-page {
+        max-width: 1080px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.88fr);
+        gap: 24px;
+        align-items: center;
+      }
+
+      .hero-copy {
+        min-width: 0;
+      }
+
+      .hero-copy h1 {
+        max-width: 720px;
+      }
+
+      .pain-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin: 18px 0 0;
+      }
+
+      .pain-chip {
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.78);
+        padding: 14px;
+      }
+
+      .pain-chip b {
+        display: block;
+        color: var(--ink);
+        font-size: 15px;
+      }
+
+      .pain-chip span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .lumi-stage {
+        position: relative;
+        border: 1px solid rgba(116, 72, 255, 0.18);
+        border-radius: 34px;
+        background:
+          radial-gradient(circle at 18% 18%, rgba(255, 93, 125, 0.16), transparent 32%),
+          radial-gradient(circle at 82% 16%, rgba(116, 72, 255, 0.18), transparent 34%),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(250, 246, 255, 0.86));
+        padding: 22px;
+        overflow: hidden;
+        min-height: 330px;
+        box-shadow: 0 24px 80px rgba(91, 51, 177, 0.12);
+      }
+
+      .lumi-stage::before {
+        content: "";
+        position: absolute;
+        inset: 20px;
+        border-radius: 28px;
+        border: 1px dashed rgba(116, 72, 255, 0.18);
+        pointer-events: none;
+      }
+
+      .lumi-orbit {
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        right: -30px;
+        bottom: -42px;
+        border-radius: 999px;
+        background: conic-gradient(from 45deg, transparent, rgba(116, 72, 255, 0.22), transparent, rgba(255, 93, 125, 0.18), transparent);
+        filter: blur(1px);
+        animation: rotateOrb 12s linear infinite;
+      }
+
+      .lumi-agent {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 112px minmax(0, 1fr);
+        gap: 16px;
+        align-items: center;
+      }
+
+      .lumi-avatar {
+        position: relative;
+        width: 112px;
+        height: 112px;
+        border-radius: 30px;
+        background: white;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 18px 44px rgba(116, 72, 255, 0.18);
+        animation: breathe 2.7s ease-in-out infinite;
+      }
+
+      .lumi-avatar::after {
+        content: "";
+        position: absolute;
+        right: 11px;
+        top: 11px;
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        background: #16c784;
+        box-shadow: 0 0 0 7px rgba(22, 199, 132, 0.14);
+      }
+
+      .lumi-avatar img {
+        width: 92px;
+        height: 92px;
+        object-fit: cover;
+        border-radius: 24px;
+      }
+
+      .lumi-speech {
+        border: 1px solid rgba(116, 72, 255, 0.16);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.78);
+        padding: 16px;
+        backdrop-filter: blur(12px);
+      }
+
+      .lumi-speech small {
+        display: block;
+        color: var(--purple);
+        font-weight: 800;
+        margin-bottom: 6px;
+      }
+
+      .lumi-speech strong {
+        display: block;
+        color: var(--ink);
+        font-size: 20px;
+      }
+
+      .lumi-speech p {
+        color: var(--muted);
+        margin: 8px 0 0;
+        line-height: 1.65;
+      }
+
+      .scenario-card {
+        position: relative;
+        z-index: 1;
+        margin-top: 22px;
+        border: 1px solid rgba(255, 93, 125, 0.18);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.72);
+        padding: 16px;
+      }
+
+      .scenario-card small {
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .scenario-card p {
+        margin: 8px 0 0;
+        color: var(--ink);
+        font-size: 17px;
+        line-height: 1.55;
+        font-weight: 700;
+      }
+
+      .run-demo {
+        position: relative;
+        z-index: 1;
+        margin-top: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: 0;
+        border-radius: 18px;
+        padding: 13px 18px;
+        font-family: inherit;
+        font-weight: 900;
+        color: #fff;
+        background: linear-gradient(135deg, var(--pink), var(--purple));
+        box-shadow: 0 18px 44px rgba(116, 72, 255, 0.22);
+        cursor: pointer;
+      }
+
+      .lumi-flow {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .flow-step {
+        border: 1px solid rgba(116, 72, 255, 0.14);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.62);
+        padding: 10px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+      }
+
+      .flow-step span {
+        display: block;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        margin-bottom: 6px;
+        display: grid;
+        place-items: center;
+        color: white;
+        background: linear-gradient(135deg, var(--pink), var(--purple));
+        font-size: 11px;
+      }
+
+      .flow-step.is-active {
+        transform: translateY(-3px);
+        border-color: rgba(116, 72, 255, 0.38);
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--ink);
+        box-shadow: 0 12px 28px rgba(116, 72, 255, 0.13);
+      }
+
+      .flow-step.is-done span {
+        background: #16c784;
+      }
+
+      .result-lab {
+        margin-top: 28px;
+        border: 1px solid rgba(116, 72, 255, 0.2);
+        border-radius: 34px;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 22px;
+        box-shadow: 0 18px 70px rgba(91, 51, 177, 0.1);
+      }
+
+      .result-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 14px;
+      }
+
+      .result-head h2 {
+        margin: 0;
+      }
+
+      .lumi-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        color: var(--purple);
+        background: #f4efff;
+        padding: 9px 12px;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .lumi-status i {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #16c784;
+        box-shadow: 0 0 0 0 rgba(22, 199, 132, 0.35);
+        animation: pulseDot 1.8s infinite;
+      }
+
+      .output-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.04fr) minmax(260px, 0.72fr);
+        gap: 16px;
+        margin-top: 18px;
+        transition: opacity 0.28s ease;
+      }
+
+      .email-card,
+      .side-card {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: linear-gradient(180deg, #fff, #fffafd);
+        padding: 18px;
+      }
+
+      .email-subject {
+        border-radius: 16px;
+        background: #f8f3ff;
+        padding: 12px;
+        color: var(--ink);
+        font-weight: 900;
+      }
+
+      .email-body {
+        margin-top: 14px;
+        color: #2a2334;
+        line-height: 1.75;
+      }
+
+      .email-body p {
+        margin: 0 0 12px;
+      }
+
+      .email-body ul {
+        margin: 0 0 12px 20px;
+        padding: 0;
+      }
+
+      .side-card {
+        display: grid;
+        gap: 12px;
+      }
+
+      .mini-message,
+      .check-card {
+        border-radius: 18px;
+        background: #faf7ff;
+        padding: 14px;
+      }
+
+      .mini-message b,
+      .check-card b {
+        display: block;
+        color: var(--purple);
+        margin-bottom: 8px;
+      }
+
+      .mini-message p,
+      .check-card li {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .check-card ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      .fade-in {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeIn 0.55s ease forwards;
+      }
+
+      .delay-1 { animation-delay: 0.15s; }
+      .delay-2 { animation-delay: 0.3s; }
+      .delay-3 { animation-delay: 0.45s; }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes breathe {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-5px) scale(1.025); }
+      }
+
+      @keyframes pulseDot {
+        0% { box-shadow: 0 0 0 0 rgba(22, 199, 132, 0.35); }
+        70% { box-shadow: 0 0 0 8px rgba(22, 199, 132, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(22, 199, 132, 0); }
+      }
+
+      @keyframes rotateOrb {
+        to { transform: rotate(360deg); }
+      }
+
+      @media (max-width: 860px) {
+        .hero,
+        .output-grid,
+        .pain-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .lumi-stage,
+        .result-lab {
+          border-radius: 26px;
+          padding: 18px;
+        }
+
+        .lumi-agent {
+          grid-template-columns: 78px 1fr;
+        }
+
+        .lumi-avatar {
+          width: 78px;
+          height: 78px;
+          border-radius: 22px;
+        }
+
+        .lumi-avatar img {
+          width: 64px;
+          height: 64px;
+          border-radius: 18px;
+        }
+
+        .result-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .lumi-flow {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="page">
+    <div class="page compact-page">
       <nav class="topbar">
         <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
         <a class="back" href="/bai-viet">← Kho bài viết</a>
       </nav>
 
       <header class="hero">
-        <div class="pill">✉ Mini Lab · Email công việc</div>
-        <h1>Viết email với Lumi <span>mà vẫn nghe như người thật.</span></h1>
-        <p class="lead">
-          Nhiều người không bí nội dung. Họ bí cách nói sao cho rõ, lịch sự, không khô cứng và không giống một mẫu email copy trên mạng. Bài này giúp bạn dùng AI để có bản nháp tốt trong vài phút, rồi sửa lại bằng giọng của mình.
-        </p>
-        <div class="hero-actions">
-          <a class="button" href="#mini-lab">Thực hành ngay</a>
-          <a class="button secondary" href="/bai-viet">Xem bài khác</a>
+        <div class="hero-copy">
+          <div class="pill">HR · Email ứng viên</div>
+          <h1>Mỗi email ứng viên đều nhỏ. <span>Nhưng cộng lại rất mất thời gian.</span></h1>
+          <p class="lead">
+            Lumi biến một tình huống tuyển dụng thành email, tin nhắn Zalo và checklist kiểm tra. Bạn nhìn kết quả trước, không cần nhập gì.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#lumi-demo">Xem Lumi xử lý</a>
+            <a class="button secondary" href="/bai-viet">Xem bài khác</a>
+          </div>
+        </div>
+
+        <div class="lumi-stage" aria-label="Lumi demo">
+          <div class="lumi-orbit"></div>
+          <div class="lumi-agent">
+            <div class="lumi-avatar">
+              <img src="/lumi-bot.png" alt="Lumi Bot" />
+            </div>
+            <div class="lumi-speech">
+              <small>Lumi đang hỗ trợ</small>
+              <strong>Mình đọc tình huống và viết sẵn cho bạn.</strong>
+              <p>Không cần nhập gì trước. Bạn xem kết quả mẫu trước, rồi thử lại sau nếu muốn.</p>
+            </div>
+          </div>
+          <div class="scenario-card">
+            <small>Tình huống mẫu</small>
+            <p>Ứng viên Minh Anh · vị trí Marketing Executive · phỏng vấn online 10h thứ Sáu · cần xác nhận trước 17h.</p>
+          </div>
+          <div class="lumi-flow" aria-label="Các bước Lumi xử lý">
+            <div class="flow-step" data-flow-step><span>1</span>Đọc tình huống</div>
+            <div class="flow-step" data-flow-step><span>2</span>Viết email</div>
+            <div class="flow-step" data-flow-step><span>3</span>Gợi ý Zalo</div>
+            <div class="flow-step" data-flow-step><span>4</span>Nhắc điểm kiểm tra</div>
+          </div>
+          <button class="run-demo" type="button" data-rerun>✨ Cho Lumi viết lại</button>
         </div>
       </header>
 
-      <section class="quick-win">
-        <div>
-          <strong>Đọc xong làm được gì?</strong>
-          <p>Viết nhanh email mời phỏng vấn, nhắc phản hồi, gửi báo giá hoặc từ chối nhẹ nhàng.</p>
+      <section class="pain-strip" aria-label="Tóm tắt lợi ích">
+        <div class="pain-chip">
+          <b>Nỗi đau</b>
+          <span>Viết lại email giống nhau mỗi ngày, dễ sai tên, sai giờ, thiếu câu xác nhận.</span>
         </div>
-        <div>
-          <strong>Không cần biết gì trước</strong>
-          <p>Chỉ cần nói người nhận là ai, mục đích email là gì và vài thông tin chính cần đưa vào.</p>
+        <div class="pain-chip">
+          <b>Lumi giải quyết</b>
+          <span>Tạo email, tin nhắn Zalo và checklist kiểm tra trong một màn hình dễ nhìn.</span>
         </div>
-        <div>
-          <strong>Lumi Bot làm mẫu</strong>
-          <p>Cuối bài có Mini Lab để bạn nhập tình huống thật và lấy bản nháp dùng ngay.</p>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Email khó không phải vì thiếu chữ. Khó vì phải đúng giọng.</h2>
-        <p>
-          Có một buổi sáng rất quen: bạn cần nhắn cho ứng viên để mời phỏng vấn. Nội dung thì đơn giản thôi. Ngày nào, mấy giờ, hình thức online hay offline, cần xác nhận lại.
-        </p>
-        <p>
-          Nhưng khi bắt đầu viết, bạn lại ngập ngừng. Viết ngắn quá thì sợ cụt. Viết dài quá thì sợ khách sáo. Viết trang trọng quá thì giống mẫu copy trên mạng. Viết thân thiện quá thì sợ thiếu chuyên nghiệp.
-        </p>
-        <p>
-          HR gặp chuyện này. Sales cũng gặp. Quản lý cũng gặp. Backoffice càng gặp nhiều hơn, vì mỗi ngày đều có những email nhỏ phải gửi: nhắc lịch, xin phản hồi, gửi tài liệu, từ chối nhẹ nhàng, xác nhận thông tin.
-        </p>
-        <p>
-          Ở Lumi Labs, mình không xem AI như người thay bạn giao tiếp. Mình xem AI như người đưa ra bản nháp đầu tiên để bạn đỡ mất lực bắt đầu. Bạn vẫn là người hiểu tình huống, hiểu người nhận và quyết định câu chữ cuối cùng.
-        </p>
-        <p>
-          Cách nghĩ đúng là: AI viết bản nháp, mình chỉnh lại cảm giác. Như vậy email vẫn nhanh hơn, nhưng không mất đi sự tinh tế của người gửi.
-        </p>
-      </section>
-
-      <section class="section">
-        <h2>Cách nhờ AI để email không bị cứng</h2>
-        <p>
-          Nếu bạn chỉ gõ “viết email mời phỏng vấn”, AI vẫn viết được. Nhưng kết quả thường an toàn quá mức: đúng, nhưng hơi lạnh. Muốn email nghe tự nhiên hơn, hãy cho AI ba thứ mà một người đồng nghiệp thật cũng cần biết.
-        </p>
-        <div class="step"><span>1</span><div><strong>Người nhận là ai?</strong><p>Email gửi ứng viên khác email gửi khách hàng. Email nhắc đồng nghiệp cũng khác email gửi sếp. Chỉ cần nói rõ người nhận, giọng văn đã khác đi rất nhiều.</p></div></div>
-        <div class="step"><span>2</span><div><strong>Mục tiêu của email là gì?</strong><p>Bạn muốn xác nhận lịch, xin phản hồi, nhắc nhẹ, gửi thông tin hay từ chối? Mục tiêu càng rõ thì email càng gọn.</p></div></div>
-        <div class="step"><span>3</span><div><strong>Bạn muốn nghe như thế nào?</strong><p>Hãy nói thẳng: lịch sự nhưng thân thiện, rõ ràng nhưng không áp lực, chuyên nghiệp nhưng không xa cách. AI cần “gu” của bạn.</p></div></div>
-      </section>
-
-      <section class="demo-card" id="demo">
-        <header><strong>Mẫu copy dùng ngay</strong><span class="pill">Dành cho email</span></header>
-        <pre id="prompt">Tôi muốn bạn giúp tôi viết một email bằng tiếng Việt.
-
-Bối cảnh:
-- Tôi là [vai trò của bạn].
-- Người nhận là [ứng viên/khách hàng/đồng nghiệp/quản lý].
-- Mục tiêu email là [mời phỏng vấn/xin phản hồi/nhắc lịch/gửi báo giá/từ chối nhẹ nhàng].
-
-Thông tin cần có:
-- [ý 1]
-- [ý 2]
-- [ý 3]
-
-Yêu cầu:
-- Viết rõ ràng, lịch sự, không quá cứng.
-- Có tiêu đề email.
-- Viết 2 phiên bản: một bản thân thiện, một bản trang trọng hơn.
-- Nếu thiếu thông tin quan trọng, hãy hỏi lại tôi trước.</pre>
-        <div class="copy-row">
-          <small>Bạn có thể dán mẫu này vào công cụ trợ lý đang dùng.</small>
-          <button class="copy-btn" data-copy="prompt">Copy mẫu</button>
+        <div class="pain-chip">
+          <b>Bạn chỉ cần làm</b>
+          <span>Đọc lại thông tin quan trọng, chỉnh nếu cần, rồi gửi cho ứng viên.</span>
         </div>
       </section>
 
-      <section class="mini-lab" id="mini-lab" data-mini-lab="email" data-fields="brief">
-        <div class="mini-lab__head">
-          <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
+      <section class="result-lab" id="lumi-demo" data-mini-lab="email-preview">
+        <div class="result-head">
           <div>
-            <div class="mini-lab__eyebrow">Thử 1 chạm</div>
-            <h2>Lumi Bot viết thử email cho bạn</h2>
-            <p>Chỉ cần kể ngắn một tình huống. Lumi sẽ tạo bản email có tiêu đề, dễ đọc và có thể sửa nhanh.</p>
+            <div class="pill">Lumi viết sẵn</div>
+            <h2>Kết quả mẫu cho HR</h2>
           </div>
+          <div class="lumi-status"><i></i><span data-status>Lumi đang chuẩn bị bản nháp...</span></div>
         </div>
-        <form class="mini-lab__form" data-mini-lab-form>
-          <div class="mini-lab__field">
-            <label>Kể tình huống của bạn bằng một câu</label>
-            <textarea name="brief" placeholder="Ví dụ: Tôi là HR, cần mời ứng viên phỏng vấn online vào thứ Sáu 10h và muốn họ xác nhận trước 17h hôm nay."></textarea>
-          </div>
-          <div class="mini-lab__actions">
-            <button class="mini-lab__run" type="submit" data-mini-lab-run>Nhờ Lumi viết thử</button>
-            <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
-            <span class="mini-lab__hint">Một ô nhập. Một lần bấm. Có bản nháp để sửa ngay.</span>
-          </div>
-        </form>
-        <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Mình đang viết bản nháp dễ nghe hơn cho bạn...</span></div>
-        <div class="mini-lab__error" data-mini-lab-error></div>
-        <div class="mini-lab__result">
-          <div class="mini-lab__result-title" data-mini-lab-title>Kết quả từ Lumi Bot</div>
-          <pre class="mini-lab__output" data-mini-lab-output></pre>
-          <div class="mini-lab__tips" data-mini-lab-tips></div>
+
+        <div class="output-grid" data-output>
+          <article class="email-card fade-in delay-1">
+            <div class="email-subject">Tiêu đề: Mời phỏng vấn vị trí Marketing Executive - Minh Anh</div>
+            <div class="email-body">
+              <p>Chào Minh Anh,</p>
+              <p>Cảm ơn bạn đã quan tâm đến vị trí <strong>Marketing Executive</strong> tại công ty.</p>
+              <p>Bên mình muốn mời bạn tham gia buổi phỏng vấn online vào <strong>10h00, thứ Sáu</strong>.</p>
+              <ul>
+                <li>Hình thức: phỏng vấn online</li>
+                <li>Thời lượng dự kiến: 30-45 phút</li>
+                <li>Thông tin link họp sẽ được gửi sau khi bạn xác nhận</li>
+              </ul>
+              <p>Nhờ bạn phản hồi email này trước <strong>17h hôm nay</strong> để bên mình sắp xếp lịch phù hợp nhé.</p>
+              <p>Trân trọng,<br />Phòng Nhân sự</p>
+            </div>
+          </article>
+
+          <aside class="side-card fade-in delay-2">
+            <div class="mini-message">
+              <b>Tin nhắn Zalo ngắn</b>
+              <p>Chào Minh Anh, mình đã gửi email mời phỏng vấn vị trí Marketing Executive vào 10h thứ Sáu. Bạn xem giúp và xác nhận trước 17h hôm nay nhé.</p>
+            </div>
+            <div class="check-card fade-in delay-3">
+              <b>Trước khi gửi, HR kiểm tra 3 điểm</b>
+              <ul>
+                <li>Tên ứng viên đã đúng chưa?</li>
+                <li>Giờ phỏng vấn và hình thức đã đúng chưa?</li>
+                <li>Đã có link họp hoặc người phụ trách gửi link chưa?</li>
+              </ul>
+            </div>
+          </aside>
         </div>
       </section>
 
       <section class="note">
-        <strong>Điều quan trọng</strong>
-        <p>Email hay không phải là email dài. Email hay là email giúp người nhận hiểu nhanh: chuyện gì, cần làm gì, khi nào phản hồi. AI giúp bạn có bản nháp. Bạn thêm sự tinh tế của mình vào.</p>
+        <strong>Điểm quan trọng</strong>
+        <p>Lumi không thay bạn quyết định. Lumi chỉ xử lý phần lặp lại để bạn đỡ mất thời gian và giảm lỗi nhỏ khi giao tiếp với ứng viên.</p>
       </section>
 
       <footer>© 2026 Lumi Labs · Bài viết cho người mới bắt đầu</footer>
     </div>
+
     <script>
-      document.querySelectorAll("[data-copy]").forEach((button) => {
-        button.addEventListener("click", async () => {
-          const text = document.getElementById(button.dataset.copy).innerText;
-          await navigator.clipboard.writeText(text);
-          const old = button.innerText;
-          button.innerText = "Đã copy!";
-          setTimeout(() => (button.innerText = old), 1600);
+      const statusEl = document.querySelector("[data-status]");
+      const outputEl = document.querySelector("[data-output]");
+      const rerunButton = document.querySelector("[data-rerun]");
+      const flowSteps = Array.from(document.querySelectorAll("[data-flow-step]"));
+      const statuses = [
+        "Lumi đang đọc tình huống...",
+        "Lumi đang chọn giọng lịch sự...",
+        "Lumi đang viết email và tin nhắn...",
+        "Xong. Bạn có thể dùng bản nháp này."
+      ];
+
+      function replayDemo() {
+        outputEl.style.opacity = "0.35";
+        flowSteps.forEach((step) => step.classList.remove("is-active", "is-done"));
+        outputEl.querySelectorAll(".fade-in").forEach((el) => {
+          el.style.animation = "none";
+          void el.offsetWidth;
+          el.style.animation = "";
         });
-      });
+
+        let i = 0;
+        statusEl.textContent = statuses[i];
+        flowSteps[0]?.classList.add("is-active");
+        const timer = setInterval(() => {
+          flowSteps[i]?.classList.remove("is-active");
+          flowSteps[i]?.classList.add("is-done");
+          i += 1;
+          flowSteps[i]?.classList.add("is-active");
+          statusEl.textContent = statuses[i] || statuses[statuses.length - 1];
+          if (i >= statuses.length - 1) {
+            clearInterval(timer);
+            flowSteps.forEach((step) => step.classList.add("is-done"));
+            outputEl.style.opacity = "1";
+          }
+        }, 650);
+      }
+
+      rerunButton.addEventListener("click", replayDemo);
+      replayDemo();
     </script>
     <script src="/lumi-mini-lab.js"></script>
   </body>
