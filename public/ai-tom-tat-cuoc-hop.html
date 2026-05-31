@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tóm tắt cuộc họp bằng AI sao cho ra việc - Lumi Labs</title>
+    <title>Biến ghi chú họp lộn xộn thành việc cần làm - Lumi Labs</title>
     <meta name="description" content="Cách dùng AI để biến ghi chú họp lộn xộn thành quyết định, việc cần làm, người phụ trách và câu hỏi cần hỏi lại." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,9 +20,9 @@
 
       <header class="hero">
         <div class="pill">☑ Mini Lab · Sau cuộc họp biết làm gì</div>
-        <h1>Tóm tắt cuộc họp bằng AI <span>sao cho ra việc.</span></h1>
+        <h1>Biến ghi chú họp lộn xộn <span>thành việc cần làm.</span></h1>
         <p class="lead">
-          Một bản tóm tắt dài chưa chắc có ích. Sau cuộc họp, thứ mọi người cần nhất là: đã quyết gì, ai làm, khi nào xong, còn điểm nào chưa rõ.
+          Sau cuộc họp, thứ có ích nhất không phải là một đoạn tóm tắt dài. Thứ có ích nhất là một danh sách rõ: đã quyết gì, ai làm, khi nào xong, còn điểm nào cần hỏi lại.
         </p>
         <div class="hero-actions">
           <a class="button" href="#mini-lab">Thực hành ngay</a>
@@ -30,8 +30,23 @@
         </div>
       </header>
 
+      <section class="quick-win">
+        <div>
+          <strong>Đọc xong làm được gì?</strong>
+          <p>Dán ghi chú họp vào AI và nhận lại bản bàn giao có việc, người phụ trách, deadline.</p>
+        </div>
+        <div>
+          <strong>Giảm hiểu nhầm trong team</strong>
+          <p>AI sẽ tách riêng phần chưa rõ để bạn hỏi lại, thay vì để mỗi người hiểu một kiểu.</p>
+        </div>
+        <div>
+          <strong>Thử ngay trên trang</strong>
+          <p>Mini Lab cuối bài giúp bạn biến vài dòng ghi chú rời rạc thành tin nhắn gửi team.</p>
+        </div>
+      </section>
+
       <section class="section">
-        <h2>Cuộc họp không mệt nhất ở lúc họp. Mệt nhất là sau đó.</h2>
+        <h2>Cuộc họp không mệt nhất ở lúc họp. Mệt nhất là lúc phải nhớ ai làm gì.</h2>
         <p>
           Anh quản lý vừa ra khỏi cuộc họp Teams. Trong đầu còn nhớ rất nhiều ý: đổi deadline, thêm một đầu việc, khách hàng muốn chỉnh lại proposal, team nội dung cần gửi bản nháp trước thứ Sáu.
         </p>
@@ -40,6 +55,9 @@
         </p>
         <p>
           Đây là chỗ AI rất hữu ích. Không phải để làm cuộc họp thông minh hơn. Mà để biến phần lộn xộn sau cuộc họp thành một bản rõ ràng để team làm tiếp.
+        </p>
+        <p>
+          Khi dùng đúng, AI giống một người thư ký tỉnh táo: không tự quyết thay bạn, nhưng giúp bạn kéo những điểm quan trọng ra khỏi đống ghi chú lộn xộn.
         </p>
       </section>
 
@@ -55,7 +73,7 @@
       </section>
 
       <section class="demo-card" id="demo">
-        <header><strong>Prompt tự demo</strong><span class="pill">Copy dùng ngay</span></header>
+        <header><strong>Mẫu copy dùng ngay</strong><span class="pill">Dành cho họp</span></header>
         <pre id="prompt">Tôi sẽ dán nội dung ghi chú cuộc họp bên dưới.
 
 Hãy giúp tôi chuyển thành bản tóm tắt dễ dùng cho team.
@@ -75,28 +93,28 @@ Nội dung cuộc họp:
 [Dán ghi chú cuộc họp ở đây]</pre>
         <div class="copy-row">
           <small>Dùng tốt với ghi chú Teams, Zoom, Zalo hoặc note cá nhân.</small>
-          <button class="copy-btn" data-copy="prompt">Copy prompt</button>
+          <button class="copy-btn" data-copy="prompt">Copy mẫu</button>
         </div>
       </section>
 
-      <section class="mini-lab" id="mini-lab" data-mini-lab="meeting" data-fields="notes">
+      <section class="mini-lab" id="mini-lab" data-mini-lab="meeting" data-fields="brief">
         <div class="mini-lab__head">
           <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
           <div>
-            <div class="mini-lab__eyebrow">Thực hành ngay trên trang</div>
+            <div class="mini-lab__eyebrow">Thử 1 chạm</div>
             <h2>Lumi Bot biến ghi chú họp thành việc cần làm</h2>
-            <p>Dán vài dòng ghi chú thật. Kết quả sẽ ưu tiên việc có thể gửi ngay cho team, không phải một đoạn văn dài để đọc cho vui.</p>
+            <p>Dán vài dòng ghi chú. Lumi sẽ gom lại thành việc cần làm, điểm chưa rõ và tin nhắn có thể gửi team.</p>
           </div>
         </div>
         <form class="mini-lab__form" data-mini-lab-form>
           <div class="mini-lab__field">
-            <label>Ghi chú cuộc họp của bạn</label>
-            <textarea name="notes" placeholder="Ví dụ: Team thống nhất làm landing page mới. Huy phụ trách nội dung. Chưa rõ deadline. Cần gửi bản nháp cho sếp xem..."></textarea>
+            <label>Dán ghi chú họp của bạn</label>
+            <textarea name="brief" placeholder="Ví dụ: Team thống nhất làm landing page mới. Huy phụ trách nội dung. Chưa rõ deadline. Cần gửi bản nháp cho sếp xem trong tuần này."></textarea>
           </div>
           <div class="mini-lab__actions">
-            <button class="mini-lab__run" type="submit" data-mini-lab-run>Tóm tắt giúp tôi</button>
+            <button class="mini-lab__run" type="submit" data-mini-lab-run>Nhờ Lumi gom việc</button>
             <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
-            <span class="mini-lab__hint">Nếu ghi chú thiếu deadline, Lumi Bot sẽ chỉ ra để bạn hỏi lại.</span>
+            <span class="mini-lab__hint">Phù hợp cho manager, PM, HR hoặc bất kỳ ai vừa họp xong.</span>
           </div>
         </form>
         <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Mình đang gom lại thành việc cần làm rõ ràng...</span></div>

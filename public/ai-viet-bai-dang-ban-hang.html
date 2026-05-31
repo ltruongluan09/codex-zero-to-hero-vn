@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Viết bài đăng bán hàng đầu tiên bằng AI - Lumi Labs</title>
+    <title>Viết bài đăng bán hàng đầu tiên khi chưa biết viết gì - Lumi Labs</title>
     <meta name="description" content="Một bài viết Lumi Labs cho chủ shop, creator và freelancer: dùng AI để có bản nháp bán hàng gần gũi, dễ sửa và không quá quảng cáo." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,9 +20,9 @@
 
       <header class="hero">
         <div class="pill">✍ Mini Lab · Content bán hàng</div>
-        <h1>Viết bài đăng bán hàng đầu tiên <span>bằng AI.</span></h1>
+        <h1>Viết bài đăng bán hàng đầu tiên <span>khi chưa biết viết gì.</span></h1>
         <p class="lead">
-          Có hôm chỉ muốn đăng một bài thôi. Sản phẩm thì biết rõ, khách hàng cũng biết là ai, nhưng câu đầu tiên vẫn chưa ra.
+          Có hôm chỉ muốn đăng một bài thôi. Sản phẩm thì biết rõ, khách hàng cũng biết là ai, nhưng câu đầu tiên vẫn chưa ra. AI có thể giúp bạn có bản nháp đầu tiên để sửa, thay vì ngồi nhìn màn hình trắng.
         </p>
         <div class="hero-actions">
           <a class="button" href="#mini-lab">Thực hành ngay</a>
@@ -30,8 +30,23 @@
         </div>
       </header>
 
+      <section class="quick-win">
+        <div>
+          <strong>Đọc xong làm được gì?</strong>
+          <p>Viết được bản nháp Facebook, TikTok hoặc Zalo cho sản phẩm thật của bạn.</p>
+        </div>
+        <div>
+          <strong>Không cần viết hay ngay</strong>
+          <p>AI tạo bản đầu. Bạn chỉ cần sửa lại cho đúng giọng và đúng sản phẩm của mình.</p>
+        </div>
+        <div>
+          <strong>Có đường tắt</strong>
+          <p>Nếu muốn nhanh hơn, bài này dẫn bạn sang Caption AI để nhập sản phẩm và tạo caption ngay.</p>
+        </div>
+      </section>
+
       <section class="section">
-        <h2>Cái khó nhất không phải là bán. Cái khó là bắt đầu viết.</h2>
+        <h2>Cái khó nhất không phải là bán. Cái khó là viết câu đầu tiên.</h2>
         <p>
           Một chủ shop nhỏ hiểu sản phẩm của mình hơn ai hết. Món nào bán chạy, khách hay hỏi gì, điểm nào khách thích, điểm nào khách còn lăn tăn. Tất cả đều nằm trong đầu.
         </p>
@@ -43,6 +58,9 @@
         </p>
         <p>
           Một bản nháp đủ tốt đôi khi quý hơn một ý tưởng hoàn hảo nằm trong đầu.
+        </p>
+        <p>
+          Với người mới dùng AI, mục tiêu không phải là để AI viết bài “viral” ngay lập tức. Mục tiêu là có một bản nháp đủ gần, đủ đời, để bạn nhìn vào và biết mình nên sửa gì.
         </p>
       </section>
 
@@ -57,7 +75,7 @@
       </section>
 
       <section class="demo-card" id="demo">
-        <header><strong>Prompt tự demo</strong><span class="pill">Copy dùng ngay</span></header>
+        <header><strong>Mẫu copy dùng ngay</strong><span class="pill">Dành cho bán hàng</span></header>
         <pre id="prompt">Tôi muốn bạn giúp tôi viết bài đăng bán hàng bằng tiếng Việt.
 
 Sản phẩm/dịch vụ:
@@ -81,36 +99,28 @@ Hãy viết:
 Nếu thông tin sản phẩm còn thiếu, hãy hỏi lại tôi tối đa 3 câu trước khi viết.</pre>
         <div class="copy-row">
           <small>Bạn cũng có thể thử nhanh hơn bằng Caption AI của Lumi Labs.</small>
-          <button class="copy-btn" data-copy="prompt">Copy prompt</button>
+          <button class="copy-btn" data-copy="prompt">Copy mẫu</button>
         </div>
       </section>
 
-      <section class="mini-lab" id="mini-lab" data-mini-lab="salesPost" data-fields="product,customer,benefit">
+      <section class="mini-lab" id="mini-lab" data-mini-lab="salesPost" data-fields="brief">
         <div class="mini-lab__head">
           <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
           <div>
-            <div class="mini-lab__eyebrow">Thực hành ngay trên trang</div>
+            <div class="mini-lab__eyebrow">Thử 1 chạm</div>
             <h2>Lumi Bot viết thử bài đăng bán hàng</h2>
-            <p>Nhập sản phẩm thật của bạn. Lumi Bot sẽ tạo bản nháp có hook, nội dung chính và hashtag để bạn sửa lại bằng giọng của mình.</p>
+            <p>Kể sản phẩm hoặc dịch vụ bằng một câu. Lumi sẽ viết bản nháp dễ đăng, có câu mở đầu và hashtag.</p>
           </div>
         </div>
         <form class="mini-lab__form" data-mini-lab-form>
           <div class="mini-lab__field">
-            <label>Sản phẩm hoặc dịch vụ của bạn</label>
-            <input name="product" placeholder="Ví dụ: cơm văn phòng giao trưa, khóa học Excel, dịch vụ thiết kế menu..." />
-          </div>
-          <div class="mini-lab__field">
-            <label>Ai là người sẽ mua?</label>
-            <input name="customer" placeholder="Ví dụ: dân văn phòng bận rộn, chủ shop nhỏ, người mới đi làm..." />
-          </div>
-          <div class="mini-lab__field">
-            <label>Lợi ích đời thường nhất là gì?</label>
-            <textarea name="benefit" placeholder="Ví dụ: tiết kiệm thời gian, dễ bắt đầu, đỡ phải tự nghĩ nội dung, giao nhanh trong giờ trưa..."></textarea>
+            <label>Bạn đang bán gì?</label>
+            <textarea name="brief" placeholder="Ví dụ: Tôi bán cơm văn phòng giao trưa cho nhân viên quanh quận 1, giá hợp lý, giao trước 12h, món nổi bật hôm nay là cơm gà sốt tiêu."></textarea>
           </div>
           <div class="mini-lab__actions">
-            <button class="mini-lab__run" type="submit" data-mini-lab-run>Viết thử cho tôi</button>
+            <button class="mini-lab__run" type="submit" data-mini-lab-run>Nhờ Lumi viết thử</button>
             <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
-            <span class="mini-lab__hint">Bạn sửa lại 20% cuối cùng để bài nghe đúng giọng của mình.</span>
+            <span class="mini-lab__hint">Phù hợp cho chủ shop, marketing, creator và freelancer.</span>
           </div>
         </form>
         <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Mình đang tìm cách viết tự nhiên, dễ đăng hơn...</span></div>

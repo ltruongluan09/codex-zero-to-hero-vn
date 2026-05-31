@@ -193,6 +193,35 @@ h1 span,
   margin-top: 24px;
 }
 
+.quick-win {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.quick-win div {
+  border: 1px solid rgba(124, 77, 255, 0.16);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.76);
+  padding: 16px;
+}
+
+.quick-win strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.quick-win p {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
 .lumi-guide {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -407,11 +436,16 @@ footer {
 
   .hero-actions,
   .lumi-guide,
-  .copy-row {
+  .copy-row,
+  .quick-win {
     display: grid;
   }
 
   .lumi-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-win {
     grid-template-columns: 1fr;
   }
 

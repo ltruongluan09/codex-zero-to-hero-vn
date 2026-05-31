@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chụp ảnh tài liệu rồi nhờ AI giải thích - Lumi Labs</title>
-    <meta name="description" content="Cách dùng AI để đọc ảnh tài liệu, hóa đơn, báo giá hoặc hợp đồng ngắn bằng ngôn ngữ dễ hiểu cho người không chuyên." />
+    <title>Có giấy tờ khó hiểu? Lumi đọc nhanh phần cần chú ý - Lumi Labs</title>
+    <meta name="description" content="Một bài Lumi Labs cho nhân viên văn phòng, bán hàng, HR và manager: cách dùng Lumi để đọc nhanh báo giá, hợp đồng, hóa đơn, ảnh chụp tài liệu và biết điểm cần hỏi lại." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
@@ -19,85 +19,105 @@
       </nav>
 
       <header class="hero">
-        <div class="pill">📄 Mini Lab · Đọc tài liệu dễ hơn</div>
-        <h1>Chụp ảnh tài liệu rồi nhờ AI <span>giải thích.</span></h1>
+        <div class="pill">📄 Bài cho văn phòng · bán hàng · manager</div>
+        <h1>Đừng đọc từng dòng nữa. <span>Đưa tài liệu cho Lumi đọc trước.</span></h1>
         <p class="lead">
-          Có những tài liệu không dài, nhưng vẫn làm mình ngại mở ra: báo giá, hóa đơn, hợp đồng, ảnh chụp từ Zalo. AI có thể giúp bạn đọc nhanh hơn, miễn là bạn hỏi đúng cách.
+          Bạn nhận một báo giá, hợp đồng, hóa đơn, file khách gửi hoặc ảnh chụp từ Zalo. Bạn không cần hiểu hết ngay. Trước mắt chỉ cần biết: nội dung chính là gì, điểm nào cần chú ý, và nên hỏi lại câu nào.
         </p>
         <div class="hero-actions">
-          <a class="button" href="#mini-lab">Thực hành ngay</a>
-          <a class="button secondary" href="/docscan-ai">Thử DocScan AI</a>
+          <a class="button" href="#mini-lab">Thử với tình huống của bạn</a>
+          <a class="button secondary" href="/docscan-ai">Mở DocScan AI</a>
         </div>
       </header>
 
-      <section class="section">
-        <h2>Năm 2026 rồi, nhưng rất nhiều tài liệu vẫn nằm trong ảnh chụp.</h2>
-        <p>
-          Một chị kế toán nhận hóa đơn qua Zalo. Một anh quản lý nhận báo giá bằng file PDF. Một chủ doanh nghiệp nhận hợp đồng chụp vội từ nhà cung cấp. Ai cũng bận, nên tài liệu cứ trôi trong tin nhắn.
-        </p>
-        <p>
-          Vấn đề không phải là họ không hiểu công việc. Vấn đề là mỗi tài liệu đều bắt họ dừng lại, mở ra, đọc từng dòng, tìm con số, tìm deadline, tìm điều kiện thanh toán, rồi tự hỏi: “Có điểm gì mình cần chú ý không?”
-        </p>
-        <p>
-          Đây là một trong những việc AI có thể giúp rất thực tế. Không phải để ký thay bạn. Không phải để quyết định thay bạn. Mà để nó đọc phụ, gom ý chính, chỉ ra điểm cần hỏi lại trước khi bạn chuyển tiếp, duyệt hoặc ký.
-        </p>
-      </section>
-
-      <section class="section">
-        <h2>Cách hỏi AI để không bị trả lời chung chung</h2>
-        <p>
-          Nếu bạn đưa ảnh tài liệu cho AI rồi hỏi “nó nói gì?”, câu trả lời thường khá chung. Hãy hỏi theo đúng việc bạn cần làm với tài liệu đó.
-        </p>
-        <div class="step"><span>1</span><div><strong>Nói loại tài liệu</strong><p>Báo giá, hóa đơn, hợp đồng, phiếu giao hàng, ảnh chụp màn hình. Mỗi loại cần chú ý điểm khác nhau.</p></div></div>
-        <div class="step"><span>2</span><div><strong>Yêu cầu kéo con số và ngày tháng ra riêng</strong><p>Đây là phần dễ sai nhất khi đọc nhanh: tổng tiền, hạn thanh toán, ngày giao, thời hạn bảo hành.</p></div></div>
-        <div class="step"><span>3</span><div><strong>Bắt AI nói rõ phần chưa chắc</strong><p>Nếu ảnh mờ hoặc thiếu góc, AI phải nói “không đọc rõ”, không được đoán thay bạn.</p></div></div>
-      </section>
-
-      <section class="demo-card" id="demo">
-        <header><strong>Prompt tự demo</strong><span class="pill">Copy dùng ngay</span></header>
-        <pre id="prompt">Tôi sẽ gửi một ảnh tài liệu.
-
-Hãy đọc nội dung trong ảnh và giải thích bằng tiếng Việt dễ hiểu.
-
-Kết quả cần có:
-1. Tài liệu này là loại gì?
-2. Nội dung chính trong 5 dòng.
-3. Các con số/ngày/thông tin quan trọng.
-4. Điểm nào cần chú ý hoặc hỏi lại trước khi ký/duyệt/chuyển tiếp.
-5. Nếu có đoạn nào không đọc rõ, hãy ghi rõ "không đọc rõ", không được tự đoán.
-
-Viết cho người không chuyên, dễ hiểu, không dùng từ pháp lý hoặc kế toán khó nếu không cần.</pre>
-        <div class="copy-row">
-          <small>Demo tốt nhất với ảnh hóa đơn, báo giá, hợp đồng ngắn hoặc phiếu giao hàng.</small>
-          <button class="copy-btn" data-copy="prompt">Copy prompt</button>
+      <section class="quick-win">
+        <div>
+          <strong>Dành cho ai?</strong>
+          <p>Nhân viên văn phòng, sales, HR, kế toán/admin, chủ shop nhỏ và manager hay phải đọc file người khác gửi.</p>
+        </div>
+        <div>
+          <strong>Bạn được gì ngay?</strong>
+          <p>Lumi giúp rút ra ý chính, số tiền/ngày tháng, điểm cần hỏi lại và việc nên làm tiếp.</p>
+        </div>
+        <div>
+          <strong>Chỉ cần một thao tác</strong>
+          <p>Kể bạn đang có tài liệu gì. Lumi làm mẫu ngay. Sau đó bạn có thể upload file thật vào DocScan AI.</p>
         </div>
       </section>
 
-      <section class="mini-lab" id="mini-lab" data-mini-lab="imageDoc" data-fields="docType,need">
+      <section class="section">
+        <h2>Tài liệu không đáng sợ. Đáng sợ là mình không biết nên nhìn vào đâu trước.</h2>
+        <p>
+          Một bạn sales nhận báo giá từ nhà cung cấp. File chỉ vài trang, nhưng trong đó có đơn giá, phí giao hàng, thời hạn thanh toán, bảo hành và điều kiện đổi trả. Nếu đọc vội, rất dễ bỏ sót một dòng nhỏ nhưng quan trọng.
+        </p>
+        <p>
+          Một bạn HR nhận hợp đồng cộng tác viên. Nhìn qua tưởng ổn, nhưng vẫn cần kiểm tra: thời hạn làm việc, trách nhiệm hai bên, cách thanh toán và điều kiện chấm dứt. Không phải ai cũng có thời gian đọc kỹ từng câu trong lúc công việc đang dồn.
+        </p>
+        <p>
+          Một manager nhận file báo cáo hoặc ảnh chụp giấy tờ trong nhóm chat. Việc cần nhất lúc đó không phải là đọc hết. Việc cần nhất là biết nhanh: “Có gì quan trọng? Có gì chưa rõ? Mình cần hỏi ai?”
+        </p>
+        <p>
+          Đó là cách nên dùng Lumi: không thay bạn quyết định, không làm chuyên gia pháp lý hay kế toán. Lumi chỉ đọc trước, gạch ra phần đáng chú ý, để bạn kiểm tra nhanh hơn và hỏi lại thông minh hơn.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>4 việc Lumi có thể làm giúp bạn khi gặp một tài liệu khó đọc</h2>
+        <div class="step"><span>1</span><div><strong>Nói tài liệu này đang nói về chuyện gì</strong><p>Ví dụ: báo giá thiết bị, hợp đồng dịch vụ, hóa đơn, phiếu giao hàng, chính sách nhân sự, file khách gửi.</p></div></div>
+        <div class="step"><span>2</span><div><strong>Kéo phần quan trọng ra trước</strong><p>Số tiền, ngày tháng, người phụ trách, thời hạn phản hồi, điều kiện thanh toán hoặc phần dễ bị hiểu nhầm.</p></div></div>
+        <div class="step"><span>3</span><div><strong>Chỉ ra câu nên hỏi lại</strong><p>Đây là phần có giá trị nhất. Nhiều khi một câu hỏi đúng giúp tránh cả ngày làm sai hướng.</p></div></div>
+        <div class="step"><span>4</span><div><strong>Gợi ý bước tiếp theo</strong><p>Gửi lại cho người phụ trách, hỏi thêm nhà cung cấp, lưu ý trước khi duyệt, hoặc đưa vào checklist công việc.</p></div></div>
+      </section>
+
+      <section class="section">
+        <h2>Ví dụ rất thật trong công việc</h2>
+        <div class="step"><span>Sales</span><div><strong>Nhận báo giá nhà cung cấp</strong><p>Lumi giúp xem tổng tiền, phí phát sinh, hạn thanh toán và câu cần hỏi lại trước khi gửi cho khách.</p></div></div>
+        <div class="step"><span>HR</span><div><strong>Nhận hợp đồng hoặc chính sách</strong><p>Lumi giúp tóm tắt quyền lợi, trách nhiệm, thời hạn và những điểm nên xác nhận lại.</p></div></div>
+        <div class="step"><span>Manager</span><div><strong>Nhận báo cáo hoặc file dài</strong><p>Lumi giúp rút ra ý chính, việc cần xử lý và điểm cần giao cho team kiểm tra tiếp.</p></div></div>
+      </section>
+
+      <section class="demo-card" id="demo">
+        <header><strong>Mẫu copy dùng ngay</strong><span class="pill">Dành cho tài liệu</span></header>
+        <pre id="prompt">Tôi sẽ gửi một ảnh hoặc file tài liệu.
+
+Bạn hãy đọc giúp tôi theo cách dễ hiểu cho người không chuyên.
+
+Kết quả tôi cần:
+1. Tài liệu này nói về việc gì?
+2. 5 ý chính cần biết.
+3. Số tiền, ngày tháng, thời hạn hoặc điều kiện quan trọng nếu có.
+4. Điểm nào cần chú ý trước khi duyệt, ký, chuyển tiếp hoặc trả lời.
+5. 3 câu nên hỏi lại người gửi tài liệu.
+6. Việc nên làm tiếp.
+
+Nếu có phần nào không đọc rõ, hãy nói "chưa đọc rõ", không tự đoán.</pre>
+        <div class="copy-row">
+          <small>Dùng được với báo giá, hóa đơn, hợp đồng ngắn, chính sách hoặc ảnh chụp từ Zalo.</small>
+          <button class="copy-btn" data-copy="prompt">Copy mẫu</button>
+        </div>
+      </section>
+
+      <section class="mini-lab" id="mini-lab" data-mini-lab="imageDoc" data-fields="brief">
         <div class="mini-lab__head">
           <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
           <div>
-            <div class="mini-lab__eyebrow">Thực hành ngay trên trang</div>
-            <h2>Lumi Bot tạo câu hỏi đọc tài liệu</h2>
-            <p>Chọn loại tài liệu và điều bạn muốn hiểu. Lumi Bot sẽ viết câu hỏi đúng ngữ cảnh để bạn dùng với Gemini, ChatGPT hoặc DocScan AI.</p>
+            <div class="mini-lab__eyebrow">Thử 1 chạm</div>
+            <h2>Kể bạn đang có tài liệu gì. Lumi đọc thử hướng xử lý.</h2>
+            <p>Chỉ cần một câu. Lumi sẽ trả lời theo kiểu: nên xem gì trước, cần hỏi lại gì, và bước tiếp theo là gì.</p>
           </div>
         </div>
         <form class="mini-lab__form" data-mini-lab-form>
           <div class="mini-lab__field">
-            <label>Đây là loại tài liệu gì?</label>
-            <input name="docType" placeholder="Ví dụ: báo giá, hợp đồng thuê nhà, hóa đơn, ảnh chụp phiếu giao hàng..." />
-          </div>
-          <div class="mini-lab__field">
-            <label>Bạn muốn AI giúp hiểu điều gì?</label>
-            <textarea name="need" placeholder="Ví dụ: tóm tắt nội dung chính, chỉ ra khoản phí, deadline, điểm cần hỏi lại trước khi ký..."></textarea>
+            <label>Bạn đang có tài liệu gì?</label>
+            <textarea name="brief" placeholder="Ví dụ: Tôi là sales, vừa nhận báo giá thiết bị từ nhà cung cấp. Tôi muốn biết tổng tiền, hạn thanh toán và điểm nào cần hỏi lại trước khi gửi cho khách."></textarea>
           </div>
           <div class="mini-lab__actions">
-            <button class="mini-lab__run" type="submit" data-mini-lab-run>Tạo câu hỏi giúp tôi</button>
+            <button class="mini-lab__run" type="submit" data-mini-lab-run>Nhờ Lumi đọc thử</button>
             <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
-            <span class="mini-lab__hint">Đây là bước chuẩn bị để AI đọc tài liệu đúng ý bạn hơn.</span>
+            <span class="mini-lab__hint">Không cần upload ở đây. Đây là bản thử nhanh để bạn thấy cách Lumi hỗ trợ.</span>
           </div>
         </form>
-        <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Mình đang viết câu hỏi để AI đọc tài liệu cẩn thận hơn...</span></div>
+        <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Lumi đang đọc tình huống và gợi ý phần cần chú ý...</span></div>
         <div class="mini-lab__error" data-mini-lab-error></div>
         <div class="mini-lab__result">
           <div class="mini-lab__result-title" data-mini-lab-title>Kết quả từ Lumi Bot</div>
@@ -108,7 +128,7 @@ Viết cho người không chuyên, dễ hiểu, không dùng từ pháp lý ho�
 
       <section class="note">
         <strong>Điều quan trọng</strong>
-        <p>AI giúp bạn đọc nhanh hơn, nhưng không thay chuyên gia. Với giấy tờ quan trọng, hãy dùng AI để biết cần hỏi gì trước, rồi kiểm tra lại với người có trách nhiệm.</p>
+        <p>Lumi không thay bạn ký, duyệt hay chịu trách nhiệm. Lumi giúp bạn đọc nhanh hơn, phát hiện điểm cần hỏi lại và chuẩn bị tốt hơn trước khi ra quyết định.</p>
       </section>
 
       <footer>© 2026 Lumi Labs · Bài viết cho người mới bắt đầu</footer>

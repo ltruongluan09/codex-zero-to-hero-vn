@@ -11,7 +11,7 @@ export const articleAudiences = {
 };
 
 export const articleCategories = {
-  prompt: "Prompt AI",
+  prompt: "Cách nhờ việc",
   office: "AI văn phòng",
   workflow: "Quy trình làm việc",
   document: "Tài liệu",
@@ -24,8 +24,8 @@ export const articles = [
   {
     slug: "prompt-ai-hieu-qua",
     type: "article",
-    title: "Prompt AI hiệu quả: 5 nguyên tắc đơn giản",
-    desc: "Biết cách giao việc để AI hiểu bạn hơn và trả kết quả dùng được ngay.",
+    title: "Nói với trợ lý thông minh sao cho ra đúng việc",
+    desc: "Cách nhờ việc rõ hơn để chủ shop, HR, marketing hoặc manager nhận được bản trả lời dùng được ngay.",
     href: "/prompt-ai-hieu-qua.html",
     tag: "Hướng dẫn",
     time: "8 phút đọc",
@@ -65,8 +65,8 @@ export const articles = [
   {
     slug: "ai-viet-email-de-hieu",
     type: "article",
-    title: "Nhờ AI viết email dễ nghe hơn",
-    desc: "Soạn email lịch sự, rõ ý, không bị cứng cho công việc hằng ngày.",
+    title: "Viết email với Lumi mà vẫn nghe như người thật",
+    desc: "Có bản email lịch sự, rõ ý trong vài phút: mời phỏng vấn, nhắc phản hồi, gửi thông tin hoặc từ chối nhẹ nhàng.",
     href: "/ai-viet-email-de-hieu.html",
     tag: "Văn phòng",
     time: "5 phút đọc",
@@ -85,8 +85,8 @@ export const articles = [
   {
     slug: "ai-tom-tat-cuoc-hop",
     type: "article",
-    title: "Tóm tắt cuộc họp bằng AI sao cho ra việc",
-    desc: "Biến ghi chú họp thành việc cần làm, người phụ trách và deadline.",
+    title: "Biến ghi chú họp lộn xộn thành việc cần làm",
+    desc: "Sau cuộc họp biết ngay đã quyết gì, ai làm, deadline nào và còn câu nào cần hỏi lại.",
     href: "/ai-tom-tat-cuoc-hop.html",
     tag: "Cuộc họp",
     time: "5 phút đọc",
@@ -105,8 +105,8 @@ export const articles = [
   {
     slug: "ai-lap-checklist-cong-viec",
     type: "article",
-    title: "Biến việc rối thành checklist bằng AI",
-    desc: "Khi chưa biết bắt đầu từ đâu, để AI chia việc thành từng bước nhỏ.",
+    title: "Không biết bắt đầu từ đâu? Nhờ Lumi chia việc thành từng bước",
+    desc: "Biến một việc đang rối thành checklist nhỏ, có thứ tự và có bước đầu tiên làm được ngay hôm nay.",
     href: "/ai-lap-checklist-cong-viec.html",
     tag: "Checklist",
     time: "6 phút đọc",
@@ -125,8 +125,8 @@ export const articles = [
   {
     slug: "ai-doc-anh-tai-lieu",
     type: "article",
-    title: "Chụp ảnh tài liệu rồi nhờ AI giải thích",
-    desc: "Dùng AI đọc hóa đơn, báo giá, hợp đồng ngắn hoặc ảnh chụp từ Zalo.",
+    title: "Có giấy tờ khó hiểu? Lumi đọc nhanh phần cần chú ý",
+    desc: "Dành cho văn phòng, sales, HR và manager: rút ra ý chính, điểm cần hỏi lại và việc nên làm tiếp từ tài liệu người khác gửi.",
     href: "/ai-doc-anh-tai-lieu.html",
     tag: "Tài liệu",
     time: "6 phút đọc",
@@ -145,8 +145,8 @@ export const articles = [
   {
     slug: "ai-viet-bai-dang-ban-hang",
     type: "article",
-    title: "Viết bài đăng bán hàng đầu tiên bằng AI",
-    desc: "Có bản nháp gần gũi để sửa nhanh, không còn nhìn màn hình trống.",
+    title: "Viết bài đăng bán hàng đầu tiên khi chưa biết viết gì",
+    desc: "Có bản nháp gần gũi để sửa nhanh cho Facebook, TikTok hoặc Zalo mà không phải nhìn màn hình trống.",
     href: "/ai-viet-bai-dang-ban-hang.html",
     tag: "Bán hàng",
     time: "5 phút đọc",

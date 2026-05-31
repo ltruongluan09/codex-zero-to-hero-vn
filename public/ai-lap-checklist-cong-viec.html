@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Biến việc rối thành checklist bằng AI - Lumi Labs</title>
+    <title>Không biết bắt đầu từ đâu? Nhờ Lumi chia việc thành từng bước - Lumi Labs</title>
     <meta name="description" content="Một bài viết Lumi Labs cho người mới: cách dùng AI để chia một việc đang rối thành checklist nhỏ, rõ và làm được ngay." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,9 +20,9 @@
 
       <header class="hero">
         <div class="pill">🧭 Mini Lab · Bớt rối việc</div>
-        <h1>Biến việc rối thành <span>checklist bằng AI.</span></h1>
+        <h1>Không biết bắt đầu từ đâu? <span>Nhờ Lumi chia việc thành từng bước.</span></h1>
         <p class="lead">
-          Nhiều việc không khó vì nó quá lớn. Nó khó vì mình chưa biết bắt đầu từ đâu. AI có thể giúp bạn tìm bước đầu tiên nhỏ nhất.
+          Nhiều việc không khó vì nó quá lớn. Nó khó vì mình nhìn vào thấy quá nhiều thứ cùng lúc. AI có thể giúp bạn tách việc lớn thành vài bước nhỏ, để biết ngay bước đầu tiên cần làm hôm nay.
         </p>
         <div class="hero-actions">
           <a class="button" href="#mini-lab">Thực hành ngay</a>
@@ -30,8 +30,23 @@
         </div>
       </header>
 
+      <section class="quick-win">
+        <div>
+          <strong>Đọc xong làm được gì?</strong>
+          <p>Biến một việc mơ hồ thành checklist có thứ tự, có ưu tiên và có bước đầu tiên.</p>
+        </div>
+        <div>
+          <strong>Ví dụ rất đời</strong>
+          <p>Chuẩn bị onboarding nhân viên mới, livestream bán hàng, viết báo cáo hoặc tổ chức workshop.</p>
+        </div>
+        <div>
+          <strong>Không cần kế hoạch hoàn hảo</strong>
+          <p>Mục tiêu là có bản đầu làm được ngay, rồi cải thiện dần sau khi đã bắt đầu.</p>
+        </div>
+      </section>
+
       <section class="section">
-        <h2>Có những việc chỉ nhìn thôi đã thấy mệt.</h2>
+        <h2>Có những việc chưa làm đã thấy mệt, vì nó chưa có hình dạng rõ ràng.</h2>
         <p>
           Bạn được giao “chuẩn bị onboarding cho nhân viên mới”. Nghe thì không quá khó. Nhưng mở file ra lại thấy quá nhiều thứ: email chào mừng, tài khoản công ty, lịch gặp quản lý, tài liệu nội bộ, checklist ngày đầu, người phụ trách từng phần.
         </p>
@@ -43,6 +58,9 @@
         </p>
         <p>
           Ở Lumi Labs, mình thích dùng AI cho những khoảnh khắc như vậy. Không phải để AI làm thay cả dự án. Mà để nó ngồi cạnh, giúp mình gỡ cục rối đầu tiên.
+        </p>
+        <p>
+          Khi việc đã được chia nhỏ, cảm giác “không biết làm gì” thường biến mất. Bạn chưa cần giỏi AI. Bạn chỉ cần biết nhờ AI chia việc theo cách đủ rõ để bắt đầu.
         </p>
       </section>
 
@@ -57,7 +75,7 @@
       </section>
 
       <section class="demo-card" id="demo">
-        <header><strong>Prompt tự demo</strong><span class="pill">Copy dùng ngay</span></header>
+        <header><strong>Mẫu copy dùng ngay</strong><span class="pill">Dành cho checklist</span></header>
         <pre id="prompt">Tôi đang có một việc hơi rối và muốn bạn giúp tôi chia thành checklist dễ làm.
 
 Việc tôi cần làm:
@@ -80,34 +98,26 @@ Hãy giúp tôi:
 Viết thật dễ hiểu, dành cho người không chuyên.</pre>
         <div class="copy-row">
           <small>Rất hợp khi bạn đang bị kẹt ở câu “không biết bắt đầu từ đâu”.</small>
-          <button class="copy-btn" data-copy="prompt">Copy prompt</button>
+          <button class="copy-btn" data-copy="prompt">Copy mẫu</button>
         </div>
       </section>
 
-      <section class="mini-lab" id="mini-lab" data-mini-lab="checklist" data-fields="task,result,constraints">
+      <section class="mini-lab" id="mini-lab" data-mini-lab="checklist" data-fields="brief">
         <div class="mini-lab__head">
           <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
           <div>
-            <div class="mini-lab__eyebrow">Thực hành ngay trên trang</div>
+            <div class="mini-lab__eyebrow">Thử 1 chạm</div>
             <h2>Lumi Bot chia việc thành checklist</h2>
-            <p>Gõ một việc thật đang làm bạn rối. Lumi Bot sẽ tạo checklist có thứ tự, có bước đầu tiên và có phần nên bỏ bớt.</p>
+            <p>Gõ một việc đang làm bạn rối. Lumi sẽ chia thành các bước nhỏ để bạn biết bắt đầu từ đâu.</p>
           </div>
         </div>
         <form class="mini-lab__form" data-mini-lab-form>
           <div class="mini-lab__field">
-            <label>Việc bạn đang cần làm</label>
-            <input name="task" placeholder="Ví dụ: chuẩn bị buổi livestream bán hàng đầu tiên" />
-          </div>
-          <div class="mini-lab__field">
-            <label>Kết quả cuối cùng bạn muốn có</label>
-            <input name="result" placeholder="Ví dụ: livestream 30 phút, có kịch bản, có danh sách sản phẩm" />
-          </div>
-          <div class="mini-lab__field">
-            <label>Có giới hạn gì không?</label>
-            <textarea name="constraints" placeholder="Ví dụ: chỉ có 2 ngày chuẩn bị, làm một mình, chưa có kinh nghiệm..."></textarea>
+            <label>Việc bạn đang muốn làm</label>
+            <textarea name="brief" placeholder="Ví dụ: Tôi là chủ shop nhỏ, muốn chuẩn bị buổi livestream bán hàng đầu tiên trong 2 ngày nhưng chưa biết bắt đầu từ đâu."></textarea>
           </div>
           <div class="mini-lab__actions">
-            <button class="mini-lab__run" type="submit" data-mini-lab-run>Chia nhỏ giúp tôi</button>
+            <button class="mini-lab__run" type="submit" data-mini-lab-run>Nhờ Lumi chia bước</button>
             <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
             <span class="mini-lab__hint">Mục tiêu là có bước đầu tiên, không phải có kế hoạch hoàn hảo.</span>
           </div>

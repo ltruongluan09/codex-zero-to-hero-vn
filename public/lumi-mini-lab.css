@@ -108,7 +108,7 @@
 }
 
 .mini-lab__field textarea {
-  min-height: 96px;
+  min-height: 132px;
   resize: vertical;
 }
 
@@ -220,11 +220,15 @@
   max-height: 430px;
   overflow: auto;
   white-space: pre-wrap;
-  color: #27304f;
-  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
-  font-size: 14px;
-  line-height: 1.72;
-  padding: 16px;
+  color: #202449;
+  font-family: Outfit, Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.78;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(124, 77, 255, 0.1), transparent 34%),
+    rgba(255, 255, 255, 0.58);
 }
 
 .mini-lab__tips {

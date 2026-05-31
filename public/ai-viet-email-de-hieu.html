@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nhờ AI viết email dễ nghe hơn - Lumi Labs</title>
+    <title>Viết email với Lumi mà vẫn nghe như người thật - Lumi Labs</title>
     <meta name="description" content="Một bài viết Lumi Labs cho người mới: cách nhờ AI viết email rõ ràng, lịch sự, có cảm giác người thật và dùng được ngay trong công việc." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,9 +20,9 @@
 
       <header class="hero">
         <div class="pill">✉ Mini Lab · Email công việc</div>
-        <h1>Nhờ AI viết email <span>dễ nghe hơn.</span></h1>
+        <h1>Viết email với Lumi <span>mà vẫn nghe như người thật.</span></h1>
         <p class="lead">
-          Không phải ai cũng sợ viết email vì thiếu ý. Nhiều khi mình biết cần nói gì rồi, chỉ là chưa biết viết sao cho rõ, lịch sự, mà vẫn giống người thật.
+          Nhiều người không bí nội dung. Họ bí cách nói sao cho rõ, lịch sự, không khô cứng và không giống một mẫu email copy trên mạng. Bài này giúp bạn dùng AI để có bản nháp tốt trong vài phút, rồi sửa lại bằng giọng của mình.
         </p>
         <div class="hero-actions">
           <a class="button" href="#mini-lab">Thực hành ngay</a>
@@ -30,8 +30,23 @@
         </div>
       </header>
 
+      <section class="quick-win">
+        <div>
+          <strong>Đọc xong làm được gì?</strong>
+          <p>Viết nhanh email mời phỏng vấn, nhắc phản hồi, gửi báo giá hoặc từ chối nhẹ nhàng.</p>
+        </div>
+        <div>
+          <strong>Không cần biết gì trước</strong>
+          <p>Chỉ cần nói người nhận là ai, mục đích email là gì và vài thông tin chính cần đưa vào.</p>
+        </div>
+        <div>
+          <strong>Lumi Bot làm mẫu</strong>
+          <p>Cuối bài có Mini Lab để bạn nhập tình huống thật và lấy bản nháp dùng ngay.</p>
+        </div>
+      </section>
+
       <section class="section">
-        <h2>Cái khó không nằm ở email. Cái khó nằm ở giọng.</h2>
+        <h2>Email khó không phải vì thiếu chữ. Khó vì phải đúng giọng.</h2>
         <p>
           Có một buổi sáng rất quen: bạn cần nhắn cho ứng viên để mời phỏng vấn. Nội dung thì đơn giản thôi. Ngày nào, mấy giờ, hình thức online hay offline, cần xác nhận lại.
         </p>
@@ -43,6 +58,9 @@
         </p>
         <p>
           Ở Lumi Labs, mình không xem AI như người thay bạn giao tiếp. Mình xem AI như người đưa ra bản nháp đầu tiên để bạn đỡ mất lực bắt đầu. Bạn vẫn là người hiểu tình huống, hiểu người nhận và quyết định câu chữ cuối cùng.
+        </p>
+        <p>
+          Cách nghĩ đúng là: AI viết bản nháp, mình chỉnh lại cảm giác. Như vậy email vẫn nhanh hơn, nhưng không mất đi sự tinh tế của người gửi.
         </p>
       </section>
 
@@ -57,7 +75,7 @@
       </section>
 
       <section class="demo-card" id="demo">
-        <header><strong>Prompt tự demo</strong><span class="pill">Copy dùng ngay</span></header>
+        <header><strong>Mẫu copy dùng ngay</strong><span class="pill">Dành cho email</span></header>
         <pre id="prompt">Tôi muốn bạn giúp tôi viết một email bằng tiếng Việt.
 
 Bối cảnh:
@@ -76,37 +94,29 @@ Yêu cầu:
 - Viết 2 phiên bản: một bản thân thiện, một bản trang trọng hơn.
 - Nếu thiếu thông tin quan trọng, hãy hỏi lại tôi trước.</pre>
         <div class="copy-row">
-          <small>Mở ChatGPT, Gemini hoặc Claude rồi dán prompt này vào.</small>
-          <button class="copy-btn" data-copy="prompt">Copy prompt</button>
+          <small>Bạn có thể dán mẫu này vào công cụ trợ lý đang dùng.</small>
+          <button class="copy-btn" data-copy="prompt">Copy mẫu</button>
         </div>
       </section>
 
-      <section class="mini-lab" id="mini-lab" data-mini-lab="email" data-fields="recipient,purpose,details">
+      <section class="mini-lab" id="mini-lab" data-mini-lab="email" data-fields="brief">
         <div class="mini-lab__head">
           <img class="mini-lab__bot" src="/lumi-bot.png" alt="" />
           <div>
-            <div class="mini-lab__eyebrow">Thực hành ngay trên trang</div>
+            <div class="mini-lab__eyebrow">Thử 1 chạm</div>
             <h2>Lumi Bot viết thử email cho bạn</h2>
-            <p>Nhập tình huống thật. Lumi Bot sẽ tạo một bản email dễ nghe, có tiêu đề và có thể copy dùng ngay.</p>
+            <p>Chỉ cần kể ngắn một tình huống. Lumi sẽ tạo bản email có tiêu đề, dễ đọc và có thể sửa nhanh.</p>
           </div>
         </div>
         <form class="mini-lab__form" data-mini-lab-form>
           <div class="mini-lab__field">
-            <label>Người nhận là ai?</label>
-            <input name="recipient" placeholder="Ví dụ: ứng viên, khách hàng, quản lý, đồng nghiệp..." />
-          </div>
-          <div class="mini-lab__field">
-            <label>Bạn muốn email này để làm gì?</label>
-            <input name="purpose" placeholder="Ví dụ: mời phỏng vấn, nhắc phản hồi, gửi báo giá..." />
-          </div>
-          <div class="mini-lab__field">
-            <label>Thông tin cần có trong email</label>
-            <textarea name="details" placeholder="Ví dụ: lịch hẹn thứ Sáu 10h, phỏng vấn online, nhờ xác nhận trước 17h..."></textarea>
+            <label>Kể tình huống của bạn bằng một câu</label>
+            <textarea name="brief" placeholder="Ví dụ: Tôi là HR, cần mời ứng viên phỏng vấn online vào thứ Sáu 10h và muốn họ xác nhận trước 17h hôm nay."></textarea>
           </div>
           <div class="mini-lab__actions">
-            <button class="mini-lab__run" type="submit" data-mini-lab-run>Làm mẫu cho tôi</button>
+            <button class="mini-lab__run" type="submit" data-mini-lab-run>Nhờ Lumi viết thử</button>
             <button class="mini-lab__copy" type="button" data-mini-lab-copy>Copy kết quả</button>
-            <span class="mini-lab__hint">Không cần đăng nhập. Thử ngay với việc thật của bạn.</span>
+            <span class="mini-lab__hint">Một ô nhập. Một lần bấm. Có bản nháp để sửa ngay.</span>
           </div>
         </form>
         <div class="mini-lab__status"><img src="/lumi-bot.png" alt="" /><span>Mình đang viết bản nháp dễ nghe hơn cho bạn...</span></div>
