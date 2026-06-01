@@ -7311,3 +7311,151 @@ body {
     max-width: min(86vw, 330px) !important;
   }
 }
+
+/* Projects mobile fix: prevent horizontal clipping and keep Lumi from covering CTAs. */
+@media (max-width: 760px) {
+  .projects-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    padding: 104px 16px 132px !important;
+  }
+
+  .projects-hero,
+  .projects-ready-strip,
+  .project-library-grid,
+  .projects-coming-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    min-width: 0 !important;
+  }
+
+  .projects-hero {
+    text-align: left !important;
+  }
+
+  .projects-hero h1 {
+    max-width: min(100%, 340px) !important;
+    font-size: clamp(34px, 10.5vw, 44px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.045em !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .projects-hero p {
+    max-width: min(100%, 336px) !important;
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .projects-ready-strip span,
+  .project-library-card p,
+  .project-fit,
+  .project-library-card em,
+  .projects-coming-section p,
+  .projects-coming-list small {
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+  }
+
+  .projects-quick-actions,
+  .project-library-grid,
+  .projects-coming-section,
+  .projects-coming-list {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  .projects-quick-actions a,
+  .project-library-card,
+  .projects-coming-list article {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .project-library-card.unified-project-card,
+  .project-library-card {
+    padding: 20px !important;
+    border-radius: 24px !important;
+  }
+
+  .project-card-top {
+    grid-template-columns: 52px minmax(0, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .project-card-top > div {
+    min-width: 0 !important;
+  }
+
+  .project-card-top small,
+  .project-card-top h2 {
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .project-card-top h2 {
+    font-size: clamp(26px, 8vw, 34px) !important;
+    line-height: 1.08 !important;
+  }
+
+  .project-card-top b {
+    grid-column: 1 / -1 !important;
+    justify-self: start !important;
+    white-space: normal !important;
+  }
+
+  .project-card-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .project-card-actions a {
+    width: 100% !important;
+    min-width: 0 !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .lumi-assistant {
+    left: auto !important;
+    right: max(12px, env(safe-area-inset-right)) !important;
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 12px)) !important;
+    width: auto !important;
+    max-width: calc(100vw - 24px) !important;
+    justify-items: end !important;
+  }
+
+  .lumi-assistant:not(.open) {
+    pointer-events: none !important;
+  }
+
+  .lumi-assistant:not(.open) .lumi-assistant-orb {
+    pointer-events: auto !important;
+    width: 58px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    grid-template-columns: 1fr !important;
+    padding: 6px !important;
+    border-radius: 22px !important;
+    transform: none !important;
+    transform-origin: bottom right !important;
+  }
+
+  .lumi-assistant:not(.open) .lumi-assistant-orb b {
+    display: none !important;
+  }
+
+  .lumi-assistant:not(.open) .lumi-assistant-orb img {
+    width: 44px !important;
+    height: 44px !important;
+  }
+}
