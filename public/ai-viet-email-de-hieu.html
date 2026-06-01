@@ -192,6 +192,36 @@
         font-weight: 700;
       }
 
+      .scenario-tabs {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .scenario-tab {
+        border: 1px solid rgba(116, 72, 255, 0.18);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--muted);
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 900;
+        padding: 9px 12px;
+        transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+      }
+
+      .scenario-tab:hover,
+      .scenario-tab.is-active {
+        transform: translateY(-1px);
+        border-color: rgba(116, 72, 255, 0.42);
+        background: #fff;
+        color: var(--purple);
+      }
+
       .run-demo {
         position: relative;
         z-index: 1;
@@ -368,6 +398,211 @@
         padding-left: 18px;
       }
 
+      .try-card,
+      .next-card {
+        margin-top: 18px;
+        border: 1px solid rgba(116, 72, 255, 0.18);
+        border-radius: 26px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(250, 246, 255, 0.9));
+        padding: 18px;
+      }
+
+      .try-card h3,
+      .next-card h3 {
+        margin: 0 0 6px;
+        color: var(--ink);
+      }
+
+      .try-card p,
+      .next-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .try-form {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .try-form input {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+        color: var(--ink);
+        font: inherit;
+        min-height: 52px;
+        padding: 0 16px;
+        outline: none;
+      }
+
+      .try-form input:focus {
+        border-color: rgba(116, 72, 255, 0.55);
+        box-shadow: 0 0 0 4px rgba(116, 72, 255, 0.08);
+      }
+
+      .try-form button,
+      .next-actions a {
+        border: 0;
+        border-radius: 18px;
+        background: linear-gradient(135deg, var(--pink), var(--purple));
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 900;
+        padding: 0 18px;
+        min-height: 52px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .try-form button:disabled {
+        cursor: wait;
+        opacity: 0.75;
+      }
+
+      .custom-result {
+        display: none;
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background:
+          radial-gradient(circle at 10% 0%, rgba(116, 72, 255, 0.08), transparent 28%),
+          #fff;
+        padding: 16px;
+      }
+
+      .custom-result.is-visible {
+        display: block;
+      }
+
+      .custom-result pre {
+        margin: 0;
+        white-space: pre-wrap;
+        color: #2a2334;
+        font-family: var(--font-sans, "Outfit", system-ui, sans-serif);
+        line-height: 1.72;
+      }
+
+      .lumi-thinking {
+        display: none;
+        align-items: center;
+        gap: 12px;
+        margin-top: 14px;
+        border: 1px solid rgba(116, 72, 255, 0.16);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.72);
+        padding: 12px;
+      }
+
+      .lumi-thinking.is-visible {
+        display: flex;
+      }
+
+      .lumi-thinking img {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(116, 72, 255, 0.16);
+        animation: breathe 2.2s ease-in-out infinite;
+      }
+
+      .lumi-thinking b {
+        color: var(--ink);
+        display: block;
+      }
+
+      .lumi-thinking span {
+        color: var(--muted);
+        display: block;
+        font-size: 14px;
+        line-height: 1.45;
+        margin-top: 2px;
+      }
+
+      .custom-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(230px, 0.65fr);
+        gap: 12px;
+      }
+
+      .custom-email,
+      .custom-side {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: linear-gradient(180deg, #fff, #fffafd);
+        padding: 14px;
+      }
+
+      .custom-subject {
+        border-radius: 14px;
+        background: #f8f3ff;
+        color: var(--ink);
+        font-weight: 900;
+        padding: 10px;
+      }
+
+      .custom-body {
+        margin-top: 12px;
+        color: #2a2334;
+        line-height: 1.72;
+      }
+
+      .custom-body p {
+        margin: 0 0 10px;
+      }
+
+      .custom-side {
+        display: grid;
+        gap: 10px;
+      }
+
+      .custom-mini {
+        border-radius: 16px;
+        background: #faf7ff;
+        padding: 12px;
+      }
+
+      .custom-mini b {
+        color: var(--purple);
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .custom-mini p,
+      .custom-mini li {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .custom-mini ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      .next-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .next-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .next-actions a.secondary {
+        background: #fff;
+        color: var(--purple);
+        border: 1px solid var(--line);
+      }
+
       .fade-in {
         opacity: 0;
         transform: translateY(10px);
@@ -437,6 +672,12 @@
         .lumi-flow {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+
+        .try-form,
+        .next-card,
+        .custom-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -474,7 +715,12 @@
           </div>
           <div class="scenario-card">
             <small>Tình huống mẫu</small>
-            <p>Ứng viên Minh Anh · vị trí Marketing Executive · phỏng vấn online 10h thứ Sáu · cần xác nhận trước 17h.</p>
+            <p data-scenario-text>Ứng viên Minh Anh · vị trí Marketing Executive · phỏng vấn online 10h thứ Sáu · cần xác nhận trước 17h.</p>
+          </div>
+          <div class="scenario-tabs" aria-label="Chọn tình huống HR">
+            <button class="scenario-tab is-active" type="button" data-scenario="interview">Mời phỏng vấn</button>
+            <button class="scenario-tab" type="button" data-scenario="reschedule">Dời lịch khéo léo</button>
+            <button class="scenario-tab" type="button" data-scenario="deadline">Nhắc hồ sơ</button>
           </div>
           <div class="lumi-flow" aria-label="Các bước Lumi xử lý">
             <div class="flow-step" data-flow-step><span>1</span>Đọc tình huống</div>
@@ -512,41 +758,59 @@
 
         <div class="output-grid" data-output>
           <article class="email-card fade-in delay-1">
-            <div class="email-subject">Tiêu đề: Mời phỏng vấn vị trí Marketing Executive - Minh Anh</div>
-            <div class="email-body">
-              <p>Chào Minh Anh,</p>
-              <p>Cảm ơn bạn đã quan tâm đến vị trí <strong>Marketing Executive</strong> tại công ty.</p>
-              <p>Bên mình muốn mời bạn tham gia buổi phỏng vấn online vào <strong>10h00, thứ Sáu</strong>.</p>
-              <ul>
-                <li>Hình thức: phỏng vấn online</li>
-                <li>Thời lượng dự kiến: 30-45 phút</li>
-                <li>Thông tin link họp sẽ được gửi sau khi bạn xác nhận</li>
-              </ul>
-              <p>Nhờ bạn phản hồi email này trước <strong>17h hôm nay</strong> để bên mình sắp xếp lịch phù hợp nhé.</p>
-              <p>Trân trọng,<br />Phòng Nhân sự</p>
+            <div class="email-subject" data-email-subject>Tiêu đề: Mời phỏng vấn vị trí Marketing Executive - Minh Anh</div>
+            <div class="email-body" data-email-body>
             </div>
           </article>
 
           <aside class="side-card fade-in delay-2">
             <div class="mini-message">
               <b>Tin nhắn Zalo ngắn</b>
-              <p>Chào Minh Anh, mình đã gửi email mời phỏng vấn vị trí Marketing Executive vào 10h thứ Sáu. Bạn xem giúp và xác nhận trước 17h hôm nay nhé.</p>
+              <p data-zalo-message>Chào Minh Anh, mình đã gửi email mời phỏng vấn vị trí Marketing Executive vào 10h thứ Sáu. Bạn xem giúp và xác nhận trước 17h hôm nay nhé.</p>
             </div>
             <div class="check-card fade-in delay-3">
               <b>Trước khi gửi, HR kiểm tra 3 điểm</b>
-              <ul>
-                <li>Tên ứng viên đã đúng chưa?</li>
-                <li>Giờ phỏng vấn và hình thức đã đúng chưa?</li>
-                <li>Đã có link họp hoặc người phụ trách gửi link chưa?</li>
+              <ul data-checklist>
               </ul>
             </div>
           </aside>
+        </div>
+
+        <div class="try-card" id="try-yourself">
+          <h3>Thử tình huống của bạn</h3>
+          <p>Viết một dòng đời thường. Ví dụ: “Dời lịch phỏng vấn cho ứng viên An sang chiều mai, nói sao cho lịch sự.”</p>
+          <form class="try-form" data-custom-form>
+            <input name="brief" autocomplete="off" placeholder="Việc HR đang cần gửi..." />
+            <button type="submit" data-custom-submit>Nhờ Lumi viết thử</button>
+          </form>
+          <div class="lumi-thinking" data-custom-thinking>
+            <img src="/lumi-bot.png" alt="Lumi Bot" />
+            <div>
+              <b>Lumi đang đọc việc của bạn</b>
+              <span data-custom-thinking-text>Đang chọn cách nói lịch sự và dễ gửi...</span>
+            </div>
+          </div>
+          <div class="custom-result" data-custom-result>
+            <span class="industry-label">Lumi viết riêng cho bạn</span>
+            <div class="custom-grid" data-custom-output></div>
+          </div>
         </div>
       </section>
 
       <section class="note">
         <strong>Điểm quan trọng</strong>
         <p>Lumi không thay bạn quyết định. Lumi chỉ xử lý phần lặp lại để bạn đỡ mất thời gian và giảm lỗi nhỏ khi giao tiếp với ứng viên.</p>
+      </section>
+
+      <section class="next-card">
+        <div>
+          <h3>Muốn thử việc thật của bạn?</h3>
+          <p>Bắt đầu bằng một tình huống nhỏ. Lumi sẽ viết bản nháp trước, bạn chỉnh lại cho đúng giọng công ty.</p>
+        </div>
+        <div class="next-actions">
+          <a href="#try-yourself">Thử ngay trên bài này</a>
+          <a class="secondary" href="/bai-viet">Xem bài theo ngành khác</a>
+        </div>
       </section>
 
       <footer>© 2026 Lumi Labs · Bài viết cho người mới bắt đầu</footer>
@@ -557,12 +821,142 @@
       const outputEl = document.querySelector("[data-output]");
       const rerunButton = document.querySelector("[data-rerun]");
       const flowSteps = Array.from(document.querySelectorAll("[data-flow-step]"));
+      const scenarioText = document.querySelector("[data-scenario-text]");
+      const subjectEl = document.querySelector("[data-email-subject]");
+      const emailBodyEl = document.querySelector("[data-email-body]");
+      const zaloEl = document.querySelector("[data-zalo-message]");
+      const checklistEl = document.querySelector("[data-checklist]");
+      const scenarioButtons = Array.from(document.querySelectorAll("[data-scenario]"));
+      const customForm = document.querySelector("[data-custom-form]");
+      const customSubmit = document.querySelector("[data-custom-submit]");
+      const customResult = document.querySelector("[data-custom-result]");
+      const customOutput = document.querySelector("[data-custom-output]");
+      const customThinking = document.querySelector("[data-custom-thinking]");
+      const customThinkingText = document.querySelector("[data-custom-thinking-text]");
       const statuses = [
         "Lumi đang đọc tình huống...",
         "Lumi đang chọn giọng lịch sự...",
         "Lumi đang viết email và tin nhắn...",
         "Xong. Bạn có thể dùng bản nháp này."
       ];
+      const scenarios = {
+        interview: {
+          text: "Ứng viên Minh Anh · vị trí Marketing Executive · phỏng vấn online 10h thứ Sáu · cần xác nhận trước 17h.",
+          subject: "Tiêu đề: Mời phỏng vấn vị trí Marketing Executive - Minh Anh",
+          email: `
+            <p>Chào Minh Anh,</p>
+            <p>Cảm ơn bạn đã quan tâm đến vị trí <strong>Marketing Executive</strong> tại công ty.</p>
+            <p>Bên mình muốn mời bạn tham gia buổi phỏng vấn online vào <strong>10h00, thứ Sáu</strong>.</p>
+            <ul>
+              <li>Hình thức: phỏng vấn online</li>
+              <li>Thời lượng dự kiến: 30-45 phút</li>
+              <li>Thông tin link họp sẽ được gửi sau khi bạn xác nhận</li>
+            </ul>
+            <p>Nhờ bạn phản hồi email này trước <strong>17h hôm nay</strong> để bên mình sắp xếp lịch phù hợp nhé.</p>
+            <p>Trân trọng,<br />Phòng Nhân sự</p>
+          `,
+          zalo: "Chào Minh Anh, mình đã gửi email mời phỏng vấn vị trí Marketing Executive vào 10h thứ Sáu. Bạn xem giúp và xác nhận trước 17h hôm nay nhé.",
+          checks: ["Tên ứng viên đã đúng chưa?", "Giờ phỏng vấn và hình thức đã đúng chưa?", "Đã có link họp hoặc người phụ trách gửi link chưa?"]
+        },
+        reschedule: {
+          text: "Ứng viên Quang Huy đã có lịch phỏng vấn chiều nay, nhưng trưởng bộ phận bận đột xuất. HR cần dời sang 15h ngày mai.",
+          subject: "Tiêu đề: Xin phép điều chỉnh lịch phỏng vấn - Quang Huy",
+          email: `
+            <p>Chào Quang Huy,</p>
+            <p>Bên mình xin phép điều chỉnh lịch phỏng vấn đã hẹn hôm nay vì người phụ trách tuyển dụng có lịch phát sinh đột xuất.</p>
+            <p>Lịch mới dự kiến là <strong>15h00 ngày mai</strong>, hình thức phỏng vấn giữ nguyên như lịch cũ.</p>
+            <p>Mình xin lỗi vì sự bất tiện này. Nhờ Huy xác nhận giúp lịch mới có phù hợp không nhé. Nếu chưa thuận tiện, bạn có thể gửi lại 1-2 khung giờ khác để bên mình sắp xếp.</p>
+            <p>Cảm ơn Huy nhiều,<br />Phòng Nhân sự</p>
+          `,
+          zalo: "Chào Huy, bên mình xin phép dời lịch phỏng vấn sang 15h ngày mai vì có lịch phát sinh. Huy xem giúp lịch mới có phù hợp không nhé.",
+          checks: ["Có xin lỗi vì thay đổi lịch chưa?", "Lịch mới đã ghi rõ ngày giờ chưa?", "Có mở lựa chọn nếu ứng viên không tiện chưa?"]
+        },
+        deadline: {
+          text: "Ứng viên Thu Hà đã qua vòng phỏng vấn, nhưng còn thiếu CV bản mới và portfolio. HR cần nhắc gửi trước 12h trưa mai.",
+          subject: "Tiêu đề: Nhắc bổ sung hồ sơ ứng tuyển - Thu Hà",
+          email: `
+            <p>Chào Thu Hà,</p>
+            <p>Cảm ơn bạn đã tham gia buổi trao đổi vừa rồi với bên mình.</p>
+            <p>Để tiếp tục bước đánh giá hồ sơ, nhờ Hà gửi bổ sung giúp mình:</p>
+            <ul>
+              <li>CV bản mới nhất</li>
+              <li>Portfolio hoặc link sản phẩm đã làm nếu có</li>
+            </ul>
+            <p>Nhờ bạn gửi trước <strong>12h trưa mai</strong> để bên mình kịp tổng hợp cho vòng tiếp theo nhé.</p>
+            <p>Cảm ơn Hà,<br />Phòng Nhân sự</p>
+          `,
+          zalo: "Chào Hà, mình nhắc nhẹ phần hồ sơ còn thiếu: CV mới nhất và portfolio nếu có. Hà gửi giúp trước 12h trưa mai nhé.",
+          checks: ["Đã liệt kê đúng tài liệu cần bổ sung chưa?", "Deadline có rõ ngày/giờ chưa?", "Có giữ giọng nhắc nhẹ, không tạo áp lực quá mức chưa?"]
+        }
+      };
+
+      function renderScenario(key) {
+        const scenario = scenarios[key] || scenarios.interview;
+        scenarioText.textContent = scenario.text;
+        subjectEl.textContent = scenario.subject;
+        emailBodyEl.innerHTML = scenario.email;
+        zaloEl.textContent = scenario.zalo;
+        checklistEl.innerHTML = scenario.checks.map((item) => `<li>${item}</li>`).join("");
+      }
+
+      function escapeHtml(text) {
+        return String(text || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function splitCustomResult(rawText) {
+        const text = String(rawText || "").trim();
+        const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+        const subjectLine = lines.find((line) => /^(tiêu đề|subject)\s*:/i.test(line)) || "Tiêu đề: Email Lumi viết cho tình huống của bạn";
+        const zaloIndex = lines.findIndex((line) => /zalo|tin nhắn/i.test(line));
+        const checkIndex = lines.findIndex((line) => /kiểm tra|nhớ kiểm tra|trước khi gửi/i.test(line));
+
+        const bodyStart = lines.findIndex((line) => line === subjectLine) + 1 || 0;
+        const bodyEndCandidates = [zaloIndex, checkIndex].filter((index) => index > bodyStart);
+        const bodyEnd = bodyEndCandidates.length ? Math.min(...bodyEndCandidates) : lines.length;
+        const bodyLines = lines.slice(bodyStart, bodyEnd).filter((line) => !/^(tin nhắn zalo|trước khi gửi)/i.test(line));
+
+        const zaloText = zaloIndex >= 0
+          ? lines.slice(zaloIndex, checkIndex > zaloIndex ? checkIndex : lines.length).join(" ").replace(/^tin nhắn zalo ngắn\s*:/i, "").trim()
+          : "Bạn có thể rút gọn email này thành một tin nhắn Zalo ngắn trước khi gửi.";
+
+        const checks = checkIndex >= 0
+          ? lines.slice(checkIndex + 1).map((line) => line.replace(/^[-•]\s*/, "")).filter(Boolean).slice(0, 3)
+          : ["Tên người nhận đã đúng chưa?", "Ngày giờ hoặc thông tin quan trọng đã rõ chưa?", "Giọng email đã phù hợp với tình huống chưa?"];
+
+        return {
+          subject: subjectLine.replace(/^subject\s*:/i, "Tiêu đề:"),
+          body: bodyLines.length ? bodyLines : ["Lumi đã tạo bản nháp cho tình huống của bạn. Bạn đọc lại tên, ngày giờ và thông tin quan trọng trước khi gửi nhé."],
+          zalo: zaloText,
+          checks,
+        };
+      }
+
+      function renderCustomResult(rawText) {
+        const result = splitCustomResult(rawText);
+        customOutput.innerHTML = `
+          <article class="custom-email">
+            <div class="custom-subject">${escapeHtml(result.subject)}</div>
+            <div class="custom-body">
+              ${result.body.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}
+            </div>
+          </article>
+          <aside class="custom-side">
+            <div class="custom-mini">
+              <b>Tin nhắn ngắn</b>
+              <p>${escapeHtml(result.zalo)}</p>
+            </div>
+            <div class="custom-mini">
+              <b>Lumi nhắc kiểm tra</b>
+              <ul>${result.checks.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+            </div>
+          </aside>
+        `;
+      }
 
       function replayDemo() {
         outputEl.style.opacity = "0.35";
@@ -590,6 +984,45 @@
         }, 650);
       }
 
+      scenarioButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          scenarioButtons.forEach((item) => item.classList.remove("is-active"));
+          button.classList.add("is-active");
+          renderScenario(button.dataset.scenario);
+          replayDemo();
+        });
+      });
+
+      customForm?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const brief = new FormData(customForm).get("brief")?.toString().trim();
+        if (!brief) return;
+
+        customSubmit.disabled = true;
+        customSubmit.textContent = "Lumi đang viết...";
+        customResult.classList.add("is-visible");
+        customThinking.classList.add("is-visible");
+        customThinkingText.textContent = "Đang chọn cách nói lịch sự và dễ gửi...";
+        customOutput.innerHTML = "";
+
+        try {
+          const response = await fetch("/api/mini-lab", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "email", inputs: { brief } })
+          });
+          const data = await response.json();
+          renderCustomResult(data.result || "Lumi chưa viết được phần này. Bạn thử mô tả ngắn hơn một chút nhé.");
+        } catch {
+          renderCustomResult("Kết nối hơi chập chờn. Bạn thử lại sau vài giây nhé.");
+        } finally {
+          customThinking.classList.remove("is-visible");
+          customSubmit.disabled = false;
+          customSubmit.textContent = "Nhờ Lumi viết thử";
+        }
+      });
+
+      renderScenario("interview");
       rerunButton.addEventListener("click", replayDemo);
       replayDemo();
     </script>
