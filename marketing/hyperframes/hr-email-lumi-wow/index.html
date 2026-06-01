@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumi Labs - HR Email Video</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&display=swap");
+
+      :root {
+        --bg: #fff9f3;
+        --surface: rgba(255, 255, 255, 0.78);
+        --ink: #17111d;
+        --muted: #6c6077;
+        --brand: #7c3aed;
+        --brand-light: #a78bfa;
+        --coral: #ff5a66;
+        --orange: #ff9f68;
+        --line: rgba(124, 58, 237, 0.18);
+        --shadow: 0 26px 80px rgba(124, 58, 237, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #efeaf8;
+        font-family: "Outfit", system-ui, sans-serif;
+        color: var(--ink);
+      }
+
+      .composition {
+        position: relative;
+        width: min(100vw, 540px);
+        aspect-ratio: 9 / 16;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 72% 18%, rgba(167, 139, 250, 0.34), transparent 28%),
+          radial-gradient(circle at 10% 8%, rgba(255, 159, 104, 0.24), transparent 28%),
+          linear-gradient(180deg, #fffaf6 0%, #fff 48%, #fff7ff 100%);
+        box-shadow: 0 28px 90px rgba(43, 27, 76, 0.22);
+      }
+
+      .composition::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle, rgba(124, 58, 237, 0.12) 1px, transparent 1px);
+        background-size: 28px 28px;
+        opacity: 0.48;
+      }
+
+      .glow-path {
+        position: absolute;
+        inset: auto -14% 10% -8%;
+        height: 45%;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at center, rgba(167, 139, 250, 0.28), transparent 65%);
+        filter: blur(10px);
+        animation: breathe 3.6s ease-in-out infinite;
+      }
+
+      .brand {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-weight: 900;
+        font-size: 20px;
+        z-index: 5;
+      }
+
+      .brand-dot {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--coral), var(--brand));
+        box-shadow: 0 0 0 8px rgba(124, 58, 237, 0.1);
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        padding: 74px 30px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        z-index: 4;
+      }
+
+      .hook {
+        max-width: 440px;
+        opacity: 0;
+        transform: translateY(26px);
+        animation: sceneIn 0.7s 0.2s ease forwards, sceneOut 0.5s 4.1s ease forwards;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        padding: 9px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(255, 90, 102, 0.24);
+        color: #d33f54;
+        font-weight: 800;
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 56px;
+        line-height: 0.98;
+        letter-spacing: -1.8px;
+      }
+
+      h1 span {
+        background: linear-gradient(135deg, var(--coral), var(--brand));
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      .sub {
+        margin-top: 18px;
+        max-width: 410px;
+        color: var(--muted);
+        font-size: 22px;
+        line-height: 1.35;
+        font-weight: 600;
+      }
+
+      .problem-card {
+        position: absolute;
+        left: 28px;
+        right: 28px;
+        top: 178px;
+        padding: 22px;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.84);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(34px) scale(0.98);
+        animation: cardIn 0.65s 4.7s ease forwards, sceneOut 0.45s 8.7s ease forwards;
+      }
+
+      .problem-label {
+        font-weight: 900;
+        color: var(--brand);
+        font-size: 15px;
+        margin-bottom: 12px;
+      }
+
+      .problem-text {
+        font-size: 28px;
+        font-weight: 900;
+        line-height: 1.18;
+        letter-spacing: -0.4px;
+      }
+
+      .lumi {
+        position: absolute;
+        left: 42px;
+        bottom: 250px;
+        width: 180px;
+        height: 180px;
+        border-radius: 42px;
+        display: grid;
+        place-items: center;
+        opacity: 0;
+        transform: translateX(-40px) translateY(14px) scale(0.85);
+        animation: lumiEnter 0.7s 8.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+          float 3.2s 9.6s ease-in-out infinite;
+        z-index: 8;
+      }
+
+      .lumi::before {
+        content: "";
+        position: absolute;
+        inset: 22px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(167, 139, 250, 0.46), transparent 64%);
+        filter: blur(10px);
+        animation: breathe 2.6s ease-in-out infinite;
+      }
+
+      .lumi img {
+        width: 152px;
+        height: 152px;
+        object-fit: cover;
+        border-radius: 34px;
+        position: relative;
+        border: 4px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 24px 48px rgba(124, 58, 237, 0.24);
+      }
+
+      .bubble {
+        position: absolute;
+        right: 28px;
+        top: 155px;
+        width: 300px;
+        padding: 20px;
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        font-size: 24px;
+        line-height: 1.25;
+        font-weight: 900;
+        opacity: 0;
+        transform: translateY(18px);
+        animation: cardIn 0.55s 9.25s ease forwards, sceneOut 0.45s 12.4s ease forwards;
+        z-index: 7;
+      }
+
+      .typing-card {
+        position: absolute;
+        left: 28px;
+        right: 28px;
+        bottom: 92px;
+        min-height: 360px;
+        padding: 22px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(32px);
+        animation: cardIn 0.65s 12.6s ease forwards;
+      }
+
+      .typing-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 14px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.15);
+        font-weight: 900;
+      }
+
+      .pill {
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: white;
+        background: linear-gradient(135deg, var(--coral), var(--brand));
+        font-size: 13px;
+      }
+
+      .email {
+        margin-top: 18px;
+        font-size: 20px;
+        line-height: 1.42;
+        color: #30263c;
+        font-weight: 600;
+      }
+
+      .email .line {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 0;
+        animation: typeLine 0.8s steps(42, end) forwards;
+      }
+
+      .email .line:nth-child(2) { animation-delay: 13.5s; }
+      .email .line:nth-child(3) { animation-delay: 14.4s; }
+      .email .line:nth-child(4) { animation-delay: 15.3s; }
+      .email .line:nth-child(5) { animation-delay: 16.2s; }
+
+      .copy-row {
+        position: absolute;
+        left: 22px;
+        right: 22px;
+        bottom: 20px;
+        display: flex;
+        gap: 12px;
+      }
+
+      .copy-btn {
+        flex: 1;
+        border: 0;
+        padding: 16px 18px;
+        border-radius: 18px;
+        color: white;
+        background: linear-gradient(135deg, var(--coral), var(--brand));
+        font-family: inherit;
+        font-size: 18px;
+        font-weight: 900;
+        box-shadow: 0 16px 42px rgba(124, 58, 237, 0.24);
+        transform: scale(0.94);
+        animation: popButton 0.42s 17.2s ease forwards, glowButton 1.4s 17.7s ease-in-out infinite;
+      }
+
+      .zalo {
+        flex: 0.78;
+        background: #fff;
+        color: var(--brand);
+        border: 1px solid var(--line);
+        box-shadow: none;
+      }
+
+      .final {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 34px;
+        opacity: 0;
+        transform: translateY(26px);
+        animation: finalIn 0.65s 18.3s ease forwards;
+        z-index: 12;
+        background:
+          radial-gradient(circle at 60% 18%, rgba(167, 139, 250, 0.28), transparent 30%),
+          rgba(255, 249, 243, 0.82);
+        backdrop-filter: blur(8px);
+      }
+
+      .final-card {
+        width: 100%;
+        padding: 34px 26px;
+        border-radius: 34px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--line);
+        text-align: center;
+        box-shadow: var(--shadow);
+      }
+
+      .final-card img {
+        width: 112px;
+        height: 112px;
+        border-radius: 28px;
+        object-fit: cover;
+        margin-bottom: 16px;
+        box-shadow: 0 18px 46px rgba(124, 58, 237, 0.2);
+      }
+
+      .final-title {
+        font-size: 38px;
+        line-height: 1.02;
+        font-weight: 900;
+        letter-spacing: -0.7px;
+      }
+
+      .final-title span {
+        color: var(--brand);
+      }
+
+      .final-sub {
+        margin: 16px auto 0;
+        max-width: 360px;
+        font-size: 20px;
+        line-height: 1.35;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .url {
+        margin-top: 22px;
+        padding: 14px 18px;
+        border-radius: 999px;
+        display: inline-flex;
+        background: linear-gradient(135deg, var(--coral), var(--brand));
+        color: white;
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .spark {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--brand-light);
+        box-shadow: 0 0 22px rgba(167, 139, 250, 0.86);
+        opacity: 0;
+        animation: sparkle 2.8s ease-in-out infinite;
+      }
+
+      .spark:nth-child(1) { top: 18%; right: 18%; animation-delay: 0.1s; }
+      .spark:nth-child(2) { top: 62%; right: 10%; animation-delay: 0.9s; }
+      .spark:nth-child(3) { bottom: 16%; left: 12%; animation-delay: 1.4s; }
+
+      @keyframes sceneIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes sceneOut {
+        to {
+          opacity: 0;
+          transform: translateY(-18px);
+        }
+      }
+
+      @keyframes cardIn {
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes lumiEnter {
+        to {
+          opacity: 1;
+          transform: translateX(0) translateY(0) scale(1);
+        }
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-14px); }
+      }
+
+      @keyframes breathe {
+        0%, 100% { transform: scale(0.94); opacity: 0.76; }
+        50% { transform: scale(1.08); opacity: 1; }
+      }
+
+      @keyframes typeLine {
+        to { width: 100%; }
+      }
+
+      @keyframes popButton {
+        to { transform: scale(1); }
+      }
+
+      @keyframes glowButton {
+        0%, 100% { box-shadow: 0 16px 42px rgba(124, 58, 237, 0.22); }
+        50% { box-shadow: 0 18px 54px rgba(255, 90, 102, 0.34); }
+      }
+
+      @keyframes finalIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes sparkle {
+        0%, 100% { opacity: 0; transform: translateY(8px) scale(0.5); }
+        45% { opacity: 1; transform: translateY(0) scale(1); }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="composition" data-composition="lumi-hr-email-wow" data-duration="22">
+      <div class="glow-path"></div>
+      <span class="spark"></span>
+      <span class="spark"></span>
+      <span class="spark"></span>
+
+      <div class="brand"><span class="brand-dot"></span>Lumi Labs</div>
+
+      <section class="scene hook">
+        <div class="eyebrow">✨ Bài demo cho HR</div>
+        <h1>Không mệt vì <span>một email</span>.</h1>
+        <p class="sub">Mệt vì ngày nào cũng phải viết lại cho thật lịch sự.</p>
+      </section>
+
+      <section class="problem-card">
+        <div class="problem-label">Tình huống rất quen</div>
+        <div class="problem-text">“Dời lịch phỏng vấn cho Minh Anh sang thứ Sáu, nói sao cho khéo?”</div>
+      </section>
+
+      <div class="lumi" aria-label="Lumi Bot">
+        <img src="../../../public/lumi-bot.png" alt="Lumi Bot" />
+      </div>
+
+      <div class="bubble">Để Lumi viết bản nháp dùng được ngay.</div>
+
+      <section class="typing-card">
+        <div class="typing-head">
+          <span>Email sẵn gửi</span>
+          <span class="pill">Lumi đang viết</span>
+        </div>
+        <div class="email">
+          <span class="line">Chào Minh Anh,</span>
+          <span class="line">Mình muốn đổi lịch phỏng vấn sang thứ Sáu.</span>
+          <span class="line">Bạn phản hồi giúp mình khung giờ phù hợp nhé.</span>
+          <span class="line">Cảm ơn bạn rất nhiều.</span>
+          <span class="line">Trân trọng, Phòng Nhân sự</span>
+        </div>
+        <div class="copy-row">
+          <button class="copy-btn">Copy email</button>
+          <button class="copy-btn zalo">Copy Zalo</button>
+        </div>
+      </section>
+
+      <section class="final">
+        <div class="final-card">
+          <img src="../../../public/lumi-bot.png" alt="Lumi Bot" />
+          <div class="final-title">Đưa việc thật.<br /><span>Lumi viết bản đầu.</span></div>
+          <p class="final-sub">Không cần biết kỹ thuật. Chỉ cần thử một việc nhỏ trong ngày.</p>
+          <div class="url">luanai.io.vn</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
