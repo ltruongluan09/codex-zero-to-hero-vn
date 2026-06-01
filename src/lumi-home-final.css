@@ -7671,3 +7671,104 @@ body {
     justify-self: start !important;
   }
 }
+
+/* Homepage article hub mobile fix: article titles should wrap, not get cut. */
+@media (max-width: 760px) {
+  .home-article-card {
+    justify-self: center !important;
+    width: min(calc(100vw - 44px), 330px) !important;
+    max-width: min(calc(100vw - 44px), 330px) !important;
+    min-width: 0 !important;
+    padding: 18px 22px 86px 18px !important;
+    overflow: hidden !important;
+  }
+
+  .home-article-card .article-hub-intro,
+  .home-learning-series,
+  .home-learning-series > div,
+  .home-learning-series h3,
+  .home-learning-series p,
+  .home-learning-series small,
+  .home-article-card .article-feature,
+  .home-article-card .article-feature > div,
+  .home-article-card .article-feature h3,
+  .home-article-card .article-feature p,
+  .home-article-card .article-list,
+  .home-article-card .article-list li,
+  .home-article-card .article-list li > a {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .home-article-card .article-feature {
+    display: grid !important;
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 14px !important;
+  }
+
+  .home-article-card .article-feature h3 {
+    font-size: clamp(27px, 8vw, 34px) !important;
+    line-height: 1.12 !important;
+  }
+
+  .home-article-card .article-feature p {
+    font-size: 15px !important;
+    line-height: 1.62 !important;
+  }
+
+  .home-article-card .article-list {
+    display: grid !important;
+    gap: 0 !important;
+  }
+
+  .home-article-card .article-list li {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: start !important;
+    gap: 7px !important;
+    padding: 15px 0 !important;
+  }
+
+  .home-article-card .article-list li > a {
+    display: grid !important;
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+    align-items: start !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .home-article-card .article-list li > a span:last-child {
+    display: block !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    font-size: 16px !important;
+    line-height: 1.36 !important;
+  }
+
+  .home-article-card .article-list li > span:last-child {
+    display: block !important;
+    padding-left: 44px !important;
+    color: #5f6888 !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    line-height: 1.3 !important;
+  }
+
+  .home-article-card .article-list-icon {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 12px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-article-card {
+    width: min(calc(100vw - 40px), 320px) !important;
+    max-width: min(calc(100vw - 40px), 320px) !important;
+  }
+}
