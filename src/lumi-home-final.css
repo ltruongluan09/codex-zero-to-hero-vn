@@ -7218,3 +7218,96 @@ body {
     box-shadow: 0 12px 32px rgba(91, 72, 153, 0.055) !important;
   }
 }
+
+/* Final mobile guardrail before public testing.
+   Older layers define header behavior several times; these rules keep mobile stable. */
+@media (max-width: 760px) {
+  html,
+  body,
+  #root {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .site-nav {
+    width: calc(100% - 16px) !important;
+    max-width: calc(100% - 16px) !important;
+    margin: 8px auto 0 !important;
+    padding: 0 !important;
+    border-radius: 22px !important;
+  }
+
+  .nav-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    display: grid !important;
+    gap: 8px !important;
+    padding: 8px 10px !important;
+    align-items: center !important;
+  }
+
+  .nav-inner .logo,
+  .nav-inner .brand,
+  .logo {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .logo > span:last-child {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .logo strong,
+  .logo small {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .nav-links,
+  .nav-actions > .nav-cta,
+  .nav-actions > .login-entry-btn,
+  .nav-actions > .user-menu {
+    display: none !important;
+  }
+
+  .nav-actions {
+    display: inline-flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    gap: 8px !important;
+  }
+
+  .hamburger {
+    display: inline-grid !important;
+    place-items: center !important;
+    flex: 0 0 auto !important;
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 16px !important;
+  }
+
+  .mobile-user-avatar {
+    display: inline-grid !important;
+    place-items: center !important;
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 15px !important;
+    overflow: hidden !important;
+  }
+
+  .mobile-user-avatar img,
+  .mobile-user-avatar span {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .mobile-drawer {
+    max-width: min(86vw, 330px) !important;
+  }
+}

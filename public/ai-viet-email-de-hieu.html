@@ -852,25 +852,126 @@
           transform: rotate(90deg);
         }
       }
+
+      @media (max-width: 560px) {
+        html,
+        body {
+          width: 100%;
+          max-width: 100%;
+          overflow-x: hidden;
+        }
+
+        .compact-page {
+          width: calc(100vw - 20px);
+          max-width: calc(100vw - 20px);
+          margin: 0 10px;
+          padding: 10px 0 44px;
+        }
+
+        .hero {
+          width: 100%;
+          max-width: 100%;
+          gap: 18px;
+          padding: 22px;
+        }
+
+        .hero-copy {
+          width: 100%;
+          max-width: 100%;
+          overflow: hidden;
+        }
+
+        .hero-copy h1 {
+          max-width: min(100%, 300px);
+          font-size: clamp(32px, 10vw, 40px);
+          line-height: 1.05;
+          letter-spacing: -0.035em;
+          overflow-wrap: break-word;
+          word-break: normal;
+        }
+
+        .hero-copy h1 span {
+          display: block;
+        }
+
+        .lead {
+          max-width: min(100%, 300px);
+          font-size: 15px;
+          line-height: 1.65;
+          overflow-wrap: break-word;
+        }
+
+        .hero-actions {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+
+        .hero-actions a {
+          width: 100%;
+          min-width: 0;
+          justify-content: center;
+        }
+
+        .result-lab,
+        .lumi-stage,
+        .try-card {
+          padding: 16px;
+          border-radius: 24px;
+        }
+
+        .lumi-agent {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .lumi-speech {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        .lumi-speech strong,
+        .lumi-speech p {
+          overflow-wrap: break-word;
+        }
+
+        .lumi-avatar {
+          width: 64px;
+          height: 64px;
+          border-radius: 18px;
+        }
+
+        .lumi-avatar img {
+          width: 54px;
+          height: 54px;
+          border-radius: 15px;
+        }
+
+        .try-form button,
+        .result-tools button,
+        .next-card a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="page compact-page">
       <nav class="topbar">
         <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
-        <a class="back" href="/bai-viet">← Kho bài viết</a>
+        <a class="back" href="/bai-viet.html">← Kho bài viết</a>
       </nav>
 
       <header class="hero">
         <div class="hero-copy">
           <div class="pill">HR · Email ứng viên</div>
-          <h1>Mỗi email ứng viên đều nhỏ. <span>Nhưng cộng lại rất mất thời gian.</span></h1>
+          <h1>Mỗi email ứng viên<br />đều nhỏ. <span>Nhưng cộng lại<br />rất mất thời gian.</span></h1>
           <p class="lead">
             Lumi biến một tình huống tuyển dụng thành email, tin nhắn Zalo và checklist kiểm tra. Bạn nhìn kết quả trước, không cần nhập gì.
           </p>
           <div class="hero-actions">
             <a class="button" href="#lumi-demo">Xem Lumi xử lý</a>
-            <a class="button secondary" href="/bai-viet">Xem bài khác</a>
+            <a class="button secondary" href="/bai-viet.html">Xem bài khác</a>
           </div>
         </div>
 
@@ -982,7 +1083,7 @@
         </div>
         <div class="next-actions">
           <a href="#try-yourself">Thử ngay trên bài này</a>
-          <a class="secondary" href="/bai-viet">Xem bài theo ngành khác</a>
+          <a class="secondary" href="/bai-viet.html">Xem bài theo ngành khác</a>
         </div>
       </section>
 
