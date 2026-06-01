@@ -1,5 +1,5 @@
 const ALLOWED_RATINGS = new Set(["good", "okay", "bad"]);
-const ALLOWED_PROJECTS = new Set(["docscan-ai", "caption-ai"]);
+const ALLOWED_PROJECTS = new Set(["docscan-ai", "caption-ai", "beginner-article"]);
 
 function parseBody(request) {
   if (!request.body) return {};

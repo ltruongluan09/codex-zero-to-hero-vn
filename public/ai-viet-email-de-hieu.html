@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/lumi-article.css" />
     <link rel="stylesheet" href="/lumi-mini-lab.css" />
+    <link rel="stylesheet" href="/lumi-feedback.css" />
     <style>
       :root {
         --ink: #181123;
@@ -461,7 +462,7 @@
       }
 
       .try-form button:disabled {
-        cursor: wait;
+        cursor: default;
         opacity: 0.75;
       }
 
@@ -495,12 +496,25 @@
         margin-top: 14px;
         border: 1px solid rgba(116, 72, 255, 0.16);
         border-radius: 20px;
-        background: rgba(255, 255, 255, 0.72);
+        background:
+          radial-gradient(circle at 12% 30%, rgba(255, 93, 125, 0.12), transparent 34%),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(246, 240, 255, 0.9));
         padding: 12px;
+        overflow: hidden;
+        position: relative;
       }
 
       .lumi-thinking.is-visible {
         display: flex;
+      }
+
+      .lumi-thinking::after {
+        content: "";
+        position: absolute;
+        inset: auto -30% 0 -30%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--pink), var(--purple), transparent);
+        animation: thinkingLine 1.15s ease-in-out infinite;
       }
 
       .lumi-thinking img {
@@ -524,18 +538,124 @@
         margin-top: 2px;
       }
 
+      .thinking-dots {
+        display: inline-flex;
+        gap: 4px;
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+
+      .thinking-dots i {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: var(--purple);
+        animation: dotJump 0.9s ease-in-out infinite;
+      }
+
+      .thinking-dots i:nth-child(2) { animation-delay: 0.15s; }
+      .thinking-dots i:nth-child(3) { animation-delay: 0.3s; }
+
       .custom-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(230px, 0.65fr);
-        gap: 12px;
+        gap: 14px;
+      }
+
+      .transform-strip {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+        gap: 10px;
+        align-items: stretch;
+      }
+
+      .messy-card,
+      .clean-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: linear-gradient(180deg, #fff, #fffafd);
+        padding: 14px;
+      }
+
+      .messy-card b,
+      .clean-card b {
+        color: var(--purple);
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .messy-card p,
+      .clean-card p {
+        color: var(--muted);
+        line-height: 1.55;
+        margin: 0;
+      }
+
+      .transform-arrow {
+        align-self: center;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--pink), var(--purple));
+        color: #fff;
+        display: grid;
+        font-weight: 900;
+        height: 42px;
+        place-items: center;
+        box-shadow: 0 14px 30px rgba(116, 72, 255, 0.18);
+      }
+
+      .custom-result-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(250px, 0.68fr);
+        gap: 14px;
       }
 
       .custom-email,
       .custom-side {
         border: 1px solid var(--line);
-        border-radius: 18px;
+        border-radius: 22px;
         background: linear-gradient(180deg, #fff, #fffafd);
-        padding: 14px;
+        overflow: hidden;
+      }
+
+      .email-compose-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(248, 243, 255, 0.8);
+        padding: 12px 14px;
+      }
+
+      .email-compose-bar b {
+        color: var(--ink);
+      }
+
+      .email-compose-bar span {
+        border-radius: 999px;
+        background: rgba(22, 199, 132, 0.12);
+        color: #13956d;
+        font-size: 12px;
+        font-weight: 900;
+        padding: 6px 9px;
+      }
+
+      .email-compose-meta {
+        display: grid;
+        gap: 8px;
+        padding: 14px 14px 0;
+      }
+
+      .email-compose-row {
+        display: grid;
+        grid-template-columns: 58px minmax(0, 1fr);
+        gap: 8px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .email-compose-row strong {
+        color: var(--ink);
       }
 
       .custom-subject {
@@ -547,7 +667,7 @@
       }
 
       .custom-body {
-        margin-top: 12px;
+        padding: 14px;
         color: #2a2334;
         line-height: 1.72;
       }
@@ -559,18 +679,33 @@
       .custom-side {
         display: grid;
         gap: 10px;
+        padding: 14px;
       }
 
-      .custom-mini {
-        border-radius: 16px;
-        background: #faf7ff;
+      .zalo-phone {
+        border-radius: 24px;
+        background: linear-gradient(180deg, #f5f0ff, #fff);
+        border: 1px solid var(--line);
         padding: 12px;
       }
 
+      .zalo-phone b,
       .custom-mini b {
         color: var(--purple);
         display: block;
         margin-bottom: 6px;
+      }
+
+      .zalo-bubble {
+        position: relative;
+        border-radius: 18px 18px 18px 6px;
+        background: #fff;
+        border: 1px solid var(--line);
+        box-shadow: 0 12px 30px rgba(116, 72, 255, 0.08);
+        color: #2a2334;
+        line-height: 1.55;
+        margin-top: 10px;
+        padding: 12px;
       }
 
       .custom-mini p,
@@ -582,6 +717,26 @@
       .custom-mini ul {
         margin: 0;
         padding-left: 18px;
+      }
+
+      .copy-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0 14px 14px;
+      }
+
+      .copy-button {
+        border: 0;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--pink), var(--purple));
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 900;
+        padding: 10px 14px;
+        box-shadow: 0 12px 26px rgba(116, 72, 255, 0.16);
       }
 
       .next-card {
@@ -635,6 +790,17 @@
         to { transform: rotate(360deg); }
       }
 
+      @keyframes dotJump {
+        0%, 100% { transform: translateY(0); opacity: 0.45; }
+        50% { transform: translateY(-4px); opacity: 1; }
+      }
+
+      @keyframes thinkingLine {
+        0% { transform: translateX(-40%); opacity: 0.2; }
+        50% { opacity: 1; }
+        100% { transform: translateX(40%); opacity: 0.2; }
+      }
+
       @media (max-width: 860px) {
         .hero,
         .output-grid,
@@ -675,8 +841,15 @@
 
         .try-form,
         .next-card,
-        .custom-grid {
+        .custom-grid,
+        .custom-result-layout,
+        .transform-strip {
           grid-template-columns: 1fr;
+        }
+
+        .transform-arrow {
+          justify-self: center;
+          transform: rotate(90deg);
         }
       }
     </style>
@@ -786,7 +959,7 @@
           <div class="lumi-thinking" data-custom-thinking>
             <img src="/lumi-bot.png" alt="Lumi Bot" />
             <div>
-              <b>Lumi đang đọc việc của bạn</b>
+              <b>Lumi đang đọc việc của bạn <span class="thinking-dots" aria-hidden="true"><i></i><i></i><i></i></span></b>
               <span data-custom-thinking-text>Đang chọn cách nói lịch sự và dễ gửi...</span>
             </div>
           </div>
@@ -913,49 +1086,90 @@
         const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
         const subjectLine = lines.find((line) => /^(tiêu đề|subject)\s*:/i.test(line)) || "Tiêu đề: Email Lumi viết cho tình huống của bạn";
         const zaloIndex = lines.findIndex((line) => /zalo|tin nhắn/i.test(line));
-        const checkIndex = lines.findIndex((line) => /kiểm tra|nhớ kiểm tra|trước khi gửi/i.test(line));
 
         const bodyStart = lines.findIndex((line) => line === subjectLine) + 1 || 0;
-        const bodyEndCandidates = [zaloIndex, checkIndex].filter((index) => index > bodyStart);
+        const bodyEndCandidates = [zaloIndex].filter((index) => index > bodyStart);
         const bodyEnd = bodyEndCandidates.length ? Math.min(...bodyEndCandidates) : lines.length;
         const bodyLines = lines.slice(bodyStart, bodyEnd).filter((line) => !/^(tin nhắn zalo|trước khi gửi)/i.test(line));
 
         const zaloText = zaloIndex >= 0
-          ? lines.slice(zaloIndex, checkIndex > zaloIndex ? checkIndex : lines.length).join(" ").replace(/^tin nhắn zalo ngắn\s*:/i, "").trim()
-          : "Bạn có thể rút gọn email này thành một tin nhắn Zalo ngắn trước khi gửi.";
-
-        const checks = checkIndex >= 0
-          ? lines.slice(checkIndex + 1).map((line) => line.replace(/^[-•]\s*/, "")).filter(Boolean).slice(0, 3)
-          : ["Tên người nhận đã đúng chưa?", "Ngày giờ hoặc thông tin quan trọng đã rõ chưa?", "Giọng email đã phù hợp với tình huống chưa?"];
+          ? lines.slice(zaloIndex).join(" ").replace(/^tin nhắn zalo ngắn\s*:/i, "").replace(/^tin nhắn zalo\s*:/i, "").trim()
+          : "Mình đã gửi email về việc này. Anh/chị xem giúp và phản hồi khi thuận tiện nhé.";
 
         return {
           subject: subjectLine.replace(/^subject\s*:/i, "Tiêu đề:"),
           body: bodyLines.length ? bodyLines : ["Lumi đã tạo bản nháp cho tình huống của bạn. Bạn đọc lại tên, ngày giờ và thông tin quan trọng trước khi gửi nhé."],
           zalo: zaloText,
-          checks,
         };
       }
 
       function renderCustomResult(rawText) {
         const result = splitCustomResult(rawText);
+        const emailText = `${result.subject}\n\n${result.body.join("\n\n")}`;
+        const zaloText = result.zalo;
+        const brief = new FormData(customForm).get("brief")?.toString().trim() || "Việc HR đang cần gửi";
         customOutput.innerHTML = `
-          <article class="custom-email">
-            <div class="custom-subject">${escapeHtml(result.subject)}</div>
-            <div class="custom-body">
-              ${result.body.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}
+          <div class="transform-strip">
+            <div class="messy-card">
+              <b>Việc bạn đưa cho Lumi</b>
+              <p>${escapeHtml(brief)}</p>
             </div>
-          </article>
-          <aside class="custom-side">
-            <div class="custom-mini">
-              <b>Tin nhắn ngắn</b>
-              <p>${escapeHtml(result.zalo)}</p>
+            <div class="transform-arrow">→</div>
+            <div class="clean-card">
+              <b>Lumi biến thành</b>
+              <p>Email sẵn gửi + tin nhắn Zalo ngắn, gọn để copy dùng ngay.</p>
             </div>
-            <div class="custom-mini">
-              <b>Lumi nhắc kiểm tra</b>
-              <ul>${result.checks.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
-            </div>
-          </aside>
+          </div>
+          <div class="custom-result-layout">
+            <article class="custom-email">
+              <div class="email-compose-bar">
+                <b>Email sẵn gửi</b>
+                <span>Có thể copy</span>
+              </div>
+              <div class="email-compose-meta">
+                <div class="email-compose-row"><span>Gửi tới</span><strong>Ứng viên / người nhận</strong></div>
+                <div class="email-compose-row"><span>Tiêu đề</span><strong>${escapeHtml(result.subject.replace(/^Tiêu đề:\s*/i, ""))}</strong></div>
+              </div>
+              <div class="custom-body">
+                ${result.body.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}
+              </div>
+              <div class="copy-row">
+                <button class="copy-button" type="button" data-copy-text="${escapeHtml(emailText)}">Copy email sẵn gửi</button>
+              </div>
+            </article>
+            <aside class="custom-side">
+              <div class="zalo-phone">
+                <b>Tin nhắn Zalo ngắn</b>
+                <div class="zalo-bubble">${escapeHtml(result.zalo)}</div>
+                <div class="copy-row">
+                  <button class="copy-button" type="button" data-copy-text="${escapeHtml(zaloText)}">Copy Zalo</button>
+                </div>
+              </div>
+              <div data-lumi-feedback data-feedback-project="beginner-article" data-feedback-context="hr-email-custom-output" data-feedback-title="Bản Lumi viết có dùng được không?"></div>
+            </aside>
+          </div>
         `;
+        bindResultActions();
+      }
+
+      function bindResultActions() {
+        customOutput.querySelectorAll("[data-copy-text]").forEach((button) => {
+          button.addEventListener("click", async () => {
+            await navigator.clipboard.writeText(button.dataset.copyText || "");
+            const old = button.textContent;
+            button.textContent = "Đã copy";
+            setTimeout(() => {
+              button.textContent = old;
+            }, 1400);
+          });
+        });
+
+        customOutput.querySelectorAll("[data-lumi-feedback]").forEach((root) => {
+          if (!root.dataset.feedbackReady) {
+            root.dataset.feedbackReady = "true";
+            createFeedbackCard(root);
+          }
+        });
       }
 
       function replayDemo() {
@@ -1027,5 +1241,6 @@
       replayDemo();
     </script>
     <script src="/lumi-mini-lab.js"></script>
+    <script src="/lumi-feedback.js"></script>
   </body>
 </html>
