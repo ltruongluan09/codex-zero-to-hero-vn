@@ -6670,6 +6670,53 @@ body {
   font-weight: 950;
 }
 
+.docscan-text-actions {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto auto auto;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid rgba(215, 199, 255, 0.96);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 244, 255, 0.84));
+  box-shadow: 0 12px 34px rgba(85, 64, 130, 0.055), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.docscan-text-actions small {
+  display: block;
+  color: #704dff;
+  font-size: 0.78rem;
+  font-weight: 950;
+}
+
+.docscan-text-actions strong {
+  display: block;
+  margin-top: 2px;
+  color: #20253f;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.docscan-text-actions button {
+  min-height: 40px;
+  padding: 0 13px;
+  border: 1px solid rgba(215, 199, 255, 0.96);
+  border-radius: 13px;
+  color: #704dff;
+  background: rgba(255, 255, 255, 0.86);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 950;
+}
+
+.docscan-text-actions button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(112, 77, 255, 0.42);
+  background: #fff;
+}
+
 .docscan-loading > div span {
   position: relative;
   overflow: hidden;
@@ -7248,6 +7295,9 @@ body {
 
 .docscan-upload-actions button,
 .docscan-upload-actions.is-empty > button:not(.docscan-sample-button) {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  -webkit-tap-highlight-color: transparent !important;
   width: 100% !important;
   min-height: 54px !important;
   border: 0 !important;
@@ -7257,6 +7307,33 @@ body {
   box-shadow: 0 18px 42px rgba(112, 77, 255, 0.24), 0 8px 22px rgba(255, 95, 104, 0.12) !important;
   font-size: 16px !important;
   font-weight: 950 !important;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease !important;
+}
+
+.docscan-upload-actions button:hover,
+.docscan-upload-actions button:focus,
+.docscan-upload-actions button:focus-visible,
+.docscan-upload-actions button:active,
+.docscan-upload-actions.is-empty > button:not(.docscan-sample-button):hover,
+.docscan-upload-actions.is-empty > button:not(.docscan-sample-button):focus,
+.docscan-upload-actions.is-empty > button:not(.docscan-sample-button):focus-visible,
+.docscan-upload-actions.is-empty > button:not(.docscan-sample-button):active {
+  border: 0 !important;
+  color: #fff !important;
+  background: linear-gradient(135deg, #ff5f68 0%, #ec54a7 46%, #704dff 100%) !important;
+  box-shadow: 0 18px 42px rgba(112, 77, 255, 0.24), 0 8px 22px rgba(255, 95, 104, 0.12) !important;
+}
+
+.docscan-upload-actions button:active,
+.docscan-upload-actions.is-empty > button:not(.docscan-sample-button):active {
+  transform: translateY(1px) scale(0.995) !important;
+  filter: brightness(0.98) !important;
+}
+
+.docscan-upload-actions button:focus-visible,
+.docscan-upload-actions.is-empty > button:not(.docscan-sample-button):focus-visible {
+  outline: 3px solid rgba(112, 77, 255, 0.2) !important;
+  outline-offset: 3px !important;
 }
 
 .docscan-safe-note {
@@ -7483,6 +7560,15 @@ body {
   .docscan-empty-sample,
   .docscan-try-own-file {
     width: 100% !important;
+  }
+
+  .docscan-text-actions {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .docscan-text-actions button {
+    width: 100%;
   }
 
   .docscan-result-ready {

@@ -580,7 +580,7 @@ export default function DocScanAISection({ profile = null }) {
                     : "Ảnh chụp/PDF nhiều chữ có thể mất 30-60 giây. Lumi đọc kỹ để kết quả đáng tin hơn."}
                 </p>
                 <ul>
-                  <li>Không bịa nếu chưa đọc đủ nội dung.</li>
+                  <li>Đọc theo nội dung thật trong file.</li>
                   <li>Ưu tiên số tiền, ngày tháng và điều khoản quan trọng.</li>
                 </ul>
                 <div>{steps.map((step, index) => <span key={step} className={index <= stepIndex ? "active" : ""} />)}</div>
@@ -632,6 +632,23 @@ export default function DocScanAISection({ profile = null }) {
                     <small>Lumi tóm tắt</small>
                     <p>{result.summary}</p>
                   </section>
+                )}
+                {rawText && (
+                  <div className="docscan-text-actions" aria-label="Văn bản đã đọc từ tài liệu">
+                    <div>
+                      <small>Văn bản đã đọc</small>
+                      <strong>Dùng để copy, lưu lại hoặc chuyển tiếp sang Excel/Word.</strong>
+                    </div>
+                    <button type="button" onClick={() => setRawTextOpen((value) => !value)}>
+                      {rawTextOpen ? "Ẩn text" : "Xem text"}
+                    </button>
+                    <button type="button" onClick={copyRawText}>
+                      {rawTextCopied ? "Đã copy!" : "Copy text"}
+                    </button>
+                    <button type="button" onClick={downloadRawText}>
+                      Tải .txt
+                    </button>
+                  </div>
                 )}
                 {(result.top_3_takeaways || result.key_points || []).length > 0 && (
                   <div className="docscan-keypoints">
@@ -704,7 +721,7 @@ export default function DocScanAISection({ profile = null }) {
                       onClick={() => setRawTextOpen((value) => !value)}
                       aria-expanded={rawTextOpen}
                     >
-                      <span>📄 Văn bản gốc</span>
+                      <span>📄 Văn bản đã đọc</span>
                       <b>{rawTextOpen ? "Ẩn" : "Xem"}</b>
                     </button>
                     {rawTextOpen && (

@@ -81,8 +81,8 @@ function fallbackAnalysis({ fileName = "tài liệu" } = {}) {
         importance: "high",
       },
       {
-        title: "Không phán bừa",
-        detail: "DocScan không tự tạo rủi ro hoặc kết luận nếu chưa đọc được tài liệu.",
+        title: "Đọc theo nội dung thật",
+        detail: "DocScan chỉ hiển thị nhận xét khi có đủ nội dung đáng tin cậy từ tài liệu.",
         importance: "high",
       },
       {
