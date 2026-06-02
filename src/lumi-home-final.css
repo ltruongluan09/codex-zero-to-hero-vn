@@ -5499,6 +5499,134 @@ body {
   line-height: 1.55;
 }
 
+.docscan-sample-filebar {
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(215, 199, 255, 0.96);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 8% 20%, rgba(16, 185, 129, 0.12), transparent 26%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 255, 0.9));
+  box-shadow: 0 14px 36px rgba(85, 64, 130, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.docscan-sample-thumb {
+  position: relative;
+  width: 58px;
+  height: 70px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(239, 231, 255, 0.78));
+  border: 1px solid rgba(215, 199, 255, 0.95);
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(124, 77, 255, 0.12);
+}
+
+.docscan-sample-thumb i {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, rgba(236, 84, 167, 0.22), rgba(112, 77, 255, 0.28));
+  border-bottom-left-radius: 10px;
+}
+
+.docscan-sample-thumb span {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(104, 96, 132, 0.18);
+}
+
+.docscan-sample-thumb span:nth-of-type(1) { top: 24px; }
+.docscan-sample-thumb span:nth-of-type(2) { top: 34px; right: 16px; }
+.docscan-sample-thumb span:nth-of-type(3) { top: 44px; }
+.docscan-sample-thumb span:nth-of-type(4) { top: 54px; right: 24px; }
+
+.docscan-sample-filebar small,
+.docscan-sample-summary small {
+  display: block;
+  color: #704dff;
+  font-weight: 950;
+  font-size: 0.78rem;
+}
+
+.docscan-sample-filebar strong {
+  display: block;
+  margin-top: 2px;
+  color: #17162b;
+  font-size: 0.98rem;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.docscan-sample-filebar p {
+  margin: 4px 0 0;
+  color: #64708f;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.docscan-sample-filebar > b {
+  padding: 8px 11px;
+  border-radius: 999px;
+  color: #087653;
+  background: rgba(16, 185, 129, 0.12);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.docscan-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.docscan-metric-grid span {
+  min-width: 0;
+  padding: 13px 12px;
+  border: 1px solid rgba(215, 199, 255, 0.96);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 30px rgba(85, 64, 130, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.docscan-metric-grid small {
+  display: block;
+  margin-bottom: 6px;
+  color: #6b7390;
+  font-weight: 850;
+  font-size: 0.78rem;
+}
+
+.docscan-metric-grid b {
+  display: block;
+  color: #17162b;
+  font-size: clamp(1rem, 1.7vw, 1.18rem);
+  line-height: 1.18;
+}
+
+.docscan-sample-summary {
+  margin-top: 12px;
+  padding: 16px;
+  border: 1px solid rgba(215, 199, 255, 0.96);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(247, 243, 255, 0.86));
+}
+
+.docscan-sample-summary p {
+  margin: 6px 0 0;
+  color: #404968;
+  line-height: 1.65;
+}
+
 .docscan-keypoints {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -5542,6 +5670,34 @@ body {
   background: rgba(255, 255, 255, 0.72);
 }
 
+.docscan-result-list article em {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 8px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(255, 95, 104, 0.1);
+  color: #d63f55;
+  font-style: normal;
+  font-weight: 950;
+  font-size: 0.76rem;
+}
+
+.docscan-result-list article.risk-high {
+  border-color: rgba(255, 95, 104, 0.38);
+  background: linear-gradient(135deg, rgba(255, 248, 248, 0.96), rgba(255, 255, 255, 0.8));
+}
+
+.docscan-result-list article.risk-medium {
+  border-color: rgba(245, 158, 11, 0.34);
+  background: linear-gradient(135deg, rgba(255, 251, 235, 0.86), rgba(255, 255, 255, 0.78));
+}
+
+.docscan-result-list article.risk-medium em {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b86500;
+}
+
 .docscan-result-list strong {
   display: block;
   color: #c43852;
@@ -5565,6 +5721,43 @@ body {
 
 .docscan-result-list .docscan-evidence p {
   font-style: italic;
+}
+
+.docscan-questions-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.docscan-questions-head strong {
+  margin: 0;
+}
+
+.docscan-questions-head button {
+  flex: 0 0 auto;
+  appearance: none;
+  border: 1px solid rgba(112, 77, 255, 0.22);
+  border-radius: 999px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #704dff;
+  font: inherit;
+  font-weight: 950;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.docscan-questions ol {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: #4a5270;
+  line-height: 1.62;
+}
+
+.docscan-questions li + li {
+  margin-top: 6px;
 }
 
 .docscan-raw-text {
@@ -6068,6 +6261,34 @@ body {
   margin-top: 16px;
 }
 
+.docscan-beta-proof {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 480px;
+  margin: 14px auto 0;
+  padding: 9px 12px;
+  border: 1px solid rgba(215, 199, 255, 0.9);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #5b6384;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.docscan-beta-proof span {
+  flex: 0 0 auto;
+  color: #704dff;
+  font-weight: 950;
+}
+
+.docscan-beta-proof p {
+  margin: 0 !important;
+  color: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
 .docscan-upload-actions button {
   margin: 0 !important;
   min-width: 176px !important;
@@ -6077,6 +6298,13 @@ body {
 
 .docscan-upload-actions .docscan-sample-button,
 .docscan-empty-sample {
+  color: #fff !important;
+  border-color: transparent !important;
+  background: linear-gradient(135deg, #ff5f68 0%, #ec54a7 46%, #704dff 100%) !important;
+  box-shadow: 0 18px 42px rgba(112, 77, 255, 0.24), 0 8px 22px rgba(255, 95, 104, 0.12) !important;
+}
+
+.docscan-upload-actions.is-empty > button:not(.docscan-sample-button) {
   border: 1px solid rgba(139, 92, 246, 0.22) !important;
   background: rgba(255, 255, 255, 0.78) !important;
   color: #6845d8 !important;
@@ -6085,6 +6313,11 @@ body {
 
 .docscan-upload-actions .docscan-sample-button:hover,
 .docscan-empty-sample:hover {
+  transform: translateY(-2px);
+  filter: saturate(1.06) brightness(1.02);
+}
+
+.docscan-upload-actions.is-empty > button:not(.docscan-sample-button):hover {
   transform: translateY(-2px);
   border-color: rgba(112, 77, 255, 0.48) !important;
   background: rgba(250, 246, 255, 0.96) !important;
@@ -6294,6 +6527,198 @@ body {
   background: rgba(143, 107, 255, 0.06);
 }
 
+.docscan-lead-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid rgba(215, 199, 255, 0.96);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 92, 145, 0.14), transparent 28%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 255, 0.9));
+  box-shadow: 0 18px 44px rgba(85, 64, 130, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  overflow: hidden;
+}
+
+.docscan-lead-card::after {
+  content: "";
+  position: absolute;
+  right: -50px;
+  top: -70px;
+  width: 160px;
+  height: 160px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(126, 87, 255, 0.18), transparent 68%);
+  pointer-events: none;
+}
+
+.docscan-lead-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.docscan-lead-bot {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+}
+
+.docscan-lead-bot span {
+  position: absolute;
+  inset: 1px;
+  border-radius: 999px;
+  background: conic-gradient(from 120deg, #ff5d7d, #7c4dff, #64d7ff, #ff5d7d);
+  filter: blur(1px);
+  animation: lumiAssistantHalo 5s linear infinite;
+}
+
+.docscan-lead-bot img {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 0 14px 32px rgba(124, 77, 255, 0.18);
+}
+
+.docscan-lead-copy small {
+  display: inline-flex;
+  width: fit-content;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #704dff;
+  background: rgba(124, 77, 255, 0.1);
+  font-weight: 900;
+  font-size: 0.78rem;
+}
+
+.docscan-lead-copy h3 {
+  margin: 10px 0 6px;
+  color: #15142d;
+  font-size: 1.05rem;
+  line-height: 1.22;
+}
+
+.docscan-lead-copy p {
+  margin: 0;
+  color: #5b6384;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.docscan-lead-options {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.docscan-lead-options button,
+.docscan-lead-actions button,
+.docscan-lead-actions a {
+  appearance: none;
+  border: 1px solid rgba(215, 199, 255, 0.95);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #594c80;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  text-decoration: none;
+}
+
+.docscan-lead-options button {
+  padding: 9px 13px;
+  font-size: 0.86rem;
+}
+
+.docscan-lead-options button:hover:not(:disabled),
+.docscan-lead-options button.active {
+  transform: translateY(-1px);
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(135deg, #ff5d7d, #7c4dff);
+  box-shadow: 0 12px 26px rgba(124, 77, 255, 0.18);
+}
+
+.docscan-lead-options button:disabled,
+.docscan-lead-actions button:disabled {
+  cursor: wait;
+  opacity: 0.74;
+}
+
+.docscan-lead-card textarea {
+  grid-column: 1 / -1;
+  width: 100%;
+  resize: vertical;
+  min-height: 74px;
+  border: 1px solid rgba(215, 199, 255, 0.96);
+  border-radius: 18px;
+  padding: 13px 14px;
+  color: #24243f;
+  background: rgba(255, 255, 255, 0.86);
+  font: inherit;
+  line-height: 1.45;
+  outline: none;
+}
+
+.docscan-lead-card textarea:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+}
+
+.docscan-lead-actions {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.docscan-lead-actions button,
+.docscan-lead-actions a {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.docscan-lead-actions a {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(135deg, #ff5d7d, #7c4dff);
+  box-shadow: 0 16px 32px rgba(124, 77, 255, 0.2);
+}
+
+.docscan-lead-actions button:hover,
+.docscan-lead-actions a:hover {
+  transform: translateY(-1px);
+  border-color: rgba(124, 77, 255, 0.55);
+}
+
+.docscan-lead-status {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  color: #6c4c12;
+  background: rgba(255, 247, 218, 0.82);
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+
+.docscan-lead-status.done {
+  color: #0e7a55;
+  background: rgba(16, 185, 129, 0.1);
+}
+
 @keyframes docscanRingSpin {
   to {
     transform: translateX(-50%) rotate(360deg);
@@ -6390,6 +6815,84 @@ body {
 }
 
 @media (max-width: 640px) {
+  .docscan-sample-filebar {
+    grid-template-columns: 48px 1fr;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .docscan-sample-thumb {
+    width: 48px;
+    height: 58px;
+    border-radius: 12px;
+  }
+
+  .docscan-sample-filebar > b {
+    grid-column: 1 / -1;
+    width: fit-content;
+    margin-left: 58px;
+  }
+
+  .docscan-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .docscan-sample-summary {
+    padding: 13px;
+    border-radius: 17px;
+  }
+
+  .docscan-questions-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .docscan-beta-proof {
+    width: 100%;
+    align-items: flex-start;
+    border-radius: 16px;
+    text-align: left;
+  }
+
+  .docscan-lead-card {
+    grid-template-columns: 52px 1fr;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .docscan-lead-bot {
+    width: 48px;
+    height: 48px;
+  }
+
+  .docscan-lead-bot img {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+  }
+
+  .docscan-lead-copy h3 {
+    font-size: 0.98rem;
+  }
+
+  .docscan-lead-copy p {
+    font-size: 0.86rem;
+  }
+
+  .docscan-lead-options {
+    gap: 7px;
+  }
+
+  .docscan-lead-options button {
+    flex: 1 1 calc(50% - 7px);
+    padding: 9px 10px;
+  }
+
+  .docscan-lead-actions {
+    grid-template-columns: 1fr;
+  }
+
   .docscan-upload-actions {
     width: 100%;
     flex-direction: column;

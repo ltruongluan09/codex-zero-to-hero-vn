@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import LumiFeedbackCard from "../../components/lumi/LumiFeedbackCard";
 
 const documentAnalysisTypes = [
   { id: "contract", label: "Hợp đồng", hint: "Tìm rủi ro trước khi ký" },
@@ -7,6 +6,10 @@ const documentAnalysisTypes = [
   { id: "finance", label: "Số liệu", hint: "Nhìn nhanh điểm bất thường" },
   { id: "report", label: "Báo cáo", hint: "Tóm tắt ý chính dễ hiểu" },
 ];
+
+const zaloCommunityUrl = "https://zalo.me/g/sf1nek4pce9gkmvz5cos";
+
+const docscanLeadOptions = ["Báo giá", "Hợp đồng", "CV/JD", "Báo cáo", "Ảnh chụp", "Khác"];
 
 const sampleDocumentResult = {
   document_type: "Chưa đọc được nội dung thật",
@@ -76,6 +79,11 @@ export default function DocScanAISection({ profile = null }) {
   const [pickerNudge, setPickerNudge] = useState(false);
   const [rawTextOpen, setRawTextOpen] = useState(false);
   const [rawTextCopied, setRawTextCopied] = useState(false);
+  const [leadIntent, setLeadIntent] = useState("");
+  const [leadNote, setLeadNote] = useState("");
+  const [leadStatus, setLeadStatus] = useState("idle");
+  const [leadMessage, setLeadMessage] = useState("");
+  const [sampleQuestionsCopied, setSampleQuestionsCopied] = useState(false);
 
   const steps = ["Đọc tài liệu", "Tìm điểm chính", "Nhận diện điểm cần chú ý", "Gợi ý bước tiếp theo"];
   const allowedExtensions = [".pdf", ".docx", ".xlsx", ".xls", ".csv", ".txt", ".png", ".jpg", ".jpeg", ".webp"];
@@ -178,45 +186,75 @@ export default function DocScanAISection({ profile = null }) {
     setFile(null);
     setError("");
     setCopied(false);
+    setSampleQuestionsCopied(false);
     setRawTextOpen(false);
     setRawTextCopied(false);
     setPickerNudge(false);
     setFilePickerHint(false);
     setSource("demo");
     setResult({
-      document_type: "Kết quả mẫu DocScan",
-      summary: "Đây là ví dụ để bạn thấy DocScan sẽ trả về gì sau khi đọc một tài liệu thật.",
-      one_line_answer: "DocScan tóm tắt ý chính, chỉ ra phần nên kiểm tra và gợi ý câu nên hỏi lại.",
-      verdict: "Bản mẫu giúp người mới hiểu cách dùng trước khi upload file thật.",
+      document_type: "Hợp đồng thuê văn phòng",
+      sample_file: {
+        name: "Hop-dong-thue-van-phong-Q3-2026.pdf",
+        meta: "8 trang · Bạn mất ~25 phút để đọc · DocScan xong trong 42 giây",
+        status: "Hoàn tất",
+      },
+      metrics: [
+        { label: "Giá thuê/tháng", value: "45.000.000 đ" },
+        { label: "Thời hạn", value: "24 tháng" },
+        { label: "Đặt cọc", value: "3 tháng" },
+        { label: "Bắt đầu", value: "01/09/2026" },
+      ],
+      summary: "Hợp đồng thuê văn phòng tầng 7, tòa nhà Saigon Tower, diện tích 120m². Giá thuê cố định 12 tháng đầu, tăng 8% từ tháng 13. Chi phí điện, nước, phí quản lý tính riêng.",
+      one_line_answer: "DocScan không chỉ tóm tắt. Nó chỉ ra chỗ có thể làm bạn mất tiền.",
+      verdict: "Rủi ro lớn nhất: chấm dứt sớm có thể mất 135.000.000 đ tiền phạt và mất thêm tiền cọc.",
       verdict_icon: "✨",
       top_3_takeaways: [
         {
-          title: "Nội dung chính",
-          detail: "AI gom tài liệu dài thành vài ý dễ đọc, không bắt bạn tự dò từng dòng.",
+          title: "Giá thuê/tháng",
+          detail: "45.000.000 đ, chưa gồm phí quản lý, điện, nước và chi phí phát sinh khác.",
         },
         {
-          title: "Điểm cần chú ý",
-          detail: "Những chỗ như deadline, chi phí, điều kiện hoặc phần đánh dấu sẽ được nhắc lại.",
+          title: "Thời hạn thuê",
+          detail: "24 tháng. Giá tăng 8% từ tháng 13, tương đương thêm 3.600.000 đ/tháng.",
         },
         {
-          title: "Việc nên làm tiếp",
-          detail: "Bạn nhận được câu hỏi nên xác nhận trước khi gửi tiếp hoặc ra quyết định.",
+          title: "Đặt cọc",
+          detail: "3 tháng tiền thuê. Cần hỏi rõ điều kiện hoàn cọc trước khi ký.",
         },
       ],
       red_flags: [
         {
-          title: "Cần kiểm tra phần quan trọng",
-          detail: "Nếu tài liệu có số tiền, thời hạn, điều kiện hoặc cam kết, DocScan sẽ nhắc bạn xem kỹ.",
+          severity: "high",
+          label: "ĐỎ - Rủi ro cao",
+          title: "Chấm dứt sớm phạt 135.000.000 đ + mất cọc",
+          detail: "Hợp đồng không ghi ngoại lệ bất khả kháng. Nếu công ty phải chuyển văn phòng sớm, chi phí thoát hợp đồng rất lớn.",
+        },
+        {
+          severity: "medium",
+          label: "CAM - Lưu ý",
+          title: "Phải thông báo gia hạn trước 60 ngày",
+          detail: "Nếu trễ thời hạn này, bên thuê có thể mất quyền gia hạn dù vẫn muốn ở tiếp.",
+        },
+        {
+          severity: "medium",
+          label: "CAM - Lưu ý",
+          title: "Tăng 8% từ tháng 13",
+          detail: "Tăng thêm 3.600.000 đ/tháng. Hợp đồng chưa giới hạn mức tăng nếu gia hạn lần 2.",
         },
       ],
       questions_to_ask: [
-        "Thông tin quan trọng đã đủ rõ để mình quyết định chưa?",
-        "Có phần nào cần hỏi lại người gửi tài liệu không?",
+        "Phí quản lý hàng tháng là bao nhiêu và có thay đổi theo năm không?",
+        "Có điều khoản chấm dứt sớm trong trường hợp bất khả kháng không?",
+        "Mức tăng giá khi gia hạn lần 2 được xác định như thế nào?",
+        "Có được cải tạo văn phòng không? Có phải hoàn trả nguyên trạng không?",
       ],
       next_actions: [
-        "Sau khi xem mẫu, hãy thử upload ảnh, PDF, Word hoặc Excel của bạn.",
+        "Copy 4 câu hỏi và gửi cho bên cho thuê trước khi đặt cọc.",
+        "Nhờ kế toán tính lại chi phí thuê từ tháng 13 trở đi.",
+        "Nếu có phụ lục bàn giao hoặc phí quản lý, hãy upload tiếp để DocScan đọc cùng.",
       ],
-      copy_ready_summary: "DocScan AI: Kết quả mẫu gồm tóm tắt nội dung chính, điểm cần chú ý và câu nên hỏi lại.",
+      copy_ready_summary: "DocScan AI - Hợp đồng thuê văn phòng Q3/2026\n\nFile mẫu: Hop-dong-thue-van-phong-Q3-2026.pdf\n\nCác con số chính:\n- Giá thuê/tháng: 45.000.000 đ\n- Thời hạn: 24 tháng\n- Đặt cọc: 3 tháng\n- Bắt đầu: 01/09/2026\n\nTóm tắt: Hợp đồng thuê văn phòng tầng 7, tòa nhà Saigon Tower, diện tích 120m². Giá thuê cố định 12 tháng đầu, tăng 8% từ tháng 13. Chi phí điện, nước, phí quản lý tính riêng.\n\nĐiểm cần chú ý:\n- Rủi ro cao: Chấm dứt sớm phạt 3 tháng tiền thuê (135.000.000 đ) + mất cọc. Không có ngoại lệ bất khả kháng.\n- Lưu ý: Phải thông báo gia hạn trước 60 ngày. Trễ thì mất quyền gia hạn.\n- Lưu ý: Tăng 8% từ tháng 13 = thêm 3.600.000 đ/tháng. Không giới hạn mức tăng nếu gia hạn lần 2.\n\nCâu nên hỏi lại:\n- Phí quản lý hàng tháng là bao nhiêu và có thay đổi theo năm không?\n- Có điều khoản chấm dứt sớm trong trường hợp bất khả kháng không?\n- Mức tăng giá khi gia hạn lần 2 được xác định như thế nào?\n- Có được cải tạo văn phòng không? Có phải hoàn trả nguyên trạng không?",
       extracted_text: "",
     });
   };
@@ -317,6 +355,7 @@ export default function DocScanAISection({ profile = null }) {
   };
 
   const rawText = result?.extracted_text?.trim() || "";
+  const isDemoResult = source === "demo";
   const docscanRisks = (result?.red_flags || result?.risks || []).filter(Boolean);
   const docscanMissingInfo = (result?.missing_information || []).filter(Boolean);
   const docscanQuestions = (result?.questions_to_ask || result?.questions || result?.suggested_questions || []).filter(Boolean);
@@ -358,6 +397,61 @@ export default function DocScanAISection({ profile = null }) {
     URL.revokeObjectURL(url);
   };
 
+  const copySampleQuestions = async () => {
+    if (!docscanQuestions.length) return;
+    try {
+      await navigator.clipboard.writeText(docscanQuestions.map((item, index) => `${index + 1}. ${item}`).join("\n"));
+      setSampleQuestionsCopied(true);
+      setTimeout(() => setSampleQuestionsCopied(false), 1600);
+    } catch {
+      setSampleQuestionsCopied(false);
+    }
+  };
+
+  const sendDocscanLeadSignal = async ({ intent = leadIntent, channel = "inline" } = {}) => {
+    const nextIntent = intent || "Chưa chọn";
+    if (leadStatus === "sending") return;
+    setLeadIntent(nextIntent);
+    setLeadStatus("sending");
+    setLeadMessage("Lumi đang ghi nhận để ưu tiên đúng loại tài liệu bạn cần...");
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          project: "docscan-ai",
+          rating: "good",
+          comment: [
+            `Nhu cầu DocScan: ${nextIntent}`,
+            leadNote ? `Ghi chú: ${leadNote}` : "",
+            channel === "zalo" ? "Người dùng bấm vào Zalo community." : "",
+          ].filter(Boolean).join("\n"),
+          page_path: `${window.location.pathname}${window.location.search}`,
+          profile: profile ? { name: profile.name, email: profile.email } : {},
+          metadata: {
+            context: source === "demo" ? "docscan-sample-lead" : "docscan-result-lead",
+            intent: nextIntent,
+            leadNote,
+            channel,
+            source,
+            fileType: file?.type || "",
+            fileSize: file?.size || 0,
+            hasRawText: Boolean(rawText),
+            attentionCount: docscanRisks.length + docscanMissingInfo.length + docscanQuestions.length + docscanNextActions.length,
+          },
+        }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) throw new Error(data.message || "Chưa gửi được tín hiệu.");
+      setLeadStatus("sent");
+      setLeadMessage("Lumi nhận rồi. Mình sẽ ưu tiên làm DocScan tốt hơn cho nhóm tài liệu này.");
+    } catch {
+      setLeadStatus("sent");
+      setLeadMessage("Lumi đã ghi nhận trên màn hình này. Nếu muốn nói kỹ hơn, bạn vào Zalo gửi trực tiếp nhé.");
+    }
+  };
+
   return (
     <section className="docscan-page">
       <div className="docscan-shell" data-reveal>
@@ -373,7 +467,7 @@ export default function DocScanAISection({ profile = null }) {
             <img src="/lumi-bot.png" alt="" />
             <div>
               <strong>AI sẽ giúp bạn hiểu tài liệu</strong>
-              <span>An toàn và bảo mật tuyệt đối.</span>
+              <span>File được xử lý bởi Google Gemini và không lưu lại sau khi phân tích.</span>
             </div>
           </div>
         </header>
@@ -433,13 +527,13 @@ export default function DocScanAISection({ profile = null }) {
               {pickerNudge && !file && !loading && (
                 <em className="docscan-picker-nudge">Bạn chưa chọn file nào. Có thể chọn lại hoặc xem thử kết quả mẫu trước.</em>
               )}
-              <div className="docscan-upload-actions">
-                <button type="button" onClick={(event) => {
-                  event.stopPropagation();
-                  openFilePicker();
-                }}>
-                  {loading ? "Đang phân tích..." : file ? "Chọn file khác" : "⇧ Chọn file"}
-                </button>
+              {!file && !loading && (
+                <div className="docscan-beta-proof">
+                  <span>Beta thật</span>
+                  <p>Người dùng đang thử nhiều nhất với báo giá, hợp đồng và ảnh chụp tài liệu.</p>
+                </div>
+              )}
+              <div className={file || loading ? "docscan-upload-actions" : "docscan-upload-actions is-empty"}>
                 {!loading && !file && (
                   <button
                     className="docscan-sample-button"
@@ -452,6 +546,12 @@ export default function DocScanAISection({ profile = null }) {
                     Xem kết quả mẫu
                   </button>
                 )}
+                <button type="button" onClick={(event) => {
+                  event.stopPropagation();
+                  openFilePicker();
+                }}>
+                  {loading ? "Đang phân tích..." : file ? "Chọn file khác" : "⇧ Chọn file"}
+                </button>
               </div>
             </div>
             <div className="docscan-guidance">
@@ -492,6 +592,23 @@ export default function DocScanAISection({ profile = null }) {
               </div>
             ) : result ? (
               <div className="docscan-result-ready" data-lumi-sensitive>
+                {isDemoResult && result.sample_file && (
+                  <div className="docscan-sample-filebar">
+                    <div className="docscan-sample-thumb" aria-hidden="true">
+                      <i></i>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <div>
+                      <small>File mẫu vừa được đọc</small>
+                      <strong>{result.sample_file.name}</strong>
+                      <p>{result.sample_file.meta}</p>
+                    </div>
+                    <b>{result.sample_file.status}</b>
+                  </div>
+                )}
                 <div className="docscan-score-mini">
                   <span>{result.verdict_icon}</span>
                   <div>
@@ -500,6 +617,22 @@ export default function DocScanAISection({ profile = null }) {
                     <p>{result.one_line_answer || result.summary || result.verdict}</p>
                   </div>
                 </div>
+                {isDemoResult && result.metrics?.length > 0 && (
+                  <div className="docscan-metric-grid">
+                    {result.metrics.map((metric) => (
+                      <span key={metric.label}>
+                        <small>{metric.label}</small>
+                        <b>{metric.value}</b>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {isDemoResult && result.summary && (
+                  <section className="docscan-sample-summary">
+                    <small>Lumi tóm tắt</small>
+                    <p>{result.summary}</p>
+                  </section>
+                )}
                 {(result.top_3_takeaways || result.key_points || []).length > 0 && (
                   <div className="docscan-keypoints">
                     {(result.top_3_takeaways || result.key_points).slice(0, 3).map((point) => (
@@ -513,7 +646,8 @@ export default function DocScanAISection({ profile = null }) {
                 <div className="docscan-result-list">
                   <h3>Điểm cần chú ý</h3>
                   {docscanRisks.slice(0, 3).map((risk) => (
-                    <article key={risk.title || risk.label}>
+                    <article key={risk.title || risk.label} className={risk.severity ? `risk-${risk.severity}` : ""}>
+                      {risk.label && <em>{risk.label}</em>}
                       <strong>{risk.title || risk.label}</strong>
                       <p>{risk.detail || risk.body || risk.value}</p>
                     </article>
@@ -526,8 +660,21 @@ export default function DocScanAISection({ profile = null }) {
                   )}
                   {docscanQuestions.length > 0 && (
                     <article className="docscan-questions">
-                      <strong>Câu nên hỏi lại</strong>
-                      <p>{docscanQuestions.slice(0, 3).join(" ")}</p>
+                      <div className="docscan-questions-head">
+                        <strong>Câu nên hỏi lại</strong>
+                        {isDemoResult && (
+                          <button type="button" onClick={copySampleQuestions}>
+                            {sampleQuestionsCopied ? "Đã copy" : "Copy câu hỏi"}
+                          </button>
+                        )}
+                      </div>
+                      {isDemoResult ? (
+                        <ol>
+                          {docscanQuestions.map((question) => <li key={question}>{question}</li>)}
+                        </ol>
+                      ) : (
+                        <p>{docscanQuestions.slice(0, 3).join(" ")}</p>
+                      )}
                     </article>
                   )}
                   {docscanNextActions.length > 0 && (
@@ -575,19 +722,55 @@ export default function DocScanAISection({ profile = null }) {
                     )}
                   </section>
                 )}
-                <LumiFeedbackCard
-                  project="docscan-ai"
-                  projectLabel="DocScan AI"
-                  context="Sau khi đọc tài liệu"
-                  profile={profile}
-                  metadata={{
-                    source,
-                    fileType: file?.type || "",
-                    fileSize: file?.size || 0,
-                    hasRawText: Boolean(rawText),
-                    attentionCount: docscanRisks.length + docscanMissingInfo.length + docscanQuestions.length + docscanNextActions.length,
-                  }}
-                />
+                <section className="docscan-lead-card" aria-label="Góp ý nhanh cho DocScan AI">
+                  <div className="docscan-lead-bot" aria-hidden="true">
+                    <span></span>
+                    <img src="/lumi-bot.png" alt="" />
+                  </div>
+                  <div className="docscan-lead-copy">
+                    <small>Lumi hỏi thêm 10 giây</small>
+                    <h3>
+                      {source === "demo"
+                        ? "Mẫu này có giống việc bạn cần xử lý không?"
+                        : "Bạn muốn DocScan đọc loại tài liệu nào tốt hơn?"}
+                    </h3>
+                    <p>Chọn một nhóm tài liệu bạn hay gặp. Mình dùng tín hiệu này để ưu tiên demo tiếp theo cho đúng người dùng thật.</p>
+                  </div>
+                  <div className="docscan-lead-options">
+                    {docscanLeadOptions.map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        className={leadIntent === option ? "active" : ""}
+                        onClick={() => sendDocscanLeadSignal({ intent: option })}
+                        disabled={leadStatus === "sending"}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                  <textarea
+                    data-clarity-mask="True"
+                    value={leadNote}
+                    onChange={(event) => setLeadNote(event.target.value)}
+                    placeholder="Ví dụ: báo giá nhà cung cấp, hợp đồng thuê mặt bằng, CV ứng viên..."
+                    rows="2"
+                  />
+                  <div className="docscan-lead-actions">
+                    <a
+                      href={zaloCommunityUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => sendDocscanLeadSignal({ intent: leadIntent || "Zalo community", channel: "zalo" })}
+                    >
+                      Vào Zalo góp ý trực tiếp
+                    </a>
+                    <button type="button" onClick={() => sendDocscanLeadSignal({})} disabled={leadStatus === "sending"}>
+                      {leadStatus === "sending" ? "Đang gửi..." : "Gửi tín hiệu cho Lumi"}
+                    </button>
+                  </div>
+                  {leadMessage && <p className={leadStatus === "sent" ? "docscan-lead-status done" : "docscan-lead-status"}>{leadMessage}</p>}
+                </section>
               </div>
             ) : (
               <div className="docscan-empty">
