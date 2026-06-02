@@ -84,8 +84,14 @@ export default function DocScanAISection({ profile = null }) {
   const [leadStatus, setLeadStatus] = useState("idle");
   const [leadMessage, setLeadMessage] = useState("");
   const [sampleQuestionsCopied, setSampleQuestionsCopied] = useState(false);
+  const [analysisSeconds, setAnalysisSeconds] = useState(0);
 
-  const steps = ["Đọc tài liệu", "Tìm điểm chính", "Nhận diện điểm cần chú ý", "Gợi ý bước tiếp theo"];
+  const steps = [
+    "Lumi đang đọc từng dòng",
+    "Đang tìm số tiền và deadline",
+    "Đang lọc điểm dễ bỏ sót",
+    "Đang viết lại cho dễ hiểu",
+  ];
   const allowedExtensions = [".pdf", ".docx", ".xlsx", ".xls", ".csv", ".txt", ".png", ".jpg", ".jpeg", ".webp"];
   const getFriendlyFileName = (nextFile) => {
     if (!nextFile?.name) return "";
@@ -118,6 +124,15 @@ export default function DocScanAISection({ profile = null }) {
   useEffect(() => {
     if (!loading) return undefined;
     const timer = setInterval(() => setStepIndex((value) => (value + 1) % steps.length), 800);
+    return () => clearInterval(timer);
+  }, [loading]);
+
+  useEffect(() => {
+    if (!loading) {
+      setAnalysisSeconds(0);
+      return undefined;
+    }
+    const timer = setInterval(() => setAnalysisSeconds((value) => value + 1), 1000);
     return () => clearInterval(timer);
   }, [loading]);
 
@@ -274,6 +289,7 @@ export default function DocScanAISection({ profile = null }) {
   const analyze = async (selectedFile = file) => {
     if (!selectedFile) return;
     setLoading(true);
+    setAnalysisSeconds(0);
     setCopied(false);
     setRawTextOpen(false);
     setRawTextCopied(false);
@@ -460,7 +476,7 @@ export default function DocScanAISection({ profile = null }) {
             <span className="docscan-logo">▰</span>
             <div>
               <h1>DocScan <em>AI</em></h1>
-              <p>AI đọc tài liệu và chỉ ra điểm cần chú ý.</p>
+              <p>Đưa tài liệu vào. Lumi đọc giúp và chỉ ra chỗ cần chú ý.</p>
             </div>
           </div>
           <div className="docscan-helper">
@@ -505,79 +521,49 @@ export default function DocScanAISection({ profile = null }) {
                 onClick={(event) => event.stopPropagation()}
               />
               <span className="docscan-file-icon"><i>+</i></span>
-              <strong>{file ? friendlyFileName : "Tải tài liệu lên"}</strong>
+              <strong>{file ? friendlyFileName : "Chọn tài liệu để Lumi đọc"}</strong>
               <p>
                 {loading
-                  ? "Lumi Bot đang đọc file. Bạn cứ chờ ở màn hình này nhé."
+                  ? "Bạn cứ để màn hình này. Lumi đang đọc kỹ để không bỏ sót phần quan trọng."
                   : filePickerHint
                     ? "Đang mở hộp chọn file..."
                   : file
                     ? "Đã nhận file. Kết quả sẽ hiện ở khung bên phải sau vài giây."
-                    : "Bấm vào khung này, dấu cộng hoặc nút bên dưới để chọn file."}
+                    : "Bấm một lần. DocScan tự đọc và trả về: tóm tắt, điểm cần chú ý, câu nên hỏi lại."}
               </p>
-              <small>{file ? fileMeta : "PDF, Word, Excel hoặc ảnh"}</small>
+              <small>{file ? fileMeta : "PDF, Word, Excel hoặc ảnh rõ chữ"}</small>
               {error && <em className="docscan-error">{error}</em>}
-              {!file && !loading && (
-                <div className="docscan-mini-steps" aria-label="Cách dùng DocScan">
-                  <span>1. Chọn file</span>
-                  <span>2. AI đọc</span>
-                  <span>3. Nhận tóm tắt</span>
-                </div>
-              )}
               {pickerNudge && !file && !loading && (
-                <em className="docscan-picker-nudge">Bạn chưa chọn file nào. Có thể chọn lại hoặc xem thử kết quả mẫu trước.</em>
-              )}
-              {!file && !loading && (
-                <div className="docscan-beta-proof">
-                  <span>Beta thật</span>
-                  <p>Người dùng đang thử nhiều nhất với báo giá, hợp đồng và ảnh chụp tài liệu.</p>
-                </div>
+                <em className="docscan-picker-nudge">Bạn chưa chọn file nào. Bấm lại nút chọn file hoặc xem mẫu bên phải trước.</em>
               )}
               <div className={file || loading ? "docscan-upload-actions" : "docscan-upload-actions is-empty"}>
-                {!loading && !file && (
-                  <button
-                    className="docscan-sample-button"
-                    type="button"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      showSampleResult();
-                    }}
-                  >
-                    Xem kết quả mẫu
-                  </button>
-                )}
                 <button type="button" onClick={(event) => {
                   event.stopPropagation();
                   openFilePicker();
                 }}>
-                  {loading ? "Đang phân tích..." : file ? "Chọn file khác" : "⇧ Chọn file"}
+                  {loading ? "Lumi đang đọc..." : file ? "Chọn file khác" : "Chọn file"}
                 </button>
               </div>
             </div>
-            <div className="docscan-guidance">
-              <img src="/lumi-bot.png" alt="" />
-              <div>
-                <strong>Lumi gợi ý</strong>
-                <p>Ảnh chụp rõ chữ, PDF, Word hoặc Excel đều được. Chọn file xong DocScan tự đọc, không cần bấm thêm.</p>
+            {(file || loading || error || result) && (
+              <div className={error ? "docscan-upload-state error" : loading ? "docscan-upload-state loading" : result ? "docscan-upload-state success" : "docscan-upload-state"}>
+                <span>{uploadStatus}</span>
+                <small>
+                  {error
+                    ? "Không sao, bạn có thể chọn lại file khác ngay."
+                    : loading
+                      ? steps[stepIndex]
+                      : result
+                        ? "Bạn có thể copy kết quả hoặc thử file khác."
+                        : "Đã sẵn sàng đọc tài liệu này."}
+                </small>
               </div>
-            </div>
-            <div className={error ? "docscan-upload-state error" : loading ? "docscan-upload-state loading" : result ? "docscan-upload-state success" : "docscan-upload-state"}>
-              <span>{uploadStatus}</span>
-              <small>
-                {error
-                  ? "Không sao, bạn có thể chọn lại file khác ngay."
-                  : loading
-                    ? steps[stepIndex]
-                    : result
-                      ? "Bạn có thể copy kết quả hoặc thử file khác."
-                      : "Một lần chọn file là DocScan tự bắt đầu đọc."}
-              </small>
-            </div>
+            )}
             <div className="docscan-safe-note">
               <span>♙</span>
               <div>
-              <strong>Tài liệu của bạn được xử lý an toàn.</strong>
-                <p>{source === "fallback" && result ? "Chưa đọc được nội dung thật, nên DocScan không đưa ra nhận xét giả." : "Không lưu trữ sau khi hoàn tất."}</p>
+                <strong>Không lưu file sau khi phân tích.</strong>
+                <p>{source === "fallback" && result ? "Chưa đọc được nội dung thật, nên DocScan không đưa ra nhận xét giả." : "File được xử lý bởi Google Gemini."}</p>
               </div>
             </div>
           </section>
@@ -586,8 +572,17 @@ export default function DocScanAISection({ profile = null }) {
             {loading ? (
               <div className="docscan-loading">
                 <img src="/lumi-bot.png" alt="" />
-              <h2>{steps[stepIndex]}...</h2>
-                <p>Lumi Bot đang đọc trong một lần, rồi gom lại phần quan trọng nhất cho bạn.</p>
+                <small className="docscan-loading-time">Đang phân tích · {analysisSeconds < 10 ? `0${analysisSeconds}` : analysisSeconds}s</small>
+                <h2>{steps[stepIndex]}...</h2>
+                <p>
+                  {analysisSeconds > 45
+                    ? "File này hơi nhiều chữ. Lumi vẫn đang đọc tiếp để không bỏ sót phần quan trọng."
+                    : "Ảnh chụp/PDF nhiều chữ có thể mất 30-60 giây. Lumi đọc kỹ để kết quả đáng tin hơn."}
+                </p>
+                <ul>
+                  <li>Không bịa nếu chưa đọc đủ nội dung.</li>
+                  <li>Ưu tiên số tiền, ngày tháng và điều khoản quan trọng.</li>
+                </ul>
                 <div>{steps.map((step, index) => <span key={step} className={index <= stepIndex ? "active" : ""} />)}</div>
               </div>
             ) : result ? (
@@ -627,6 +622,11 @@ export default function DocScanAISection({ profile = null }) {
                     ))}
                   </div>
                 )}
+                {isDemoResult && (
+                  <button className="docscan-try-own-file" type="button" onClick={openFilePicker}>
+                    Thử file của bạn ngay
+                  </button>
+                )}
                 {isDemoResult && result.summary && (
                   <section className="docscan-sample-summary">
                     <small>Lumi tóm tắt</small>
@@ -644,7 +644,7 @@ export default function DocScanAISection({ profile = null }) {
                   </div>
                 )}
                 <div className="docscan-result-list">
-                  <h3>Điểm cần chú ý</h3>
+                  <h3>3 điều cần biết ngay</h3>
                   {docscanRisks.slice(0, 3).map((risk) => (
                     <article key={risk.title || risk.label} className={risk.severity ? `risk-${risk.severity}` : ""}>
                       {risk.label && <em>{risk.label}</em>}
@@ -731,10 +731,10 @@ export default function DocScanAISection({ profile = null }) {
                     <small>Lumi hỏi thêm 10 giây</small>
                     <h3>
                       {source === "demo"
-                        ? "Mẫu này có giống việc bạn cần xử lý không?"
+                        ? "Bạn hay phải đọc loại tài liệu nào nhất?"
                         : "Bạn muốn DocScan đọc loại tài liệu nào tốt hơn?"}
                     </h3>
-                    <p>Chọn một nhóm tài liệu bạn hay gặp. Mình dùng tín hiệu này để ưu tiên demo tiếp theo cho đúng người dùng thật.</p>
+                    <p>Chọn một nhóm tài liệu bạn hay gặp. Mình dùng tín hiệu này để ưu tiên bản DocScan tiếp theo cho đúng việc thật.</p>
                   </div>
                   <div className="docscan-lead-options">
                     {docscanLeadOptions.map((option) => (
@@ -773,38 +773,59 @@ export default function DocScanAISection({ profile = null }) {
                 </section>
               </div>
             ) : (
-              <div className="docscan-empty">
-                <span>▤</span>
-                <h2>Kết quả sẽ hiển thị ở đây</h2>
-                <p>Sau khi bạn tải tài liệu lên, AI sẽ đọc và chỉ ra những điểm cần chú ý và gợi ý câu hỏi nên làm rõ.</p>
-                <ul>
-                  <li>Phân tích tự động</li>
-                  <li>Dễ hiểu, dễ áp dụng</li>
-                  <li>Dễ dàng copy và sử dụng</li>
-                </ul>
+              <div className="docscan-empty docscan-sample-preview">
+                <div className="docscan-preview-filebar">
+                  <div className="docscan-sample-thumb" aria-hidden="true">
+                    <i></i>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div>
+                    <small>Kết quả mẫu</small>
+                    <strong>Hop-dong-thue-van-phong-Q3-2026.pdf</strong>
+                    <p>8 trang · Đọc thường ~25 phút · DocScan xong trong 42 giây</p>
+                  </div>
+                </div>
+                <h2>DocScan phát hiện rủi ro có thể mất 135.000.000 đ</h2>
+                <p>Trong hợp đồng thuê văn phòng mẫu, điều khoản chấm dứt sớm có thể làm bên thuê mất 3 tháng tiền thuê và mất thêm cọc.</p>
+                <div className="docscan-preview-metrics" aria-label="Các con số chính trong hợp đồng mẫu">
+                  <span><small>Giá thuê</small><b>45.000.000 đ</b></span>
+                  <span><small>Thời hạn</small><b>24 tháng</b></span>
+                  <span><small>Đặt cọc</small><b>3 tháng</b></span>
+                  <span><small>Bắt đầu</small><b>01/09/2026</b></span>
+                </div>
+                <article className="docscan-preview-risk">
+                  <em>ĐỎ - Rủi ro cao</em>
+                  <strong>Chấm dứt sớm phạt 3 tháng tiền thuê + mất cọc</strong>
+                  <p>Không thấy ngoại lệ bất khả kháng trong điều khoản mẫu.</p>
+                </article>
                 <button className="docscan-empty-sample" type="button" onClick={showSampleResult}>
-                  Xem thử kết quả mẫu
+                  Xem mẫu đầy đủ
                 </button>
               </div>
             )}
           </section>
         </div>
 
-        <footer className="docscan-summary">
-          <div>
-            <span>▣</span>
+        {result && (
+          <footer className="docscan-summary">
             <div>
-              <strong>Tóm tắt để sử dụng</strong>
-              <p>Bạn có thể copy toàn bộ kết quả để lưu lại hoặc gửi cho người khác.</p>
+              <span>▣</span>
+              <div>
+                <strong>Lưu lại để dùng ngay</strong>
+                <p>Copy tóm tắt, gửi cho sếp/đồng nghiệp hoặc lưu vào ghi chú của bạn.</p>
+              </div>
             </div>
-          </div>
-          <div className="docscan-summary-actions">
-            <a href="/project-02-docscan-ai.html">Xem hành trình build</a>
-            <button type="button" onClick={copySummary} disabled={!result}>
-              {copied ? "Đã copy" : "Copy kết quả"}
-            </button>
-          </div>
-        </footer>
+            <div className="docscan-summary-actions">
+              <a href="/project-02-docscan-ai.html">Xem hành trình build</a>
+              <button type="button" onClick={copySummary} disabled={!result}>
+                {copied ? "Đã copy" : "Copy kết quả"}
+              </button>
+            </div>
+          </footer>
+        )}
       </div>
     </section>
   );
