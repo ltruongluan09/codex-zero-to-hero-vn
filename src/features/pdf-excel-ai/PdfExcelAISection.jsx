@@ -25,6 +25,12 @@ const samplePreviewRows = sampleResult.rows.slice(0, 4);
 
 const industryExamples = [
   {
+    icon: "🏦",
+    role: "Tài chính / ngân hàng",
+    file: "Sao kê, bảng giao dịch, báo cáo phí, bảng đối soát",
+    result: "Ra bảng Excel để kiểm tra dòng tiền và số liệu lệch.",
+  },
+  {
     icon: "👥",
     role: "HR",
     file: "Danh sách ứng viên, bảng chấm công, bảng phụ cấp",
@@ -85,14 +91,22 @@ export default function PdfExcelAISection() {
             <span className="caption-badge">MVP mẫu · Data AI cho doanh nghiệp</span>
             <h1>Chuyển PDF thành Excel bằng AI</h1>
             <p>
-              Nhìn thử cách Lumi đọc một file PDF có bảng, tách dòng/cột và tạo ra bảng Excel dùng được ngay.
-              Dữ liệu bên dưới là mẫu công khai, không liên quan tới file khách hàng.
+              Đỡ phải ngồi gõ lại từng dòng từ PDF. Nhìn thử cách Lumi đọc một file có bảng,
+              tách dòng/cột và tạo ra bảng Excel dùng được ngay.
+            </p>
+            <div className="pdf-excel-before-after" aria-label="So sánh trước và sau khi dùng PDF to Excel AI">
+              <span><b>Trước</b> Nhìn PDF rồi nhập tay từng dòng</span>
+              <i aria-hidden="true">→</i>
+              <span><b>Sau</b> Có bảng Excel để kiểm tra và tải về</span>
+            </div>
+            <p className="pdf-excel-trust-note">
+              Lumi đánh dấu dòng chưa chắc để bạn kiểm tra lại trước khi dùng.
             </p>
             <div className="pdf-excel-hero-actions">
-              <a href="#sample-table">Xem bảng mẫu</a>
-              <a className="ghost" href={zaloCommunityUrl} target="_blank" rel="noreferrer">
-                Muốn thử với file của bạn?
-              </a>
+              <a href="#sample-table">Xem bảng Excel đầu ra</a>
+              <button className="ghost" type="button" onClick={buildWorkbook}>
+                Tải XLSX mẫu
+              </button>
             </div>
           </div>
 
@@ -152,7 +166,7 @@ export default function PdfExcelAISection() {
         <section className="pdf-excel-industries" data-reveal aria-label="Các loại file có thể thử với PDF to Excel AI">
           <div className="pdf-excel-industries-head">
             <span>File nào có bảng đều đáng thử</span>
-            <h2>Không chỉ kế toán. HR, sales, admin cũng dùng được.</h2>
+            <h2>Tài chính, ngân hàng, kế toán, HR, sales, admin đều có thể dùng.</h2>
           </div>
           <div className="pdf-excel-industries-grid">
             {industryExamples.map((item) => (
@@ -239,7 +253,7 @@ export default function PdfExcelAISection() {
           <div className="pdf-excel-actions">
             <button type="button" onClick={buildWorkbook}>Tải XLSX mẫu</button>
             <button type="button" onClick={copyTable}>{copied ? "Đã copy" : "Copy bảng"}</button>
-            <a href={zaloCommunityUrl} target="_blank" rel="noreferrer">Muốn thử file thật?</a>
+            <a href={zaloCommunityUrl} target="_blank" rel="noreferrer">Gửi file để Lumi tư vấn cách xử lý</a>
           </div>
         </section>
       </div>

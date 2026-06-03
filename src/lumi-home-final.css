@@ -9110,6 +9110,53 @@ body {
   line-height: 1.65;
 }
 
+.pdf-excel-before-after {
+  max-width: 680px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid rgba(128, 83, 255, 0.18);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #5f6682;
+  font-weight: 800;
+}
+
+.pdf-excel-before-after span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: rgba(124, 77, 255, 0.06);
+}
+
+.pdf-excel-before-after b {
+  color: #704dff;
+}
+
+.pdf-excel-before-after i {
+  color: #704dff;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.pdf-excel-hero .pdf-excel-trust-note {
+  max-width: 620px;
+  width: fit-content;
+  padding: 10px 13px;
+  border-radius: 999px;
+  color: #0f766e;
+  background: rgba(16, 185, 129, 0.09);
+  border: 1px solid rgba(16, 185, 129, 0.16);
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 850;
+}
+
 .pdf-excel-hero-visual {
   position: relative;
   z-index: 1;
@@ -9320,6 +9367,7 @@ body {
 }
 
 .pdf-excel-hero-actions a,
+.pdf-excel-hero-actions button,
 .pdf-excel-actions a,
 .pdf-excel-actions button {
   min-height: 54px;
@@ -9339,6 +9387,7 @@ body {
 }
 
 .pdf-excel-hero-actions .ghost,
+.pdf-excel-hero-actions button.ghost,
 .pdf-excel-actions a,
 .pdf-excel-actions button:nth-child(2) {
   color: #704dff;
@@ -9379,7 +9428,7 @@ body {
 
 .pdf-excel-industries-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -9706,6 +9755,16 @@ body {
     text-align: center;
   }
 
+  .pdf-excel-before-after {
+    display: grid;
+    gap: 8px;
+  }
+
+  .pdf-excel-before-after i {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
   .pdf-excel-industries {
     border-radius: 24px;
     padding: 18px;
@@ -9765,6 +9824,7 @@ body {
 
   .pdf-excel-actions button,
   .pdf-excel-actions a,
+  .pdf-excel-hero-actions button,
   .pdf-excel-hero-actions a {
     width: 100%;
   }
