@@ -21,6 +21,35 @@ const sampleResult = {
   ],
 };
 
+const samplePreviewRows = sampleResult.rows.slice(0, 4);
+
+const industryExamples = [
+  {
+    icon: "👥",
+    role: "HR",
+    file: "Danh sách ứng viên, bảng chấm công, bảng phụ cấp",
+    result: "Ra bảng để lọc, kiểm tra và gửi lại cho team.",
+  },
+  {
+    icon: "🧾",
+    role: "Kế toán",
+    file: "Sao kê, bảng phí, hóa đơn, file đối soát",
+    result: "Ra Excel để kiểm tra số tiền và dòng cần xem lại.",
+  },
+  {
+    icon: "📦",
+    role: "Sales / Admin",
+    file: "Báo giá, đơn hàng, danh sách khách, bảng giao nhận",
+    result: "Ra bảng gọn để copy, gửi tiếp hoặc nhập hệ thống.",
+  },
+  {
+    icon: "🏢",
+    role: "Manager",
+    file: "Báo cáo PDF, danh sách chi phí, bảng tổng hợp",
+    result: "Nhìn nhanh số liệu chính trước khi ra quyết định.",
+  },
+];
+
 function buildWorkbook() {
   const workbook = XLSX.utils.book_new();
   const sheet = XLSX.utils.aoa_to_sheet([sampleResult.columns, ...sampleResult.rows]);
@@ -52,19 +81,90 @@ export default function PdfExcelAISection() {
     <section className="pdf-excel-section">
       <div className="pdf-excel-shell">
         <header className="pdf-excel-hero" data-reveal>
-          <span className="caption-badge">MVP mẫu · Data AI cho doanh nghiệp</span>
-          <h1>Chuyển PDF thành Excel bằng AI</h1>
-          <p>
-            Đây là bản demo mẫu để bạn thấy Lumi có thể biến tài liệu có bảng thành dữ liệu dùng được.
-            File thật sẽ được thử trong luồng riêng để đảm bảo bảo mật và độ chính xác.
-          </p>
-          <div className="pdf-excel-hero-actions">
-            <a href="#sample-table">Xem bảng mẫu</a>
-            <a className="ghost" href={zaloCommunityUrl} target="_blank" rel="noreferrer">
-              Trao đổi file thật
-            </a>
+          <div className="pdf-excel-hero-copy">
+            <span className="caption-badge">MVP mẫu · Data AI cho doanh nghiệp</span>
+            <h1>Chuyển PDF thành Excel bằng AI</h1>
+            <p>
+              Nhìn thử cách Lumi đọc một file PDF có bảng, tách dòng/cột và tạo ra bảng Excel dùng được ngay.
+              Dữ liệu bên dưới là mẫu công khai, không liên quan tới file khách hàng.
+            </p>
+            <div className="pdf-excel-hero-actions">
+              <a href="#sample-table">Xem bảng mẫu</a>
+              <a className="ghost" href={zaloCommunityUrl} target="_blank" rel="noreferrer">
+                Muốn thử với file của bạn?
+              </a>
+            </div>
+          </div>
+
+          <div className="pdf-excel-hero-visual" aria-label="Mô phỏng PDF được Lumi chuyển thành Excel">
+            <div className="pdf-mini-card pdf-mini-pdf">
+              <div className="pdf-mini-head">
+                <span>PDF</span>
+                <b>3 trang</b>
+              </div>
+              <div className="pdf-mini-lines">
+                <i />
+                <i />
+                <i />
+                <i />
+              </div>
+              <div className="pdf-mini-table">
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+              </div>
+            </div>
+
+            <div className="pdf-transform-core">
+              <img src="/lumi-bot.png" alt="Lumi Bot" />
+              <strong>Lumi bóc bảng</strong>
+              <small>Tách cột · giữ số tiền · đánh dấu dòng cần xem lại</small>
+            </div>
+
+            <div className="pdf-mini-card pdf-mini-excel">
+              <div className="pdf-mini-head">
+                <span>XLSX</span>
+                <b>8 dòng</b>
+              </div>
+              <div className="excel-mini-grid">
+                <b>Ngày</b>
+                <b>Nội dung</b>
+                <b>Chi</b>
+                {samplePreviewRows.map((row) => (
+                  <span key={row[1]} className={row.at(-1) === "Cần kiểm tra" ? "review" : ""}>
+                    <em>{row[0]}</em>
+                    <em>{row[2]}</em>
+                    <em>{row[4] || row[3]}</em>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="pdf-excel-proof-chip">
+              <b>Đầu ra:</b> Excel có thể tải, copy và kiểm tra
+            </div>
           </div>
         </header>
+
+        <section className="pdf-excel-industries" data-reveal aria-label="Các loại file có thể thử với PDF to Excel AI">
+          <div className="pdf-excel-industries-head">
+            <span>File nào có bảng đều đáng thử</span>
+            <h2>Không chỉ kế toán. HR, sales, admin cũng dùng được.</h2>
+          </div>
+          <div className="pdf-excel-industries-grid">
+            {industryExamples.map((item) => (
+              <article key={item.role}>
+                <b>{item.icon}</b>
+                <small>{item.role}</small>
+                <strong>{item.file}</strong>
+                <p>{item.result}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <div className="pdf-excel-flow" data-reveal>
           <article>

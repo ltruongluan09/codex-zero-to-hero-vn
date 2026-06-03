@@ -9066,6 +9066,8 @@ body {
   border-radius: 34px;
   padding: clamp(24px, 5vw, 48px);
   display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(420px, 1fr);
+  align-items: center;
   gap: 18px;
   overflow: hidden;
   position: relative;
@@ -9074,14 +9076,22 @@ body {
 .pdf-excel-hero::after {
   content: "";
   position: absolute;
-  right: 8%;
-  top: 22%;
-  width: 190px;
-  height: 190px;
+  right: -90px;
+  top: -80px;
+  width: 360px;
+  height: 360px;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(255, 80, 112, 0.18), rgba(124, 77, 255, 0.28));
-  filter: blur(24px);
+  background: radial-gradient(circle, rgba(124, 77, 255, 0.14), transparent 68%);
+  filter: blur(10px);
   pointer-events: none;
+}
+
+.pdf-excel-hero-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 18px;
+  align-content: center;
 }
 
 .pdf-excel-hero h1 {
@@ -9098,6 +9108,208 @@ body {
   color: #5f6682;
   font-size: clamp(17px, 2vw, 22px);
   line-height: 1.65;
+}
+
+.pdf-excel-hero-visual {
+  position: relative;
+  z-index: 1;
+  min-height: 390px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) 148px minmax(0, 1.1fr);
+  align-items: center;
+  gap: 14px;
+  padding: clamp(16px, 2.4vw, 28px);
+  border-radius: 30px;
+  border: 1px solid rgba(128, 83, 255, 0.18);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(250, 245, 255, 0.72)),
+    radial-gradient(circle at 52% 50%, rgba(255, 91, 112, 0.12), transparent 40%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 24px 70px rgba(124, 77, 255, 0.12);
+}
+
+.pdf-excel-hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 26px 34px;
+  border-radius: 999px;
+  border: 1px dashed rgba(128, 83, 255, 0.22);
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
+.pdf-mini-card,
+.pdf-transform-core,
+.pdf-excel-proof-chip {
+  position: relative;
+  z-index: 1;
+}
+
+.pdf-mini-card {
+  border: 1px solid rgba(128, 83, 255, 0.2);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 18px 50px rgba(80, 55, 150, 0.11);
+}
+
+.pdf-mini-pdf {
+  padding: 16px;
+  min-height: 230px;
+  transform: rotate(-2deg);
+}
+
+.pdf-mini-excel {
+  padding: 14px;
+  min-height: 274px;
+  transform: rotate(1.2deg);
+}
+
+.pdf-mini-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #704dff;
+  font-weight: 950;
+}
+
+.pdf-mini-head b {
+  padding: 6px 9px;
+  border-radius: 999px;
+  color: #0f9f6e;
+  background: rgba(16, 185, 129, 0.12);
+  font-size: 12px;
+}
+
+.pdf-mini-lines {
+  display: grid;
+  gap: 9px;
+  margin: 18px 0;
+}
+
+.pdf-mini-lines i {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(124, 77, 255, 0.2), rgba(255, 91, 112, 0.13));
+}
+
+.pdf-mini-lines i:nth-child(1) { width: 86%; }
+.pdf-mini-lines i:nth-child(2) { width: 72%; }
+.pdf-mini-lines i:nth-child(3) { width: 94%; }
+.pdf-mini-lines i:nth-child(4) { width: 62%; }
+
+.pdf-mini-table {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(124, 77, 255, 0.06);
+}
+
+.pdf-mini-table span {
+  height: 28px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(128, 83, 255, 0.12);
+}
+
+.pdf-transform-core {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 14px 12px;
+  border-radius: 24px;
+  color: #171429;
+  background: linear-gradient(135deg, rgba(255, 91, 112, 0.12), rgba(124, 77, 255, 0.14));
+}
+
+.pdf-transform-core::before,
+.pdf-transform-core::after {
+  content: "→";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #704dff;
+  font-size: 24px;
+  font-weight: 950;
+}
+
+.pdf-transform-core::before { left: -24px; }
+.pdf-transform-core::after { right: -24px; }
+
+.pdf-transform-core img {
+  width: 70px;
+  height: 70px;
+  border-radius: 22px;
+  box-shadow: 0 16px 38px rgba(124, 77, 255, 0.24);
+  animation: lumiBreath 2.8s ease-in-out infinite;
+}
+
+.pdf-transform-core strong {
+  font-size: 16px;
+  line-height: 1.15;
+}
+
+.pdf-transform-core small {
+  color: #6a728c;
+  line-height: 1.4;
+  font-weight: 750;
+}
+
+.excel-mini-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.3fr 0.8fr;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 11px;
+}
+
+.excel-mini-grid > b,
+.excel-mini-grid em {
+  min-height: 34px;
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(124, 77, 255, 0.07);
+  color: #704dff;
+  font-style: normal;
+  font-weight: 900;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.excel-mini-grid span {
+  display: contents;
+}
+
+.excel-mini-grid em {
+  background: rgba(255, 255, 255, 0.92);
+  color: #53607c;
+  border: 1px solid rgba(128, 83, 255, 0.1);
+  font-weight: 760;
+}
+
+.excel-mini-grid span.review em {
+  background: rgba(255, 185, 80, 0.16);
+  border-color: rgba(245, 158, 11, 0.22);
+  color: #9a5d00;
+}
+
+.pdf-excel-proof-chip {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: 2px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: #53607c;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(128, 83, 255, 0.18);
+  font-weight: 850;
+}
+
+.pdf-excel-proof-chip b {
+  color: #704dff;
 }
 
 .pdf-excel-hero-actions,
@@ -9133,6 +9345,79 @@ body {
   background: rgba(255, 255, 255, 0.78);
   border: 1px solid rgba(128, 83, 255, 0.2);
   box-shadow: none;
+}
+
+.pdf-excel-industries {
+  display: grid;
+  gap: 16px;
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid rgba(128, 83, 255, 0.2);
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(250, 246, 255, 0.84)),
+    radial-gradient(circle at 8% 0%, rgba(255, 91, 112, 0.08), transparent 32%);
+  box-shadow: 0 24px 74px rgba(91, 64, 160, 0.08);
+}
+
+.pdf-excel-industries-head {
+  display: grid;
+  gap: 5px;
+}
+
+.pdf-excel-industries-head span {
+  color: #704dff;
+  font-weight: 950;
+}
+
+.pdf-excel-industries-head h2 {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(24px, 4vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+}
+
+.pdf-excel-industries-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pdf-excel-industries-grid article {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid rgba(128, 83, 255, 0.16);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.78);
+  min-height: 188px;
+}
+
+.pdf-excel-industries-grid b {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: linear-gradient(135deg, rgba(255, 91, 112, 0.12), rgba(124, 77, 255, 0.15));
+  font-size: 22px;
+}
+
+.pdf-excel-industries-grid small {
+  color: #704dff;
+  font-weight: 950;
+}
+
+.pdf-excel-industries-grid strong {
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.pdf-excel-industries-grid p {
+  margin: 0;
+  color: #5f6682;
+  line-height: 1.5;
+  font-weight: 700;
 }
 
 .pdf-excel-flow {
@@ -9328,6 +9613,32 @@ body {
   font-weight: 760;
 }
 
+@keyframes lumiBreath {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 16px 38px rgba(124, 77, 255, 0.24);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 22px 48px rgba(124, 77, 255, 0.32);
+  }
+}
+
+@media (max-width: 1040px) {
+  .pdf-excel-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .pdf-excel-hero h1,
+  .pdf-excel-hero p {
+    max-width: 100%;
+  }
+
+  .pdf-excel-industries-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 760px) {
   .pdf-excel-section {
     padding: 112px 16px 34px;
@@ -9336,6 +9647,82 @@ body {
   .pdf-excel-hero,
   .pdf-excel-showcase {
     border-radius: 26px;
+  }
+
+  .pdf-excel-hero {
+    padding: 22px;
+  }
+
+  .pdf-excel-hero-visual {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 24px;
+  }
+
+  .pdf-excel-hero-visual::before,
+  .pdf-transform-core::before,
+  .pdf-transform-core::after {
+    display: none;
+  }
+
+  .pdf-mini-pdf,
+  .pdf-mini-excel {
+    min-height: auto;
+    transform: none;
+  }
+
+  .pdf-transform-core {
+    grid-template-columns: 54px minmax(0, 1fr);
+    justify-items: start;
+    text-align: left;
+  }
+
+  .pdf-transform-core img {
+    grid-row: span 2;
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+  }
+
+  .pdf-transform-core small {
+    font-size: 12px;
+  }
+
+  .excel-mini-grid {
+    font-size: 10px;
+  }
+
+  .excel-mini-grid > b,
+  .excel-mini-grid em {
+    min-height: 30px;
+    padding: 7px;
+  }
+
+  .pdf-excel-proof-chip {
+    justify-self: stretch;
+    border-radius: 16px;
+    text-align: center;
+  }
+
+  .pdf-excel-industries {
+    border-radius: 24px;
+    padding: 18px;
+  }
+
+  .pdf-excel-industries-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pdf-excel-industries-grid article {
+    min-height: auto;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .pdf-excel-industries-grid b {
+    grid-row: span 3;
   }
 
   .pdf-excel-flow,
