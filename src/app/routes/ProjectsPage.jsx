@@ -3,11 +3,13 @@ import { getPlannedProjects, getReadyProjects } from "../../content/projects";
 const ctaLabel = {
   "caption-ai": "Viết caption ngay",
   "docscan-ai": "Đọc tài liệu ngay",
+  "pdf-excel-ai": "Xem PDF sang Excel",
 };
 
 const usefulFor = {
   "caption-ai": "Phù hợp shop nhỏ, creator, freelancer, nhân viên marketing cần đăng bài nhanh.",
   "docscan-ai": "Phù hợp người cần đọc nhanh hợp đồng, báo giá, báo cáo, ảnh chụp tài liệu.",
+  "pdf-excel-ai": "Phù hợp team vận hành, kế toán, backoffice cần biến file có bảng thành Excel.",
 };
 
 export default function ProjectsPage() {
@@ -18,9 +20,9 @@ export default function ProjectsPage() {
     <section className="projects-page">
       <section className="projects-hero" data-reveal>
         <span className="caption-badge">Chọn 1 demo để thử ngay</span>
-        <h1>Tool AI thật, mở lên là dùng được</h1>
+        <h1>Tool AI thật, mở lên là hiểu được</h1>
         <p>
-          Nếu bạn mới vào Lumi Labs, hãy bắt đầu bằng một trong hai demo đang chạy.
+          Nếu bạn mới vào Lumi Labs, hãy bắt đầu bằng một trong các demo đang chạy.
           Không cần đăng nhập, không cần biết code, chỉ cần bấm thử.
         </p>
         <div className="projects-quick-actions">
@@ -35,7 +37,7 @@ export default function ProjectsPage() {
       </section>
 
       <section className="projects-ready-strip" data-reveal>
-        <strong>Đang dùng được ngay</strong>
+        <strong>Đang xem được ngay</strong>
         <span>{readyProjects.length} demo mở sẵn · Không cần tài khoản · Dành cho người non-tech</span>
       </section>
 
@@ -48,14 +50,16 @@ export default function ProjectsPage() {
                 <small>Project #{index + 1} · {project.tag}</small>
                 <h2>{project.title}</h2>
               </div>
-              <b>Dùng được</b>
+              <b>{project.status}</b>
             </div>
             <p>{project.desc}</p>
             <p className="project-fit">{usefulFor[project.slug]}</p>
             <em>{project.outcome}</em>
             <div className="project-card-actions">
               <a href={project.href}>{ctaLabel[project.slug] || "Dùng thử ngay"}</a>
-              <a className="ghost" href={project.journeyHref}>{project.journeyHref === "/projects" ? "Chưa có hành trình" : "Xem hành trình"}</a>
+              <a className="ghost" href={project.journeyHref}>
+                {project.journeyHref === "/projects" ? "Đang viết hành trình" : "Xem hành trình"}
+              </a>
             </div>
           </article>
         ))}

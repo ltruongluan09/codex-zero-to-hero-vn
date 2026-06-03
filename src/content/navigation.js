@@ -10,6 +10,7 @@ export const appRoutes = {
   dashboard: "/dashboard",
   captionAi: "/caption-ai",
   docscanAi: "/docscan-ai",
+  pdfExcelAi: "/pdf-excel-ai",
   articles: "/bai-viet.html",
   codexTraining: "/codex-training-thuc-chien.html",
 };

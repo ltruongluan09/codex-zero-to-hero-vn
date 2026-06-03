@@ -85,6 +85,7 @@ export default function DocScanAISection({ profile = null }) {
   const [leadMessage, setLeadMessage] = useState("");
   const [sampleQuestionsCopied, setSampleQuestionsCopied] = useState(false);
   const [analysisSeconds, setAnalysisSeconds] = useState(0);
+  const [expandedRiskIndex, setExpandedRiskIndex] = useState(null);
 
   const steps = [
     "Lumi đang đọc từng dòng",
@@ -204,6 +205,7 @@ export default function DocScanAISection({ profile = null }) {
     setSampleQuestionsCopied(false);
     setRawTextOpen(false);
     setRawTextCopied(false);
+    setExpandedRiskIndex(null);
     setPickerNudge(false);
     setFilePickerHint(false);
     setSource("demo");
@@ -293,6 +295,7 @@ export default function DocScanAISection({ profile = null }) {
     setCopied(false);
     setRawTextOpen(false);
     setRawTextCopied(false);
+    setExpandedRiskIndex(null);
     setError("");
     const startedAt = Date.now();
 
@@ -662,13 +665,54 @@ export default function DocScanAISection({ profile = null }) {
                 )}
                 <div className="docscan-result-list">
                   <h3>3 điều cần biết ngay</h3>
-                  {docscanRisks.slice(0, 3).map((risk) => (
-                    <article key={risk.title || risk.label} className={risk.severity ? `risk-${risk.severity}` : ""}>
-                      {risk.label && <em>{risk.label}</em>}
-                      <strong>{risk.title || risk.label}</strong>
-                      <p>{risk.detail || risk.body || risk.value}</p>
-                    </article>
-                  ))}
+                  {isDemoResult && docscanRisks.length > 0 && (
+                    <p className="docscan-tap-hint">Bấm vào từng điểm cảnh báo để xem Lumi giải thích rõ hơn.</p>
+                  )}
+                  {docscanRisks.slice(0, 3).map((risk, index) => {
+                    const isExpanded = expandedRiskIndex === index;
+                    const relatedQuestion = docscanQuestions[index] || docscanQuestions[0];
+                    return (
+                      <article
+                        key={risk.title || risk.label}
+                        className={[
+                          risk.severity ? `risk-${risk.severity}` : "",
+                          isDemoResult ? "is-clickable" : "",
+                          isExpanded ? "is-expanded" : "",
+                        ].filter(Boolean).join(" ")}
+                        role={isDemoResult ? "button" : undefined}
+                        tabIndex={isDemoResult ? 0 : undefined}
+                        onClick={isDemoResult ? () => setExpandedRiskIndex((value) => (value === index ? null : index)) : undefined}
+                        onKeyDown={isDemoResult ? (event) => {
+                          if (event.key !== "Enter" && event.key !== " ") return;
+                          event.preventDefault();
+                          setExpandedRiskIndex((value) => (value === index ? null : index));
+                        } : undefined}
+                      >
+                        <div className="docscan-risk-head">
+                          <div>
+                            {risk.label && <em>{risk.label}</em>}
+                            <strong>{risk.title || risk.label}</strong>
+                          </div>
+                          {isDemoResult && <span>{isExpanded ? "Thu gọn" : "Xem thêm"}</span>}
+                        </div>
+                        <p>{risk.detail || risk.body || risk.value}</p>
+                        {isExpanded && (
+                          <div className="docscan-risk-detail">
+                            <b>Vì sao đáng chú ý?</b>
+                            <p>{risk.severity === "high"
+                              ? "Đây là khoản có thể ảnh hưởng trực tiếp tới tiền hoặc quyết định ký/gửi/duyệt tài liệu."
+                              : "Điểm này dễ bị bỏ qua khi đọc nhanh, nhưng nên làm rõ trước khi quyết định."}</p>
+                            {relatedQuestion && (
+                              <>
+                                <b>Câu nên hỏi lại</b>
+                                <p>{relatedQuestion}</p>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </article>
+                    );
+                  })}
                   {docscanMissingInfo.length > 0 && (
                     <article className="docscan-missing-info">
                       <strong>Thông tin còn thiếu</strong>
@@ -699,6 +743,11 @@ export default function DocScanAISection({ profile = null }) {
                       <strong>Việc nên làm tiếp</strong>
                       <p>{docscanNextActions.slice(0, 3).join(" ")}</p>
                     </article>
+                  )}
+                  {isDemoResult && (
+                    <button className="docscan-sample-next-cta" type="button" onClick={openFilePicker}>
+                      Thử kiểm tra tài liệu của bạn
+                    </button>
                   )}
                   {docscanEvidence.length > 0 && (
                     <article className="docscan-evidence">
@@ -813,11 +862,12 @@ export default function DocScanAISection({ profile = null }) {
                   <span><small>Đặt cọc</small><b>3 tháng</b></span>
                   <span><small>Bắt đầu</small><b>01/09/2026</b></span>
                 </div>
-                <article className="docscan-preview-risk">
+                <button className="docscan-preview-risk" type="button" onClick={showSampleResult}>
                   <em>ĐỎ - Rủi ro cao</em>
                   <strong>Chấm dứt sớm phạt 3 tháng tiền thuê + mất cọc</strong>
                   <p>Không thấy ngoại lệ bất khả kháng trong điều khoản mẫu.</p>
-                </article>
+                  <span>Xem Lumi giải thích</span>
+                </button>
                 <button className="docscan-empty-sample" type="button" onClick={showSampleResult}>
                   Xem mẫu đầy đủ
                 </button>

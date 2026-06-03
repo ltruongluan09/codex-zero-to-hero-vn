@@ -25,6 +25,7 @@ const requiredFiles = [
   "src/components/lumi/LumiAssistant.jsx",
   "src/features/caption-ai/CaptionAISection.jsx",
   "src/features/docscan-ai/DocScanAISection.jsx",
+  "src/features/pdf-excel-ai/PdfExcelAISection.jsx",
   "src/lumi-home-final.css",
   "docs/ARCHITECTURE.md",
   "api/generate-caption.js",
@@ -73,6 +74,7 @@ const appSources = [
   file("src/components/layout/SiteHeader.jsx"),
   file("src/features/caption-ai/CaptionAISection.jsx"),
   file("src/features/docscan-ai/DocScanAISection.jsx"),
+  file("src/features/pdf-excel-ai/PdfExcelAISection.jsx"),
 ].join("\n");
 assert(appSources.includes("./content/navigation"), "App is not wired to navigation registry");
 assert(app.includes("./components/lumi/LumiAssistant"), "App is not wired to Lumi Assistant component");
@@ -83,6 +85,7 @@ assert(app.includes("./app/routes/ProjectsPage"), "App is not wired to Projects 
 [
   "/caption-ai",
   "/docscan-ai",
+  "/pdf-excel-ai",
   "/projects",
   "/dashboard",
   "/bai-viet.html",
@@ -148,6 +151,7 @@ projectCatalog.forEach((project) => {
 
 assert(projectCatalog.some((project) => project.stage === "ready" && project.href === "/caption-ai"), "Caption AI is missing from ready projects");
 assert(projectCatalog.some((project) => project.stage === "ready" && project.href === "/docscan-ai"), "DocScan AI is missing from ready projects");
+assert(projectCatalog.some((project) => project.stage === "ready" && project.href === "/pdf-excel-ai"), "PDF to Excel AI is missing from ready projects");
 
 [
   "Bắt đầu series Codex",

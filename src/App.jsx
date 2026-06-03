@@ -10,6 +10,7 @@ import SiteFooter from "./components/layout/SiteFooter";
 import SiteHeader from "./components/layout/SiteHeader";
 import CaptionAISection from "./features/caption-ai/CaptionAISection";
 import DocScanAISection from "./features/docscan-ai/DocScanAISection";
+import PdfExcelAISection from "./features/pdf-excel-ai/PdfExcelAISection";
 
 function AppShell({ auth, loginOpen, setLoginOpen, children, withFooter = true }) {
   return (
@@ -69,6 +70,16 @@ function App() {
       <AppShell auth={auth} loginOpen={loginOpen} setLoginOpen={setLoginOpen}>
         <main>
           <DocScanAISection profile={auth.profile} />
+        </main>
+      </AppShell>
+    );
+  }
+
+  if (currentPath === "/pdf-excel-ai") {
+    return (
+      <AppShell auth={auth} loginOpen={loginOpen} setLoginOpen={setLoginOpen}>
+        <main>
+          <PdfExcelAISection />
         </main>
       </AppShell>
     );

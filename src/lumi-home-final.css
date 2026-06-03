@@ -5523,11 +5523,28 @@ body {
 }
 
 .docscan-preview-risk {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
   margin-top: 14px;
   padding: 14px;
   border: 1px solid rgba(255, 95, 104, 0.38);
   border-radius: 18px;
   background: linear-gradient(135deg, rgba(255, 248, 248, 0.96), rgba(255, 255, 255, 0.8));
+  font: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.docscan-preview-risk:hover,
+.docscan-preview-risk:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(255, 95, 104, 0.62);
+  box-shadow: 0 16px 34px rgba(255, 95, 104, 0.12);
+}
+
+.docscan-preview-risk:focus-visible {
+  outline: 3px solid rgba(255, 95, 104, 0.16);
+  outline-offset: 3px;
 }
 
 .docscan-preview-risk em {
@@ -5553,6 +5570,14 @@ body {
   margin: 6px 0 0;
   color: #59637f;
   line-height: 1.5;
+}
+
+.docscan-preview-risk span {
+  display: inline-flex;
+  margin-top: 10px;
+  color: #704dff;
+  font-size: 0.84rem;
+  font-weight: 950;
 }
 
 .docscan-empty li::before {
@@ -5807,11 +5832,99 @@ body {
   font-size: 18px;
 }
 
+.docscan-tap-hint {
+  margin: -4px 0 2px !important;
+  color: #704dff !important;
+  font-size: 0.86rem !important;
+  font-weight: 850;
+}
+
 .docscan-result-list article {
   padding: 14px;
   border: 1px solid rgba(225, 214, 255, 0.88);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.72);
+}
+
+.docscan-result-list article.is-clickable {
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.docscan-result-list article.is-clickable:hover,
+.docscan-result-list article.is-clickable:focus-visible,
+.docscan-result-list article.is-expanded {
+  transform: translateY(-1px);
+  border-color: rgba(112, 77, 255, 0.36);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 16px 38px rgba(85, 64, 130, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.docscan-result-list article.is-clickable:focus-visible {
+  outline: 3px solid rgba(112, 77, 255, 0.16);
+  outline-offset: 3px;
+}
+
+.docscan-risk-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.docscan-risk-head > div {
+  min-width: 0;
+}
+
+.docscan-risk-head > span {
+  flex: 0 0 auto;
+  padding: 6px 9px;
+  border-radius: 999px;
+  color: #704dff;
+  background: rgba(112, 77, 255, 0.08);
+  font-size: 0.76rem;
+  font-weight: 950;
+}
+
+.docscan-risk-detail {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid rgba(215, 199, 255, 0.9);
+  border-radius: 15px;
+  background: linear-gradient(135deg, rgba(248, 244, 255, 0.94), rgba(255, 255, 255, 0.82));
+}
+
+.docscan-risk-detail b {
+  display: block;
+  margin-top: 8px;
+  color: #704dff;
+  font-size: 0.82rem;
+}
+
+.docscan-risk-detail b:first-child {
+  margin-top: 0;
+}
+
+.docscan-risk-detail p {
+  margin-top: 4px !important;
+}
+
+.docscan-sample-next-cta {
+  min-height: 52px;
+  border: 0;
+  border-radius: 17px;
+  color: #fff;
+  background: linear-gradient(135deg, #ff5f68 0%, #ec54a7 46%, #704dff 100%);
+  box-shadow: 0 18px 42px rgba(112, 77, 255, 0.2);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 950;
+}
+
+.docscan-sample-next-cta:hover,
+.docscan-sample-next-cta:focus-visible {
+  transform: translateY(-2px);
+  filter: saturate(1.05) brightness(1.02);
 }
 
 .docscan-result-list article em {
@@ -8919,5 +9032,353 @@ body {
   .home-article-card {
     width: min(calc(100vw - 40px), 320px) !important;
     max-width: min(calc(100vw - 40px), 320px) !important;
+  }
+}
+
+/* PDF to Excel AI showcase */
+.pdf-excel-section {
+  min-height: 100vh;
+  padding: 132px max(20px, 5vw) 56px;
+  background:
+    radial-gradient(circle at 86% 6%, rgba(140, 93, 255, 0.2), transparent 34%),
+    radial-gradient(circle at 8% 20%, rgba(255, 105, 124, 0.12), transparent 32%),
+    #fffaf7;
+  color: #171429;
+}
+
+.pdf-excel-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 22px;
+}
+
+.pdf-excel-hero,
+.pdf-excel-card,
+.pdf-excel-flow article {
+  border: 1px solid rgba(128, 83, 255, 0.2);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 28px 90px rgba(91, 64, 160, 0.1);
+  backdrop-filter: blur(18px);
+}
+
+.pdf-excel-hero {
+  border-radius: 34px;
+  padding: clamp(24px, 5vw, 48px);
+  display: grid;
+  gap: 18px;
+  overflow: hidden;
+  position: relative;
+}
+
+.pdf-excel-hero::after {
+  content: "";
+  position: absolute;
+  right: 8%;
+  top: 22%;
+  width: 190px;
+  height: 190px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255, 80, 112, 0.18), rgba(124, 77, 255, 0.28));
+  filter: blur(24px);
+  pointer-events: none;
+}
+
+.pdf-excel-hero h1 {
+  max-width: 720px;
+  margin: 0;
+  font-size: clamp(42px, 7vw, 86px);
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+}
+
+.pdf-excel-hero p {
+  max-width: 660px;
+  margin: 0;
+  color: #5f6682;
+  font-size: clamp(17px, 2vw, 22px);
+  line-height: 1.65;
+}
+
+.pdf-excel-hero-actions,
+.pdf-excel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pdf-excel-hero-actions a,
+.pdf-excel-actions a,
+.pdf-excel-actions button {
+  min-height: 54px;
+  border: 0;
+  border-radius: 18px;
+  padding: 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(135deg, #ff5b70, #7c4dff);
+  box-shadow: 0 18px 44px rgba(124, 77, 255, 0.22);
+  font: inherit;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pdf-excel-hero-actions .ghost,
+.pdf-excel-actions a,
+.pdf-excel-actions button:nth-child(2) {
+  color: #704dff;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(128, 83, 255, 0.2);
+  box-shadow: none;
+}
+
+.pdf-excel-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.pdf-excel-flow article {
+  border-radius: 24px;
+  padding: 20px;
+  display: grid;
+  gap: 8px;
+}
+
+.pdf-excel-flow span {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, #ff5b70, #7c4dff);
+  font-weight: 950;
+}
+
+.pdf-excel-flow strong {
+  font-size: 18px;
+}
+
+.pdf-excel-flow p {
+  margin: 0;
+  color: #5f6682;
+  line-height: 1.55;
+}
+
+.pdf-excel-showcase {
+  border-radius: 34px;
+  padding: clamp(18px, 4vw, 36px);
+  display: grid;
+  gap: 22px;
+}
+
+.pdf-excel-sample-head {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid rgba(128, 83, 255, 0.18);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.pdf-excel-file-preview {
+  width: 70px;
+  height: 70px;
+  border-radius: 20px;
+  display: grid;
+  gap: 6px;
+  align-content: center;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(255, 80, 112, 0.18), rgba(124, 77, 255, 0.2));
+}
+
+.pdf-excel-file-preview span,
+.pdf-excel-file-preview i {
+  display: block;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(112, 77, 255, 0.38);
+}
+
+.pdf-excel-file-preview span {
+  width: 72%;
+}
+
+.pdf-excel-file-preview i {
+  width: 100%;
+}
+
+.pdf-excel-sample-head small,
+.pdf-excel-value-card small {
+  color: #704dff;
+  font-weight: 950;
+}
+
+.pdf-excel-sample-head h2 {
+  margin: 2px 0;
+  font-size: clamp(22px, 4vw, 32px);
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+
+.pdf-excel-sample-head p {
+  margin: 0;
+  color: #6a728c;
+}
+
+.pdf-excel-sample-head b {
+  justify-self: end;
+  padding: 9px 13px;
+  border-radius: 999px;
+  color: #0f9f6e;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.pdf-excel-value-card {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255, 248, 252, 0.92), rgba(246, 241, 255, 0.92));
+}
+
+.pdf-excel-value-card img {
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  box-shadow: 0 14px 34px rgba(124, 77, 255, 0.2);
+}
+
+.pdf-excel-value-card strong {
+  display: block;
+  margin-top: 4px;
+  font-size: clamp(20px, 3vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.pdf-excel-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pdf-excel-stats span {
+  padding: 16px;
+  border: 1px solid rgba(128, 83, 255, 0.18);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.pdf-excel-stats small {
+  display: block;
+  color: #6a728c;
+  font-weight: 850;
+}
+
+.pdf-excel-stats b {
+  display: block;
+  margin-top: 4px;
+  font-size: 20px;
+}
+
+.pdf-excel-table-wrap {
+  overflow-x: auto;
+  border: 1px solid rgba(128, 83, 255, 0.18);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.pdf-excel-table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+}
+
+.pdf-excel-table th,
+.pdf-excel-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(128, 83, 255, 0.12);
+  text-align: left;
+  font-size: 14px;
+}
+
+.pdf-excel-table th {
+  color: #704dff;
+  background: rgba(124, 77, 255, 0.07);
+  font-weight: 950;
+}
+
+.pdf-excel-table tr.needs-review td {
+  background: rgba(255, 185, 80, 0.14);
+}
+
+.pdf-excel-checks {
+  display: grid;
+  gap: 8px;
+  color: #53607c;
+  font-weight: 760;
+}
+
+@media (max-width: 760px) {
+  .pdf-excel-section {
+    padding: 112px 16px 34px;
+  }
+
+  .pdf-excel-hero,
+  .pdf-excel-showcase {
+    border-radius: 26px;
+  }
+
+  .pdf-excel-flow,
+  .pdf-excel-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .pdf-excel-sample-head {
+    grid-template-columns: 58px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .pdf-excel-file-preview {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    padding: 12px;
+  }
+
+  .pdf-excel-sample-head b {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .pdf-excel-value-card {
+    grid-template-columns: 56px minmax(0, 1fr);
+  }
+
+  .pdf-excel-value-card img {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+  }
+
+  .pdf-excel-actions,
+  .pdf-excel-hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .pdf-excel-actions button,
+  .pdf-excel-actions a,
+  .pdf-excel-hero-actions a {
+    width: 100%;
   }
 }
