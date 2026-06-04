@@ -788,20 +788,6 @@ export default function DocScanAISection({ profile = null }) {
                     )}
                   </section>
                 )}
-                <section className="docscan-business-pilot-card" aria-label="Pilot chuyển PDF thành Excel">
-                  <div>
-                    <small>Cho team có nhiều file lặp lại</small>
-                    <h3>Có file dạng bảng cần chuyển thành Excel?</h3>
-                    <p>
-                      Nếu team bạn đang nhập tay sao kê, bảng phí, hóa đơn hoặc file đối soát,
-                      Lumi Labs có thể làm một bản pilot nhỏ để xem có giảm được bao nhiêu giờ.
-                    </p>
-                  </div>
-                  <div>
-                    <a href="/pdf-excel-ai">Xem demo PDF → Excel</a>
-                    <a className="ghost" href="/business-pilot">Gửi yêu cầu pilot</a>
-                  </div>
-                </section>
                 <section className="docscan-lead-card" aria-label="Góp ý nhanh cho DocScan AI">
                   <div className="docscan-lead-bot" aria-hidden="true">
                     <span></span>
@@ -885,10 +871,6 @@ export default function DocScanAISection({ profile = null }) {
                 <button className="docscan-empty-sample" type="button" onClick={showSampleResult}>
                   Xem mẫu đầy đủ
                 </button>
-                <div className="docscan-empty-pilot-link">
-                  <span>Có file PDF dạng bảng?</span>
-                  <a href="/pdf-excel-ai">Xem demo chuyển thành Excel</a>
-                </div>
               </div>
             )}
           </section>

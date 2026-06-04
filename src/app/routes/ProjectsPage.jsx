@@ -41,15 +41,6 @@ export default function ProjectsPage() {
         <span>{readyProjects.length} demo mở sẵn · Không cần tài khoản · Dành cho người non-tech</span>
       </section>
 
-      <section className="projects-business-pilot" data-reveal>
-        <div>
-          <span className="section-label">Dành cho doanh nghiệp</span>
-          <h2>Có file PDF/bảng/sao kê cần chuyển thành Excel?</h2>
-          <p>Lumi Labs có thể làm một bản pilot nhỏ cho quy trình thật của team bạn trước khi triển khai sâu.</p>
-        </div>
-        <a href="/business-pilot">Gửi yêu cầu pilot →</a>
-      </section>
-
       <section className="project-library-grid">
         {readyProjects.map((project, index) => (
           <article className="project-library-card unified-project-card ready-project" key={project.slug} data-reveal>

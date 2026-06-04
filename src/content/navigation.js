@@ -11,7 +11,6 @@ export const appRoutes = {
   captionAi: "/caption-ai",
   docscanAi: "/docscan-ai",
   pdfExcelAi: "/pdf-excel-ai",
-  businessPilot: "/business-pilot",
   articles: "/bai-viet.html",
   codexTraining: "/codex-training-thuc-chien.html",
 };
@@ -22,5 +21,4 @@ export const serverlessApiRoutes = [
   "/api/mini-lab",
   "/api/feedback",
   "/api/subscribe",
-  "/api/pilot-request",
 ];

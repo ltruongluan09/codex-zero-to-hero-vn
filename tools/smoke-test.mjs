@@ -11,7 +11,6 @@ const requiredFiles = [
   "src/app/auth/useAuth.js",
   "src/app/hooks/useReveal.js",
   "src/app/routes/DashboardPage.jsx",
-  "src/app/routes/BusinessPilotPage.jsx",
   "src/app/routes/HomePage.jsx",
   "src/app/routes/ProjectsPage.jsx",
   "src/components/layout/LoginModal.jsx",
@@ -31,7 +30,6 @@ const requiredFiles = [
   "docs/ARCHITECTURE.md",
   "api/generate-caption.js",
   "api/analyze-document.js",
-  "api/pilot-request.js",
   "api/mini-lab.js",
   "public/bai-viet.html",
   "public/prompt-ai-hieu-qua.html",
@@ -70,7 +68,6 @@ const appSources = [
   app,
   file("src/app/auth/useAuth.js"),
   file("src/app/routes/DashboardPage.jsx"),
-  file("src/app/routes/BusinessPilotPage.jsx"),
   file("src/app/routes/HomePage.jsx"),
   file("src/app/routes/ProjectsPage.jsx"),
   file("src/components/layout/LoginModal.jsx"),
@@ -85,12 +82,10 @@ assert(app.includes("./components/layout/SiteHeader"), "App is not wired to site
 assert(app.includes("./components/layout/LoginModal"), "App is not wired to login modal");
 assert(app.includes("./app/routes/HomePage"), "App is not wired to Home page component");
 assert(app.includes("./app/routes/ProjectsPage"), "App is not wired to Projects page component");
-assert(app.includes("./app/routes/BusinessPilotPage"), "App is not wired to Business Pilot page component");
 [
   "/caption-ai",
   "/docscan-ai",
   "/pdf-excel-ai",
-  "/business-pilot",
   "/projects",
   "/dashboard",
   "/bai-viet.html",
@@ -98,7 +93,6 @@ assert(app.includes("./app/routes/BusinessPilotPage"), "App is not wired to Busi
   "/codex-session-02-tao-tool-dau-tien.html",
   "/api/generate-caption",
   "/api/analyze-document",
-  "/api/pilot-request",
 ].forEach((needle) => {
   assert(appSources.includes(needle), `App route/API reference missing: ${needle}`);
 });

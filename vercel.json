@@ -19,10 +19,6 @@
       "destination": "/"
     },
     {
-      "source": "/business-pilot",
-      "destination": "/"
-    },
-    {
       "source": "/soi-tai-lieu",
       "destination": "/"
     },
