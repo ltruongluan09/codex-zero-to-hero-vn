@@ -304,6 +304,464 @@
   }
 }
 
+.projects-business-pilot {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: center;
+  padding: 24px;
+  border: 1px solid rgba(128, 83, 255, 0.2);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(124, 77, 255, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 246, 250, 0.9));
+  box-shadow: 0 24px 70px rgba(98, 72, 170, 0.1);
+}
+
+.projects-business-pilot h2 {
+  margin: 8px 0;
+  color: #171429;
+  font-size: clamp(26px, 4vw, 42px);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.projects-business-pilot p {
+  max-width: 720px;
+  margin: 0;
+  color: #5f6681;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.projects-business-pilot a {
+  display: inline-flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 22px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ff5f6d, #8b4dff);
+  color: #fff;
+  font-weight: 950;
+  text-decoration: none;
+  box-shadow: 0 18px 44px rgba(140, 77, 255, 0.24);
+  white-space: nowrap;
+}
+
+.business-pilot-page {
+  min-height: 100vh;
+  padding: 132px max(20px, 5vw) 56px;
+  background:
+    radial-gradient(circle at 10% 12%, rgba(255, 95, 109, 0.12), transparent 28%),
+    radial-gradient(circle at 88% 10%, rgba(124, 77, 255, 0.16), transparent 32%),
+    linear-gradient(180deg, #fffaf7 0%, #fbf8ff 54%, #fff 100%);
+  color: #171429;
+}
+
+.business-pilot-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 22px;
+}
+
+.business-pilot-hero,
+.business-pilot-card,
+.business-pilot-form,
+.business-pilot-grid article {
+  border: 1px solid rgba(128, 83, 255, 0.18);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 24px 76px rgba(97, 67, 160, 0.09);
+  backdrop-filter: blur(18px);
+}
+
+.business-pilot-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.75fr);
+  gap: 24px;
+  align-items: stretch;
+  padding: clamp(24px, 5vw, 46px);
+  overflow: hidden;
+  position: relative;
+}
+
+.business-pilot-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -120px -160px auto;
+  width: 360px;
+  height: 360px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 95, 109, 0.18), rgba(124, 77, 255, 0.08), transparent 68%);
+  pointer-events: none;
+}
+
+.business-pilot-hero h1 {
+  max-width: 850px;
+  margin: 18px 0;
+  font-size: clamp(44px, 7vw, 86px);
+  line-height: 0.98;
+  letter-spacing: -0.075em;
+}
+
+.business-pilot-hero p {
+  max-width: 760px;
+  margin: 0;
+  color: #5f6681;
+  font-size: clamp(18px, 2vw, 23px);
+  line-height: 1.68;
+}
+
+.business-pilot-value {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.business-pilot-value span {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid rgba(128, 83, 255, 0.17);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #5f6681;
+  font-weight: 780;
+}
+
+.business-pilot-value b {
+  color: #704dff;
+}
+
+.business-pilot-lumi {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 16px;
+  align-content: center;
+  padding: 22px;
+  border: 1px solid rgba(128, 83, 255, 0.2);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 25% 15%, rgba(255, 95, 109, 0.12), transparent 32%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(246, 239, 255, 0.9));
+}
+
+.business-pilot-lumi img {
+  width: 92px;
+  height: 92px;
+  border-radius: 28px;
+  object-fit: cover;
+  box-shadow: 0 18px 46px rgba(124, 77, 255, 0.22);
+  animation: lumiBreath 3.6s ease-in-out infinite;
+}
+
+.business-pilot-lumi small {
+  color: #704dff;
+  font-weight: 950;
+}
+
+.business-pilot-lumi strong {
+  display: block;
+  margin-top: 8px;
+  color: #171429;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+
+.business-pilot-lumi p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.business-pilot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.business-pilot-grid article {
+  min-height: 210px;
+  padding: 22px;
+}
+
+.business-pilot-grid article > span {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 95, 109, 0.12), rgba(124, 77, 255, 0.16));
+  font-size: 28px;
+}
+
+.business-pilot-grid h2,
+.business-pilot-card h2,
+.business-pilot-form h2 {
+  margin: 16px 0 10px;
+  color: #171429;
+  letter-spacing: -0.04em;
+}
+
+.business-pilot-grid p,
+.business-pilot-card p {
+  margin: 0;
+  color: #606883;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.business-pilot-main {
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.business-pilot-card,
+.business-pilot-form {
+  padding: 24px;
+}
+
+.business-pilot-card ol {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: pilot-step;
+}
+
+.business-pilot-card li {
+  counter-increment: pilot-step;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid rgba(128, 83, 255, 0.16);
+  border-radius: 18px;
+  background: rgba(250, 247, 255, 0.8);
+  color: #30334c;
+  font-weight: 850;
+}
+
+.business-pilot-card li::before {
+  content: counter(pilot-step);
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #ff5f6d, #8b4dff);
+  color: #fff;
+  font-weight: 950;
+}
+
+.business-pilot-pricing {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid rgba(16, 185, 129, 0.18);
+  border-radius: 20px;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.business-pilot-pricing strong {
+  color: #00966e;
+}
+
+.business-pilot-form {
+  display: grid;
+  gap: 14px;
+}
+
+.business-pilot-form-intro {
+  margin: -2px 0 2px;
+  color: #606883;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.business-pilot-honeypot {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.business-pilot-more {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(128, 83, 255, 0.14);
+  border-radius: 18px;
+  background: rgba(250, 247, 255, 0.62);
+}
+
+.business-pilot-more summary {
+  cursor: pointer;
+  color: #704dff;
+  font-weight: 950;
+}
+
+.business-pilot-more[open] {
+  gap: 14px;
+}
+
+.business-pilot-form label {
+  display: grid;
+  gap: 7px;
+}
+
+.business-pilot-form label span {
+  color: #323751;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.business-pilot-form input,
+.business-pilot-form textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 13px 14px;
+  border: 1px solid rgba(128, 83, 255, 0.2);
+  border-radius: 16px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.92);
+  color: #171429;
+  font: inherit;
+  resize: vertical;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.business-pilot-form input:focus,
+.business-pilot-form textarea:focus {
+  border-color: rgba(124, 77, 255, 0.75);
+  box-shadow: 0 0 0 4px rgba(124, 77, 255, 0.12);
+}
+
+.business-pilot-form button {
+  min-height: 58px;
+  border: 0;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ff5f6d, #8b4dff);
+  color: #fff;
+  font: inherit;
+  font-weight: 950;
+  cursor: pointer;
+  box-shadow: 0 18px 44px rgba(140, 77, 255, 0.24);
+}
+
+.business-pilot-form button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.business-pilot-message {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(124, 77, 255, 0.09);
+  color: #704dff;
+  font-weight: 850;
+}
+
+.business-pilot-message.sent {
+  background: rgba(16, 185, 129, 0.1);
+  color: #00966e;
+}
+
+.business-pilot-message.error {
+  background: rgba(255, 95, 109, 0.11);
+  color: #cf3347;
+}
+
+.business-pilot-zalo-fallback {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: 1px solid rgba(128, 83, 255, 0.2);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #704dff;
+  font-weight: 950;
+  text-decoration: none;
+}
+
+@media (max-width: 920px) {
+  .projects-business-pilot,
+  .business-pilot-hero,
+  .business-pilot-main {
+    grid-template-columns: 1fr;
+  }
+
+  .business-pilot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-business-pilot a {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .business-pilot-page {
+    padding: 112px 14px 34px;
+  }
+
+  .business-pilot-hero,
+  .business-pilot-card,
+  .business-pilot-form,
+  .business-pilot-grid article,
+  .projects-business-pilot {
+    border-radius: 24px;
+  }
+
+  .business-pilot-hero,
+  .business-pilot-card,
+  .business-pilot-form {
+    padding: 18px;
+  }
+
+  .business-pilot-value {
+    display: grid;
+  }
+
+  .business-pilot-lumi {
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: center;
+    padding: 16px;
+  }
+
+  .business-pilot-lumi img {
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
+  }
+
+  .business-pilot-lumi p {
+    grid-column: 1 / -1;
+  }
+
+  .business-pilot-more {
+    padding: 10px;
+  }
+
+  .business-pilot-zalo-fallback {
+    width: 100%;
+  }
+}
+
 /* Lumi Assistant: the cross-page AI guide for non-tech users. */
 .lumi-assistant {
   position: fixed;
@@ -7077,6 +7535,76 @@ body {
   background: rgba(16, 185, 129, 0.1);
 }
 
+.docscan-business-pilot-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid rgba(128, 83, 255, 0.2);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(124, 77, 255, 0.14), transparent 36%),
+    linear-gradient(135deg, rgba(255, 250, 247, 0.96), rgba(247, 241, 255, 0.92));
+  box-shadow: 0 18px 48px rgba(124, 77, 255, 0.1);
+}
+
+.docscan-business-pilot-card small,
+.docscan-empty-pilot-link span {
+  color: #704dff;
+  font-weight: 950;
+}
+
+.docscan-business-pilot-card h3 {
+  margin: 6px 0;
+  color: #171429;
+  font-size: 22px;
+  letter-spacing: -0.035em;
+}
+
+.docscan-business-pilot-card p {
+  margin: 0;
+  color: #606883;
+  line-height: 1.65;
+}
+
+.docscan-business-pilot-card > div:last-child {
+  display: grid;
+  gap: 10px;
+  min-width: 210px;
+}
+
+.docscan-business-pilot-card a,
+.docscan-empty-pilot-link a {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ff5f6d, #8b4dff);
+  color: #fff;
+  font-weight: 950;
+  text-decoration: none;
+}
+
+.docscan-business-pilot-card a.ghost {
+  border: 1px solid rgba(128, 83, 255, 0.2);
+  background: rgba(255, 255, 255, 0.86);
+  color: #704dff;
+}
+
+.docscan-empty-pilot-link {
+  display: grid;
+  gap: 10px;
+  width: min(100%, 420px);
+  margin: 4px auto 0;
+  padding: 14px;
+  border: 1px solid rgba(128, 83, 255, 0.16);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
 @keyframes docscanRingSpin {
   to {
     transform: translateX(-50%) rotate(360deg);
@@ -7271,6 +7799,21 @@ body {
 
   .docscan-lead-actions {
     grid-template-columns: 1fr;
+  }
+
+  .docscan-business-pilot-card {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .docscan-business-pilot-card > div:last-child {
+    min-width: 0;
+  }
+
+  .docscan-business-pilot-card a,
+  .docscan-empty-pilot-link a {
+    width: 100%;
   }
 
   .docscan-upload-actions {

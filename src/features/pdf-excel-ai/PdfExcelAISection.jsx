@@ -1,8 +1,6 @@
 import { useState } from "react";
 import * as XLSX from "xlsx";
 
-const zaloCommunityUrl = "https://zalo.me/g/sf1nek4pce9gkmvz5cos";
-
 const sampleResult = {
   fileName: "Bang-giao-dich-mau-06-2026.pdf",
   fileMeta: "3 trang · bảng giao dịch mẫu · xuất XLSX trong vài giây",
@@ -253,7 +251,7 @@ export default function PdfExcelAISection() {
           <div className="pdf-excel-actions">
             <button type="button" onClick={buildWorkbook}>Tải XLSX mẫu</button>
             <button type="button" onClick={copyTable}>{copied ? "Đã copy" : "Copy bảng"}</button>
-            <a href={zaloCommunityUrl} target="_blank" rel="noreferrer">Gửi file để Lumi tư vấn cách xử lý</a>
+            <a href="/business-pilot">Gửi yêu cầu pilot</a>
           </div>
         </section>
       </div>

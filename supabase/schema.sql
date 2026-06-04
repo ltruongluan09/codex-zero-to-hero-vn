@@ -67,6 +67,20 @@ create table if not exists public.project_feedback (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.pilot_requests (
+  id uuid primary key default gen_random_uuid(),
+  name text,
+  company text,
+  role text,
+  file_type text not null,
+  monthly_volume text,
+  contact text not null,
+  note text,
+  source text default 'business_pilot',
+  page_path text,
+  created_at timestamptz not null default now()
+);
+
 create or replace function public.consume_ai_usage(
   p_bucket_key text,
   p_client_ip text,
@@ -117,6 +131,7 @@ alter table public.followed_projects enable row level security;
 alter table public.memberships enable row level security;
 alter table public.ai_usage_limits enable row level security;
 alter table public.project_feedback enable row level security;
+alter table public.pilot_requests enable row level security;
 
 drop policy if exists "Users can read own profile" on public.profiles;
 create policy "Users can read own profile"
@@ -197,3 +212,5 @@ create index if not exists memberships_user_id_idx on public.memberships (user_i
 create index if not exists ai_usage_limits_bucket_idx on public.ai_usage_limits (bucket_key, window_start);
 create index if not exists project_feedback_project_idx on public.project_feedback (project, created_at desc);
 create index if not exists project_feedback_rating_idx on public.project_feedback (rating, created_at desc);
+create index if not exists pilot_requests_created_idx on public.pilot_requests (created_at desc);
+create index if not exists pilot_requests_contact_idx on public.pilot_requests (contact);

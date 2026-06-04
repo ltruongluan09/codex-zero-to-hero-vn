@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "./app/auth/useAuth";
 import { useReveal } from "./app/hooks/useReveal";
+import BusinessPilotPage from "./app/routes/BusinessPilotPage";
 import DashboardPage from "./app/routes/DashboardPage";
 import HomePage, { ChallengeSection } from "./app/routes/HomePage";
 import ProjectsPage from "./app/routes/ProjectsPage";
@@ -80,6 +81,16 @@ function App() {
       <AppShell auth={auth} loginOpen={loginOpen} setLoginOpen={setLoginOpen}>
         <main>
           <PdfExcelAISection />
+        </main>
+      </AppShell>
+    );
+  }
+
+  if (currentPath === "/business-pilot") {
+    return (
+      <AppShell auth={auth} loginOpen={loginOpen} setLoginOpen={setLoginOpen}>
+        <main>
+          <BusinessPilotPage />
         </main>
       </AppShell>
     );
