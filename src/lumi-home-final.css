@@ -9829,3 +9829,141 @@ body {
     width: 100%;
   }
 }
+
+/* Final mobile containment pass after rollback.
+   Keep cards measured by their parent container, not by 100vw. */
+@media (max-width: 760px) {
+  .projects-page,
+  .docscan-page {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+    overflow-x: clip !important;
+  }
+
+  .projects-page {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .projects-hero {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .projects-hero h1,
+  .projects-hero p {
+    width: 100% !important;
+    max-width: min(100%, calc(100vw - 48px)) !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .projects-quick-actions,
+  .projects-ready-strip,
+  .project-library-grid,
+  .projects-coming-section,
+  .projects-coming-list,
+  .project-library-card,
+  .project-library-card.unified-project-card,
+  .projects-coming-list article {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .project-library-card,
+  .project-library-card.unified-project-card {
+    overflow: hidden !important;
+  }
+
+  .project-card-top,
+  .project-card-top > div,
+  .project-card-actions,
+  .project-card-actions a {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .home-cards,
+  .home-project-card,
+  .home-article-card,
+  .project-hub-card,
+  .home-project-list,
+  .home-project-list .unified-project-card {
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+  }
+
+  .home-cards {
+    width: calc(100% - 48px) !important;
+    max-width: 310px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .docscan-page {
+    width: calc(100% - 20px) !important;
+    max-width: calc(100% - 20px) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .docscan-shell,
+  .docscan-grid,
+  .docscan-upload-card,
+  .docscan-result-card,
+  .docscan-drop,
+  .docscan-safe-note,
+  .docscan-empty,
+  .docscan-empty.docscan-sample-preview,
+  .docscan-result-ready,
+  .docscan-sample-filebar,
+  .docscan-sample-summary,
+  .docscan-result-list,
+  .docscan-result-list article,
+  .docscan-lead-card,
+  .docscan-text-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .docscan-shell {
+    box-sizing: border-box !important;
+    overflow-x: clip !important;
+  }
+
+  .docscan-drop {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .docscan-upload-actions,
+  .docscan-upload-actions button,
+  .docscan-upload-actions .docscan-sample-button {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .docscan-sample-filebar {
+    grid-template-columns: 54px minmax(0, 1fr) !important;
+  }
+
+  .docscan-sample-filebar strong,
+  .docscan-sample-filebar p,
+  .docscan-sample-summary p,
+  .docscan-result-card h2,
+  .docscan-result-list p {
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+  }
+}
