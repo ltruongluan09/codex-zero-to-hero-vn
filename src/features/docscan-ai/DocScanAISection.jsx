@@ -91,6 +91,8 @@ export default function DocScanAISection({ profile = null }) {
   const [sampleQuestionsCopied, setSampleQuestionsCopied] = useState(false);
   const [analysisSeconds, setAnalysisSeconds] = useState(0);
   const [expandedRiskIndex, setExpandedRiskIndex] = useState(null);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [assistantOpen, setAssistantOpen] = useState(false);
   const [assistantQuestion, setAssistantQuestion] = useState("");
   const [assistantAnswer, setAssistantAnswer] = useState(null);
   const [assistantLoading, setAssistantLoading] = useState(false);
@@ -218,6 +220,8 @@ export default function DocScanAISection({ profile = null }) {
     setExpandedRiskIndex(null);
     setPickerNudge(false);
     setFilePickerHint(false);
+    setDetailsOpen(false);
+    setAssistantOpen(false);
     setAssistantQuestion("");
     setAssistantAnswer(null);
     setAssistantError("");
@@ -310,6 +314,8 @@ export default function DocScanAISection({ profile = null }) {
     setRawTextOpen(false);
     setRawTextCopied(false);
     setExpandedRiskIndex(null);
+    setDetailsOpen(false);
+    setAssistantOpen(false);
     setAssistantQuestion("");
     setAssistantAnswer(null);
     setAssistantError("");
@@ -730,23 +736,6 @@ export default function DocScanAISection({ profile = null }) {
                     <p>{result.summary}</p>
                   </section>
                 )}
-                {rawText && (
-                  <div className="docscan-text-actions" aria-label="Văn bản đã đọc từ tài liệu">
-                    <div>
-                      <small>Văn bản đã đọc</small>
-                      <strong>Dùng để copy, lưu lại hoặc chuyển tiếp sang Excel/Word.</strong>
-                    </div>
-                    <button type="button" onClick={() => setRawTextOpen((value) => !value)}>
-                      {rawTextOpen ? "Ẩn text" : "Xem text"}
-                    </button>
-                    <button type="button" onClick={copyRawText}>
-                      {rawTextCopied ? "Đã copy!" : "Copy text"}
-                    </button>
-                    <button type="button" onClick={downloadRawText}>
-                      Tải .txt
-                    </button>
-                  </div>
-                )}
                 {(result.top_3_takeaways || result.key_points || []).length > 0 && (
                   <div className="docscan-keypoints">
                     {(result.top_3_takeaways || result.key_points).slice(0, 3).map((point) => (
@@ -807,53 +796,70 @@ export default function DocScanAISection({ profile = null }) {
                       </article>
                     );
                   })}
-                  {docscanMissingInfo.length > 0 && (
-                    <article className="docscan-missing-info">
-                      <strong>Thông tin còn thiếu</strong>
-                      <p>{docscanMissingInfo.slice(0, 3).join(" ")}</p>
-                    </article>
-                  )}
-                  {docscanQuestions.length > 0 && (
-                    <article className="docscan-questions">
-                      <div className="docscan-questions-head">
-                        <strong>Câu nên hỏi lại</strong>
-                        {isDemoResult && (
-                          <button type="button" onClick={copySampleQuestions}>
-                            {sampleQuestionsCopied ? "Đã copy" : "Copy câu hỏi"}
-                          </button>
-                        )}
-                      </div>
-                      {isDemoResult ? (
-                        <ol>
-                          {docscanQuestions.map((question) => <li key={question}>{question}</li>)}
-                        </ol>
-                      ) : (
-                        <p>{docscanQuestions.slice(0, 3).join(" ")}</p>
+                  {(docscanMissingInfo.length > 0 || docscanQuestions.length > 0 || docscanNextActions.length > 0 || docscanEvidence.length > 0 || (!hasDocscanAttention && rawText)) && (
+                    <section className={detailsOpen ? "docscan-detail-panel open" : "docscan-detail-panel"}>
+                      <button
+                        className="docscan-detail-toggle"
+                        type="button"
+                        onClick={() => setDetailsOpen((value) => !value)}
+                        aria-expanded={detailsOpen}
+                      >
+                        <span>Xem phân tích chi tiết</span>
+                        <b>{detailsOpen ? "Ẩn bớt" : "Mở thêm"}</b>
+                      </button>
+                      {detailsOpen && (
+                        <div className="docscan-detail-body">
+                          {docscanMissingInfo.length > 0 && (
+                            <article className="docscan-missing-info">
+                              <strong>Thông tin còn thiếu</strong>
+                              <p>{docscanMissingInfo.slice(0, 3).join(" ")}</p>
+                            </article>
+                          )}
+                          {docscanQuestions.length > 0 && (
+                            <article className="docscan-questions">
+                              <div className="docscan-questions-head">
+                                <strong>Câu nên hỏi lại</strong>
+                                {isDemoResult && (
+                                  <button type="button" onClick={copySampleQuestions}>
+                                    {sampleQuestionsCopied ? "Đã copy" : "Copy câu hỏi"}
+                                  </button>
+                                )}
+                              </div>
+                              {isDemoResult ? (
+                                <ol>
+                                  {docscanQuestions.map((question) => <li key={question}>{question}</li>)}
+                                </ol>
+                              ) : (
+                                <p>{docscanQuestions.slice(0, 3).join(" ")}</p>
+                              )}
+                            </article>
+                          )}
+                          {docscanNextActions.length > 0 && (
+                            <article className="docscan-next-actions">
+                              <strong>Việc nên làm tiếp</strong>
+                              <p>{docscanNextActions.slice(0, 3).join(" ")}</p>
+                            </article>
+                          )}
+                          {isDemoResult && (
+                            <button className="docscan-sample-next-cta" type="button" onClick={openFilePicker}>
+                              Thử kiểm tra tài liệu của bạn
+                            </button>
+                          )}
+                          {docscanEvidence.length > 0 && (
+                            <article className="docscan-evidence">
+                              <strong>Căn cứ DocScan nhìn thấy</strong>
+                              <p>{docscanEvidence.slice(0, 3).map((item) => `“${item}”`).join(" ")}</p>
+                            </article>
+                          )}
+                          {!hasDocscanAttention && rawText && (
+                            <article className="docscan-neutral-note">
+                              <strong>Chưa thấy cảnh báo rõ</strong>
+                              <p>DocScan đã đọc được văn bản, nhưng chưa thấy điểm nào đủ rõ để cảnh báo. Nếu dùng tài liệu này để làm việc, bạn vẫn nên kiểm tra lại mục tiêu chính, deadline, chi phí và người phụ trách trước khi gửi tiếp.</p>
+                            </article>
+                          )}
+                        </div>
                       )}
-                    </article>
-                  )}
-                  {docscanNextActions.length > 0 && (
-                    <article className="docscan-next-actions">
-                      <strong>Việc nên làm tiếp</strong>
-                      <p>{docscanNextActions.slice(0, 3).join(" ")}</p>
-                    </article>
-                  )}
-                  {isDemoResult && (
-                    <button className="docscan-sample-next-cta" type="button" onClick={openFilePicker}>
-                      Thử kiểm tra tài liệu của bạn
-                    </button>
-                  )}
-                  {docscanEvidence.length > 0 && (
-                    <article className="docscan-evidence">
-                      <strong>Căn cứ DocScan nhìn thấy</strong>
-                      <p>{docscanEvidence.slice(0, 3).map((item) => `“${item}”`).join(" ")}</p>
-                    </article>
-                  )}
-                  {!hasDocscanAttention && rawText && (
-                    <article className="docscan-neutral-note">
-                      <strong>Chưa thấy cảnh báo rõ</strong>
-                      <p>DocScan đã đọc được văn bản, nhưng chưa thấy điểm nào đủ rõ để cảnh báo. Nếu dùng tài liệu này để làm việc, bạn vẫn nên kiểm tra lại mục tiêu chính, deadline, chi phí và người phụ trách trước khi gửi tiếp.</p>
-                    </article>
+                    </section>
                   )}
                 </div>
                 {rawText && (
@@ -882,7 +888,7 @@ export default function DocScanAISection({ profile = null }) {
                     )}
                   </section>
                 )}
-                <section className="docscan-assistant-card" aria-label="Hỏi Lumi về tài liệu này">
+                <section className={assistantOpen ? "docscan-assistant-card open" : "docscan-assistant-card is-compact"} aria-label="Hỏi Lumi về tài liệu này">
                   <div className="docscan-assistant-head">
                     <div className="docscan-assistant-avatar">
                       <img src="/lumi-bot.png" alt="" />
@@ -892,73 +898,86 @@ export default function DocScanAISection({ profile = null }) {
                       <h3>Hỏi Lumi về tài liệu này</h3>
                       <p>Lumi chỉ trả lời dựa trên phần tài liệu vừa đọc. Nếu không thấy trong file, Lumi sẽ nói rõ là chưa thấy.</p>
                     </div>
-                  </div>
-                  <div className="docscan-assistant-quick">
-                    {docscanAssistantQuestions.map((question) => (
-                      <button
-                        key={question}
-                        type="button"
-                        onClick={() => askLumiAboutDocument(question)}
-                        disabled={assistantLoading}
-                      >
-                        {question}
-                      </button>
-                    ))}
-                  </div>
-                  <form
-                    className="docscan-assistant-form"
-                    onSubmit={(event) => {
-                      event.preventDefault();
-                      askLumiAboutDocument();
-                    }}
-                  >
-                    <input
-                      data-clarity-mask="True"
-                      value={assistantQuestion}
-                      onChange={(event) => setAssistantQuestion(event.target.value)}
-                      placeholder="Ví dụ: điều khoản nào cần hỏi lại?"
-                      disabled={assistantLoading}
-                    />
-                    <button type="submit" disabled={assistantLoading || !assistantQuestion.trim()}>
-                      {assistantLoading ? "Lumi đang đọc..." : "Hỏi Lumi"}
+                    <button
+                      className="docscan-assistant-toggle"
+                      type="button"
+                      onClick={() => setAssistantOpen((value) => !value)}
+                      aria-expanded={assistantOpen}
+                    >
+                      {assistantOpen ? "Thu gọn" : "Hỏi Lumi"}
                     </button>
-                  </form>
-                  {assistantLoading && (
-                    <div className="docscan-assistant-loading">
-                      <span></span>
-                      Lumi đang đọc lại phần liên quan trong tài liệu...
-                    </div>
-                  )}
-                  {assistantError && <p className="docscan-assistant-error">{assistantError}</p>}
-                  {assistantAnswer && (
-                    <div className="docscan-assistant-answer">
-                      <div className="docscan-assistant-answer-head">
-                        <span className={`docscan-assistant-status ${assistantAnswer.status}`}>
-                          {assistantAnswer.status === "found"
-                            ? "Có trong tài liệu"
-                            : assistantAnswer.status === "not_found"
-                              ? "Chưa thấy trong tài liệu"
-                              : "Cần kiểm tra lại"}
-                        </span>
-                        <button type="button" onClick={copyAssistantAnswer}>
-                          {assistantCopied ? "Đã copy" : "Copy"}
-                        </button>
+                  </div>
+                  {assistantOpen && (
+                    <>
+                      <div className="docscan-assistant-quick">
+                        {docscanAssistantQuestions.map((question) => (
+                          <button
+                            key={question}
+                            type="button"
+                            onClick={() => askLumiAboutDocument(question)}
+                            disabled={assistantLoading}
+                          >
+                            {question}
+                          </button>
+                        ))}
                       </div>
-                      <p>{assistantAnswer.answer}</p>
-                      {assistantAnswer.evidence && <em>Căn cứ: {assistantAnswer.evidence}</em>}
-                      {assistantAnswer.suggested_next_question && (
-                        <button
-                          className="docscan-assistant-next"
-                          type="button"
-                          onClick={() => askLumiAboutDocument(assistantAnswer.suggested_next_question)}
+                      <form
+                        className="docscan-assistant-form"
+                        onSubmit={(event) => {
+                          event.preventDefault();
+                          askLumiAboutDocument();
+                        }}
+                      >
+                        <input
+                          data-clarity-mask="True"
+                          value={assistantQuestion}
+                          onChange={(event) => setAssistantQuestion(event.target.value)}
+                          placeholder="Ví dụ: điều khoản nào cần hỏi lại?"
                           disabled={assistantLoading}
-                        >
-                          Hỏi tiếp: {assistantAnswer.suggested_next_question}
+                        />
+                        <button type="submit" disabled={assistantLoading || !assistantQuestion.trim()}>
+                          {assistantLoading ? "Lumi đang đọc..." : "Hỏi Lumi"}
                         </button>
+                      </form>
+                      {assistantLoading && (
+                        <div className="docscan-assistant-loading">
+                          <span></span>
+                          Lumi đang đọc lại phần liên quan trong tài liệu...
+                        </div>
                       )}
-                    </div>
+                      {assistantError && <p className="docscan-assistant-error">{assistantError}</p>}
+                      {assistantAnswer && (
+                        <div className="docscan-assistant-answer">
+                          <div className="docscan-assistant-answer-head">
+                            <span className={`docscan-assistant-status ${assistantAnswer.status}`}>
+                              {assistantAnswer.status === "found"
+                                ? "Có trong tài liệu"
+                                : assistantAnswer.status === "not_found"
+                                  ? "Chưa thấy trong tài liệu"
+                                  : "Cần kiểm tra lại"}
+                            </span>
+                            <button type="button" onClick={copyAssistantAnswer}>
+                              {assistantCopied ? "Đã copy" : "Copy"}
+                            </button>
+                          </div>
+                          <p>{assistantAnswer.answer}</p>
+                          {assistantAnswer.evidence && <em>Căn cứ: {assistantAnswer.evidence}</em>}
+                          {assistantAnswer.suggested_next_question && (
+                            <button
+                              className="docscan-assistant-next"
+                              type="button"
+                              onClick={() => askLumiAboutDocument(assistantAnswer.suggested_next_question)}
+                              disabled={assistantLoading}
+                            >
+                              Hỏi tiếp: {assistantAnswer.suggested_next_question}
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </>
                   )}
                 </section>
+                {false && (
                 <section className="docscan-lead-card" aria-label="Góp ý nhanh cho DocScan AI">
                   <div className="docscan-lead-bot" aria-hidden="true">
                     <span></span>
@@ -1008,6 +1027,7 @@ export default function DocScanAISection({ profile = null }) {
                   </div>
                   {leadMessage && <p className={leadStatus === "sent" ? "docscan-lead-status done" : "docscan-lead-status"}>{leadMessage}</p>}
                 </section>
+                )}
               </div>
             ) : (
               <div className="docscan-empty docscan-sample-preview">
