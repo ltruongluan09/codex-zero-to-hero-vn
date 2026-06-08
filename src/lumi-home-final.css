@@ -9967,3 +9967,283 @@ body {
     overflow-wrap: anywhere !important;
   }
 }
+
+/* DocScan Assistant: grounded Q&A inside analyzed documents */
+.docscan-assistant-card {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255, 95, 124, 0.08), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(247, 242, 255, 0.9));
+  box-shadow: 0 18px 48px rgba(72, 52, 128, 0.08);
+}
+
+.docscan-assistant-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.docscan-assistant-avatar {
+  width: 58px;
+  height: 58px;
+  position: relative;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(255, 94, 122, 0.16), rgba(118, 78, 255, 0.16));
+}
+
+.docscan-assistant-avatar::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 24px;
+  border: 1px solid rgba(132, 91, 255, 0.3);
+  animation: lumiAssistPulse 2.4s ease-in-out infinite;
+}
+
+.docscan-assistant-avatar img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.docscan-assistant-head small {
+  display: inline-flex;
+  color: #764eff;
+  font-weight: 900;
+  font-size: 0.78rem;
+}
+
+.docscan-assistant-head h3 {
+  margin: 4px 0 4px;
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  color: #17142c;
+}
+
+.docscan-assistant-head p {
+  margin: 0;
+  color: #66708f;
+  line-height: 1.55;
+  font-weight: 650;
+}
+
+.docscan-assistant-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.docscan-assistant-quick button,
+.docscan-assistant-form button,
+.docscan-assistant-answer-head button,
+.docscan-assistant-next {
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #6d43ef;
+  font-weight: 900;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.docscan-assistant-quick button:hover,
+.docscan-assistant-form button:hover,
+.docscan-assistant-answer-head button:hover,
+.docscan-assistant-next:hover {
+  transform: translateY(-2px);
+  border-color: rgba(118, 78, 255, 0.55);
+  box-shadow: 0 14px 28px rgba(118, 78, 255, 0.12);
+}
+
+.docscan-assistant-quick button:disabled,
+.docscan-assistant-form button:disabled,
+.docscan-assistant-next:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.docscan-assistant-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.docscan-assistant-form input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(139, 92, 246, 0.24);
+  border-radius: 18px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #17142c;
+  font: inherit;
+  font-weight: 750;
+  outline: none;
+}
+
+.docscan-assistant-form input:focus {
+  border-color: rgba(118, 78, 255, 0.65);
+  box-shadow: 0 0 0 4px rgba(118, 78, 255, 0.12);
+}
+
+.docscan-assistant-form button {
+  background: linear-gradient(135deg, #ff5a75, #764eff);
+  color: #fff;
+  border: 0;
+  padding-inline: 18px;
+}
+
+.docscan-assistant-loading,
+.docscan-assistant-error {
+  margin: 14px 0 0;
+  border-radius: 18px;
+  padding: 13px 14px;
+  font-weight: 850;
+}
+
+.docscan-assistant-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #6d43ef;
+  background: rgba(118, 78, 255, 0.08);
+}
+
+.docscan-assistant-loading span {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: #6d43ef;
+  box-shadow: 0 0 0 0 rgba(118, 78, 255, 0.32);
+  animation: lumiAssistPulse 1.8s ease-in-out infinite;
+}
+
+.docscan-assistant-error {
+  color: #c33d50;
+  background: rgba(255, 90, 117, 0.08);
+}
+
+.docscan-assistant-answer {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.docscan-assistant-answer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.docscan-assistant-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 950;
+  color: #0f8f61;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.docscan-assistant-status.not_found {
+  color: #c33d50;
+  background: rgba(255, 90, 117, 0.12);
+}
+
+.docscan-assistant-status.needs_check {
+  color: #8a5a00;
+  background: rgba(245, 158, 11, 0.14);
+}
+
+.docscan-assistant-answer p {
+  margin: 0;
+  color: #2a2646;
+  font-weight: 750;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.docscan-assistant-answer em {
+  display: block;
+  margin-top: 12px;
+  color: #687092;
+  font-style: normal;
+  font-weight: 720;
+  line-height: 1.55;
+}
+
+.docscan-assistant-next {
+  margin-top: 12px;
+  text-align: left;
+}
+
+@keyframes lumiAssistPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(118, 78, 255, 0.25);
+  }
+  70% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 12px rgba(118, 78, 255, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(118, 78, 255, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .docscan-assistant-card {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .docscan-assistant-head {
+    grid-template-columns: 1fr;
+  }
+
+  .docscan-assistant-avatar {
+    width: 52px;
+    height: 52px;
+  }
+
+  .docscan-assistant-avatar img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .docscan-assistant-quick,
+  .docscan-assistant-form,
+  .docscan-assistant-answer-head {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .docscan-assistant-quick button,
+  .docscan-assistant-form button,
+  .docscan-assistant-answer-head button,
+  .docscan-assistant-next {
+    width: 100%;
+    min-height: 46px;
+    text-align: center;
+  }
+}

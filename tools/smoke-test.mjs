@@ -30,6 +30,7 @@ const requiredFiles = [
   "docs/ARCHITECTURE.md",
   "api/generate-caption.js",
   "api/analyze-document.js",
+  "api/docscan-chat.js",
   "api/mini-lab.js",
   "public/bai-viet.html",
   "public/prompt-ai-hieu-qua.html",

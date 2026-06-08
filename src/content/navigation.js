@@ -18,6 +18,7 @@ export const appRoutes = {
 export const serverlessApiRoutes = [
   "/api/generate-caption",
   "/api/analyze-document",
+  "/api/docscan-chat",
   "/api/mini-lab",
   "/api/feedback",
   "/api/subscribe",

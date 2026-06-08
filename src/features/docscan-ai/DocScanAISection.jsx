@@ -10,6 +10,11 @@ const documentAnalysisTypes = [
 const zaloCommunityUrl = "https://zalo.me/g/sf1nek4pce9gkmvz5cos";
 
 const docscanLeadOptions = ["Báo giá", "Hợp đồng", "CV/JD", "Báo cáo", "Ảnh chụp", "Khác"];
+const docscanAssistantQuestions = [
+  "Có rủi ro nào không?",
+  "Tóm tắt cho sếp trong 5 dòng",
+  "Tôi nên hỏi lại bên gửi file câu gì?",
+];
 
 const sampleDocumentResult = {
   document_type: "Chưa đọc được nội dung thật",
@@ -86,6 +91,11 @@ export default function DocScanAISection({ profile = null }) {
   const [sampleQuestionsCopied, setSampleQuestionsCopied] = useState(false);
   const [analysisSeconds, setAnalysisSeconds] = useState(0);
   const [expandedRiskIndex, setExpandedRiskIndex] = useState(null);
+  const [assistantQuestion, setAssistantQuestion] = useState("");
+  const [assistantAnswer, setAssistantAnswer] = useState(null);
+  const [assistantLoading, setAssistantLoading] = useState(false);
+  const [assistantError, setAssistantError] = useState("");
+  const [assistantCopied, setAssistantCopied] = useState(false);
 
   const steps = [
     "Lumi đang đọc từng dòng",
@@ -208,6 +218,10 @@ export default function DocScanAISection({ profile = null }) {
     setExpandedRiskIndex(null);
     setPickerNudge(false);
     setFilePickerHint(false);
+    setAssistantQuestion("");
+    setAssistantAnswer(null);
+    setAssistantError("");
+    setAssistantCopied(false);
     setSource("demo");
     setResult({
       document_type: "Hợp đồng thuê văn phòng",
@@ -296,6 +310,10 @@ export default function DocScanAISection({ profile = null }) {
     setRawTextOpen(false);
     setRawTextCopied(false);
     setExpandedRiskIndex(null);
+    setAssistantQuestion("");
+    setAssistantAnswer(null);
+    setAssistantError("");
+    setAssistantCopied(false);
     setError("");
     const startedAt = Date.now();
 
@@ -424,6 +442,82 @@ export default function DocScanAISection({ profile = null }) {
       setTimeout(() => setSampleQuestionsCopied(false), 1600);
     } catch {
       setSampleQuestionsCopied(false);
+    }
+  };
+
+  const buildAssistantContext = () => {
+    if (!result) return "";
+    const lines = [
+      `Loại tài liệu: ${result.document_type || ""}`,
+      `Kết luận nhanh: ${result.one_line_answer || result.verdict || ""}`,
+      `Tóm tắt: ${result.summary || result.plainSummary || ""}`,
+      "Các điểm chính:",
+      ...(result.top_3_takeaways || result.key_points || []).map((item) => `- ${item.title || item.label}: ${item.detail || item.value}`),
+      "Điểm cần chú ý:",
+      ...docscanRisks.map((item) => `- ${item.label ? `${item.label}: ` : ""}${item.title || ""}. ${item.detail || item.body || ""}`),
+      "Thông tin còn thiếu:",
+      ...docscanMissingInfo.map((item) => `- ${item}`),
+      "Câu nên hỏi lại:",
+      ...docscanQuestions.map((item) => `- ${item}`),
+      "Việc nên làm tiếp:",
+      ...docscanNextActions.map((item) => `- ${item}`),
+      "Căn cứ nhìn thấy:",
+      ...docscanEvidence.map((item) => `- ${item}`),
+    ];
+    return lines.filter(Boolean).join("\n").slice(0, 9000);
+  };
+
+  const askLumiAboutDocument = async (question) => {
+    const nextQuestion = String(question || assistantQuestion || "").trim();
+    if (!result || !nextQuestion || assistantLoading) return;
+    const analysisSummary = buildAssistantContext();
+    if (!analysisSummary && !rawText) {
+      setAssistantError("Lumi chưa có đủ nội dung tài liệu để trả lời.");
+      return;
+    }
+
+    setAssistantQuestion(nextQuestion);
+    setAssistantLoading(true);
+    setAssistantError("");
+    setAssistantCopied(false);
+
+    try {
+      const response = await fetch("/api/docscan-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          question: nextQuestion,
+          extractedText: rawText,
+          analysisSummary,
+        }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "Lumi chưa trả lời được câu này.");
+      setAssistantAnswer({
+        status: data.status || "needs_check",
+        answer: data.answer || "Mình chưa thấy thông tin này trong tài liệu vừa đọc.",
+        evidence: data.evidence || "",
+        suggested_next_question: data.suggested_next_question || "",
+      });
+    } catch (nextError) {
+      setAssistantError(nextError.message || "Lumi chưa trả lời được. Bạn thử hỏi lại ngắn hơn nhé.");
+      setAssistantAnswer(null);
+    } finally {
+      setAssistantLoading(false);
+    }
+  };
+
+  const copyAssistantAnswer = async () => {
+    if (!assistantAnswer?.answer) return;
+    try {
+      await navigator.clipboard.writeText([
+        assistantAnswer.answer,
+        assistantAnswer.evidence ? `\nCăn cứ: ${assistantAnswer.evidence}` : "",
+      ].filter(Boolean).join("\n"));
+      setAssistantCopied(true);
+      setTimeout(() => setAssistantCopied(false), 1600);
+    } catch {
+      setAssistantCopied(false);
     }
   };
 
@@ -788,6 +882,83 @@ export default function DocScanAISection({ profile = null }) {
                     )}
                   </section>
                 )}
+                <section className="docscan-assistant-card" aria-label="Hỏi Lumi về tài liệu này">
+                  <div className="docscan-assistant-head">
+                    <div className="docscan-assistant-avatar">
+                      <img src="/lumi-bot.png" alt="" />
+                    </div>
+                    <div>
+                      <small>Lumi đọc cùng bạn</small>
+                      <h3>Hỏi Lumi về tài liệu này</h3>
+                      <p>Lumi chỉ trả lời dựa trên phần tài liệu vừa đọc. Nếu không thấy trong file, Lumi sẽ nói rõ là chưa thấy.</p>
+                    </div>
+                  </div>
+                  <div className="docscan-assistant-quick">
+                    {docscanAssistantQuestions.map((question) => (
+                      <button
+                        key={question}
+                        type="button"
+                        onClick={() => askLumiAboutDocument(question)}
+                        disabled={assistantLoading}
+                      >
+                        {question}
+                      </button>
+                    ))}
+                  </div>
+                  <form
+                    className="docscan-assistant-form"
+                    onSubmit={(event) => {
+                      event.preventDefault();
+                      askLumiAboutDocument();
+                    }}
+                  >
+                    <input
+                      data-clarity-mask="True"
+                      value={assistantQuestion}
+                      onChange={(event) => setAssistantQuestion(event.target.value)}
+                      placeholder="Ví dụ: điều khoản nào cần hỏi lại?"
+                      disabled={assistantLoading}
+                    />
+                    <button type="submit" disabled={assistantLoading || !assistantQuestion.trim()}>
+                      {assistantLoading ? "Lumi đang đọc..." : "Hỏi Lumi"}
+                    </button>
+                  </form>
+                  {assistantLoading && (
+                    <div className="docscan-assistant-loading">
+                      <span></span>
+                      Lumi đang đọc lại phần liên quan trong tài liệu...
+                    </div>
+                  )}
+                  {assistantError && <p className="docscan-assistant-error">{assistantError}</p>}
+                  {assistantAnswer && (
+                    <div className="docscan-assistant-answer">
+                      <div className="docscan-assistant-answer-head">
+                        <span className={`docscan-assistant-status ${assistantAnswer.status}`}>
+                          {assistantAnswer.status === "found"
+                            ? "Có trong tài liệu"
+                            : assistantAnswer.status === "not_found"
+                              ? "Chưa thấy trong tài liệu"
+                              : "Cần kiểm tra lại"}
+                        </span>
+                        <button type="button" onClick={copyAssistantAnswer}>
+                          {assistantCopied ? "Đã copy" : "Copy"}
+                        </button>
+                      </div>
+                      <p>{assistantAnswer.answer}</p>
+                      {assistantAnswer.evidence && <em>Căn cứ: {assistantAnswer.evidence}</em>}
+                      {assistantAnswer.suggested_next_question && (
+                        <button
+                          className="docscan-assistant-next"
+                          type="button"
+                          onClick={() => askLumiAboutDocument(assistantAnswer.suggested_next_question)}
+                          disabled={assistantLoading}
+                        >
+                          Hỏi tiếp: {assistantAnswer.suggested_next_question}
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </section>
                 <section className="docscan-lead-card" aria-label="Góp ý nhanh cho DocScan AI">
                   <div className="docscan-lead-bot" aria-hidden="true">
                     <span></span>
