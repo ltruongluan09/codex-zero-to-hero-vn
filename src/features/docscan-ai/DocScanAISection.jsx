@@ -404,6 +404,15 @@ export default function DocScanAISection({ profile = null }) {
   const docscanQuestions = (result?.questions_to_ask || result?.questions || result?.suggested_questions || []).filter(Boolean);
   const docscanNextActions = (result?.next_actions || result?.action_items || []).filter(Boolean);
   const docscanEvidence = (result?.evidence_snippets || []).filter(Boolean);
+  const docscanTakeaways = (result?.top_3_takeaways || result?.key_points || []).filter(Boolean);
+  const docscanHighlights = docscanRisks.length
+    ? docscanRisks.slice(0, 3)
+    : docscanTakeaways.slice(0, 3).map((item) => ({
+        severity: item.importance === "high" ? "high" : "medium",
+        label: "Điểm quan trọng",
+        title: item.title || item.label,
+        detail: item.detail || item.value,
+      }));
   const hasDocscanAttention = Boolean(
     docscanRisks.length ||
     docscanMissingInfo.length ||
@@ -591,6 +600,13 @@ export default function DocScanAISection({ profile = null }) {
           </div>
         </header>
 
+        <div className="docscan-flow" aria-label="Quy trình sử dụng DocScan">
+          <span className={file || result ? "done" : "active"}><b>1</b> Chọn file</span>
+          <span className={result ? "done" : loading ? "active" : ""}><b>2</b> Lumi đọc</span>
+          <span className={result ? "done" : ""}><b>3</b> Xem 3 điểm</span>
+          <span className={assistantOpen ? "active" : ""}><b>4</b> Hỏi thêm</span>
+        </div>
+
         <div className={result ? "docscan-grid has-result" : "docscan-grid"}>
           <section id="docscan-upload" className="docscan-card docscan-upload-card">
             <div
@@ -736,22 +752,12 @@ export default function DocScanAISection({ profile = null }) {
                     <p>{result.summary}</p>
                   </section>
                 )}
-                {(result.top_3_takeaways || result.key_points || []).length > 0 && (
-                  <div className="docscan-keypoints">
-                    {(result.top_3_takeaways || result.key_points).slice(0, 3).map((point) => (
-                      <span key={`${point.title || point.label}-${point.detail || point.value}`}>
-                        <b>{point.title || point.label}</b>
-                        {point.detail || point.value}
-                      </span>
-                    ))}
-                  </div>
-                )}
                 <div className="docscan-result-list">
-                  <h3>3 điều cần biết ngay</h3>
-                  {isDemoResult && docscanRisks.length > 0 && (
+                  <h3>{docscanHighlights.length === 3 ? "3 điều cần biết ngay" : "Điều cần biết ngay"}</h3>
+                  {isDemoResult && docscanHighlights.length > 0 && (
                     <p className="docscan-tap-hint">Bấm vào từng điểm cảnh báo để xem Lumi giải thích rõ hơn.</p>
                   )}
-                  {docscanRisks.slice(0, 3).map((risk, index) => {
+                  {docscanHighlights.map((risk, index) => {
                     const isExpanded = expandedRiskIndex === index;
                     const relatedQuestion = docscanQuestions[index] || docscanQuestions[0];
                     return (
@@ -796,7 +802,7 @@ export default function DocScanAISection({ profile = null }) {
                       </article>
                     );
                   })}
-                  {(docscanMissingInfo.length > 0 || docscanQuestions.length > 0 || docscanNextActions.length > 0 || docscanEvidence.length > 0 || (!hasDocscanAttention && rawText)) && (
+                  {(docscanTakeaways.length > 0 || docscanMissingInfo.length > 0 || docscanQuestions.length > 0 || docscanNextActions.length > 0 || docscanEvidence.length > 0 || (!hasDocscanAttention && rawText)) && (
                     <section className={detailsOpen ? "docscan-detail-panel open" : "docscan-detail-panel"}>
                       <button
                         className="docscan-detail-toggle"
@@ -809,6 +815,19 @@ export default function DocScanAISection({ profile = null }) {
                       </button>
                       {detailsOpen && (
                         <div className="docscan-detail-body">
+                          {docscanTakeaways.length > 0 && docscanRisks.length > 0 && (
+                            <article className="docscan-takeaways-detail">
+                              <strong>Các thông tin chính</strong>
+                              <ul>
+                                {docscanTakeaways.slice(0, 3).map((item) => (
+                                  <li key={`${item.title || item.label}-${item.detail || item.value}`}>
+                                    <b>{item.title || item.label}</b>
+                                    <span>{item.detail || item.value}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </article>
+                          )}
                           {docscanMissingInfo.length > 0 && (
                             <article className="docscan-missing-info">
                               <strong>Thông tin còn thiếu</strong>
@@ -862,41 +881,15 @@ export default function DocScanAISection({ profile = null }) {
                     </section>
                   )}
                 </div>
-                {rawText && (
-                  <section className={rawTextOpen ? "docscan-raw-text open" : "docscan-raw-text"}>
-                    <button
-                      className="docscan-raw-toggle"
-                      type="button"
-                      onClick={() => setRawTextOpen((value) => !value)}
-                      aria-expanded={rawTextOpen}
-                    >
-                      <span>📄 Văn bản đã đọc</span>
-                      <b>{rawTextOpen ? "Ẩn" : "Xem"}</b>
-                    </button>
-                    {rawTextOpen && (
-                      <div className="docscan-raw-body">
-                        <textarea data-clarity-mask="True" readOnly value={rawText} />
-                        <div>
-                          <button type="button" onClick={copyRawText}>
-                            {rawTextCopied ? "Đã copy!" : "Copy text"}
-                          </button>
-                          <button type="button" onClick={downloadRawText}>
-                            Tải về .txt
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </section>
-                )}
                 <section className={assistantOpen ? "docscan-assistant-card open" : "docscan-assistant-card is-compact"} aria-label="Hỏi Lumi về tài liệu này">
                   <div className="docscan-assistant-head">
                     <div className="docscan-assistant-avatar">
                       <img src="/lumi-bot.png" alt="" />
                     </div>
                     <div>
-                      <small>Lumi đọc cùng bạn</small>
-                      <h3>Hỏi Lumi về tài liệu này</h3>
-                      <p>Lumi chỉ trả lời dựa trên phần tài liệu vừa đọc. Nếu không thấy trong file, Lumi sẽ nói rõ là chưa thấy.</p>
+                      <small><i></i> Lumi đã hiểu tài liệu này</small>
+                      <h3>Bạn muốn hỏi thêm điều gì?</h3>
+                      <p>Ví dụ: “Điểm nào có thể làm tôi mất tiền?”</p>
                     </div>
                     <button
                       className="docscan-assistant-toggle"
@@ -904,7 +897,7 @@ export default function DocScanAISection({ profile = null }) {
                       onClick={() => setAssistantOpen((value) => !value)}
                       aria-expanded={assistantOpen}
                     >
-                      {assistantOpen ? "Thu gọn" : "Hỏi Lumi"}
+                      {assistantOpen ? "Thu gọn" : "Hỏi Lumi ngay"}
                     </button>
                   </div>
                   {assistantOpen && (
@@ -977,6 +970,32 @@ export default function DocScanAISection({ profile = null }) {
                     </>
                   )}
                 </section>
+                {rawText && (
+                  <section className={rawTextOpen ? "docscan-raw-text open" : "docscan-raw-text"}>
+                    <button
+                      className="docscan-raw-toggle"
+                      type="button"
+                      onClick={() => setRawTextOpen((value) => !value)}
+                      aria-expanded={rawTextOpen}
+                    >
+                      <span>📄 Văn bản Lumi đã đọc</span>
+                      <b>{rawTextOpen ? "Ẩn" : "Xem & tải"}</b>
+                    </button>
+                    {rawTextOpen && (
+                      <div className="docscan-raw-body">
+                        <textarea data-clarity-mask="True" readOnly value={rawText} />
+                        <div>
+                          <button type="button" onClick={copyRawText}>
+                            {rawTextCopied ? "Đã copy!" : "Copy text"}
+                          </button>
+                          <button type="button" onClick={downloadRawText}>
+                            Tải về .txt
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </section>
+                )}
                 {false && (
                 <section className="docscan-lead-card" aria-label="Góp ý nhanh cho DocScan AI">
                   <div className="docscan-lead-bot" aria-hidden="true">
@@ -1072,12 +1091,16 @@ export default function DocScanAISection({ profile = null }) {
             <div>
               <span>▣</span>
               <div>
-                <strong>Lưu lại để dùng ngay</strong>
-                <p>Copy tóm tắt, gửi cho sếp/đồng nghiệp hoặc lưu vào ghi chú của bạn.</p>
+                <strong>Lưu kết quả để dùng tiếp</strong>
+                <p>Copy bản phân tích hoặc tải phần văn bản Lumi đã đọc.</p>
               </div>
             </div>
             <div className="docscan-summary-actions">
-              <a href="/project-02-docscan-ai.html">Xem hành trình build</a>
+              {rawText && (
+                <button type="button" className="secondary" onClick={downloadRawText}>
+                  Tải text gốc
+                </button>
+              )}
               <button type="button" onClick={copySummary} disabled={!result}>
                 {copied ? "Đã copy" : "Copy kết quả"}
               </button>
