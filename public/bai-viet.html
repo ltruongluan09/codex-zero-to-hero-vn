@@ -498,6 +498,82 @@
         font-weight: 900;
       }
 
+      .series-lessons {
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .series-lesson {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 12px;
+        align-items: center;
+        border: 1px solid rgba(238, 226, 220, 0.95);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.72);
+        padding: 12px;
+      }
+
+      .series-lesson.live {
+        border-color: rgba(124, 77, 255, 0.3);
+        background:
+          linear-gradient(135deg, rgba(255, 107, 101, 0.08), rgba(124, 77, 255, 0.08)),
+          rgba(255, 255, 255, 0.86);
+      }
+
+      .series-lesson.coming {
+        opacity: 0.58;
+      }
+
+      .series-lesson .lesson-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 48px;
+        min-height: 32px;
+        border-radius: 999px;
+        background: #f2ebff;
+        color: var(--violet);
+        font-size: 12px;
+        font-weight: 950;
+      }
+
+      .series-lesson strong {
+        display: block;
+        color: var(--ink);
+        font-size: 14px;
+        line-height: 1.28;
+      }
+
+      .series-lesson small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 720;
+        line-height: 1.45;
+      }
+
+      .series-lesson .lesson-badge,
+      .series-lesson .lesson-action {
+        border-radius: 999px;
+        padding: 7px 10px;
+        font-size: 12px;
+        font-weight: 950;
+        white-space: nowrap;
+      }
+
+      .series-lesson .lesson-badge {
+        background: #fff1ed;
+        color: var(--coral);
+      }
+
+      .series-lesson .lesson-action {
+        color: var(--violet);
+        background: #f8f3ff;
+      }
+
       .read-link {
         display: inline-flex;
         margin-top: 16px;
@@ -575,6 +651,17 @@
 
         .unlock-body {
           min-width: 0;
+        }
+
+        .series-lesson {
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+
+        .series-lesson .lesson-num,
+        .series-lesson .lesson-action,
+        .series-lesson .lesson-badge {
+          width: fit-content;
         }
       }
 
@@ -702,14 +789,47 @@
             </div>
             <span class="read-link">Xem series →</span>
           </a>
-          <article class="series-card coming">
-            <div class="series-icon">🧠</div>
-            <h3>Claude cho công việc văn phòng</h3>
-            <p>Cách nhờ Claude viết, tóm tắt, phân tích và biến ý tưởng thành bản nháp dễ dùng.</p>
+          <article class="series-card primary">
+            <div class="series-icon">📒</div>
+            <h3>Claude cho Kế toán Dịch vụ</h3>
+            <p>Từ setup đến thực chiến — dành cho kế toán viên đang dùng Claude Pro.</p>
             <div class="series-meta">
-              <span>Sắp có</span>
-              <span>Cho non-tech</span>
+              <span>Series</span>
+              <span>4 bài</span>
+              <span>Claude Pro</span>
             </div>
+            <div class="series-lessons" aria-label="Danh sách bài trong series Claude cho Kế toán Dịch vụ">
+              <article class="series-lesson live">
+                <span class="lesson-num">Bài 1</span>
+                <div>
+                  <strong>Cái đầu tiên mình làm khi mở Claude Pro</strong>
+                  <small>Setup Project trong 15 phút — để Claude nhớ công ty bạn, đúng TT20/2026, dùng được cả năm.</small>
+                </div>
+                <a class="lesson-action" href="/bai-viet/setup-claude-project-ke-toan">Đọc ngay →</a>
+              </article>
+              <div class="series-lesson coming" aria-disabled="true">
+                <span class="lesson-num">Bài 2</span>
+                <div>
+                  <strong>Tài liệu nào nên upload — và thứ gì tuyệt đối không đưa lên Claude</strong>
+                </div>
+                <span class="lesson-badge">Sắp có</span>
+              </div>
+              <div class="series-lesson coming" aria-disabled="true">
+                <span class="lesson-num">Bài 3</span>
+                <div>
+                  <strong>10 prompt thực tế mình dùng mỗi tuần cho công việc kế toán</strong>
+                </div>
+                <span class="lesson-badge">Sắp có</span>
+              </div>
+              <div class="series-lesson coming" aria-disabled="true">
+                <span class="lesson-num">Bài 4</span>
+                <div>
+                  <strong>Từ Claude trả lời → email gửi khách trong 3 phút</strong>
+                </div>
+                <span class="lesson-badge">Sắp có</span>
+              </div>
+            </div>
+            <a class="read-link" href="/bai-viet/claude-cho-ke-toan">Xem series →</a>
           </article>
           <article class="series-card coming">
             <div class="series-icon">⚡</div>

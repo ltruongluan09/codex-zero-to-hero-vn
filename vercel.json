@@ -3,6 +3,14 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/bai-viet/claude-cho-ke-toan",
+      "destination": "/bai-viet/claude-cho-ke-toan/index.html"
+    },
+    {
+      "source": "/bai-viet/setup-claude-project-ke-toan",
+      "destination": "/bai-viet/setup-claude-project-ke-toan/index.html"
+    },
+    {
       "source": "/dashboard",
       "destination": "/"
     },

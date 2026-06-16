@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cái đầu tiên mình làm khi mở Claude Pro - Lumi Labs</title>
+    <meta
+      name="description"
+      content="Setup Claude Project trong 15 phút cho kế toán dịch vụ: để Claude nhớ công ty, tài liệu và cách trả lời đúng ngữ cảnh."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/lumi-article.css" />
+    <style>
+      .page { width: min(980px, calc(100% - 32px)); }
+      .article-hero {
+        display: grid;
+        grid-template-columns: 1fr 0.82fr;
+        gap: 28px;
+        align-items: center;
+      }
+      .article-hero h1 {
+        margin: 14px 0;
+        font-size: clamp(40px, 7vw, 74px);
+        line-height: .96;
+        letter-spacing: -.055em;
+      }
+      .article-hero h1 span {
+        color: var(--violet);
+      }
+      .article-hero .lead {
+        margin: 0;
+        color: var(--text);
+        font-size: 18px;
+        font-weight: 650;
+        line-height: 1.72;
+      }
+      .hero-card {
+        border: 1px solid rgba(238,226,220,.95);
+        border-radius: 28px;
+        background: rgba(255,255,255,.78);
+        padding: 14px;
+        box-shadow: var(--shadow);
+      }
+      .hero-card img {
+        display: block;
+        width: 100%;
+        border-radius: 22px;
+      }
+      .article-body {
+        display: grid;
+        gap: 18px;
+        margin-top: 28px;
+      }
+      .article-section {
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        background: rgba(255,255,255,.78);
+        padding: clamp(20px, 4vw, 30px);
+      }
+      .article-section h2 {
+        margin: 0 0 12px;
+        font-size: clamp(26px, 4vw, 38px);
+        line-height: 1.08;
+        letter-spacing: -.03em;
+      }
+      .article-section p,
+      .article-section li {
+        color: var(--text);
+        font-size: 17px;
+        font-weight: 620;
+        line-height: 1.75;
+      }
+      .article-section p {
+        margin: 0 0 12px;
+      }
+      .article-section p:last-child {
+        margin-bottom: 0;
+      }
+      .article-section ul {
+        margin: 12px 0 0;
+        padding-left: 22px;
+      }
+      .steps {
+        display: grid;
+        gap: 12px;
+      }
+      .step-card {
+        border: 1px solid rgba(238,226,220,.95);
+        border-radius: 20px;
+        background: rgba(255,255,255,.72);
+        padding: 16px;
+      }
+      .step-card strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--ink);
+        font-size: 18px;
+      }
+      .code-block {
+        overflow-x: auto;
+        border: 1px solid rgba(124,77,255,.18);
+        border-radius: 20px;
+        background: #fbf8ff;
+        padding: 18px;
+        color: #25264a;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 13px;
+        line-height: 1.65;
+        white-space: pre-wrap;
+      }
+      .compare {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .compare article {
+        border: 1px solid rgba(238,226,220,.95);
+        border-radius: 22px;
+        background: rgba(255,255,255,.72);
+        padding: 18px;
+      }
+      .compare article.good {
+        border-color: rgba(19,168,117,.24);
+        background: rgba(19,168,117,.06);
+      }
+      blockquote {
+        margin: 14px 0 0;
+        border-left: 4px solid var(--violet);
+        padding: 10px 0 10px 16px;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 750;
+        line-height: 1.65;
+      }
+      .next-card {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+        border: 1px solid rgba(124,77,255,.2);
+        border-radius: 26px;
+        background:
+          radial-gradient(circle at 90% 8%, rgba(124,77,255,.16), transparent 30%),
+          rgba(255,255,255,.8);
+        padding: 22px;
+      }
+      @media (max-width: 860px) {
+        .article-hero,
+        .compare,
+        .next-card {
+          grid-template-columns: 1fr;
+        }
+        .next-card {
+          display: grid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <nav class="topbar">
+        <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
+        <a class="back" href="/bai-viet/claude-cho-ke-toan">← Series kế toán</a>
+      </nav>
+
+      <header class="article-hero">
+        <div>
+          <div class="pill">📒 Kế toán · 4 phút đọc</div>
+          <h1>Cái đầu tiên mình làm khi mở <span>Claude Pro.</span></h1>
+          <p class="lead">
+            Hồi mới có Claude Pro, mình dùng y chang mọi người: mở lên, hỏi, nhận câu trả lời, đóng lại.
+            Hôm sau mở lên, Claude không nhớ gì cả. Như thuê người rồi mỗi sáng phải đào tạo lại.
+          </p>
+        </div>
+        <div class="hero-card" aria-hidden="true">
+          <img src="/assets/claude-project-ke-toan-illustration.svg" alt="" />
+        </div>
+      </header>
+
+      <main class="article-body">
+        <section class="article-section">
+          <h2>Project là gì — nói thật, không nói sách</h2>
+          <p>
+            Thay vì mỗi lần mở Claude là một tờ giấy trắng, Project giống như bạn có một trợ lý ngồi cố định trong công ty:
+            đã biết bạn là ai, biết công ty làm gì, biết quy trình hay dùng.
+          </p>
+          <p>
+            Bạn có thể đưa tài liệu vào đó: thông tư, quy trình nội bộ, template email.
+            Khi hỏi, Claude trả lời dựa trên đúng văn bản của mình, không phải kiến thức chung chung ngoài mạng.
+          </p>
+        </section>
+
+        <section class="article-section">
+          <h2>Setup trong 15 phút — làm đúng một lần, dùng cả năm</h2>
+          <div class="steps">
+            <article class="step-card">
+              <strong>Bước 1 — Tạo Project</strong>
+              <p>Vào claude.ai hoặc Claude Desktop → Projects → New Project → đặt tên rõ ràng, ví dụ: Kế toán dịch vụ - Cty ABC.</p>
+            </article>
+            <article class="step-card">
+              <strong>Bước 2 — Viết hướng dẫn làm việc cho Claude</strong>
+              <p>Đây là phần quan trọng nhất. Bạn cho Claude biết công ty mình là ai, cần trả lời theo chuẩn nào, và khi không chắc thì phải nói rõ.</p>
+              <pre class="code-block">Bạn là trợ lý kế toán - thuế chuyên nghiệp, hỗ trợ công ty dịch vụ kế toán.
+
+Khách hàng của chúng tôi là doanh nghiệp vừa và nhỏ tại Việt Nam.
+
+Căn cứ pháp lý: Thông tư 20/2026/TT-BTC (hiệu lực 12/3/2026 - thay thế toàn bộ TT78/2014 và TT96/2015), Luật Thuế TNDN 2025 số 67/2025/QH15.
+
+Lưu ý quan trọng: Ngưỡng thanh toán không dùng tiền mặt hiện là 5 triệu đồng - không còn là 20 triệu theo quy định cũ. Áp dụng từ kỳ tính thuế 2025.
+
+Khi trả lời về chi phí hoặc thuế:
+- Kết luận trước: được trừ hay không được trừ
+- Trích dẫn điều khoản cụ thể của TT20/2026
+- Nếu không chắc chắn, nói rõ "cần xác minh thêm"
+
+Trả lời bằng tiếng Việt, ngắn gọn, thực tế.</pre>
+            </article>
+            <article class="step-card">
+              <strong>Bước 3 — Upload tài liệu</strong>
+              <p>Đưa vào những tài liệu hay dùng nhất: văn bản gốc, quy trình nội bộ, template email, bảng tra cứu thuế suất theo ngành nghề.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="article-section">
+          <h2>Khác biệt trong thực tế</h2>
+          <p>Khách hỏi: chi phí tiếp khách 8 triệu, thanh toán tiền mặt, có được trừ thuế TNDN không?</p>
+          <div class="compare">
+            <article>
+              <strong>Không có Project</strong>
+              <p>Claude có thể trả lời theo kiến thức chung. Bạn vẫn phải tự kiểm lại rất nhiều, nhất là khi quy định thay đổi.</p>
+            </article>
+            <article class="good">
+              <strong>Có Project + tài liệu đúng</strong>
+              <p>Claude trả lời đúng theo tài liệu bạn đã đưa vào, có kết luận trước và chỉ rõ điểm cần xác minh.</p>
+            </article>
+          </div>
+          <blockquote>
+            Không được trừ. Theo Thông tư 20/2026/TT-BTC, từ kỳ tính thuế 2025,
+            thanh toán tiền mặt từ 5 triệu đồng trở lên không được tính vào chi phí hợp lệ.
+          </blockquote>
+        </section>
+
+        <section class="article-section">
+          <h2>3 Project nên tạo ngay</h2>
+          <ul>
+            <li><strong>Thuế & Chi phí:</strong> câu hỏi hằng ngày về chi phí được trừ, tình huống phát sinh với từng khách.</li>
+            <li><strong>Email & Khách hàng:</strong> soạn email nhắc deadline, giải thích kết quả kiểm tra, thông báo thay đổi chính sách.</li>
+            <li><strong>Hợp đồng & Chứng từ:</strong> rà điều khoản thanh toán, thời hạn, điều kiện phạt, những điểm ảnh hưởng tới chi phí.</li>
+          </ul>
+        </section>
+
+        <section class="article-section">
+          <h2>Thử ngay sau khi setup xong</h2>
+          <p>Vào Project vừa tạo, gõ câu này:</p>
+          <pre class="code-block">Tóm tắt lại cho tôi: bạn đang hỗ trợ công ty như thế nào dựa trên thông tin tôi đã cung cấp?
+Nêu 3 việc bạn có thể giúp tôi làm tốt hơn ngay hôm nay.</pre>
+          <p>
+            Nếu Claude trả lời đúng ngữ cảnh công ty, đúng tài liệu bạn đưa vào, Project đã chạy đúng.
+            Nếu còn chung chung, chỉnh lại phần hướng dẫn làm việc rồi thử lại.
+          </p>
+        </section>
+
+        <section class="next-card">
+          <div>
+            <div class="pill">Bài tiếp theo</div>
+            <h2>Tài liệu nào nên upload — và thứ gì tuyệt đối không đưa lên Claude</h2>
+            <p>Bài này đang được chuẩn bị để giúp kế toán viên dùng Claude an toàn hơn với dữ liệu khách hàng.</p>
+          </div>
+          <a class="button secondary" href="/bai-viet/claude-cho-ke-toan">Xem series</a>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

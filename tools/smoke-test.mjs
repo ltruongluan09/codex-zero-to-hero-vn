@@ -159,10 +159,19 @@ assert(projectCatalog.some((project) => project.stage === "ready" && project.hre
   "Bài nền tảng",
   "Series chuyên đề",
   "Hành trình project thật",
-  "Claude cho công việc văn phòng",
+  "Claude cho Kế toán Dịch vụ",
+  "/bai-viet/claude-cho-ke-toan",
+  "/bai-viet/setup-claude-project-ke-toan",
   "AI Automation cơ bản",
 ].forEach((needle) => {
   assert(articleIndex.includes(needle), `Article library missing learning structure text: ${needle}`);
+});
+
+[
+  "public/bai-viet/claude-cho-ke-toan/index.html",
+  "public/bai-viet/setup-claude-project-ke-toan/index.html",
+].forEach((path) => {
+  assert(existsSync(join(root, path)), `Claude accounting route missing file: ${path}`);
 });
 
 const trainingHub = file("public/codex-training-thuc-chien.html");

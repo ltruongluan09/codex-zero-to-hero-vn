@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claude cho Kế toán Dịch vụ - Lumi Labs</title>
+    <meta
+      name="description"
+      content="Series Claude cho Kế toán Dịch vụ: từ setup Project đến các tình huống thực chiến cho kế toán viên đang dùng Claude Pro."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/lumi-article.css" />
+    <style>
+      .page { width: min(1080px, calc(100% - 32px)); }
+      .series-hero {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 24px;
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: 32px;
+        background:
+          radial-gradient(circle at 88% 10%, rgba(124,77,255,.16), transparent 30%),
+          rgba(255,255,255,.78);
+        padding: clamp(22px, 5vw, 46px);
+        box-shadow: var(--shadow);
+      }
+      .series-hero h1 {
+        margin: 14px 0 14px;
+        font-size: clamp(42px, 7vw, 76px);
+        line-height: .95;
+        letter-spacing: -.055em;
+      }
+      .series-hero h1 span {
+        color: var(--violet);
+      }
+      .series-hero p {
+        max-width: 620px;
+        color: var(--text);
+        font-size: 18px;
+        font-weight: 650;
+        line-height: 1.7;
+      }
+      .series-visual {
+        border: 1px solid rgba(238,226,220,.95);
+        border-radius: 28px;
+        background: rgba(255,255,255,.76);
+        padding: 14px;
+      }
+      .series-visual img {
+        display: block;
+        width: 100%;
+        border-radius: 22px;
+      }
+      .lesson-list {
+        display: grid;
+        gap: 14px;
+        margin-top: 24px;
+      }
+      .lesson-card {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 16px;
+        align-items: center;
+        border: 1px solid rgba(238,226,220,.95);
+        border-radius: 24px;
+        background: rgba(255,255,255,.82);
+        padding: 18px;
+        transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      }
+      a.lesson-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(124,77,255,.34);
+        box-shadow: 0 18px 44px rgba(90,66,125,.1);
+      }
+      .lesson-card.coming {
+        opacity: .56;
+      }
+      .lesson-num {
+        display: grid;
+        place-items: center;
+        width: 54px;
+        height: 54px;
+        border-radius: 18px;
+        background: #f2ebff;
+        color: var(--violet);
+        font-weight: 950;
+      }
+      .lesson-card h2 {
+        margin: 0 0 6px;
+        font-size: 22px;
+        line-height: 1.22;
+      }
+      .lesson-card p {
+        margin: 0;
+        color: var(--text);
+        font-size: 15px;
+        font-weight: 650;
+        line-height: 1.55;
+      }
+      .lesson-state {
+        border-radius: 999px;
+        background: #f8f3ff;
+        color: var(--violet);
+        padding: 9px 12px;
+        font-size: 13px;
+        font-weight: 950;
+        white-space: nowrap;
+      }
+      .lesson-card.live {
+        border-color: rgba(124,77,255,.28);
+        background:
+          linear-gradient(135deg, rgba(255,107,101,.08), rgba(124,77,255,.08)),
+          rgba(255,255,255,.9);
+      }
+      .note {
+        margin-top: 22px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: rgba(255,255,255,.74);
+        padding: 18px;
+        color: var(--text);
+        font-weight: 650;
+        line-height: 1.7;
+      }
+      @media (max-width: 860px) {
+        .series-hero,
+        .lesson-card {
+          grid-template-columns: 1fr;
+        }
+        .lesson-state {
+          width: fit-content;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <nav class="topbar">
+        <a class="brand" href="/"><img src="/lumi-bot.png" alt="" /><span>Lumi Labs<small>AI dễ hiểu cho người mới</small></span></a>
+        <a class="back" href="/bai-viet">← Kho bài học</a>
+      </nav>
+
+      <header class="series-hero">
+        <div>
+          <div class="pill">📒 Series · 4 bài · Claude Pro</div>
+          <h1>Claude cho <span>Kế toán Dịch vụ.</span></h1>
+          <p>
+            Một đường học ngắn cho kế toán viên muốn dùng Claude như một trợ lý làm việc thật:
+            nhớ ngữ cảnh công ty, đọc đúng tài liệu, soạn câu trả lời rõ ràng hơn cho khách.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="/bai-viet/setup-claude-project-ke-toan">Đọc bài 1 ngay</a>
+            <a class="button secondary" href="#lessons">Xem 4 bài</a>
+          </div>
+        </div>
+        <div class="series-visual" aria-hidden="true">
+          <img src="/assets/claude-project-ke-toan-illustration.svg" alt="" />
+        </div>
+      </header>
+
+      <main id="lessons" class="section">
+        <h2>4 bài trong series</h2>
+        <div class="lesson-list">
+          <a class="lesson-card live" href="/bai-viet/setup-claude-project-ke-toan">
+            <span class="lesson-num">Bài 1</span>
+            <div>
+              <h2>Cái đầu tiên mình làm khi mở Claude Pro</h2>
+              <p>Setup Project trong 15 phút — để Claude nhớ công ty bạn, đúng TT20/2026, dùng được cả năm.</p>
+            </div>
+            <span class="lesson-state">Đọc ngay →</span>
+          </a>
+          <article class="lesson-card coming" aria-disabled="true">
+            <span class="lesson-num">Bài 2</span>
+            <div>
+              <h2>Tài liệu nào nên upload — và thứ gì tuyệt đối không đưa lên Claude</h2>
+              <p>Bài này sẽ giúp bạn giữ an toàn dữ liệu khách hàng trước khi dùng Claude cho công việc thật.</p>
+            </div>
+            <span class="lesson-state">Sắp có</span>
+          </article>
+          <article class="lesson-card coming" aria-disabled="true">
+            <span class="lesson-num">Bài 3</span>
+            <div>
+              <h2>10 prompt thực tế mình dùng mỗi tuần cho công việc kế toán</h2>
+              <p>Các mẫu nhờ việc ngắn, sát tình huống: chi phí, chứng từ, email khách, deadline và kiểm tra logic.</p>
+            </div>
+            <span class="lesson-state">Sắp có</span>
+          </article>
+          <article class="lesson-card coming" aria-disabled="true">
+            <span class="lesson-num">Bài 4</span>
+            <div>
+              <h2>Từ Claude trả lời → email gửi khách trong 3 phút</h2>
+              <p>Biến câu trả lời thô thành email lịch sự, dễ hiểu, khách đọc xong biết cần làm gì tiếp theo.</p>
+            </div>
+            <span class="lesson-state">Sắp có</span>
+          </article>
+        </div>
+
+        <div class="note">
+          Lumi Bot sẽ giữ series này theo đúng tinh thần Lumi Labs: ít thuật ngữ, nhiều tình huống thật,
+          ưu tiên thứ kế toán viên có thể dùng ngay trong ngày làm việc.
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

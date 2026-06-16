@@ -1,0 +1,95 @@
+<svg width="100%" viewBox="0 0 680 420" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Claude Project cho kế toán — trước và sau khi setup</title>
+  <desc>Hai màn hình Claude: bên trái là hội thoại trắng mỗi ngày, bên phải là Project đã nhớ ngữ cảnh công ty với TT20/2026</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="420" fill="#F4F2EF"/>
+
+  <!-- LABEL ĐẦU -->
+  <text x="158" y="28" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#B4B2A9" letter-spacing="2">TRƯỚC</text>
+  <text x="522" y="28" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#534AB7" letter-spacing="2">SAU KHI CÓ PROJECT</text>
+  <line x1="340" y1="16" x2="340" y2="408" stroke="#D3D1C7" stroke-width="0.5" stroke-dasharray="5 4"/>
+
+  <!-- BÊN TRÁI — TRƯỚC -->
+  <rect x="24" y="42" width="296" height="300" rx="12" fill="#FFFFFF" stroke="#E0DDD6" stroke-width="0.5"/>
+  <rect x="24" y="42" width="296" height="36" rx="12" fill="#F7F5F2"/>
+  <rect x="24" y="66" width="296" height="12" fill="#F7F5F2"/>
+  <circle cx="46" cy="60" r="5" fill="#F09595"/>
+  <circle cx="62" cy="60" r="5" fill="#FAC775"/>
+  <circle cx="78" cy="60" r="5" fill="#97C459"/>
+  <text x="172" y="64" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#B4B2A9">Hội thoại mới</text>
+
+  <text x="172" y="96" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#D3D1C7">— Thứ Hai —</text>
+  <rect x="116" y="104" width="190" height="38" rx="7" fill="#EAE8E2"/>
+  <text x="126" y="118" font-family="sans-serif" font-size="8" fill="#5F5E5A">Công ty mình làm dịch vụ kế toán,</text>
+  <text x="126" y="130" font-family="sans-serif" font-size="8" fill="#5F5E5A">khách là DN vừa nhỏ, theo TT20...</text>
+  <rect x="36" y="150" width="160" height="26" rx="7" fill="#F7F5F2" stroke="#E0DDD6" stroke-width="0.5"/>
+  <text x="46" y="163" font-family="sans-serif" font-size="8" fill="#888780">Xin chào! Bạn cần hỗ trợ gì?</text>
+
+  <text x="172" y="196" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#D3D1C7">— Thứ Ba —</text>
+  <rect x="116" y="204" width="190" height="38" rx="7" fill="#EAE8E2"/>
+  <text x="126" y="218" font-family="sans-serif" font-size="8" fill="#5F5E5A">Mình đã nói hôm qua rồi, công ty</text>
+  <text x="126" y="230" font-family="sans-serif" font-size="8" fill="#5F5E5A">mình làm dịch vụ kế toán...</text>
+  <rect x="36" y="250" width="150" height="18" rx="7" fill="#F7F5F2" stroke="#E0DDD6" stroke-width="0.5"/>
+  <text x="46" y="262" font-family="sans-serif" font-size="8" fill="#888780">Xin lỗi, tôi không nhớ...</text>
+
+  <path d="M 172 278 C 172 296 80 296 80 278" fill="none" stroke="#E0DDD6" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#a)"/>
+  <text x="172" y="314" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#B4B2A9">Lặp lại mỗi ngày</text>
+  <text x="172" y="348" text-anchor="middle" font-family="sans-serif" font-size="22">😮‍💨</text>
+  <text x="172" y="368" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#B4B2A9">Như thuê người rồi đào tạo lại mỗi sáng</text>
+
+  <!-- BÊN PHẢI — SAU -->
+  <rect x="360" y="42" width="296" height="300" rx="12" fill="#FFFFFF" stroke="#AFA9EC" stroke-width="1"/>
+  <rect x="360" y="42" width="296" height="36" rx="12" fill="#EEEDFE"/>
+  <rect x="360" y="66" width="296" height="12" fill="#EEEDFE"/>
+  <circle cx="382" cy="60" r="5" fill="#F09595" opacity="0.6"/>
+  <circle cx="398" cy="60" r="5" fill="#FAC775" opacity="0.6"/>
+  <circle cx="414" cy="60" r="5" fill="#97C459" opacity="0.6"/>
+  <rect x="444" y="52" width="196" height="18" rx="9" fill="#534AB7"/>
+  <text x="448" y="64" font-family="sans-serif" font-size="8.5" fill="#EEEDFE">✦  Kế toán dịch vụ – Cty ABC</text>
+
+  <rect x="368" y="86" width="110" height="18" rx="9" fill="#F4F2EF" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="423" y="98" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#888780">📋 Hướng dẫn làm việc ✓</text>
+  <rect x="486" y="86" width="120" height="18" rx="9" fill="#EAF3DE" stroke="#C0DD97" stroke-width="0.5"/>
+  <text x="546" y="98" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#3B6D11">📚 TT20/2026 ✓</text>
+
+  <rect x="430" y="114" width="212" height="28" rx="7" fill="#534AB7"/>
+  <text x="440" y="126" font-family="sans-serif" font-size="8" fill="#EEEDFE">Chi tiếp khách 8tr tiền mặt —</text>
+  <text x="440" y="138" font-family="sans-serif" font-size="8" fill="#EEEDFE">được trừ thuế TNDN không?</text>
+
+  <rect x="368" y="150" width="274" height="76" rx="8" fill="#F7F5F2" stroke="#E0DDD6" stroke-width="0.5"/>
+  <rect x="368" y="150" width="3" height="76" rx="2" fill="#534AB7"/>
+  <rect x="378" y="158" width="66" height="14" rx="7" fill="#FCEBEB"/>
+  <text x="411" y="168" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#A32D2D">Không được trừ</text>
+  <text x="378" y="188" font-family="sans-serif" font-size="7.5" fill="#5F5E5A">TT20/2026: thanh toán tiền mặt ≥ 5 triệu</text>
+  <text x="378" y="200" font-family="sans-serif" font-size="7.5" fill="#5F5E5A">không được tính chi phí hợp lệ.</text>
+  <text x="378" y="212" font-family="sans-serif" font-size="7.5" fill="#5F5E5A">Cần chuyển khoản + bổ sung hóa đơn.</text>
+
+  <text x="508" y="238" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#639922">⚡ 6 giây · đúng quy định 2026</text>
+
+  <rect x="368" y="252" width="84" height="72" rx="8" fill="#EEEDFE"/>
+  <text x="410" y="276" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#534AB7">Nhớ ngữ cảnh</text>
+  <text x="410" y="304" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#534AB7" font-weight="500">mãi</text>
+
+  <rect x="462" y="252" width="84" height="72" rx="8" fill="#EAF3DE"/>
+  <text x="504" y="276" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#3B6D11">Setup một lần</text>
+  <text x="504" y="296" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#3B6D11" font-weight="500">15</text>
+  <text x="504" y="312" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#3B6D11">phút</text>
+
+  <rect x="556" y="252" width="90" height="72" rx="8" fill="#FAECE7"/>
+  <text x="601" y="270" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#993C1D">Ngưỡng mới</text>
+  <text x="601" y="283" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#993C1D">TT20/2026</text>
+  <text x="601" y="304" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#D85A30" font-weight="500">5tr</text>
+  <text x="601" y="318" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#993C1D">(cũ: 20tr)</text>
+
+  <!-- MŨI TÊN TRUNG TÂM -->
+  <rect x="305" y="138" width="70" height="28" rx="8" fill="#534AB7"/>
+  <text x="340" y="156" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#FFFFFF">Project →</text>
+
+  <!-- NHÃN DƯỚI -->
+  <text x="340" y="400" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#888780">claude.ai · Claude Desktop · Tháng 6/2026</text>
+</svg>
