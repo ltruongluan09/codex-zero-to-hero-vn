@@ -6,9 +6,9 @@ import StatusBadge from "./StatusBadge";
 export default function AlertItem({ alert }) {
   const project = projects.find((item) => item.id === alert.projectId);
   return (
-    <Link to={`/projects/${alert.projectId}`} className="block rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-red-200 hover:shadow-sm">
+    <Link to={`/projects/${alert.projectId}`} className="block rounded-[22px] border border-slate-200 bg-white p-4 shadow-[0_10px_30px_rgba(15,23,42,0.05)] transition duration-200 ease-out hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50/20 hover:shadow-[0_18px_45px_rgba(15,23,42,0.1)] active:scale-[0.99]">
       <div className="flex gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-600">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-red-100 bg-red-50 text-red-600">
           <BellRing size={18} />
         </span>
         <div className="min-w-0">

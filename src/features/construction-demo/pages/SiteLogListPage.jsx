@@ -16,8 +16,8 @@ export default function SiteLogListPage() {
   }, [logs, projectId]);
 
   return (
-    <div className="space-y-6">
-      <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
+    <div className="space-y-8">
+      <section className="rounded-[32px] border border-slate-200 bg-white p-5 shadow-[0_18px_55px_rgba(15,23,42,0.08)] md:p-7">
         <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
           <div>
             <p className="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-indigo-600">
@@ -30,21 +30,21 @@ export default function SiteLogListPage() {
           </div>
           <Link
             to="/logs/new"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-indigo-700"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition hover:-translate-y-0.5 hover:bg-indigo-700 active:scale-[0.98]"
           >
             <Plus size={18} /> Thêm nhật ký
           </Link>
         </div>
       </section>
 
-      <section className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm md:p-5">
+      <section className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-[0_14px_40px_rgba(15,23,42,0.06)] md:p-5">
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
           <label className="relative flex-1">
             <Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             <select
               value={projectId}
               onChange={(event) => setProjectId(event.target.value)}
-              className="w-full appearance-none rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-12 pr-4 text-sm font-bold text-slate-800 outline-none transition focus:border-indigo-300 focus:bg-white"
+              className="w-full appearance-none rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-12 pr-4 text-sm font-bold text-slate-800 outline-none transition hover:bg-white focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-50"
             >
               <option value="all">Tất cả công trình</option>
               {projects.map((project) => (
@@ -54,7 +54,7 @@ export default function SiteLogListPage() {
               ))}
             </select>
           </label>
-          <span className="rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-500">
+          <span className="rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-bold text-slate-500">
             {filteredLogs.length} nhật ký
           </span>
         </div>

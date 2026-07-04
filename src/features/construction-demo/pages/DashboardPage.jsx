@@ -9,7 +9,7 @@ import { alerts, projects, staff, tasks } from "../data/mockData";
 import { useSiteFlow } from "../SiteFlowDemo";
 
 function SkeletonCard() {
-  return <div className="h-32 animate-pulse rounded-2xl border border-slate-200 bg-white" />;
+  return <div className="h-36 animate-pulse rounded-[24px] border border-slate-200 bg-gradient-to-r from-slate-100 via-white to-slate-100" />;
 }
 
 export default function DashboardPage() {
@@ -23,8 +23,8 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="space-y-6">
-      <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
+    <div className="space-y-8">
+      <section className="rounded-[32px] border border-slate-200 bg-white p-5 shadow-[0_18px_55px_rgba(15,23,42,0.08)] md:p-7">
         <p className="text-sm font-semibold text-indigo-600">SiteFlow Demo</p>
         <div className="mt-2 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
@@ -33,7 +33,7 @@ export default function DashboardPage() {
               Theo dõi tiến độ, cảnh báo trễ hạn và nhật ký hiện trường từ một màn hình duy nhất.
             </p>
           </div>
-          <Link to="/logs/new" className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white hover:bg-indigo-700">
+          <Link to="/logs/new" className="inline-flex items-center justify-center rounded-2xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition hover:-translate-y-0.5 hover:bg-indigo-700 active:scale-[0.98]">
             + Thêm nhật ký
           </Link>
         </div>
@@ -53,7 +53,7 @@ export default function DashboardPage() {
       )}
 
       <div className="grid gap-6 xl:grid-cols-[2fr_1fr]">
-        <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
+        <section className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.07)] md:p-6">
           <div className="mb-5 flex items-center justify-between gap-4">
             <div>
               <h2 className="text-xl font-bold">Tiến độ các công trình</h2>
@@ -63,7 +63,7 @@ export default function DashboardPage() {
           </div>
           <div className="space-y-4">
             {projects.slice(0, 3).map((project) => (
-              <Link key={project.id} to={`/projects/${project.id}`} className="block rounded-2xl border border-slate-200 p-4 transition hover:border-indigo-200 hover:bg-slate-50">
+              <Link key={project.id} to={`/projects/${project.id}`} className="block rounded-[22px] border border-slate-200 p-4 transition duration-200 ease-out hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-slate-50 hover:shadow-[0_14px_35px_rgba(15,23,42,0.07)] active:scale-[0.99]">
                 <div className="mb-3 flex items-center justify-between gap-3">
                   <div>
                     <p className="font-bold text-slate-900">{project.name}</p>
@@ -77,7 +77,7 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
+        <section className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.07)] md:p-6">
           <div className="mb-5 flex items-center gap-2">
             <HardHat className="text-red-500" size={20} />
             <h2 className="text-xl font-bold">Cảnh báo cần chú ý</h2>
@@ -88,7 +88,7 @@ export default function DashboardPage() {
         </section>
       </div>
 
-      <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
+      <section className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.07)] md:p-6">
         <div className="mb-5 flex items-center justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold">Nhật ký hiện trường gần đây</h2>

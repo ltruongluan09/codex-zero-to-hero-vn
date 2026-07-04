@@ -91,19 +91,19 @@ export const alerts = [
 ];
 
 export const imageMap = {
-  "concrete formwork construction": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80",
-  "electrical wiring construction site": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=900&q=80",
-  "basement waterproofing": "https://images.unsplash.com/photo-1590725175682-2b27bbf0c4b8?auto=format&fit=crop&w=900&q=80",
-  "steel frame roof construction": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80",
-  "warehouse floor construction rain": "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=80",
-  "house exterior paint construction": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80",
-  "construction site meeting": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80",
-  "school playground construction complete": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=900&q=80",
+  "concrete formwork construction": "/images/construction/concrete-formwork.jpg",
+  "electrical wiring construction site": "/images/construction/electrical-site.jpg",
+  "basement waterproofing": "/images/construction/basement-waterproofing.jpg",
+  "steel frame roof construction": "/images/construction/steel-frame-roof.jpg",
+  "warehouse floor construction rain": "/images/construction/warehouse-floor.jpg",
+  "house exterior paint construction": "/images/construction/house-exterior.jpg",
+  "construction site meeting": "/images/construction/site-meeting.jpg",
+  "school playground construction complete": "/images/construction/school-playground.jpg",
 };
 
 export const projectImages = {
-  P001: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80",
-  P002: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=900&q=80",
-  P003: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80",
-  P004: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=900&q=80",
+  P001: "/images/construction/condo-riverside.jpg",
+  P002: "/images/construction/industrial-warehouse.jpg",
+  P003: "/images/construction/villa-garden.jpg",
+  P004: "/images/construction/school-building.jpg",
 };
