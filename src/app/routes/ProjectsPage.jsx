@@ -4,12 +4,14 @@ const ctaLabel = {
   "caption-ai": "Viết caption ngay",
   "docscan-ai": "Đọc tài liệu ngay",
   "pdf-excel-ai": "Xem PDF sang Excel",
+  "siteflow-demo": "Xem demo SiteFlow",
 };
 
 const usefulFor = {
   "caption-ai": "Phù hợp shop nhỏ, creator, freelancer, nhân viên marketing cần đăng bài nhanh.",
   "docscan-ai": "Phù hợp người cần đọc nhanh hợp đồng, báo giá, báo cáo, ảnh chụp tài liệu.",
   "pdf-excel-ai": "Phù hợp team vận hành, kế toán, backoffice cần biến file có bảng thành Excel.",
+  "siteflow-demo": "Phù hợp nhà thầu, chủ đầu tư hoặc founder cần demo SaaS quản lý công trình.",
 };
 
 export default function ProjectsPage() {

@@ -1,10 +1,11 @@
-import { imageMap, projects } from "../data/mockData";
+import ConstructionVisual from "./ConstructionVisual";
+import { projects } from "../data/mockData";
 
 export default function SiteLogCard({ log, compact = false }) {
   const project = projects.find((item) => item.id === log.projectId);
   return (
     <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <img src={imageMap[log.imageQuery]} alt="" className={compact ? "h-28 w-full object-cover" : "h-52 w-full object-cover"} />
+      <ConstructionVisual seed={log.imageQuery} label={log.relatedTask || "Ảnh hiện trường"} compact={compact} />
       <div className="p-4">
         <p className="text-xs font-bold uppercase tracking-wide text-indigo-600">{project?.name}</p>
         <p className="mt-1 text-sm font-semibold text-slate-500">{log.date} · {log.author}</p>

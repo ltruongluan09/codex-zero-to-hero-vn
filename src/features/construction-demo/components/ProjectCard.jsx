@@ -1,6 +1,6 @@
 import { MapPin, UserRound } from "lucide-react";
 import { Link } from "react-router-dom";
-import { projectImages } from "../data/mockData";
+import ConstructionVisual from "./ConstructionVisual";
 import ProgressBar from "./ProgressBar";
 import StatusBadge from "./StatusBadge";
 
@@ -11,11 +11,9 @@ export default function ProjectCard({ project }) {
       className="group block rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md"
     >
       <div className="flex gap-4">
-        <img
-          src={projectImages[project.id]}
-          alt=""
-          className="hidden h-28 w-32 rounded-xl object-cover md:block"
-        />
+        <div className="hidden w-36 shrink-0 md:block">
+          <ConstructionVisual seed={project.id} label={project.name} compact />
+        </div>
         <div className="min-w-0 flex-1">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <h3 className="text-lg font-bold text-slate-900 group-hover:text-indigo-700">{project.name}</h3>

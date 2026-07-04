@@ -1,4 +1,5 @@
-import { imageMap, projects } from "../data/mockData";
+import ConstructionVisual from "./ConstructionVisual";
+import { projects } from "../data/mockData";
 
 export default function SiteLogFeedItem({ log }) {
   const project = projects.find((item) => item.id === log.projectId);
@@ -14,7 +15,7 @@ export default function SiteLogFeedItem({ log }) {
           <p className="mt-1 text-xs font-medium text-slate-500">{log.date}</p>
         </div>
       </div>
-      <img src={imageMap[log.imageQuery]} alt="" className="h-64 w-full rounded-xl object-cover" />
+      <ConstructionVisual seed={log.imageQuery} label={log.relatedTask || "Ảnh hiện trường"} />
       <p className="mt-4 text-sm leading-6 text-slate-700">{log.note}</p>
       {log.relatedTask && (
         <p className="mt-4 text-sm font-semibold text-slate-600">

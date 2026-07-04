@@ -1,12 +1,17 @@
 import { Camera, X } from "lucide-react";
-import { imageMap } from "../data/mockData";
+import ConstructionVisual from "./ConstructionVisual";
 
-const pool = Object.values(imageMap);
+const pool = [
+  "concrete formwork construction",
+  "electrical wiring construction site",
+  "steel frame roof construction",
+  "construction site meeting",
+];
 
 export default function PhotoUploadMock({ photos, onChange }) {
   function addPhoto() {
     if (photos.length >= 4) return;
-    onChange([...photos, pool[(photos.length + 2) % pool.length]]);
+    onChange([...photos, pool[photos.length % pool.length]]);
   }
 
   return (
@@ -24,7 +29,7 @@ export default function PhotoUploadMock({ photos, onChange }) {
         <div className="mt-3 grid grid-cols-2 gap-3">
           {photos.map((photo, index) => (
             <div key={`${photo}-${index}`} className="relative">
-              <img src={photo} alt="" className="h-28 w-full rounded-xl object-cover" />
+              <ConstructionVisual seed={photo} label={`Ảnh ${index + 1}`} compact />
               <button
                 type="button"
                 onClick={() => onChange(photos.filter((_, itemIndex) => itemIndex !== index))}
