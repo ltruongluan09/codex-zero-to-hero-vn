@@ -9,6 +9,7 @@ import LoginModal from "./components/layout/LoginModal";
 import SiteFooter from "./components/layout/SiteFooter";
 import SiteHeader from "./components/layout/SiteHeader";
 import CaptionAISection from "./features/caption-ai/CaptionAISection";
+import SiteFlowDemo from "./features/construction-demo/SiteFlowDemo";
 import DocScanAISection from "./features/docscan-ai/DocScanAISection";
 import PdfExcelAISection from "./features/pdf-excel-ai/PdfExcelAISection";
 
@@ -38,6 +39,10 @@ function App() {
   const auth = useAuth();
   const [loginOpen, setLoginOpen] = useState(false);
   const currentPath = window.location.pathname;
+
+  if (currentPath.startsWith("/construction-demo")) {
+    return <SiteFlowDemo />;
+  }
 
   if (currentPath === "/dashboard") {
     return (

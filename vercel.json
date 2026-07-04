@@ -37,6 +37,14 @@
     {
       "source": "/challenge",
       "destination": "/"
+    },
+    {
+      "source": "/construction-demo",
+      "destination": "/"
+    },
+    {
+      "source": "/construction-demo/:path*",
+      "destination": "/"
     }
   ]
 }
